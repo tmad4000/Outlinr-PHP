@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<!--
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    -->
+    <link href="style.css" rel="stylesheet">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+   <!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>    -->
+
+        <script type="text/javascript" >
+        
+        
+        //getPosts();
+
+$(document).ready(function() {
+
+    
+    
+		/*
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		$(this).tab('show');
+	})
+	
+	
+	
+	$('#myTab a:last').tab('show');
+*/
+	makeCollapsibleTree();
+	
+	
+
+});
+
+
+function makeCollapsibleTree() {
+
+		// Find list items representing folders and
+		// style them accordingly.  Also, turn them
+		// into links that can expand/collapse the
+		// tree leaf.
+		$('#currentposts li > ul').each(function(i) {
+			// Find this list's parent list item.
+			var parent_li = $(this).parent('li');
+	
+			// Style the list item as folder.
+			parent_li.addClass('folder');
+	
+			// Temporarily remove the list from the
+			// parent list item, wrap the remaining
+			// text in an anchor, then reattach it.
+			var sub_ul = $(this).remove();
+			parent_li.wrapInner('<a/>').find('a').click(function() {
+				// Make the anchor toggle the leaf display.
+				sub_ul.toggle();
+			});
+			parent_li.append(sub_ul);
+		});
+	
+		// Hide all lists except the outermost.
+		$('ul ul').hide();
+
+
+    // Find list items representing folders and turn them
+    // into links that can expand/collapse the tree leaf.
+    $('#currentposts li.folder').each(function(i) {
+        // Temporarily decouple the child list, wrap the
+        // remaining text in an anchor, then reattach it.
+        var sub_ul = $(this).children().remove();
+        $(this).wrapInner('<a/>').find('a').click(function() {
+            // Make the anchor toggle the leaf display.
+            sub_ul.toggle();
+        });
+        $(this).append(sub_ul);
+    });
+
+    // Hide all lists except the outermost.
+    $('ul ul').hide();
+	
+	//http://homework.nwsnet.de/releases/ea21/#turn-nested-lists-into-a-collapsible-tree-with-jquery
+
+}
+$(function() {
+	makeCollapsibleTree();
+});
+
+</script>
+</head>
+
+<body>
+<div id="currentposts">
+<ul>
+  <li>item 1
+    <ul>
+      <li>item 1.1</li>
+      <li>item 1.2</li>
+      <li>item 1.3</li>
+    </ul>
+  </li>
+  <li>item 2
+    <ul>
+      <li>item 2.1
+        <ul>
+          <li>item 2.1.1</li>
+          <li>item 2.2.2</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>item 3</li>
+</ul>
+</div>
+</body>
+</html>
