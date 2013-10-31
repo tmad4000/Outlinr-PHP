@@ -88,16 +88,6 @@
     /*    margin-top: 5px;*/
         width: 400px;
     }
-	
-	table.subrow {
-		border:none;
-		width:100%;
-	}
-
-	table.subrow td {
-		border:none;
-	}
-
       </style>
       
     
@@ -106,7 +96,7 @@
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>    
         
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
-    <script type="text/javascript" src="client_inProgress.js"></script>
+    <script type="text/javascript" src="client_proposals.js"></script>
         
     <script type='text/javascript'>//<![CDATA[ 
     /*window.onload=function(){
@@ -145,6 +135,10 @@
     
 </head>
 <body>
+  <?php 
+  	include('inc/nav.inc.php');
+	if(0) {
+	?>
   <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
@@ -159,9 +153,12 @@
       <div class="nav-collapse">
         <ul class="nav">
 
-          <li><a href="index.1.7_mitsuggestionbox.php">IdeaMap</a></li>
-          <li class="active"><a href="index.1.7_mitsuggestionbox_inProgress.php">InProgress</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_proposals.php">Proposals</a></li>
+
+          <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
+          <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+          <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
+          
+         
         </ul>
         <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
       </div><!--/.nav-collapse -->
@@ -169,6 +166,7 @@
     </div>
   </div>
 </div>
+<?php } ?>
 
 <div class="container-fluid">
   <div class="row-fluid row">
@@ -216,9 +214,13 @@
         </div>
       </form>
       -->
-      <div id="currentposts"></div>
+	  <iframe style="width:100%; height:100%;width: 100%;height: 800px;overflow: hidden;border: none;" src="http://dev.outline.com/" />
+      <div id="currentposts" style="display:none"></div>
       
       </div>
+      
+
+      
       
 
   <hr>

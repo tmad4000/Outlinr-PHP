@@ -22,14 +22,14 @@ $r = mysqli_fetch_assoc($result)
         <span class="icon-bar"></span>
       </a>
       
-      <a class="brand" href="index.1.7_mitsuggestionbox_ideamaps.php"><img src="" height="20" width="20"><!--<img src="http://www.dpcma.org/Portals/1/massachusetts-seal.gif" height="20" width="20">--> &nbsp; Outline <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_mitsuggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span></a> 
+      <a class="brand" href="index.1.7_suggestionbox_ideamaps.php"><img src="" height="20" width="20"><!--<img src="http://www.dpcma.org/Portals/1/massachusetts-seal.gif" height="20" width="20">--> &nbsp; Outline <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span></a> 
       <div class="nav-collapse">
         <ul class="nav">
 
 
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_mitsuggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_mitsuggestionbox.php?mapid=<?= $_GET['mapid'] ?>">IdeaMap</a></li>
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_mitsuggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_mitsuggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">InProgress</a></li>
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_mitsuggestionbox_proposals.php") ? ' class="active"' : '' ?>><a href="index.1.7_mitsuggestionbox_proposals.php?mapid=<?= $_GET['mapid'] ?>">Proposals</a></li>
+          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox.php?mapid=<?= $_GET['mapid'] ?>">IdeaMap</a></li>
+          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">InProgress</a></li>
+          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_proposals.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_proposals.php?mapid=<?= $_GET['mapid'] ?>">Proposals</a></li>
           <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
          
         </ul>

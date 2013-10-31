@@ -1,6 +1,7 @@
 body {
     background: #FFF;
     /*background: #661B21;*/
+    font-weight:300;
 }
 
 div.container {
@@ -118,6 +119,12 @@ div.commentform div.commentsinput {
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
+#postform textarea {
+	font-weight:200!important;
+}
+#postform .btn {
+	font-weight:200!important;
+}
 
 /*
 

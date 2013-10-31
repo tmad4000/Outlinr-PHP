@@ -7,7 +7,8 @@
   
   
     
-      <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
     
     
   
@@ -18,10 +19,10 @@
 }
 
 .sidebar-nav-fixed {
-    padding: 9px 0;
+    padding: 13px 0;
     position:fixed;
     right:20px;
-    top:40px;
+    top:36px;
     width:250px;
 }
 
@@ -89,21 +90,78 @@ td.votes {
 /*popover */
 .idea {position: absolute; top: 100px; left: 100px;}
 
-form#postform {
-	padding-bottom:0;
+td.ideaTxt {
+	/*width:100%;*/
+}
+
+
+
+ul.entryNode {
+	list-style-type: none;
+	padding-top:0
+	
+}
+
+ul.entrylist {
+	list-style-type: none;
+	padding-top:0
+	
+}
+
+ul.entryNode table{
+	padding-top:5px;		
 	margin-bottom:0;
+	
 }
 
-div#relatedideas {
-	border: 1px #ccc solid;
-	margin-left: 20px;
-	margin-top: -21px;
-	margin-bottom: 20px;
+ul.entryNode td {
+	
+	
 }
 
-a.addlink {
-margin-right:10px
+td.uid {
+	text-align:right;
 }
+
+#currentposts > ul.entrylist {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+#currentposts > ul.entryNode {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+#currentposts > ul.entryNode > li > ul.entrylist {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+
+#currentposts > ul.entryNode > li > ul.entrylist > li > ul.entryNode {
+
+  padding-left:1px;
+  margin-left:0;
+  
+}
+
+
+
+#currentposts .suggname {
+  text-decoration:none;
+  color:#D41528;
+  cursor:text!important;
+}
+
+.ideaTxt {
+  color:#777;
+}
+
+
   </style>
   
 
@@ -114,7 +172,7 @@ margin-right:10px
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
     
 <link href="style.css" rel="stylesheet">
-    <script type="text/javascript" src="client_wsugg.js"></script>
+    <script type="text/javascript" src="client.js"></script>
     
 <script type='text/javascript'>//<![CDATA[ 
 /*window.onload=function(){
@@ -159,9 +217,9 @@ margin-right:10px
         <ul class="nav">
 
 
-          <li class="active"><a href="index.1.7_mitsuggestionbox.php">IdeaMap</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_inProgress.php">InProgress</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_proposals.php">Proposals</a></li>
+          <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
+          <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+          <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
           
          
         </ul>
@@ -213,8 +271,7 @@ margin-right:10px
           <input class="btn" type="submit"></input>
         </div>
       </form>
-      <div id="relatedideas">
-</div>
+      
       <div id="currentposts"></div>
       
       </div>

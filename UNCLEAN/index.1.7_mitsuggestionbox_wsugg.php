@@ -7,8 +7,7 @@
   
   
     
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
     
     
   
@@ -90,60 +89,21 @@ td.votes {
 /*popover */
 .idea {position: absolute; top: 100px; left: 100px;}
 
-td.ideaTxt {
-	/*width:100%;*/
-}
-
-
-
-ul.entryNode {
-	list-style-type: none;
-	padding-top:0
-	
-}
-
-ul.entrylist {
-	list-style-type: none;
-	padding-top:0
-	
-}
-
-ul.entryNode table{
-	padding-top:5px;		
+form#postform {
+	padding-bottom:0;
 	margin-bottom:0;
-	
 }
 
-ul.entryNode td {
-	
-	
+div#relatedideas {
+	border: 1px #ccc solid;
+	margin-left: 20px;
+	margin-top: -21px;
+	margin-bottom: 20px;
 }
 
-td.uid {
-	text-align:right;
+a.addlink {
+margin-right:10px
 }
-
-#currentposts > ul.entrylist {
-
-	padding-left:0;
-	margin-left:0;
-	
-}
-#currentposts > ul.entryNode {
-
-	padding-left:0;
-	margin-left:0;
-	
-}
-#currentposts > ul.entryNode > li > ul.entrylist {
-
-	padding-left:0;
-	margin-left:0;
-	
-}
-
-
-
   </style>
   
 
@@ -154,7 +114,7 @@ td.uid {
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
     
 <link href="style.css" rel="stylesheet">
-    <script type="text/javascript" src="client.js"></script>
+    <script type="text/javascript" src="client_wsugg.js"></script>
     
 <script type='text/javascript'>//<![CDATA[ 
 /*window.onload=function(){
@@ -199,9 +159,9 @@ td.uid {
         <ul class="nav">
 
 
-          <li class="active"><a href="index.1.7_mitsuggestionbox.php">IdeaMap</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_inProgress.php">InProgress</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_proposals.php">Proposals</a></li>
+          <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
+          <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+          <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
           
          
         </ul>
@@ -253,7 +213,8 @@ td.uid {
           <input class="btn" type="submit"></input>
         </div>
       </form>
-      
+      <div id="relatedideas">
+</div>
       <div id="currentposts"></div>
       
       </div>

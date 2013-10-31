@@ -198,9 +198,9 @@ td.uid {
         <ul class="nav">
 
 
-          <li class="active"><a href="index.1.7_mitsuggestionbox.php">IdeaMap</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_inProgress.php">InProgress</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_proposals.php">Proposals</a></li>
+          <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
+          <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+          <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
           
          
         </ul>

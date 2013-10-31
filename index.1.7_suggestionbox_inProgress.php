@@ -88,6 +88,89 @@
     /*    margin-top: 5px;*/
         width: 400px;
     }
+	
+	table.subrow {
+		border:none;
+		width:100%;
+	}
+
+	table.subrow td {
+		border:none;
+	}
+	
+	ul.progbarlist {
+		list-style-type: none;
+		padding-top:0
+		
+	}
+	
+	ul.progbarlist table{
+		padding-top:5px;		
+		margin-bottom:0;
+		
+	}
+	
+	#currentposts > ul.progbarlist {
+
+		padding-left:0;
+		margin-left:0
+		
+	}
+	
+	
+	
+td.ideaTxt {
+	/*width:100%;*/
+}
+
+
+
+ul.entryNode {
+	list-style-type: none;
+	padding-top:0
+	
+}
+
+ul.entrylist {
+	list-style-type: none;
+	padding-top:0
+	
+}
+
+ul.entryNode table{
+	padding-top:5px;		
+	margin-bottom:0;
+	
+}
+
+ul.entryNode td {
+	
+	
+}
+
+td.uid {
+	text-align:right;
+}
+
+#currentposts > ul.entrylist {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+#currentposts > ul.entryNode {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+#currentposts > ul.entryNode > li > ul.entrylist {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+
       </style>
       
     
@@ -96,7 +179,7 @@
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>    
         
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
-    <script type="text/javascript" src="client_proposals.js"></script>
+    <script type="text/javascript" src="client_inProgress.js"></script>
         
     <script type='text/javascript'>//<![CDATA[ 
     /*window.onload=function(){
@@ -131,6 +214,7 @@
     
     
     </script>
+
     
     
 </head>
@@ -154,9 +238,9 @@
         <ul class="nav">
 
 
-          <li class="active"><a href="index.1.7_mitsuggestionbox.php">IdeaMap</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_inProgress.php">InProgress</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_proposals.php">Proposals</a></li>
+          <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
+          <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+          <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
           
          
         </ul>
@@ -214,13 +298,9 @@
         </div>
       </form>
       -->
-	  <iframe style="width:100%; height:100%;width: 100%;height: 800px;overflow: hidden;border: none;" src="http://dev.outline.com/" />
-      <div id="currentposts" style="display:none"></div>
+      <div id="currentposts"></div>
       
       </div>
-      
-
-      
       
 
   <hr>

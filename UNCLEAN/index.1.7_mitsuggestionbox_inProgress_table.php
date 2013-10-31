@@ -97,25 +97,6 @@
 	table.subrow td {
 		border:none;
 	}
-	
-	ul.progbarlist {
-		list-style-type: none;
-		padding-top:0
-		
-	}
-	
-	ul.progbarlist table{
-		padding-top:5px;		
-		margin-bottom:0;
-		
-	}
-	
-	#currentposts > ul.progbarlist {
-
-		padding-left:0;
-		margin-left:0
-		
-	}
 
       </style>
       
@@ -125,7 +106,7 @@
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>    
         
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
-    <script type="text/javascript" src="client_ideamaps.js"></script>
+    <script type="text/javascript" src="client_inProgress.js"></script>
         
     <script type='text/javascript'>//<![CDATA[ 
     /*window.onload=function(){
@@ -164,10 +145,6 @@
     
 </head>
 <body>
-  <?php 
-  	include('inc/nav.inc.php');
-	if(0) {
-	?>
   <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
@@ -182,12 +159,9 @@
       <div class="nav-collapse">
         <ul class="nav">
 
-
-          <li class="active"><a href="index.1.7_mitsuggestionbox.php">IdeaMap</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_inProgress.php">InProgress</a></li>
-          <li><a href="index.1.7_mitsuggestionbox_proposals.php">Proposals</a></li>
-          
-         
+          <li><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
+          <li class="active"><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+          <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
         </ul>
         <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
       </div><!--/.nav-collapse -->
@@ -195,7 +169,6 @@
     </div>
   </div>
 </div>
-<?php } ?>
 
 <div class="container-fluid">
   <div class="row-fluid row">
@@ -236,13 +209,13 @@
             <div class="bar" style="width: 0%;"></div>
         </div>
 	  </div>-->
-      <form id="postform">
+      <!--<form id="postform">
         <div class="input-append" style="width:100%">
-          <textarea class="span12" placeholder="New idea map name" id="newpost" ></textarea>
+          <textarea class="span12" placeholder="Enter your own cool project idea(s) here!" id="newpost" ></textarea>
           <input class="btn" type="submit"></input>
         </div>
       </form>
-      
+      -->
       <div id="currentposts"></div>
       
       </div>

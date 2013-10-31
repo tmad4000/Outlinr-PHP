@@ -90,7 +90,7 @@ function displayPosts() {
 			var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 			var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
 			
-			status ="<td class='status'>" + '<a href="index.1.7_mitsuggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
+			status ="<td class='status'>" + '<a href="index.1.7_suggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
 			upvoter='<td class="votes" -idea-id="'+data[i].pid+'"><span class="vote"> </span><span class="votes" >'+data[i].upvotes+'</span></td>';
             
 			table += '<tr>'+status + upvoter+'<td>' + nl2br(processIdea(data[i].body,data[i].pid)) + "</td>" + 
@@ -211,7 +211,7 @@ function replaceIdeaName(idea,pid) {
     if(i<0) i=10000;
     
     nameEnd = Math.min(50,i);
-    return $.trim('<a class="ideaname" name="'+pid+'" href="index.1.7_mitsuggestionbox_inProgress.php#?post='+pid+'">'+idea.substr(0,nameEnd)+'</a>'+idea.substr(nameEnd));
+    return $.trim('<a class="ideaname" name="'+pid+'" href="index.1.7_suggestionbox_inProgress.php#?post='+pid+'">'+idea.substr(0,nameEnd)+'</a>'+idea.substr(nameEnd));
 }
 
 
