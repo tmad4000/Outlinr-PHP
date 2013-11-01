@@ -17,7 +17,13 @@ $(document).ready(function() {
           {
           	$('#postform').submit();
           }
+          else {
+          	
+          }
+          filterIdeas($(this).text());
+          	console.log($(this).text());
       });
+
 	function getCaret(el) { 
 		if (el.selectionStart) { 
 			return el.selectionStart; 
@@ -222,14 +228,37 @@ function entryNodeToHTML(entryNode) {
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
-	/*
+	
 	$('#ideatags a').click(function(e){	
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
 		$('#newpost').val(targetName).focus();
+		filterIdeas(targetName);
 	});
-	*/
+	
+
+}
+
+function filterIdeas(query){
+
+	 // TODO FIX SPLIT ON NEW LINES
+	query = query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"");
+	query = query.split(/[\r\n ,]+/);
+	if(query == []) return;
+
+console.log(query);
+	$('.entryNode').each(function(){
+		var h=true;
+		
+		for(var i=0;i<query.length;i++){
+			
+			if($(this).find('.ideaTxt').text().indexOf(query[i])>=0){
+				h=false;
+			}
+		}
+		if(h) $(this).css('display','none');
+	});
 
 }
 
@@ -284,8 +313,6 @@ function findTitleEnd(idea) {
 
 	titleEnd=i3//Math.min(titleEnd,i3);
 
-
-	console.log(titleEnd)
 	return titleEnd;
 }
 
