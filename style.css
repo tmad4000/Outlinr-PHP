@@ -33,10 +33,20 @@ td.timecol {
 }
 
 
-div.status{width:20px;height:20px;border-radius:50px;font-size:20px;color:#fff;line-height:100px;text-align:center;}
+div.status{
+	width:20px;
+	height:20px;
+	border-radius:50px;
+	font-size:20px;
+	color:#fff;
+	line-height:100px;
+	text-align:center;
+}
 
 div.sc0 { /*Status: not acknowledged*/
-	background:#AAA
+	/*background:#AAA*/
+	background:transparent;
+	border:1px solid #DDDDDD;
 }
 div.sc1 { /*Status: acknowledged*/
 	background:#FF0
@@ -49,7 +59,8 @@ div.sc3 { /*Status: complete*/
 }
 
 td.status {
-	width:28px
+	width:28px;
+	vertical-align: middle;
 }
 
 .progress {
@@ -124,6 +135,8 @@ div.commentform div.commentsinput {
 }
 #postform .btn {
 	font-weight:200!important;
+	margin-left:5px;
+	height:50px;
 }
 
 /*

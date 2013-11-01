@@ -1,9 +1,9 @@
 <?php
 require_once('mysql.php');
 
-$body = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['newpost']));
-$mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['mapid']))+0);
-$path = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['path']));
+$body = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['newpost'])));
+$mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0);
+$path = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['path'])));
 
 
 $defaultpath="";
@@ -29,7 +29,7 @@ $ideastbl = IDEAS_TBL;
 
 
 if (!empty($body)) {
-	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['ideatitle']));
+	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
 	if(!$tmptitle)
 		$tmptitle=substr($body,0,80);
     $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle','$body', 0, NULL, '', 0,$defaultparent,$mapid,'$path')";
@@ -40,11 +40,11 @@ if (!empty($body)) {
 
 //return progress bars info if queried
 if($_GET['inProgress']) {
-	$query = "SELECT * FROM $ideastbl WHERE mapid=$mapid AND status > 0 ORDER BY path ASC,status ASC,time DESC";
+	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND status > 0 ORDER BY path ASC,status ASC,time DESC";
 }
 //normally, return suggestions info
 else {
-	$query = "SELECT * FROM $ideastbl WHERE mapid=$mapid ORDER BY path ASC,time DESC";
+	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid ORDER BY path ASC,time DESC";
 }
 $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 
@@ -56,7 +56,7 @@ while ($r = mysqli_fetch_assoc($result)) {
 	$rows[]=$r;
 	
 	
-	$entry=array_map(stripslashes,$r);
+	$entry=array_map(trim,array_map(stripslashes,$r));
 	$entry["children"]=array();
 		
 	$currpath=explode('/',$entry['path']);

@@ -153,7 +153,7 @@ function entryNodeToHTML(entryNode) {
 			var entrylist=entryNodeToHTML(data);
 
 			$("#currentposts").html(entrylist);
-		/*
+			/*
 						var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
 				
 				
@@ -181,37 +181,48 @@ function entryNodeToHTML(entryNode) {
 						//$( ".progressbar" ).progressbar({
 					//		value: 59
 						//});
-*/
+				*/
 
+	displayIdeaNames();
 
+	$('td.votes').click(function() {
+		$(this).children('.vote').toggleClass('on'); 
+		var num=$(this).children('span.votes').html()-0; 
+		if ($(this).children('.vote').hasClass('on')) {
+			num+=1;
+			doUpvote($(this).attr('-idea-id')-0,'up');
+		}
+		else {
+			num-=1;
+			doUpvote($(this).attr('-idea-id')-0,'down');
+		}
+		$(this).children('span.votes').html(num) 
+	});
 
-displayIdeaNames();
+	$("[rel='popover']").popover({
+		trigger: "hover", 
+		offset: 10,
+		html:true
 
-$('td.votes').click(function() {
-	$(this).children('.vote').toggleClass('on'); 
-	var num=$(this).children('span.votes').html()-0; 
-	if ($(this).children('.vote').hasClass('on')) {
-		num+=1;
-		doUpvote($(this).attr('-idea-id')-0,'up');
+	});
 	}
-	else {
-		num-=1;
-		doUpvote($(this).attr('-idea-id')-0,'down');
-	}
-	$(this).children('span.votes').html(num) 
-});
 
-$("[rel='popover']").popover({
-	trigger: "hover", 
-	offset: 10,
-	html:true
 
-});
-}
+	//ADD JQUERY HERE
+	$('a.suggname').click(function(e){
+				e.preventDefault();
+			});
 
-$('a.suggname').click(function(e){
-			e.preventDefault();
-		});
+	//fix offset
+	$('#ideanames a').click(function(e){	
+		e.preventDefault();
+
+		var targetName=$(e.target).attr('href').substr(1);
+		var offset = $($("a[name='"+targetName+"']")).offset();
+		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
+		$('html, body').animate({scrollTop:scrollto}, 0);
+	});
+
 }
 
 function displayIdeaNames() {
@@ -227,7 +238,7 @@ function displayIdeaNames() {
 			if(t)
 				$.each(t,function(i,tag) {tags[tag]=true;});
 
-			nameul.append('<li><a href="#">'+n + '</a></li>');
+			nameul.append('<li><a href="#'+data.pid+'">'+n + '</a></li>');
 
 		});
 
@@ -235,7 +246,8 @@ function displayIdeaNames() {
 		var tagsul = $('ul#ideatags').empty();
 		$.each( tags,function(tag,trueval) {
 
-			tagsul.append('<li><a href="#">'+tag + '</a> </li>');
+			tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
+//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
 
 		});
 	}

@@ -62,7 +62,7 @@ padding-bottom: 6px;
 .table td {
     line-height:auto;
     
-    padding: 5px 8px 12px 0;
+    padding: 5px 8px 7px 0;
 
 }
 
@@ -71,8 +71,9 @@ padding-bottom: 6px;
 .vote {
   display: block;
   background: url('upvote.png');
+  background-repeat: no-repeat;
   width: 40px;
-  height: 25px;
+  height: 14px;
   background-position: 0px -25px;
 } 
 
@@ -81,10 +82,11 @@ padding-bottom: 6px;
   background-position: 0px 0px;
 }
 td.votes {
-	font-size:14px;
+	font-size:8pt;
 	color:#AAA;
 	text-align:center;
 	width:40px;
+  padding-bottom:5px;
 }
 
 /*popover */
@@ -92,6 +94,7 @@ td.votes {
 
 td.ideaTxt {
 	/*width:100%;*/
+  vertical-align: middle;
 }
 
 
@@ -200,7 +203,7 @@ td.uid {
 <body>
   <?php 
   	include('inc/nav.inc.php');
-	if(0) {
+	if(0) { // GONE. POOF
 	?>
   <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -268,7 +271,6 @@ td.uid {
       <form id="postform">
         <div class="input-append" style="width:100%">
           <textarea class="span12" placeholder="Enter your own cool project idea, suggestion, goal for your group, or complaint here!" id="newpost" ></textarea>
-          <input class="btn" type="submit"></input>
         </div>
       </form>
       
