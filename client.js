@@ -208,7 +208,7 @@ function entryNodeToHTML(entryNode) {
 	}
 
 
-	//ADD JQUERY HERE
+	//ADD #JQUERY HERE
 	$('a.suggname').click(function(e){
 				e.preventDefault();
 			});
@@ -222,6 +222,14 @@ function entryNodeToHTML(entryNode) {
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
+	/*
+	$('#ideatags a').click(function(e){	
+		e.preventDefault();
+
+		var targetName=$(e.target).html();
+		$('#newpost').val(targetName).focus();
+	});
+	*/
 
 }
 

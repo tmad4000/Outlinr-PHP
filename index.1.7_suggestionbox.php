@@ -87,6 +87,7 @@ td.votes {
 	text-align:center;
 	width:40px;
   padding-bottom:5px;
+  cursor:pointer;
 }
 
 /*popover */
