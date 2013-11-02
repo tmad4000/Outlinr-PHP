@@ -2,10 +2,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<?php 
+require_once('mysql.php');
+
+include_once("analyticstracking.php");
+
+$getmapid=$_GET['mapid']+0;
+
+$query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
+//echo $query;
+$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+$r = mysqli_fetch_assoc($result)
+
+?>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>IdeaOverflow -- Ideas</title>
-  
-  
+  <title>IdeaOverflow -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+   
+   
     
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
