@@ -251,7 +251,7 @@
   <hr>
 
   <footer>
-    <p>Created by <a href="mailto:jcole@mit.edu">Jacob Cole</a> and <a href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
+    <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
   </footer>
 
 </div><!--/.fluid-container-->
