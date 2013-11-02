@@ -252,15 +252,18 @@ function filterIdeas(query){
 
 	query = query.split(/[\r\n ,]+/);
 
+	
 
 	$('#currentposts > ul.entryNode > li > ul.entrylist > li .entryNode').each(function(){
 		var h=true;
 		for(var i=0;i<query.length;i++){
+			
+
 			var itN=$(this).find('td.ideaTxt');
 			var pid=itN.children(".ideaname").attr('name');
 			var it=itN.text();
 			var mi = it.toLowerCase().indexOf(query[i]);
-			if(mi>=0){
+			if(mi>=0&&query[i]!=""){//ignore empty strings from query
 				/*itN.html().split("<");
 				var isTag=false;
 				for(var j=0;j<itN.html().length;j++) {
