@@ -209,9 +209,9 @@ function entryNodeToHTML(entryNode) {
 
 	$("[rel='popover']").popover({
 		trigger: "hover", 
+		//placement: 'top', IDEALLY want this but it goes wrong
 		offset: 10,
 		html:true
-
 	});
 	}
 
@@ -231,6 +231,14 @@ function entryNodeToHTML(entryNode) {
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
 	
+	$('.hashtag').click(function(e){
+		e.preventDefault();
+
+		var targetName=$(e.target).html();
+		$('#newpost').val(targetName).focus();
+		filterIdeas(targetName);
+	});
+
 	$('#ideatags a').click(function(e){	
 		e.preventDefault();
 
