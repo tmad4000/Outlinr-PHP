@@ -251,7 +251,7 @@
   <hr>
 
   <footer>
-    <p>&copy; Company 2012</p>
+    <p>Created by <a href="mailto:jcole@mit.edu">Jacob Cole</a> and <a href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
   </footer>
 
 </div><!--/.fluid-container-->

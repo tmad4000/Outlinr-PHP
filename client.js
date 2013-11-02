@@ -6,22 +6,24 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
+
            if (event.keyCode == 13 && event.shiftKey) { // enter
            	var content = this.value;
            	var caret = getCaret(this);
            	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
            	event.stopPropagation();
 
-          }else if(event.keyCode == 13) // enter
+          } else if(event.keyCode == 13) // enter
           {
           	$('#postform').submit();
           }
           else {
-          	
+    	      //console.log($(this).val());
+  	          filterIdeas($(this).val());
+   	
           }
-          filterIdeas($(this).text());
-          	console.log($(this).text());
       });
 
 	function getCaret(el) { 
@@ -236,28 +238,32 @@ function entryNodeToHTML(entryNode) {
 		$('#newpost').val(targetName).focus();
 		filterIdeas(targetName);
 	});
-	
+}
 
+function removeCommonWords(str) {
+	return str.replace(/\b(?:(the)|(it)|(is)|(we)|(all)|(a)|(an)|(by)|(to)|(you)|(me)|(he)|(she)|(they)|(we)|(how)|(it)|(i)|(are)|(to)|(for)|(of))\b/ig, '');
 }
 
 function filterIdeas(query){
-
+//console.log(query);
 	 // TODO FIX SPLIT ON NEW LINES
-	query = query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"");
-	query = query.split(/[\r\n ,]+/);
-	if(query == []) return;
+	query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
+	console.log(query);
 
-console.log(query);
+	query = query.split(/[\r\n ,]+/);
+
+
 	$('.entryNode').each(function(){
 		var h=true;
-		
 		for(var i=0;i<query.length;i++){
-			
-			if($(this).find('.ideaTxt').text().indexOf(query[i])>=0){
+			var mi = $(this).find('.ideaTxt').text().toLowerCase().indexOf(query[i]);
+			if(mi>=0){
+				
 				h=false;
 			}
 		}
-		if(h) $(this).css('display','none');
+		if(!h||query == [""]) $(this).css('display','inherit'); 
+		else $(this).css('display','none');
 	});
 
 }
