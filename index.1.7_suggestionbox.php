@@ -98,6 +98,11 @@ td.ideaTxt {
   vertical-align: middle;
 }
 
+td.ideaTxt > b {
+	/*width:100%;*/
+	font-weight:900;
+}
+
 
 
 ul.entryNode {

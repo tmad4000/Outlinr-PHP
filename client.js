@@ -248,17 +248,39 @@ function filterIdeas(query){
 //console.log(query);
 	 // TODO FIX SPLIT ON NEW LINES
 	query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
-	console.log(query);
+	//console.log(query);
 
 	query = query.split(/[\r\n ,]+/);
 
 
-	$('.entryNode').each(function(){
+	$('#currentposts > ul.entryNode > li > ul.entrylist > li .entryNode').each(function(){
 		var h=true;
 		for(var i=0;i<query.length;i++){
-			var mi = $(this).find('.ideaTxt').text().toLowerCase().indexOf(query[i]);
+			var itN=$(this).find('td.ideaTxt');
+			var pid=itN.children(".ideaname").attr('name');
+			var it=itN.text();
+			var mi = it.toLowerCase().indexOf(query[i]);
 			if(mi>=0){
-				
+				/*itN.html().split("<");
+				var isTag=false;
+				for(var j=0;j<itN.html().length;j++) {
+					if(itN.html()[j]==="<")
+						isTag=true;
+					else if(itN.html()[j]===">")
+						isTag=false;
+					if(!isTag)
+					
+					var re = new RegExp(query[i],"gi");
+					itN.html(itN.html().replace(re,"<b>"+query[i]+"</b>"));
+				}
+				var re = new RegExp(query[i],"gi");
+				itN.html(itN.html().replace(re,"<b>"+query[i]+"</b>"));
+//				$(this).attr('-idea-id')-0*/
+				var re = new RegExp("("+query[i]+")","gi");
+				it=it.replace(re,"<b>$1</b>");
+
+				itN.html(nl2br(processIdea(it,pid)));
+				//console.log(itN.html().replace('a','%'));
 				h=false;
 			}
 		}
@@ -347,7 +369,7 @@ function linkHashtags(text) {
         '<a class="hashtag" href="http://twitter.com/#search?q=$1">#$1</a>'
     );
 } */
-var hashtag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+var hashtag_regexp = /#([a-zA-Z0-9<>\-\/"&;”“]+)/g; //#todo relates to
 function extractTags(idea) {
 
 	return idea.match(hashtag_regexp)
