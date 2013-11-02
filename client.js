@@ -263,7 +263,7 @@ function filterIdeas(query){
 			var pid=itN.children(".ideaname").attr('name');
 			var it=itN.text();
 			var mi = it.toLowerCase().indexOf(query[i]);
-			if(mi>=0&&query[i]!=""){//ignore empty strings from query
+			if(mi>=0&&(query.length<=1 || query[i]!="")){//ignore empty strings from query
 				/*itN.html().split("<");
 				var isTag=false;
 				for(var j=0;j<itN.html().length;j++) {
