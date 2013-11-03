@@ -111,9 +111,11 @@ function entryNodeToHTML(entryNode) {
 		*/
 		
 		//entryNodeBody+=comments;
+		console.log('this one should work'+entryNode.body+entryNode.pid);
+		var temp = new Entry(entryNode.body,entryNode.pid);
+		temp = temp.render();
 		
-		
-		table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + new Entry(entryNode.body,entryNode.pid).render() + "<br />"+comments+"</td>" + 
+		table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + temp + "<br />"+comments+"</td>" + 
 	   // '<td><div class="progressbar"></div></td>' +
 	   "<td class='uid'><a href='#' class='uid'>" + (entryNode.uid!=0 ? entryNode.uid : "anon") + "</a></td>" +
 	   "<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
@@ -258,7 +260,10 @@ function filterIdeas(query){
 			var mi = it.toLowerCase().indexOf(query[i]);
 			if(query.length==1 && query[0]==""){
 				h=false;
-				itN.html(new Entry(entryNode.body,entryNode.pid).render() );
+				console.log("test"+entryNode.body);
+				var tem=new Entry(entryNode.body,entryNode.pid);
+				tem = tem.render();
+				itN.html(tem);
 			} 
 			if(mi>=0&&query[i]!=""){//ignore empty strings from query
 				/*itN.html().split("<");
@@ -278,8 +283,11 @@ function filterIdeas(query){
 //				$(this).attr('-idea-id')-0*/
 				var re = new RegExp("("+query[i]+")","gi");
 				it=it.replace(re,"<b>$1</b>");
+				console.log("test"+entryNode.body);
 
-				itN.html(new Entry(entryNode.body,entryNode.pid).render()); //TODO add third param to this, pass whether bold or not so we can put it inside.
+				var tem=new Entry(entryNode.body,entryNode.pid);
+				tem = tem.render();
+				itN.html(tem); //TODO add third param to this, pass whether bold or not so we can put it inside.
 				//console.log(itN.html().replace('a','%'));
 				h=false;
 			}
@@ -376,18 +384,22 @@ function Entry(txt,pid) {
 //replace with this.critPts=[]; (i,code)
 
 	//model
+	console.log(typeof txt);
+	this.txt=txt;
+	console.log(typeof this.txt+this.txt);
+	this.pid=pid;
 	this.critPts=[];
 	this.critPtsSet=false;
 
 	this.bSplits=[]; //bolds
 	this.hSplits=[]; //hashtags
 	this.tSplit; //title/nontitle
-	this.txt=txt;
-	this.pid=pid;
+	
 
 
-	var pushSplits = function(re,ray) {
-		console.log(x=this)
+	var pushSplits = function(re,ray) { // THIS IS WHERE THE ERROR OCCURS!
+		console.log(typeof this.txt+this.txt);
+
 		var m=this.txt.regexMatchOffset(re,0);
 		var si=m.index;
 		for(var i=0;si>=0;i++) {
@@ -528,12 +540,11 @@ function Entry(txt,pid) {
 			if(j>0) strWTags.push(txt.substr(lastI,i));
 			strWTags.push(o);
 
-//			strWTags.push([o,i]);
+			//			strWTags.push([o,i]);
 		}
 
-		return nl2Br(strWTags.join(""));
-		
-/*
+		return nl2Br(strWTags.join(""));	
+		/*
 
 		//hash
 		for(var i=0;i<st.length;i++) {
@@ -572,7 +583,7 @@ function Entry(txt,pid) {
 	}
 
 
-	//constructor
+	//constructor #ERROR HERE!
 	pushSplits(hashtag_regexp,this.hSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
 
