@@ -289,8 +289,8 @@ function filterIdeas(query){
 				h=false;
 			}
 		}
-
-		if(!h||query == [""]) $(this).css('display','inherit'); 
+		console.log(testing=query);
+		if(!h||(query.length==1 && query[0]=="")) $(this).css('display','inherit'); 
 		else $(this).css('display','none');
 	});
 
@@ -375,7 +375,7 @@ String.prototype.regexMatchOffset = function(regex, startpos) {
     if(matchObj!=null && matchObj.index >= 0) {
     	matchObj.index=matchObj.index + (startpos || 0)
     	var m=matchObj[0]
-    	m.index=matchObj.index
+    	m.index=matchObj
     	matchObj=m;
     }
 
