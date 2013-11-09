@@ -167,7 +167,7 @@ function extractIdeaName(idea) {
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     return $.trim(idea.substr(0,Math.min(50,i)))
 }
 
@@ -178,7 +178,7 @@ function replaceIdeaName(idea) {
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     
     nameEnd = Math.min(50,i);
     return $.trim('<a class="ideaname" href="#?q=$1">'+$.trim(idea.substr(0,nameEnd))+'</a> '+idea.substr(nameEnd));
@@ -208,7 +208,7 @@ function replaceTags(idea) {
 
 function submitPostAndGetPosts() {
     $.ajax({
-            'url': 'get_or_make_post_inProgress.php',
+            'url': 'ajax/get_or_make_post_inProgress.php',
             'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val()},
             'success': function(jsonData) {
                  // todo: parse data and add into our table
@@ -221,7 +221,7 @@ function submitPostAndGetPosts() {
 
 function getPosts() {
     $.ajax({
-            'url': 'get_or_make_post_inProgress.php',
+            'url': 'ajax/get_or_make_post_inProgress.php',
             'data': {'mapid':$('#mapidform').val(), 'newpost': ''},
             'success': function(jsonData) {
                  localStorage.setItem("posts", jsonData);

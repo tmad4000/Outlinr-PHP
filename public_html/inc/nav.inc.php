@@ -1,7 +1,7 @@
 <?php 
-require_once('mysql.php');
+require_once('inc/mysql.inc.php');
 
-include_once("analyticstracking.php");
+include_once("inc/analyticstracking.inc.php");
 
 $getmapid=$_GET['mapid']+0;
 

@@ -1,126 +1,123 @@
+<?php 
+require_once('../config.inc.php');
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
+<?php 
+
+require_once('inc/mysql.inc.php');
+
+include_once("inc/analyticstracking.inc.php");
+
+$getmapid=$_GET['mapid']+0;
+
+$query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
+//echo $query;
+$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+$r = mysqli_fetch_assoc($result)
+
+?>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>IdeaOverflow -- Ideas</title>
-  
-  
+  <title>IdeaOverflow -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+   
+   
     
-    <!--      <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
-          <link rel="stylesheet" type="text/css" href="http://twitter.github.io/bootstrap/1.4.0/bootstrap.min.css">
-    -->
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
     
-    <link href="style.css" rel="stylesheet">
-      
-    <style type='text/css'>
-        body {
-        padding-bottom: 40px;
-        padding-top: 60px;
-    }
     
-    .sidebar-nav-fixed {
-        padding: 9px 0;
-        position:fixed;
-        right:20px;
-        top:40px;
-        width:250px;
-    }
-    
-    .row-fluid > .span-fixed-sidebar {
-        margin-right: 290px;
-    }
-    
-    #ideanames, #ideatags {
-    overflow:auto;
-    max-height:300px;
-    }
-    
-    #ideanames li{
-    line-height: 14px;
-    padding-bottom: 6px;
-    }
-    
-     ul#ideatags li {
-     display:inline;
-     margin:1px
-     }
-    
-    .hero-unit-light {
-        padding: 60px;
-      margin-bottom: 30px;
-     /* font-size: 18px;
-      font-weight: 200;
-      line-height: 30px;*/
-      color: inherit;
-      /*background-color: #eeeeee;*/
-      -webkit-border-radius: 6px;
-         -moz-border-radius: 6px;
-              border-radius: 6px;
-    
-    }
-    
-    .table td {
-        line-height:auto;
-        
-        padding: 5px 8px 12px 0;
-    
-    }
-    
-    
-    td.progbaruser {
-        text-align:right;
-        padding-right:20px;
-    }
-    
-    .metric {
-        font-size:10px;
-        color:#AAA
-    }
-    .progress {
-        margin-bottom:0px
-    }
-    /*<!-- **PROGBAR** -->*/
-    /*@import url('http://twitter.github.com/bootstrap/assets/css/bootstrap.css');*/
-    
-    .container {
-    /*    margin-top: 5px;*/
-        width: 400px;
-    }
-	
-	table.subrow {
-		border:none;
-		width:100%;
-	}
+  
+  <style type='text/css'>
+    body {
+    padding-bottom: 40px;
+    padding-top: 60px;
+}
 
-	table.subrow td {
-		border:none;
-	}
-	
-	ul.progbarlist {
-		list-style-type: none;
-		padding-top:0
-		
-	}
-	
-	ul.progbarlist table{
-		padding-top:5px;		
-		margin-bottom:0;
-		
-	}
-	
-	#currentposts > ul.progbarlist {
+.sidebar-nav-fixed {
+    padding: 13px 0;
+    position:fixed;
+    right:20px;
+    top:36px;
+    width:250px;
+}
 
-		padding-left:0;
-		margin-left:0
-		
-	}
-	
-	
-	
+.row-fluid > .span-fixed-sidebar {
+    margin-right: 290px;
+}
+
+#ideanames, #ideatags {
+overflow:auto;
+max-height:300px;
+}
+
+#ideanames li{
+line-height: 14px;
+padding-bottom: 6px;
+}
+
+ ul#ideatags li {
+ display:inline;
+ margin:1px
+ }
+
+.hero-unit-light {
+    padding: 60px;
+  margin-bottom: 30px;
+ /* font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;*/
+  color: inherit;
+  /*background-color: #eeeeee;*/
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+
+}
+
+.table td {
+    line-height:auto;
+    
+    padding: 5px 8px 7px 0;
+
+}
+
+
+
+.vote {
+  display: block;
+  background: url('images/upvote.png');
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 14px;
+  background-position: 0px -25px;
+} 
+
+
+.vote.on {
+  background-position: 0px 0px;
+}
+td.votes {
+	font-size:8pt;
+	color:#AAA;
+	text-align:center;
+	width:40px;
+  padding-bottom:5px;
+  cursor:pointer;
+}
+
+/*popover */
+.idea {position: absolute; top: 100px; left: 100px;}
+
 td.ideaTxt {
 	/*width:100%;*/
+  vertical-align: middle;
+}
+
+td.ideaTxt > b {
+	/*width:100%;*/
+	font-weight:900;
 }
 
 
@@ -171,57 +168,65 @@ td.uid {
 	
 }
 
-      </style>
-      
-    
-      
+#currentposts > ul.entryNode > li > ul.entrylist > li > ul.entryNode {
+
+  padding-left:1px;
+  margin-left:0;
+  
+}
+
+
+
+#currentposts .suggname {
+  text-decoration:none;
+  color:#D41528;
+  cursor:text!important;
+}
+
+.ideaTxt {
+  color:#777;
+}
+
+
+  </style>
+  
+
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>    
         
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
-    <script type="text/javascript" src="client_inProgress.js"></script>
-        
-    <script type='text/javascript'>//<![CDATA[ 
-    /*window.onload=function(){
-        localStorage.setItem("ideaNames",'[\
-        {\
-            "name": "CuriosityThread",\
-            "description": "asdfasdf"\
-        },\
-        {\
-            "name": "PRIVMSG",\
-            "description": "randomURI"\
-        }\
-    ]');
     
-     displayIdeaNames();
-     }*/
-    //]]>  
-    /*<!-- **PROGBAR** -->*/
-    /*
-    var progress = setInterval(function() {
-        var $bar = $('.bar');
-        
-        if ($bar.width()==400) {
-            clearInterval(progress);
-            $('.progress').removeClass('active');
-        } else {
-            $bar.width($bar.width()+40);
-        }
-        $bar.text($bar.width()/4 + "%");
-    }, 800);
-    */
+<link href="style.css" rel="stylesheet">
+    <script type="text/javascript" src="js/client.js"></script>
     
-    
-    </script>
+<script type='text/javascript'>//<![CDATA[ 
+/*window.onload=function(){
+    localStorage.setItem("ideaNames",'[\
+    {\
+        "name": "CuriosityThread",\
+        "description": "asdfasdf"\
+    },\
+    {\
+        "name": "PRIVMSG",\
+        "description": "randomURI"\
+    }\
+]');
 
-    
-    
+ displayIdeaNames();
+ }*/
+//]]>  
+
+
+
+</script>
+
+
 </head>
 <body>
   <?php 
   	include('inc/nav.inc.php');
-	if(0) {
+	if(0) { // GONE. POOF
 	?>
   <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -251,7 +256,6 @@ td.uid {
   </div>
 </div>
 <?php } ?>
-
 <div class="container-fluid">
   <div class="row-fluid row">
     <div class="">
@@ -284,20 +288,15 @@ td.uid {
 
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
+<!--<span class="vote"> </span>-->
 
-	<!-- **PROGBAR** --><!--
-      <div class="container">
-        <div class="progress progress-striped active">
-            <div class="bar" style="width: 0%;"></div>
-        </div>
-	  </div>-->
-      <!--<form id="postform">
+      
+      <form id="postform">
         <div class="input-append" style="width:100%">
-          <textarea class="span12" placeholder="Enter your own cool project idea(s) here!" id="newpost" ></textarea>
-          <input class="btn" type="submit"></input>
+          <textarea class="span12" placeholder="Enter your own cool project idea, suggestion, goal for your group, or complaint here!" id="newpost" ></textarea>
         </div>
       </form>
-      -->
+      
       <div id="currentposts"></div>
       
       </div>

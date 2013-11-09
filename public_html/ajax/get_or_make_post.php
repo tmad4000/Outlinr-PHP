@@ -1,5 +1,6 @@
 <?php
-require_once('mysql.php');
+require_once('../../config.inc.php');
+require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 
 $body = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['newpost'])));
 $mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0);

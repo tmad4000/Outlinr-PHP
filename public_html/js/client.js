@@ -289,7 +289,6 @@ function filterIdeas(query){
 				h=false;
 			}
 		}
-		console.log(testing=query);
 		if(!h||(query.length==1 && query[0]=="")) $(this).css('display','inherit'); 
 		else $(this).css('display','none');
 	});
@@ -339,7 +338,7 @@ function findTitleEnd(idea) {
 
 	var i=Math.min(i1-2,i2-1);
 
-	if(i<0) i=10000;
+	if(i<0) i=idea.length;
 
 	var titleEnd=Math.min(80,i); // max 80 chars
 
@@ -633,7 +632,7 @@ function replaceTags(idea) {
 function doUpvote(ideaid,upOrDown) {
 
 	$.ajax({
-		'url': 'upvote.php?'+upOrDown+'=true',
+		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
 
@@ -643,7 +642,7 @@ function doUpvote(ideaid,upOrDown) {
 
 function submitPostAndGetPosts() {
 	$.ajax({
-		'url': 'get_or_make_post.php',
+		'url': 'ajax/get_or_make_post.php',
 		'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val())},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
@@ -657,7 +656,7 @@ function submitPostAndGetPosts() {
 
 function getPosts() {
 	$.ajax({
-		'url': 'get_or_make_post.php',
+		'url': 'ajax/get_or_make_post.php',
 		'data': {'mapid':$('#mapidform').val(), 'newpost': ''},
 		'success': function(jsonData) {
 			localStorage.setItem("posts", jsonData);

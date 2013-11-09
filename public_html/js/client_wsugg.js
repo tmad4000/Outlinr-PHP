@@ -40,17 +40,18 @@ $(document).ready(function() {
     }
     
     
-    /*
-$('#myTab a').click(function(e) {
-    e.preventDefault();
-    $(this).tab('show');
-})
-
-
-
-$('#myTab a:last').tab('show');
+		/*
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		$(this).tab('show');
+	})
+	
+	
+	
+	$('#myTab a:last').tab('show');
 */
 	getPosts();
+
 });
 
 function timeToString(hours, minutes) {
@@ -77,74 +78,77 @@ function nl2br(str) {
 function displayPosts() {
     if (localStorage.getItem("posts") !== null){
         var jsonData = localStorage.getItem("posts");
-        var data = $.parseJSON(jsonData);
-		
-		var progbarlist="<ul class='progbarlist'>";
-		
+        var data = $.parseJSON(jsonData).allideas;
+        var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
+
 
         for (var i = 0; i < data.length; i++) {
-            progbarlist+="<li>";
+            
+
+            var time = new Date(data[i].time * 1000);
+
+			var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+			var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
 			
-				var table = "" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
-	
-					var time = new Date(data[i].time * 1000);
-					//nl2br(processIdea(data[i].body))
-					n=extractIdeaName(data[i].mapname)		
-					status ="<td class='status'>" + '<div class="status sc'+data[i].status +'" >'+ '</div>' + "</td>";
-					
-					
-							
-						var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a>' ;
-						
-						//if(data[i].parent+0!=0)
-						//	tablerow='<tr><td></td><td colspan="4"><table class="subrow">'+tablerow+'</table></td></tr>'
-			
-			//			tableRows[data[i].pid]=tablerow
-			//			tableRows[data[i].parent].append 
-	
-				table+=tablerow;
-				table+="";
-				
-			if(data[i].parent+0!=0)
-				table="<ul class='progbarlist'><li>"+table+"</li></ul>";
-			progbarlist+=table+"</li>";
+			status ="<td class='status'>" + '<a href="index.1.7_suggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
+			upvoter='<td class="votes" -idea-id="'+data[i].pid+'"><span class="vote"> </span><span class="votes" >'+data[i].upvotes+'</span></td>';
+            
+			table += '<tr>'+status + upvoter+'<td>' + nl2br(processIdea(data[i].body,data[i].pid)) + "</td>" + 
+               // '<td><div class="progressbar"></div></td>' +
+                "<td><a href='#' class='uid'>" + (data[i].uid!=0 ? data[i].uid : "anon") + "</a></td>" +
+                "<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+                "</td></tr>";
         }
         
-		progbarlist+="</ul>";
-        $("#currentposts").html(progbarlist);
+        table += "</table>";
+        $("#currentposts").html(table);
         /*$( ".progressbar" ).progressbar({
             value: 59
         });*/
         displayIdeaNames();
 		
-		//<!-- **PROGBAR** -->
-//		var progress = setInterval(function() {
-/*			var $bar = $('.bar');
-			
-			if ($bar.width()==400) {
-				clearInterval(progress);
-				$('.progress').removeClass('active');
-			} else {
-				$bar.width($bar.width()+40);
+		$('td.votes').click(function() {
+			$(this).children('.vote').toggleClass('on'); 
+			var num=$(this).children('span.votes').html()-0; 
+			if ($(this).children('.vote').hasClass('on')) {
+				num+=1;
+				doUpvote($(this).attr('-idea-id')-0,'up');
 			}
-			$bar.text($bar.width()/4 + "%");
-	*///	}, 800);
-		var $bars = $('.bar');
-		$bars.each(function() {
-			$(this).text($(this).width()/4 + "%");
+			else {
+				num-=1;
+				doUpvote($(this).attr('-idea-id')-0,'down');
+			}
+			$(this).children('span.votes').html(num) 
 		});
-	   $(".idea").popover({
+		
+	   $("[rel='popover']").popover({
 			trigger: "hover", 
-		  offset: 10
+		  offset: 10,
+		  html:true
 
 		});
+    }
+}
+
+function displaySugg() {
+    if (localStorage.getItem("posts") !== null){
+        var jsonData = localStorage.getItem("posts");
+        var data = $.parseJSON(jsonData).sugg;
+        var sugglist = "<ul class='sugg'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
+
+        for (var i = 0; i < data.length; i++) {
+			sugglist += '<li><span class="sugg">'+ nl2br(processIdea(data[i].body.substr(0,120),data[i].pid)) + "</span><a class='addlink pull-right' -idea-id='"+data[i].pid+"'>Add Link</a></li>";
+        }
+        
+        sugglist += "</ul>";
+        $("#relatedideas").html(sugglist);
     }
 }
 
 function displayIdeaNames() {
     if (localStorage.getItem("posts") !== null){
         var jsonData = localStorage.getItem("posts");
-        var data = $.parseJSON(jsonData);
+        var data = $.parseJSON(jsonData).allideas;
 
         var nameul = $('ul#ideanames').empty();
         var tags={};
@@ -172,12 +176,17 @@ function processIdea(idea) {
     return replaceIdeaName(replaceTags(idea)); // order matters; as replaceIdeaName creates # signs
 }
 
+function processIdea(idea,pid) {
+    return replaceIdeaName(replaceTags(idea),pid); // order matters; as replaceIdeaName creates # signs
+}
+
+
 function extractIdeaName(idea) {
     i1=idea.indexOf("--");
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     return $.trim(idea.substr(0,Math.min(50,i)))
 }
 
@@ -188,10 +197,21 @@ function replaceIdeaName(idea) {
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     
     nameEnd = Math.min(50,i);
-    return $.trim('<a class="ideaname" href="#?q=$1">'+$.trim(idea.substr(0,nameEnd))+'</a> '+idea.substr(nameEnd));
+    return $.trim('<a class="ideaname" href="#?q=$1">'+idea.substr(0,nameEnd)+'</a>'+idea.substr(nameEnd));
+}
+
+function replaceIdeaName(idea,pid) {
+    i1=idea.indexOf("--");
+    i2=idea.indexOf(":");
+    i=Math.max(i1,i2);
+    
+    if(i<0) i=idea.length;
+    
+    nameEnd = Math.min(50,i);
+    return $.trim('<a class="ideaname" name="'+pid+'" href="index.1.7_suggestionbox_inProgress.php#?post='+pid+'">'+idea.substr(0,nameEnd)+'</a>'+idea.substr(nameEnd));
 }
 
 
@@ -215,11 +235,21 @@ function replaceTags(idea) {
     
 }
 
+function doUpvote(ideaid,upOrDown) {
+
+	$.ajax({
+            'url': 'ajax/upvote.php?'+upOrDown+'=true',
+            'data': {'ideaid':ideaid},
+            'success': function(jsonData) {
+                 
+            },
+    });
+}
 
 function submitPostAndGetPosts() {
     $.ajax({
-            'url': 'get_or_make_post_ideamaps.php',
-            'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val()},
+            'url': 'ajax/get_or_make_post_wsugg.php',
+            'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val())},
             'success': function(jsonData) {
                  // todo: parse data and add into our table
                 localStorage.setItem("posts", jsonData);
@@ -231,11 +261,11 @@ function submitPostAndGetPosts() {
 
 function getPosts() {
     $.ajax({
-            'url': 'get_or_make_post_ideamaps.php',
-            'data': {'mapid':$('#mapidform').val(), 
-			'newpost': ''},
+            'url': 'ajax/get_or_make_post_wsugg.php',
+            'data': {'mapid':$('#mapidform').val(), 'newpost': ''},
             'success': function(jsonData) {
                  localStorage.setItem("posts", jsonData);
+                 displaySugg();
                  displayPosts();
             },
     });

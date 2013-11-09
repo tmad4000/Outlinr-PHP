@@ -310,7 +310,7 @@ function extractIdeaName(idea) {
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     return $.trim(idea.substr(0,Math.min(50,i)))
 }
 
@@ -321,7 +321,7 @@ function replaceIdeaName(idea) {
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     
     nameEnd = Math.min(50,i);
     return $.trim('<a class="ideaname" href="#?q=$1">'+idea.substr(0,nameEnd)+'</a>'+idea.substr(nameEnd));
@@ -332,7 +332,7 @@ function replaceIdeaName(idea,pid) {
     i2=idea.indexOf(":");
     i=Math.max(i1,i2);
     
-    if(i<0) i=10000;
+    if(i<0) i=idea.length;
     
     nameEnd = Math.min(50,i);
     return $.trim('<a class="ideaname" name="'+pid+'" href="index.1.7_suggestionbox_inProgress.php#?post='+pid+'">'+idea.substr(0,nameEnd)+'</a>'+idea.substr(nameEnd));
@@ -362,7 +362,7 @@ function replaceTags(idea) {
 function doUpvote(ideaid,upOrDown) {
 
 	$.ajax({
-            'url': 'upvote.php?'+upOrDown+'=true',
+            'url': 'ajax/upvote.php?'+upOrDown+'=true',
             'data': {'ideaid':ideaid},
             'success': function(jsonData) {
                  
@@ -372,7 +372,7 @@ function doUpvote(ideaid,upOrDown) {
 
 	function submitPostAndGetPosts() {
 		$.ajax({
-				'url': 'get_or_make_post.php',
+				'url': 'ajax/get_or_make_post.php',
 				'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(), 'inProgress': true},
 				'success': function(jsonData) {
 					 // todo: parse data and add into our table
@@ -385,7 +385,7 @@ function doUpvote(ideaid,upOrDown) {
 	
 	function getPosts() {
 		$.ajax({
-				'url': 'get_or_make_post.php',
+				'url': 'ajax/get_or_make_post.php',
 				'data': {'mapid':$('#mapidform').val(), 'newpost': '', 'inProgress': true},
 				'success': function(jsonData) {
 					 localStorage.setItem("posts", jsonData);

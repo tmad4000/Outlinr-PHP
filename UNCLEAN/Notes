@@ -29,3 +29,20 @@ TODO:
 		Clear filter on idea click on the right
 		x button in search field (clear filter)
 		links - autolink similar to B or hashtag
+
+REGEX:
+
+
+([^a-z])([bht]Split)
+\1this.\2
+
+
+([^a-z])((critPts(Set)?)|(pid)|(txt))
+\1this.\2
+
+
+KNOWN BUGS
+
+title length changes once a filter ids applied
+multiple tags in one idea breaks it
+cant press on multiple tags

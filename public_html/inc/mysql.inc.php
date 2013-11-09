@@ -1,19 +1,22 @@
 <?php
 
-include('remoteinfo.php');
+include(PATH.PATH_SEP.'inc/remoteinfo.inc.php');
 if(!REMOTE_USER) define('REMOTE_USER', '');
 if(!REMOTE_PASS) define('REMOTE_PASS', '');
 
-define('DB_USER', REMOTE_USER);
-define('DB_PASS', REMOTE_PASS);
-define('DB_NAME', 'jcole_ideaoverflow2_ma');
 
-
-if (getenv("C9_PROJECT")) {
-    define('DB_HOST', '173.230.141.29');
-} else {
-    define('DB_HOST', 'localhost');
+if(LOCAL) {
+	define('DB_NAME', 'ideaoverflow2_ma');
+	define('DB_USER', 'root');
+	define('DB_PASS', 'root');
+} 
+else {
+	define('DB_NAME', REMOTE_DB_NAME);
+	define('DB_USER', REMOTE_USER);
+	define('DB_PASS', REMOTE_PASS);
 }
+
+define('DB_HOST', 'localhost');
 
 
 define('IDEAS_TBL', 'post_ideas_mitsugg');

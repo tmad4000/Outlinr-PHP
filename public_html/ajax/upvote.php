@@ -1,5 +1,6 @@
 <?php
-require_once('mysql.php');
+require_once('../../config.inc.php');
+require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 
 $ideaid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['ideaid']))+0);
 $upvote = $_REQUEST['up'] ? 1 : ($_REQUEST['down'] ? -1 : 0);
