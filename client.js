@@ -111,7 +111,7 @@ function entryNodeToHTML(entryNode) {
 		*/
 		
 		//entryNodeBody+=comments;
-		console.log('this one should work'+entryNode.body+entryNode.pid);
+//		console.log('this one should work'+entryNode.body+entryNode.pid);
 		var temp = new Entry(entryNode.body,entryNode.pid);
 		temp = temp.render();
 		
@@ -207,7 +207,8 @@ function displayPosts() {
 	//fix offset
 	$('#ideanames a').click(function(e){	
 		e.preventDefault();
-
+		$('#newpost').val('');
+		
 		var targetName=$(e.target).attr('href').substr(1);
 		var offset = $($("a[name='"+targetName+"']")).offset();
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
@@ -252,19 +253,14 @@ function filterIdeas(query){
 
 	$('#currentposts > ul.entryNode > li > ul.entrylist > li .entryNode').each(function(){
 		var h=true;
+		var itN=$(this).find('td.ideaTxt');
+		var pid=itN.children(".ideaname").attr('name');
+		var it=itN.text();
+		var tem=new Entry(it,pid);
+
 		for(var i=0;i<query.length;i++){
-			
-			var itN=$(this).find('td.ideaTxt');
-			var pid=itN.children(".ideaname").attr('name');
-			var it=itN.text();
 			var mi = it.toLowerCase().indexOf(query[i]);
-			if(query.length==1 && query[0]==""){
-				h=false;
-				console.log("test"+entryNode.body);
-				var tem=new Entry(entryNode.body,entryNode.pid);
-				tem = tem.render();
-				itN.html(tem);
-			} 
+
 			if(mi>=0&&query[i]!=""){//ignore empty strings from query
 				/*itN.html().split("<");
 				var isTag=false;
@@ -281,17 +277,19 @@ function filterIdeas(query){
 				var re = new RegExp(query[i],"gi");
 				itN.html(itN.html().replace(re,"<b>"+query[i]+"</b>"));
 //				$(this).attr('-idea-id')-0*/
-				var re = new RegExp("("+query[i]+")","gi");
-				it=it.replace(re,"<b>$1</b>");
-				console.log("test"+entryNode.body);
+/*				var re = new RegExp("("+query[i]+")","gi");
+				it=it.replace(re,"<b>$1</b>");*/
+//				console.log("test"+it);
 
-				var tem=new Entry(entryNode.body,entryNode.pid);
-				tem = tem.render();
-				itN.html(tem); //TODO add third param to this, pass whether bold or not so we can put it inside.
+				var tem=new Entry(it,pid);
+				tem.setBold(mi,mi+query[i].length);
+				var r = tem.render();
+				itN.html(r); //TODO add third param to this, pass whether bold or not so we can put it inside.
 				//console.log(itN.html().replace('a','%'));
 				h=false;
 			}
 		}
+
 		if(!h||query == [""]) $(this).css('display','inherit'); 
 		else $(this).css('display','none');
 	});
@@ -337,7 +335,7 @@ function processIdea(idea,pid) {
 
 function findTitleEnd(idea) {
 	var i1=idea.indexOf("--");
-	var i2=idea.indexOf(":");
+	var i2=-1//idea.indexOf(":");
 
 	var i=Math.min(i1-2,i2-1);
 
@@ -373,32 +371,45 @@ function replaceIdeaName(idea,pid) {
 
 String.prototype.regexMatchOffset = function(regex, startpos) {
     var matchObj = this.substring(startpos || 0).match(regex);
-    if(matchObj.index >= 0)
+
+    if(matchObj!=null && matchObj.index >= 0) {
     	matchObj.index=matchObj.index + (startpos || 0)
+    	var m=matchObj[0]
+    	m.index=matchObj.index
+    	matchObj=m;
+    }
+
+     if(matchObj===null) {
+     	matchObj="";
+     	matchObj.index=-1;
+     	matchObj.length=0;
+     }
+
     return matchObj;
 }
 
+var hashtag_regexp = /#([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 
 
 function Entry(txt,pid) {
 //replace with this.critPts=[]; (i,code)
 
 	//model
-	console.log(typeof txt);
+//	console.log(typeof this.txt);
 	this.txt=txt;
-	console.log(typeof this.txt+this.txt);
+//	console.log(typeof this.txt+this.txt);
 	this.pid=pid;
 	this.critPts=[];
 	this.critPtsSet=false;
 
 	this.bSplits=[]; //bolds
 	this.hSplits=[]; //hashtags
-	this.tSplit; //title/nontitle
+	this.tSplit=[]; //title/nontitle
 	
 
-
-	var pushSplits = function(re,ray) { // THIS IS WHERE THE ERROR OCCURS!
-		console.log(typeof this.txt+this.txt);
+	this.pushSplits = function(re,ray) { // should be private
+		// console.log(typeof this.txt+this.txt);
+		// console.log(y=this);
 
 		var m=this.txt.regexMatchOffset(re,0);
 		var si=m.index;
@@ -406,29 +417,31 @@ function Entry(txt,pid) {
 			m=this.txt.regexMatchOffset(re,i);
 			si=m.index;
 
-			ray.push([si,si+m[0].length]);
+			//console.log(m)
+			ray.push([si,si+m.length]);
 		}
 	}
 
 	//may contain duplicates
-	var setCritPts = function() {
-		critPts=[];
+	this.setCritPts = function() {// should be private
+		this.critPts=[];
 		var a1=0;
-		while(a1<tSplits.length){
-			critPts.push(tSplits[a1]);
+		while(a1<this.tSplit.length){
+			this.critPts.push(this.tSplit[a1]);
 			a1++;
 		}
 		a1 = 0;
-		while(a1<hSplits.length){
-			critPts.push(hSplits[a1]);
+		while(a1<this.hSplits.length){
+			this.critPts.push(this.hSplits[a1]);
 			a1++;
 		}
 		a1=0;
-		while(a1<bSplits.length){
-			critPts.push(bSplits[a1]);
+		while(a1<this.bSplits.length){
+			this.critPts.push(this.bSplits[a1]);
 			a1++;
 		}
-		critPts.sort();
+		this.critPts.sort();
+		this.critPtsSet=true;
 	}
 /*
 	var doSplit = function(t,i) {
@@ -458,9 +471,9 @@ function Entry(txt,pid) {
 
 	}*/
 
-	this.setBold = function(s) {
-		pushSplits(s,bSplits);
-		critPtsSet=false;
+	this.setBold = function(s) { 
+		this.pushSplits(s,this.bSplits);
+		this.critPtsSet=false;
 /*
 		var si=this.txt.indexOf(s,0);
 		for(var i=0;si>=0;i++) {
@@ -471,12 +484,12 @@ function Entry(txt,pid) {
 
 	this.clearBold = function() {
 		this.bSplits=[];
-		critPtsSet=false;
+		this.critPtsSet=false;
 	}
 
 
 	//oOrC is 0 or 1 for open or close
-	var isASplitOpenOrClose=function(i,whichSplit,oOrC) {
+	this.isASplitOpenOrClose=function(i,whichSplit,oOrC) {// should be private
 
 		for(var n=0;n<whichSplit.length;n++) {
 			if(i==whichSplit[n,oOrC])
@@ -486,9 +499,10 @@ function Entry(txt,pid) {
 	}
 
 	this.render = function() {
+
 		//bulid tagsI: (tags, index to insert)
 		if(!this.critPtsSet)
-			setCritPts();
+			this.setCritPts();
 
 
 		var strWTags=[];
@@ -501,61 +515,65 @@ function Entry(txt,pid) {
 
 			if(j>0) //skip dup
 				if(lastI==i) {
-					lastI=i;
+					//lastI=i;
 					continue;
 				}
-			lastI=i;
 
-			if(i==tSplit[0]){
+			
+
+			if(i==this.tSplit[0]){
 				o='<a class="ideaname suggname" href="#" name="'+this.pid+'">';
 			}
-			if(i==tSplit[1]){
+			if(i==this.tSplit[1]){
 				o="</a>";
 				if(openB)
 					o="</b>"+o+"<b>"
 			}
 
-			//i is a bSplit open
-			if(isASplitOpen(i,this.bSplit,0)){
+			//i is a this.bSplit open
+			if(this.isASplitOpenOrClose(this.bSplit,0)){
 				o="<b>"
 				openB=true;
 			}
 
-			//i is a bSplit close
-			if(isASplitOpen(i,this.bSplit,1)){
+			//i is a this.bSplit close
+			if(this.isASplitOpenOrClose(this.bSplit,1)){
 				o="</b>"
 				openB=false;
 			}
 
-			//i is a hSplit open
-			if(isASplitOpen(i,this.hSplit,0)){
+			//i is a this.hSplit open
+			if(this.isASplitOpenOrClose(this.hSplit,0)){
 				o='<a class="hashtag" href="#">'
 			}
 
-			//i is a hSplit close
-			if(isASplitOpen(i,this.hSplit,1)){
+			//i is a this.hSplit close
+			if(this.isASplitOpenOrClose(this.hSplit,1)){
 				o="</a>"
 			}
 
-			if(j>0) strWTags.push(txt.substr(lastI,i));
+			if(j>0) strWTags.push(this.txt.substr(lastI,i));
 			strWTags.push(o);
+
+			lastI=i;
 
 			//			strWTags.push([o,i]);
 		}
-
-		return nl2Br(strWTags.join(""));	
+console.log(x=this)
+//console.log(strWTags)
+		return nl2br(strWTags.join(""));	
 		/*
 
 		//hash
 		for(var i=0;i<st.length;i++) {
-			st[i]=splitTxt(st[i],hSplits);
+			st[i]=splitTxt(st[i],this.hSplits);
 
 		}
 		
 		//bold
 		for(var i=0;i<st.length;i++) {
 			for(var j=0;j<st.length;j++) {
-				st[i][j]=splitTxt(st[i][j],bSplits);
+				st[i][j]=splitTxt(st[i][j],this.bSplits);
 			}
 
 		}
@@ -566,7 +584,7 @@ function Entry(txt,pid) {
 
 		for(var j=0;j<st.length;j++) {
 			for(var k=0;k<st.length;k++) {
-				st[i][j]=splitTxt(st[i][j],hSplits);
+				st[i][j]=splitTxt(st[i][j],this.hSplits);
 			}
 		}
 
@@ -584,7 +602,8 @@ function Entry(txt,pid) {
 
 
 	//constructor #ERROR HERE!
-	pushSplits(hashtag_regexp,this.hSplits);
+	this.pushSplits(hashtag_regexp,this.hSplits);
+
 	this.tSplit=[0,findTitleEnd(this.txt)];
 
 }
@@ -599,7 +618,6 @@ function linkHashtags(text) {
         '<a class="hashtag" href="http://twitter.com/#search?q=$1">#$1</a>'
     );
 } */
-var hashtag_regexp = /#([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 function extractTags(idea) {
 
 	return idea.match(hashtag_regexp)
