@@ -1,4 +1,3 @@
-//getPosts() -> displayPosts() 
 $(document).ready(function() {
 	$('#postform').submit(function() {
 		submitPostAndGetPosts();
@@ -7,7 +6,7 @@ $(document).ready(function() {
 
 	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
-		// #TODO #Future trim repeated enters
+
         if (event.keyCode == 13 && event.shiftKey) { // enter
            	var content = this.value;
            	var caret = getCaret(this);
@@ -18,12 +17,10 @@ $(document).ready(function() {
           	$('#postform').submit();
         }
         else {
-    	    entryList.filterIdeas($(this).val());
+    	      //console.log($(this).val());
+  	          filterIdeas($(this).val());
+   	
         }
-    });
-
-    $('textarea#newpost').change(function (event) {
-		entryList.filterIdeas($(this).val());
     });
 
 	function getCaret(el) { 
@@ -56,7 +53,9 @@ $(document).ready(function() {
 	$('#myTab a:last').tab('show');
 	*/
 	getPosts();
+
 });
+
 
 
 function entryNodeToHTML(entryNode) {
@@ -66,11 +65,12 @@ function entryNodeToHTML(entryNode) {
 	var entryNodeBody="";
 	
 	if(entryNode.pid!=null) {
-
 		var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
+		entryNode;
 
 		var time = new Date(entryNode.time * 1000);
 
+		var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 		var progEntry=entryNode.progress && entryNode.progress != "null" ? entryNode.progress + '% - ': "";
 
 		status ="<td class='status'>" + '<a href="#" rel="popover" data-content="'+progEntry +entryNode.metric+'" data-original-title="'+statusTable[entryNode.status]+'"><div class="status sc'+entryNode.status +'" >'+ '</div></a>' + "</td>";
@@ -90,8 +90,8 @@ function entryNodeToHTML(entryNode) {
 		*/
 		
 		//entryNodeBody+=comments;
-		//		console.log('this one should work'+entryNode.body+entryNode.pid);
-		var temp = new EntryText(entryNode.body,entryNode.pid);
+//		console.log('this one should work'+entryNode.body+entryNode.pid);
+		var temp = new Entry(entryNode.body,entryNode.pid);
 		temp = temp.render();
 		
 		table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + temp + "<br />"+comments+"</td>" + 
@@ -116,24 +116,13 @@ function entryNodeToHTML(entryNode) {
 	"</ul>";
 }							
 
-//var entryList = null;
-var rootNodeViewModel = null;
-
 function displayPosts() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
-		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
+		var data = $.parseJSON(jsonData)['treePosts'];
+		var entrylist=entryNodeToHTML(data);
 
-		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
-
-		//entryList = new EntryList(data);
-		//var entrylist=entryNodeToHTML(data);
-		//entryList = new EntryList(data);
-
-		$("#currentposts").html("");
-		$("#currentposts").append(rootNodeViewModel.render());
-
-		//$("#currentposts").html(entrylist);
+		$("#currentposts").html(entrylist);
 		/*
 					var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
 			
@@ -164,10 +153,30 @@ function displayPosts() {
 					//});
 			*/
 
-		// Right hand bar
 		displayIdeaNames();
 
-		
+		// Voting click
+		$('td.votes').click(function() {
+			$(this).children('.vote').toggleClass('on'); 
+			var num=$(this).children('span.votes').html()-0; 
+			if ($(this).children('.vote').hasClass('on')) {
+				num+=1;
+				doUpvote($(this).attr('-idea-id')-0,'up');
+			}
+			else {
+				num-=1;
+				doUpvote($(this).attr('-idea-id')-0,'down');
+			}
+			$(this).children('span.votes').html(num) 
+		});
+
+		// Voting hover status
+		$("[rel='popover']").popover({
+			trigger: "hover", 
+			//placement: 'top', IDEALLY want this but it goes wrong
+			offset: 10,
+			html:true
+		});
 	}
 
 
@@ -198,10 +207,72 @@ function displayPosts() {
 	linkifyBodyHashtags();
 }
 
+function linkifyBodyHashtags(){
+	$('.hashtag').click(function(e){
+		e.preventDefault();
+
+		var targetName=$(e.target).html();
+		$('#newpost').val(targetName).focus();
+		filterIdeas(targetName);
+	});
+};
+
+	
+
 
 
 function filterIdeas(query){
+//console.log(query);
+	 // TODO FIX SPLIT ON NEW LINES
+	query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
+	//console.log(query);
 
+	query = query.split(/[\r\n ,]+/);
+
+
+	$('#currentposts > ul.entryNode > li > ul.entrylist > li .entryNode').each(function(){
+		var h=true;
+		var itN=$(this).find('td.ideaTxt');
+		var pid=itN.children(".ideaname").attr('name');
+		var it=itN.text();
+		var tem=new Entry(it,pid);
+
+		for(var i=0;i<query.length;i++){
+			var mi = it.toLowerCase().indexOf(query[i]);
+
+			if(mi>=0&&query[i]!=""){//ignore empty strings from query
+				/*itN.html().split("<");
+				var isTag=false;
+				for(var j=0;j<itN.html().length;j++) {
+					if(itN.html()[j]==="<")
+						isTag=true;
+					else if(itN.html()[j]===">")
+						isTag=false;
+					if(!isTag)
+					
+					var re = new RegExp(query[i],"gi");
+					itN.html(itN.html().replace(re,"<b>"+query[i]+"</b>"));
+				}
+				var re = new RegExp(query[i],"gi");
+				itN.html(itN.html().replace(re,"<b>"+query[i]+"</b>"));
+//				$(this).attr('-idea-id')-0*/
+/*				var re = new RegExp("("+query[i]+")","gi");
+				it=it.replace(re,"<b>$1</b>");*/
+//				console.log("test"+it);
+
+				//var tem=new Entry(it,pid);
+				tem.setBold(mi,query[i].length);
+				var r = tem.render();
+				itN.html(r); //TODO add third param to this, pass whether bold or not so we can put it inside.
+				//console.log(itN.html().replace('a','%'));
+				h=false;
+			}
+		}
+		if(!h||(query.length==1 && query[0]=="")) $(this).css('display','inherit'); 
+		else $(this).css('display','none');
+	});
+
+	linkifyBodyHashtags();
 }
 
 function displayIdeaNames() {
@@ -226,7 +297,7 @@ function displayIdeaNames() {
 		$.each( tags,function(tag,trueval) {
 
 			tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
-		//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
+//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
 
 		});
 	}
@@ -235,7 +306,7 @@ function displayIdeaNames() {
 
 
 
-//ajax
+
 function doUpvote(ideaid,upOrDown) {
 
 	$.ajax({
@@ -246,8 +317,6 @@ function doUpvote(ideaid,upOrDown) {
 		},
 	});
 }
-
-
 
 function submitPostAndGetPosts() {
 	$.ajax({

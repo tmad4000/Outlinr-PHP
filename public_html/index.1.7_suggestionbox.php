@@ -198,6 +198,10 @@ td.uid {
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
     
 <link href="style.css" rel="stylesheet">
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/EntryText.js"></script>
+    <script type="text/javascript" src="js/Entry.js"></script>    
+    <script type="text/javascript" src="js/EntryList.js"></script>        
     <script type="text/javascript" src="js/client.js"></script>
     
 <script type='text/javascript'>//<![CDATA[ 
