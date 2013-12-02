@@ -11,7 +11,7 @@ function EntryText(txt,pid) {
 	this.tSplit=[]; //title/nontitle
 	
 	this.matches = function(query){
-
+		
 	}
 
 	this.pushSplits = function(re,ray) { // should be private

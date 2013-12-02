@@ -15,11 +15,11 @@ function EntryNodeTextViewModel(txt,pid) {
 	//bolds matches, returns true if a match
 	this.filter = function(query){
 		
-		
-		return true;
+		return (this.txt.indexOf(query) >= 0)
 	}
 
 	this.pushSplits = function(re,ray) { // should be private
+
 		var m=this.txt.regexMatchOffset(re,0);
 		// removes Duplicates
 		for(var i=0;i<m.length;i++) {
@@ -55,33 +55,34 @@ function EntryNodeTextViewModel(txt,pid) {
 		}
 		this.critPtsSet=true;
 	}
-/*
-	var doSplit = function(t,i) {
-		return [t.substr(0,i),t.substr(i)]
-	}
+	/*
+		var doSplit = function(t,i) {
+			return [t.substr(0,i),t.substr(i)]
+		}
 
-	var splitTxt = function(t,splitsRay) {
-			var outRay=[];
+		var splitTxt = function(t,splitsRay) {
+				var outRay=[];
 
-			//if number
-			if(!(splitsRay instanceof Array)) {
-				return [t.substr(0,splitsRay),t.substr(splitsRay)]
-			}
-			else {
-				var start=0;
-				var end=t.length;
-				for(var i=0;i<splitsRay.length;i++) {
+				//if number
+				if(!(splitsRay instanceof Array)) {
+					return [t.substr(0,splitsRay),t.substr(splitsRay)]
+				}
+				else {
+					var start=0;
+					var end=t.length;
+					for(var i=0;i<splitsRay.length;i++) {
 
-					start=splitsRay[i][0];
-					end=splitsRay[i][1];
-					
+						start=splitsRay[i][0];
+						end=splitsRay[i][1];
+						
 
+					}
+
+					return st;
 				}
 
-				return st;
-			}
-
-	}*/
+		}
+	*/
 
 	this.setBold = function(s1,s2) { 
 		this.pushSplits([[s1,s2]],this.bSplits);
@@ -107,6 +108,11 @@ function EntryNodeTextViewModel(txt,pid) {
 				return true;
 		}
 		return false;
+	}
+
+	this.killHTML = function(){
+		this.viewDomE.html("");
+		console.log("sdf")
 	}
 
 	this.render = function() {
@@ -167,44 +173,54 @@ function EntryNodeTextViewModel(txt,pid) {
 
 			//			strWTags.push([o,i]);
 		}
-		//console.log(x=strWTags);
-		return nl2br(strWTags.join(""));	
+
+		this.viewDomE = $($.parseHTML(
+			nl2br(strWTags.join(""))
+		));
+
+		//linkifyHashtags(this.viewDomE);
+
+		return this.viewDomE;
+
+
+
 		/*
 
-		//hash
-		for(var i=0;i<st.length;i++) {
-			st[i]=splitTxt(st[i],this.hSplits);
+			//hash
+			for(var i=0;i<st.length;i++) {
+				st[i]=splitTxt(st[i],this.hSplits);
 
-		}
-		
-		//bold
-		for(var i=0;i<st.length;i++) {
+			}
+			
+			//bold
+			for(var i=0;i<st.length;i++) {
+				for(var j=0;j<st.length;j++) {
+					st[i][j]=splitTxt(st[i][j],this.bSplits);
+				}
+
+			}
+
+
+			//reconstitute st into text
+			var rt;
+
 			for(var j=0;j<st.length;j++) {
-				st[i][j]=splitTxt(st[i][j],this.bSplits);
+				for(var k=0;k<st.length;k++) {
+					st[i][j]=splitTxt(st[i][j],this.hSplits);
+				}
 			}
 
-		}
+			rt="<a>"+st[0]+"</a>"+st[1];
 
 
-		//reconstitute st into text
-		var rt;
 
-		for(var j=0;j<st.length;j++) {
-			for(var k=0;k<st.length;k++) {
-				st[i][j]=splitTxt(st[i][j],this.hSplits);
 			}
-		}
 
-		rt="<a>"+st[0]+"</a>"+st[1];
+			//insert special marker where b and /b tags go
 
-
-
-		}
-
-		//insert special marker where b and /b tags go
-
-		
-		return $(this).text(this.txt);*/
+			
+			return $(this).text(this.txt);
+		*/
 	}
 
 

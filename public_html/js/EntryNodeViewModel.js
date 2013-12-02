@@ -1,17 +1,37 @@
 
-
-function EntryNodeViewModel(this.entryNodeModel) {
-	this.this.entryNodeModel=this.entryNodeModel; //js obj from json
+function EntryNodeViewModel(entryNodeModel) {
+	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
 	
 	//attributes of this object
 	this.visible=true;
 
 	//self
-	this.eT = new EntryNodeTextViewModel(this.entryNodeModel.body,this.entryNodeModel.pid);
+	if(this.entryNodeModel.pid !== null)
+		this.eT = new EntryNodeTextViewModel(this.entryNodeModel.body,this.entryNodeModel.pid);
+	else
+		this.eT = null;
 
 	//children
-	//this.children = new EntryList(this.this.entryNodeModel['children'])
+	this.children = {};
+	for(var key in this.entryNodeModel.children) {
+		this.children[key]=new EntryNodeViewModel(this.entryNodeModel.children[key]);
+	}
+
+
+	this.killHTML = function(){
+		if(this.eT!==null)
+			this.eT.killHTML();
+		
+		for(var key in this.children) {
+			
+				this.children[key].killHTML()
+			}
+
+
+	}
+
+	// new EntryList(this.entryNodeModel['children'])
 
 	//render must be called first so that viewDomE!==null
 	this.show = function() {
@@ -30,26 +50,27 @@ function EntryNodeViewModel(this.entryNodeModel) {
 			console.log("viewDomE is null")
 			return;
 		}
-
+		console.log(x=this.viewDomE);
 		this.viewDomE.css("display","none");
 		this.visible=false
 	}
 
 	//render must be called first so that viewDomE!==null
 	this.filter = function(query){
-		if(this.viewDomE === null){
+		if(this.viewDomE === null){ //ERROR
 			console.log("viewDomE is null")
 			return;
 		}
-
-		this.eT.filter(query); //returns true if matches. Boldifies its own text
-
-		if(!this.eT.matches(query)){
-			this.hide();
+		if(this.eT !== null){
+			var isMatch=this.eT.filter(query); //returns true if matches. Boldifies its own text
+			console.log(isMatch)
+			if(!isMatch)
+				this.hide();
+			else 
+				this.show();
 		}
-		else {
-			this.show();
-		}
+		$.each(this.children,function() {this.filter(query)})
+		//#TODO #future should we show parents of children who match?
 	}
 
 
@@ -58,9 +79,9 @@ function EntryNodeViewModel(this.entryNodeModel) {
 	this.render = function() {
 		//entryNodeBodyToHTML
 		//entryNodeChildrenToHTML
-		var entryNodeBody="";
 		
-		if(this.entryNodeModel.pid!=null) {
+		var entryNodeBody="";
+		if(this.entryNodeModel.pid!==null) {
 			var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
 			this.entryNodeModel;
 
@@ -86,8 +107,7 @@ function EntryNodeViewModel(this.entryNodeModel) {
 			*/
 			//entryNodeBody+=comments;
 
-			
-			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + eT.render() + "<br />"+comments+"</td>" + 
+			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+ "<br />"+comments+"</td>" + 
 		   	// '<td><div class="progressbar"></div></td>' +
 		   	"<td class='uid'><a href='#' class='uid'>" + (this.entryNodeModel.uid!=0 ? this.entryNodeModel.uid : "anon") + "</a></td>" +
 		   	"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
@@ -96,22 +116,42 @@ function EntryNodeViewModel(this.entryNodeModel) {
 		   	table+="</table>";
 
 		   	entryNodeBody="<div>"+table+"</div>";	
+		   	entryNodeBody=$($.parseHTML(entryNodeBody));
+
+			var eTView=this.eT.render();
+
+			// there should only ever be one
+			entryNodeBody.find("div.ideaTxtInner").append(eTView);
+		}
+		
+
+		//render children
+		//View means HTML
+		var childrenListView=$($.parseHTML("<ul class='entrylist'></ul>"));
+		for(var key in this.children) {
+			var cNRendered=this.children[key].render();
+
+			var entryNodeChildView=$($.parseHTML("<li></li>\n"));
+			entryNodeChildView.append(cNRendered);
+
+			childrenListView.append(entryNodeChildView);
 		}
 
-		var entryNodeChildren=$($.parseHTML("<ul class='entrylist'></ul>"));
-//#TODO #HEAD
-		for(var key in this.entryNodeModel.children) {
-			var childNodeViewModel=new EntryNodeViewModel(this.entryNodeModel.children[key]);
-			var cNRendered=childNodeViewModel.render();
-
-			var entryNodeChild=$.parseHTML("<li>"+cNRendered + "</li>\n");
-			entryNodeChildren.append(entryNodeChild)
-		}
-
-		this.domE = $($.parseHTML("<ul class='entryNode'>" + 
-		"<li>" + entryNodeBody + "</li>" +
-		"<li>\n<ul class='entrylist'>" + entryNodeChildren + "</ul>\n</li>" +
+		this.viewDomE = $($.parseHTML("<ul class='entryNode'>" + 
 		"</ul>"));
-		return this.domE;
+		
+
+		var eNBLi=$($.parseHTML("<li></li>"));
+		eNBLi.append(entryNodeBody);
+
+		var cLVLi=$($.parseHTML("<li></li>"));
+		cLVLi.append(childrenListView);
+
+		this.viewDomE.append(eNBLi);
+		this.viewDomE.append(cLVLi);
+		// if(this.eT !==null)	
+		// 	this.eT.killHTML();
+
+		return this.viewDomE;
 	}
 }

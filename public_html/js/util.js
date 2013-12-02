@@ -114,3 +114,13 @@ function processIdea(idea) {
 function processIdea(idea,pid) {
     return replaceIdeaName(replaceTags(idea),pid); // order matters; as replaceIdeaName creates # signs
 }
+
+function linkifyHashtags(context){
+	context.find('.hashtag').click(function(e){
+		e.preventDefault();
+
+		var targetName=$(e.target).html();
+		context.find('#newpost').val(targetName).focus();
+		filterIdeas(targetName);
+	});
+};

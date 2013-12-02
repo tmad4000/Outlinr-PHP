@@ -9,22 +9,23 @@ $(document).ready(function() {
 	$('textarea#newpost').keyup(function (event) {
 		// #TODO #Future trim repeated enters
         if (event.keyCode == 13 && event.shiftKey) { // enter
-           	var content = this.value;
-           	var caret = getCaret(this);
-           	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
-           	event.stopPropagation();
+        	var content = this.value;
+        	var caret = getCaret(this);
+        	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
+        	event.stopPropagation();
         } 
         else if(event.keyCode == 13){ // enter
-          	$('#postform').submit();
+        	$('#postform').submit();
         }
         else {
-    	    entryList.filterIdeas($(this).val());
+        	if(rootNodeViewModel!==null)
+        		rootNodeViewModel.filter($(this).val() || "");
         }
     });
 
-    $('textarea#newpost').change(function (event) {
-		entryList.filterIdeas($(this).val());
-    });
+	$('textarea#newpost').change(function (event) {
+		rootNodeViewModel.filter($(this).val());
+	});
 
 	function getCaret(el) { 
 		if (el.selectionStart) { 
@@ -58,64 +59,6 @@ $(document).ready(function() {
 	getPosts();
 });
 
-
-function entryNodeToHTML(entryNode) {
-
-	//entryNodeBodyToHTML
-	//entryNodeChildrenToHTML
-	var entryNodeBody="";
-	
-	if(entryNode.pid!=null) {
-
-		var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
-
-		var time = new Date(entryNode.time * 1000);
-
-		var progEntry=entryNode.progress && entryNode.progress != "null" ? entryNode.progress + '% - ': "";
-
-		status ="<td class='status'>" + '<a href="#" rel="popover" data-content="'+progEntry +entryNode.metric+'" data-original-title="'+statusTable[entryNode.status]+'"><div class="status sc'+entryNode.status +'" >'+ '</div></a>' + "</td>";
-		upvoter='<td class="votes" -idea-id="'+entryNode.pid+'"><span class="vote"> </span><span class="votes" >'+entryNode.upvotes+'</span></td>';
-
-
-		//entryNodeBody="<div>"+table+"</div>";
-		comments=""
-		/*
-		comments="<div class='showcomments'><a href='#' class='showcomments'>7+ Comments</a>";
-		
-		comments+='<div class="commentform"> \
-				<div class="commentsinput" contenteditable="true" placeholder="" -idea-id="'+entryNode.pid+'"></div> \
-				<input class="btn" type="button" value="Comment"> \
-			</div>';
-		comments+='</div>';
-		*/
-		
-		//entryNodeBody+=comments;
-		//		console.log('this one should work'+entryNode.body+entryNode.pid);
-		var temp = new EntryText(entryNode.body,entryNode.pid);
-		temp = temp.render();
-		
-		table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + temp + "<br />"+comments+"</td>" + 
-	   // '<td><div class="progressbar"></div></td>' +
-	   "<td class='uid'><a href='#' class='uid'>" + (entryNode.uid!=0 ? entryNode.uid : "anon") + "</a></td>" +
-	   "<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
-	   "</td></tr>";
-
-	   table+="</table>";
-
-	   entryNodeBody="<div>"+table+"</div>";	
-	}
-
-	var entryNodeChildren="";
-	for(var key in entryNode.children) {
-		entryNodeChildren+="<li>"+entryNodeToHTML(entryNode.children[key]) + "</li>\n";
-	}
-
-	return "<ul class='entryNode'>" + 
-	"<li>" + entryNodeBody + "</li>" +
-	"<li>\n<ul class='entrylist'>" + entryNodeChildren + "</ul>\n</li>" +
-	"</ul>";
-}							
-
 //var entryList = null;
 var rootNodeViewModel = null;
 
@@ -131,6 +74,7 @@ function displayPosts() {
 		//entryList = new EntryList(data);
 
 		$("#currentposts").html("");
+		console.log(z=rootNodeViewModel)
 		$("#currentposts").append(rootNodeViewModel.render());
 
 		//$("#currentposts").html(entrylist);
@@ -162,7 +106,7 @@ function displayPosts() {
 					//$( ".progressbar" ).progressbar({
 				//		value: 59
 					//});
-			*/
+		*/
 
 		// Right hand bar
 		displayIdeaNames();
@@ -173,8 +117,8 @@ function displayPosts() {
 
 	//ADD #JQUERY HERE
 	$('a.suggname').click(function(e){
-				e.preventDefault();
-			});
+		e.preventDefault();
+	});
 
 	//fix offset
 	$('#ideanames a').click(function(e){	
@@ -195,13 +139,7 @@ function displayPosts() {
 		filterIdeas(targetName);
 	});
 
-	linkifyBodyHashtags();
-}
-
-
-
-function filterIdeas(query){
-
+	//linkifyHashtags($('.sidebar-nav-fixed'));
 }
 
 function displayIdeaNames() {
@@ -228,12 +166,9 @@ function displayIdeaNames() {
 			tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
 		//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
 
-		});
+	});
 	}
 }
-
-
-
 
 //ajax
 function doUpvote(ideaid,upOrDown) {
@@ -246,8 +181,6 @@ function doUpvote(ideaid,upOrDown) {
 		},
 	});
 }
-
-
 
 function submitPostAndGetPosts() {
 	$.ajax({
