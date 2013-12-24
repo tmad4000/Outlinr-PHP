@@ -186,8 +186,6 @@ td.uid {
 .ideaTxt {
   color:#777;
 }
-
-
 </style>
 
 
@@ -222,12 +220,7 @@ td.uid {
  displayIdeaNames();
 }*/
 //]]>  
-
-
-
 </script>
-
-
 </head>
 <body>
   <?php 
@@ -306,18 +299,11 @@ td.uid {
         <div id="currentposts"></div>
 
       </div>
-      
-
       <hr>
 
       <footer>
         <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
       </footer>
-
     </div><!--/.fluid-container-->
-
   </body>
-
-
   </html>
-

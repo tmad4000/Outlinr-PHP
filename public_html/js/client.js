@@ -111,6 +111,28 @@ function displayPosts() {
 		// Right hand bar
 		displayIdeaNames();
 
+		// Voting click
+		$('td.votes').click(function() {
+			$(this).children('.vote').toggleClass('on'); 
+			var num=$(this).children('span.votes').html()-0; 
+			if ($(this).children('.vote').hasClass('on')) {
+				num+=1;
+				doUpvote($(this).attr('-idea-id')-0,'up');
+			}
+			else {
+				num-=1;
+				doUpvote($(this).attr('-idea-id')-0,'down');
+			}
+			$(this).children('span.votes').html(num) 
+		});
+
+		// Voting hover status
+		$("[rel='popover']").popover({
+			trigger: "hover", 
+			//placement: 'top', IDEALLY want this but it goes wrong
+			offset: 10,
+			html:true
+		});
 		
 	}
 
