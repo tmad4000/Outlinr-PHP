@@ -21,13 +21,20 @@ require_once('../config.inc.php');
   ?>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>IdeaOverflow -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
-
-
+  
+  <script src="js/lib/jquery-1.10.2.min.js"></script>
+  <script src="js/lib/bootstrap.min.js"></script> 
+  <script type="text/javascript" src="js/util.js"></script>
+  <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
+  <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
+  <script type="text/javascript" src="js/client.js"></script>
+  
 
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-
-
+  
+  <link href="style.css" rel="stylesheet">
+  
   
   <style type='text/css'>
     body {
@@ -193,16 +200,11 @@ td.uid {
 <!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
  -->
-<script src="js/lib/jquery-1.10.2.min.js"></script>
-<script src="js/lib/bootstrap.min.js"></script>    
+   
 
 <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
 
-<link href="style.css" rel="stylesheet">
-<script type="text/javascript" src="js/util.js"></script>
-<script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
-<script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
-<script type="text/javascript" src="js/client.js"></script>
+
 
 <script type='text/javascript'>//<![CDATA[ 
 /*window.onload=function(){

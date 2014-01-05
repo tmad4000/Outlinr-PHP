@@ -12,14 +12,14 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.hSplits=[]; //hashtags
 	this.tSplit=[]; //title/nontitle
 	
-	//bolds matches, returns true if a match
+	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
-		
 		return (this.txt.indexOf(query) >= 0)
 	}
 
+	//
 	this.pushSplits = function(re,ray) { // should be private
-
+		console.log("PushSplits!"+this.txt)
 		var m=this.txt.regexMatchOffset(re,0);
 		// removes Duplicates
 		for(var i=0;i<m.length;i++) {
@@ -30,6 +30,7 @@ function EntryNodeTextViewModel(txt,pid) {
 	}
 
 	//may contain duplicates
+	//Determines all the critical points in any given idea (bolds, hashtags, title)
 	this.setCritPts = function() {// should be private
 		this.critPts=[];
 		var a1=0;
@@ -87,7 +88,7 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.setBold = function(s1,s2) { 
 		this.pushSplits([[s1,s2]],this.bSplits);
 		this.critPtsSet=false;
-/*
+		/*
 		var si=this.txt.indexOf(s,0);
 		for(var i=0;si>=0;i++) {
 			si=this.txt.indexOf(s,i);
@@ -110,9 +111,9 @@ function EntryNodeTextViewModel(txt,pid) {
 		return false;
 	}
 
+	// Only for debugging
 	this.killHTML = function(){
 		this.viewDomE.html("");
-		console.log("sdf")
 	}
 
 	this.render = function() {
@@ -174,9 +175,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			//			strWTags.push([o,i]);
 		}
 
-		this.viewDomE = $($.parseHTML(
-			nl2br(strWTags.join(""))
-		));
+		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
 
 		//linkifyHashtags(this.viewDomE);
 

@@ -5,10 +5,11 @@ $(document).ready(function() {
 		return false;
 	});
 
+	//Omnibox (input field) operations
 	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
-		// #TODO #Future trim repeated enters
-        if (event.keyCode == 13 && event.shiftKey) { // enter
+		// #TODO #Future trim repeated enters       
+		if (event.keyCode == 13 && event.shiftKey) { // enter
         	var content = this.value;
         	var caret = getCaret(this);
         	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
@@ -22,11 +23,10 @@ $(document).ready(function() {
         		rootNodeViewModel.filter($(this).val() || "");
         }
     });
-
 	$('textarea#newpost').change(function (event) {
 		rootNodeViewModel.filter($(this).val());
 	});
-
+	//Handles new line (shift+enter) in the omnibox
 	function getCaret(el) { 
 		if (el.selectionStart) { 
 			return el.selectionStart; 
@@ -74,7 +74,6 @@ function displayPosts() {
 		//entryList = new EntryList(data);
 
 		$("#currentposts").html("");
-		console.log(z=rootNodeViewModel)
 		$("#currentposts").append(rootNodeViewModel.render());
 
 		//$("#currentposts").html(entrylist);
@@ -133,6 +132,9 @@ function displayPosts() {
 			offset: 10,
 			html:true
 		});
+
+		linkifyHashtags($('.sidebar-nav-fixed'));
+		linkifyHashtags($('#currentposts'));
 		
 	}
 
@@ -158,11 +160,40 @@ function displayPosts() {
 
 		var targetName=$(e.target).html();
 		$('#newpost').val(targetName).focus();
-		filterIdeas(targetName);
+		rootNodeViewModel.filter(targetName);
 	});
 
-	//linkifyHashtags($('.sidebar-nav-fixed'));
+
 }
+// Now implemented through an EntryNodeViewModel object and the .filter method
+/*function filterIdeas(query){//#TODO 
+	query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
+	query = query.split(/[\r\n ,]+/);
+
+	$('#currentposts > ul.entryNode > li > ul.entrylist > li .entryNode').each(function(){
+		var h=true;
+		var itN=$(this).find('td.ideaTxt');
+		var pid=itN.children(".ideaname").attr('name');
+		var it=itN.text();
+		var tem=new EntryNodeTextViewModel(it,pid);
+
+		for(var i=0;i<query.length;i++){
+			var mi = it.toLowerCase().indexOf(query[i]);
+
+			if(mi>=0&&query[i]!=""){//ignore empty strings from query
+				
+				tem.setBold(mi,query[i].length);
+				var r = tem.render();
+				itN.html(r); //TODO add third param to this, pass whether bold or not so we can put it inside.
+				//console.log(itN.html().replace('a','%'));
+				h=false;
+			}
+		}
+		if(!h||(query.length==1 && query[0]=="")) $(this).css('display','inherit'); 
+		else $(this).css('display','none');
+	});
+
+}*/
 
 function displayIdeaNames() {
 	if (localStorage.getItem("posts") !== null){

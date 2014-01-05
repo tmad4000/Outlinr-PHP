@@ -18,17 +18,13 @@ function EntryNodeViewModel(entryNodeModel) {
 		this.children[key]=new EntryNodeViewModel(this.entryNodeModel.children[key]);
 	}
 
-
+	// only for debugging
 	this.killHTML = function(){
 		if(this.eT!==null)
 			this.eT.killHTML();
-		
-		for(var key in this.children) {
-			
-				this.children[key].killHTML()
-			}
-
-
+		for(var key in this.children) {	
+			this.children[key].killHTML()
+		}
 	}
 
 	// new EntryList(this.entryNodeModel['children'])
@@ -63,7 +59,6 @@ function EntryNodeViewModel(entryNodeModel) {
 		}
 		if(this.eT !== null){
 			var isMatch=this.eT.filter(query); //returns true if matches. Boldifies its own text
-			console.log(isMatch)
 			if(!isMatch)
 				this.hide();
 			else 

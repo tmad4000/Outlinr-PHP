@@ -48,8 +48,6 @@ function extractIdeaName(idea) {
 	return $.trim(idea.substr(0,findTitleEnd(idea)));
 }
 
-
-
 function replaceIdeaName(idea) {
 	var te=findTitleEnd(idea);
 	return $.trim('<a class="ideaname suggname" href="">'+idea.substr(0,te)+'</a>'+idea.substr(te));
@@ -96,31 +94,31 @@ function linkHashtags(text) {
 } */
 
 function extractTags(idea) {
-
 	return idea.match(hashtag_regexp)
-
 }
+// never gets called
 function replaceTags(idea) {
-
-
-	return idea.replace(hashtag_regexp,'<a class="hashtag"href="#?q=$1">#$1</a>') // problematic using <> inside here breaks it, same with ""
-
+    var temp = idea.replace(hashtag_regexp,'<a class="hashtag" href="&#35;?q=$1">&#35;$1</a>') // problematic using <> inside here breaks it, same with ""
+    linkifyHashtags(idea);
+    console.log("replaceTags");
+    return temp;
 }
-
+// never gets called
 function processIdea(idea) {
     return replaceIdeaName(replaceTags(idea)); // order matters; as replaceIdeaName creates # signs
 }
-
+// never gets called
 function processIdea(idea,pid) {
     return replaceIdeaName(replaceTags(idea),pid); // order matters; as replaceIdeaName creates # signs
 }
 
-function linkifyHashtags(context){
+function linkifyHashtags(context){//#TODO broken
 	context.find('.hashtag').click(function(e){
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
+        
 		context.find('#newpost').val(targetName).focus();
-		filterIdeas(targetName);
+		rootNodeViewModel.filter(targetName);
 	});
-};
+}
