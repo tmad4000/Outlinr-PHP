@@ -1,6 +1,6 @@
 function EntryNodeTextViewModel(txt,pid) {
 	this.viewDomE=null; //until render is called for first time
-
+	
 	//replace with this.critPts=[]; (i,code)
 	//model
 	this.txt=txt;
@@ -17,11 +17,11 @@ function EntryNodeTextViewModel(txt,pid) {
 		return (this.txt.indexOf(query) >= 0)
 	}
 
-	//
+	//adds splits to a split array
 	this.pushSplits = function(re,ray) { // should be private
 		console.log("PushSplits!"+this.txt)
 		var m=this.txt.regexMatchOffset(re,0);
-		// removes Duplicates
+		// Removes Duplicates
 		for(var i=0;i<m.length;i++) {
 			if(i==0 || !(m[i][0]==m[i-1][0] && m[i][1]==m[i-1][1])){
 				ray.push(m[i][0],m[i][1]+m[i][0]);//start and end of substring
@@ -178,7 +178,7 @@ function EntryNodeTextViewModel(txt,pid) {
 		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
 
 		//linkifyHashtags(this.viewDomE);
-
+		console.log(x=this)
 		return this.viewDomE;
 
 

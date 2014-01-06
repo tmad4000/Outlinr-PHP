@@ -19,106 +19,105 @@ require_once('../config.inc.php');
       
     <style type='text/css'>
         body {
-        padding-bottom: 40px;
-        padding-top: 60px;
-    }
-    
-    .sidebar-nav-fixed {
-        padding: 9px 0;
-        position:fixed;
-        right:20px;
-        top:40px;
-        width:250px;
-    }
-    
-    .row-fluid > .span-fixed-sidebar {
-        margin-right: 290px;
-    }
-    
-    #ideanames, #ideatags {
-    overflow:auto;
-    max-height:300px;
-    }
-    
-    #ideanames li{
-    line-height: 14px;
-    padding-bottom: 6px;
-    }
-    
-     ul#ideatags li {
-     display:inline;
-     margin:1px
-     }
-    
-    .hero-unit-light {
-        padding: 60px;
-      margin-bottom: 30px;
-     /* font-size: 18px;
-      font-weight: 200;
-      line-height: 30px;*/
-      color: inherit;
-      /*background-color: #eeeeee;*/
-      -webkit-border-radius: 6px;
-         -moz-border-radius: 6px;
-              border-radius: 6px;
-    
-    }
-    
-    .table td {
-        line-height:auto;
+            padding-bottom: 40px;
+            padding-top: 60px;
+        }
         
-        padding: 5px 8px 12px 0;
-    
-    }
-    
-    
-    td.progbaruser {
-        text-align:right;
-        padding-right:20px;
-    }
-    
-    .metric {
-        font-size:10px;
-        color:#AAA
-    }
-    .progress {
-        margin-bottom:0px
-    }
-    /*<!-- **PROGBAR** -->*/
-    /*@import url('http://twitter.github.com/bootstrap/assets/css/bootstrap.css');*/
-    
-    .container {
-    /*    margin-top: 5px;*/
-        width: 400px;
-    }
-	
-	table.subrow {
-		border:none;
-		width:100%;
-	}
+        .sidebar-nav-fixed {
+            padding: 9px 0;
+            position:fixed;
+            right:20px;
+            top:40px;
+            width:250px;
+        }
+        
+        .row-fluid > .span-fixed-sidebar {
+            margin-right: 290px;
+        }
+        
+        #ideanames, #ideatags {
+            overflow:auto;
+            max-height:300px;
+        }
+        
+        #ideanames li{
+            line-height: 14px;
+            padding-bottom: 6px;
+        }
+        
+         ul#ideatags li {
+            display:inline;
+            margin:1px
+         }
+        
+        .hero-unit-light {
+            padding: 60px;
+            margin-bottom: 30px;
+            /* font-size: 18px;
+            font-weight: 200;
+            line-height: 30px;*/
+            color: inherit;
+            /*background-color: #eeeeee;*/
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+        
+        }
+        
+        .table td {
+            line-height:auto;   
+            padding: 5px 8px 12px 0;
+        
+        }     
+        
+        td.progbaruser {
+            text-align:right;
+            padding-right:20px;
+        }
+        
+        .metric {
+            font-size:10px;
+            color:#AAA
+        }
 
-	table.subrow td {
-		border:none;
-	}
-	
-	ul.progbarlist {
-		list-style-type: none;
-		padding-top:0
-		
-	}
-	
-	ul.progbarlist table{
-		padding-top:5px;		
-		margin-bottom:0;
-		
-	}
-	
-	#currentposts > ul.progbarlist {
+        .progress {
+            margin-bottom:0px
+        }
+        /*<!-- **PROGBAR** -->*/
+        /*@import url('http://twitter.github.com/bootstrap/assets/css/bootstrap.css');*/
+        
+        .container {
+        /*    margin-top: 5px;*/
+            width: 400px;
+        }
+        
+        table.subrow {
+                border:none;
+                width:100%;
+        }
 
-		padding-left:0;
-		margin-left:0
-		
-	}
+        table.subrow td {
+                border:none;
+        }
+        
+        ul.progbarlist {
+                list-style-type: none;
+                padding-top:0
+                
+        }
+        
+        ul.progbarlist table{
+                padding-top:5px;                
+                margin-bottom:0;
+                
+        }
+        
+        #currentposts > ul.progbarlist {
+
+                padding-left:0;
+                margin-left:0
+                
+        }
 
       </style>
       
@@ -168,9 +167,9 @@ require_once('../config.inc.php');
 </head>
 <body>
   <?php 
-  	include('inc/nav.inc.php');
-	if(0) {
-	?>
+          include('inc/nav.inc.php');
+        if(0) {
+        ?>
   <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
@@ -221,7 +220,7 @@ require_once('../config.inc.php');
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
           </ul>
-<!--
+          <!--
           <li class="nav-header">Sidebar</li>
           <li><a href="#">Link</a></li>
           <li><a href="#">Link</a></li>
@@ -233,12 +232,12 @@ require_once('../config.inc.php');
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
 
-	<!-- **PROGBAR** --><!--
+        <!-- **PROGBAR** --><!--
       <div class="container">
         <div class="progress progress-striped active">
             <div class="bar" style="width: 0%;"></div>
         </div>
-	  </div>-->
+          </div>-->
       <form id="postform">
         <div class="input-append" style="width:100%">
           <textarea class="span12" placeholder="New idea map name" id="newpost" ></textarea>
@@ -260,7 +259,4 @@ require_once('../config.inc.php');
 </div><!--/.fluid-container-->
   
 </body>
-
-
 </html>
-

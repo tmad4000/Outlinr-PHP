@@ -14,7 +14,7 @@ index.1.7_suggestionbox_inProgress.php
 
 client.js // Sets up page structure, calls other js files functions
 	document.ready
-		Sets up textarea&textarea operations
+		Sets up textarea & textarea operations
 	displayPosts()
 		renders the list of ideas, right hand bar
 	displayIdeaNames()
@@ -83,3 +83,8 @@ util.js // utility functions to be used by other functions
 		never called
 	linkifyHashtags
 		makes pressing hashtags enter their contents into search box & filter on it
+
+
+Issues
+
+	- viewDomE is not actually connected to the html page, we can use a getter method to select the jquery object based on the parents pid.
