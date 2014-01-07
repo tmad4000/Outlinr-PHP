@@ -1,6 +1,6 @@
 function EntryNodeTextViewModel(txt,pid) {
 	this.viewDomE=null; //until render is called for first time
-	
+
 	//replace with this.critPts=[]; (i,code)
 	//model
 	this.txt=txt;
@@ -19,7 +19,6 @@ function EntryNodeTextViewModel(txt,pid) {
 
 	//adds splits to a split array
 	this.pushSplits = function(re,ray) { // should be private
-		console.log("PushSplits!"+this.txt)
 		var m=this.txt.regexMatchOffset(re,0);
 		// Removes Duplicates
 		for(var i=0;i<m.length;i++) {
@@ -27,6 +26,7 @@ function EntryNodeTextViewModel(txt,pid) {
 				ray.push(m[i][0],m[i][1]+m[i][0]);//start and end of substring
 			}
 		}
+
 	}
 
 	//may contain duplicates
@@ -127,7 +127,7 @@ function EntryNodeTextViewModel(txt,pid) {
 		var lastI;
 		for(var j=0;j<this.critPts.length;j++) {
 
-			var o;
+			var o="";
 			var i=this.critPts[j];
 
 			if(j>0) //skip dup
@@ -135,46 +135,43 @@ function EntryNodeTextViewModel(txt,pid) {
 					//lastI=i;
 					continue;
 				}
-
-			if(i==this.tSplit[0]){
-				o='<a class="ideaname suggname" href="#" name="'+this.pid+'">';
-			}
-			if(i==this.tSplit[1]){
-				o="</a>";
-				if(openB)
-					o="</b>"+o+"<b>"
-			}
-
-			//i is a this.bSplit open
-			if(this.isASplitOpenOrClose(i,this.bSplits,0)){
-				o="<b>"
-				openB=true;
-			}
-
 			//i is a this.bSplit close
 			if(this.isASplitOpenOrClose(i,this.bSplits,1)){
-				o="</b>"
+				o+="</b>"
 				openB=false;
 			}
+			if(i==this.tSplit[0]){
+				o+='<a class="ideaname suggname" href="#" name="'+this.pid+'">';
+			}
+			if(i==this.tSplit[1]){
+				o+="</a>";
+				if(openB)
+					o+="</b>"+o+"<b>"
+			}			
 
 			//i is a this.hSplit open
 			if(this.isASplitOpenOrClose(i,this.hSplits,0)){
-				o='<a class="hashtag" href="#">'
+				o+='<a class="hashtag" href="#">'
 			}
 
 			//i is a this.hSplit close
 			if(this.isASplitOpenOrClose(i,this.hSplits,1)){
-				o="</a>"
+				o+="</a>"
 			}
 
-			if(j>0) strWTags.push(this.txt.substr(lastI,i));
+			//i is a this.bSplit open
+			if(this.isASplitOpenOrClose(i,this.bSplits,0)){
+				o+="<b>"
+				openB=true;
+			}
+
+			if(j>0) strWTags.push(this.txt.substr(lastI,i-lastI));
 			strWTags.push(o);
 
 			lastI=i;
 
 			//			strWTags.push([o,i]);
 		}
-
 		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
 
 		//linkifyHashtags(this.viewDomE);
