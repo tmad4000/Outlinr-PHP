@@ -1,4 +1,3 @@
-
 function EntryNodeViewModel(entryNodeModel) {
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
@@ -35,9 +34,9 @@ function EntryNodeViewModel(entryNodeModel) {
 			console.log("viewDomE is null")
 			return;
 		}
-
-		this.viewDomE.css("display","inherit");
-		this.visible=true
+		console.log(x=this.getViewDomE())
+		this.getViewDomE().css("display","block");
+		this.getViewDomE().visible=true;
 	}
 
 	//render must be called first so that viewDomE!==null
@@ -46,14 +45,15 @@ function EntryNodeViewModel(entryNodeModel) {
 			console.log("viewDomE is null")
 			return;
 		}
-		console.log(x=this.viewDomE);
-		this.viewDomE.css("display","none");
-		this.visible=false
+		this.getViewDomE().css("display","none");
+		this.getViewDomE().visible=false;
 	}
-
+	this.getViewDomE = function(){ // #HACK
+		return $('.entryNode[-idea-id="'+this.entryNodeModel.pid+'"]');
+	}
 	//render must be called first so that viewDomE!==null
 	this.filter = function(query){
-		if(this.viewDomE === null){ //ERROR
+		if(this.getViewDomE() === null){ //ERROR
 			console.log("viewDomE is null")
 			return;
 		}
@@ -135,7 +135,7 @@ function EntryNodeViewModel(entryNodeModel) {
 			childrenListView.append(entryNodeChildView);
 		}
 
-		this.viewDomE = $($.parseHTML("<ul class='entryNode'>" + 
+		this.viewDomE = $($.parseHTML("<ul class='entryNode' -idea-id='"+this.entryNodeModel.pid+"'>" + 
 		"</ul>"));
 		
 

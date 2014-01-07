@@ -14,7 +14,10 @@ function EntryNodeTextViewModel(txt,pid) {
 	
 	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
-		return (this.txt.indexOf(query) >= 0)
+		if(!query) return true
+		
+
+		return (this.txt.toLowerCase().indexOf(query.toLowerCase()) >= 0)
 	}
 
 	//adds splits to a split array
@@ -173,12 +176,8 @@ function EntryNodeTextViewModel(txt,pid) {
 			//			strWTags.push([o,i]);
 		}
 		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
-
 		//linkifyHashtags(this.viewDomE);
-		console.log(x=this)
 		return this.viewDomE;
-
-
 
 		/*
 
@@ -219,6 +218,9 @@ function EntryNodeTextViewModel(txt,pid) {
 		*/
 	}
 
+	this.getViewDomE = function(){ // #HACK
+		return $('.entryNode[-idea-id="'+this.pid+'"] .entryNodeText');
+	}
 
 	//constructor #ERROR HERE!
 	this.pushSplits(hashtag_regexp,this.hSplits);
