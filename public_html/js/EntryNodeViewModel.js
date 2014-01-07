@@ -110,8 +110,11 @@ function EntryNodeViewModel(entryNodeModel) {
 
 		   	table+="</table>";
 
-		   	entryNodeBody="<div>"+table+"</div>";	
+		   	entryNodeBody="<div>"+table+"</div>";
+
 		   	entryNodeBody=$($.parseHTML(entryNodeBody));
+
+		   	var addLink = $("<input style=\"width:160px; float:right\" id=\"LinkCreateType\" placeholder=\"Type a Connection\" />").appendTo(entryNodeBody);
 
 			var eTView=this.eT.render();
 

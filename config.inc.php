@@ -34,8 +34,6 @@ if (LOCAL) {
 define('PATH_SEP', '/');
 define('PATH', $_SERVER['DOCUMENT_ROOT'].PATH_SEP.'public_html');
 
-
-
 if(!DEBUG_MODE) {
 	//no error reporting
 	ini_set('display_errors',0);
