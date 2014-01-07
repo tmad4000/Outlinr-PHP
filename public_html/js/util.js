@@ -115,10 +115,9 @@ function processIdea(idea,pid) {
 function linkifyHashtags(context){//#TODO broken
 	context.find('.hashtag').click(function(e){
 		e.preventDefault();
-
 		var targetName=$(e.target).html();
-        
-		context.find('#newpost').val(targetName).focus();
+            
+		$('#newpost').val(targetName).focus();
 		rootNodeViewModel.filter(targetName);
 	});
 }
