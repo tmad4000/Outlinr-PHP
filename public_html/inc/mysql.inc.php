@@ -11,6 +11,7 @@ if(LOCAL) {
 	define('DB_PASS', 'root');
 } 
 else {
+
 	define('DB_NAME', REMOTE_DB_NAME);
 	define('DB_USER', REMOTE_USER);
 	define('DB_PASS', REMOTE_PASS);

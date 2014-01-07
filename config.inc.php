@@ -1,6 +1,7 @@
 <?php
 //include at the top of every PHP page
 
+$_SERVER['DOCUMENT_ROOT'] = dirname(__FILE__);
 
 
 // Determine whether we're working on a local server
@@ -32,7 +33,6 @@ if (LOCAL) {
 
 define('PATH_SEP', '/');
 define('PATH', $_SERVER['DOCUMENT_ROOT'].PATH_SEP.'public_html');
-
 
 
 
