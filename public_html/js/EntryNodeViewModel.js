@@ -34,7 +34,6 @@ function EntryNodeViewModel(entryNodeModel) {
 			console.log("viewDomE is null")
 			return;
 		}
-		console.log(x=this.getViewDomE())
 		this.getViewDomE().css("display","inherit");
 		this.getViewDomE().visible=true;
 	}
@@ -103,7 +102,7 @@ function EntryNodeViewModel(entryNodeModel) {
 			*/
 			//entryNodeBody+=comments;
 
-			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+ "<br />"+comments+"</td>" + 
+			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+comments+"</td>" + 
 		   	// '<td><div class="progressbar"></div></td>' +
 		   	"<td class='uid'><a href='#' class='uid'>" + (this.entryNodeModel.uid!=0 ? this.entryNodeModel.uid : "anon") + "</a></td>" +
 		   	"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +

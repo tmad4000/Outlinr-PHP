@@ -69,7 +69,6 @@ String.prototype.regexMatchOffset = function(regex, startpos) {
     	}
     /*
     if(matchObj!=null && matchObj.length > 0) {
-    	console.log(matchObj);
     	matchObj.index=matchObj.index + (startpos || 0)
     	var m=matchObj[0]
     	m.index=matchObj
@@ -100,7 +99,6 @@ function extractTags(idea) {
 function replaceTags(idea) {
     var temp = idea.replace(hashtag_regexp,'<a class="hashtag" href="&#35;?q=$1">&#35;$1</a>') // problematic using <> inside here breaks it, same with ""
     linkifyHashtags(idea);
-    console.log("replaceTags");
     return temp;
 }
 // never gets called

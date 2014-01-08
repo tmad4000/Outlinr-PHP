@@ -14,23 +14,27 @@ function EntryNodeTextViewModel(txt,pid) {
 	
 	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
+		this.bSplits=[];
 		if(!query) return true
 		query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
-		query = query.split(/[\r\n ,]+/);
-		var h = true;
-		var t =this.txt.toLowerCase()
+		query = query.split(/[\r\n ,-\/]+/);
+		var nomatch = true;
+		var t = this.txt.toLowerCase()
 		
 		for(var i=0;i<query.length;i++){
 			var mi = t.indexOf(query[i]);
 			if(mi>=0&&query[i]!=""){//ignore empty strings from query
-				console.log();
+				
 				this.setBold(mi,query[i].length);
-				var r = this.render();
-				//this.getViewDomE().html(r); //need parent render
-				h=false;
+				
+				nomatch=false;
 			}
 		}
-		return (!h||(query.length==1 && query[0]==""))
+		if(!nomatch||(query.length==1 && query[0]=="")){
+			var r = this.render();
+			this.getViewDomE().html(r); //need parent render
+		}
+		return (!nomatch||(query.length==1 && query[0]==""))
 	}
 
 	//adds splits to a split array
@@ -102,7 +106,8 @@ function EntryNodeTextViewModel(txt,pid) {
 	*/
 
 	this.setBold = function(s1,s2) { 
-		this.pushSplits([[s1,s2]],this.bSplits);
+		this.bSplits.push(s1);
+		this.bSplits.push(s1+s2);
 		this.critPtsSet=false;
 		/*
 		var si=this.txt.indexOf(s,0);
@@ -137,7 +142,7 @@ function EntryNodeTextViewModel(txt,pid) {
 		if(!this.critPtsSet)
 			this.setCritPts();
 
-
+		console.log(this.bSplits)
 		var strWTags=[];
 		var openB=false;
 		var lastI;
@@ -188,56 +193,17 @@ function EntryNodeTextViewModel(txt,pid) {
 
 			lastI=i;
 
-			//			strWTags.push([o,i]);
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
 		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
 		return this.viewDomE;
-
-		/*
-
-			//hash
-			for(var i=0;i<st.length;i++) {
-				st[i]=splitTxt(st[i],this.hSplits);
-
-			}
-			
-			//bold
-			for(var i=0;i<st.length;i++) {
-				for(var j=0;j<st.length;j++) {
-					st[i][j]=splitTxt(st[i][j],this.bSplits);
-				}
-
-			}
-
-
-			//reconstitute st into text
-			var rt;
-
-			for(var j=0;j<st.length;j++) {
-				for(var k=0;k<st.length;k++) {
-					st[i][j]=splitTxt(st[i][j],this.hSplits);
-				}
-			}
-
-			rt="<a>"+st[0]+"</a>"+st[1];
-
-
-
-			}
-
-			//insert special marker where b and /b tags go
-
-			
-			return $(this).text(this.txt);
-		*/
 	}
 
 	this.getViewDomE = function(){ // #HACK
 		return $('.entryNode[-idea-id="'+this.pid+'"] .entryNodeText');
 	}
 
-	//constructor #ERROR HERE!
+	
 	this.pushSplits(hashtag_regexp,this.hSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
 
