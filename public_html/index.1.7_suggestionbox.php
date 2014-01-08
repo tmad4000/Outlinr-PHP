@@ -106,11 +106,11 @@ require_once('../config.inc.php');
   background-position: 0px 0px;
 }
 td.votes {
-	font-size:8pt;
+	font-size:10pt;
 	color:#AAA;
 	text-align:center;
+  vertical-align: middle;
 	width:40px;
-  padding-bottom:5px;
   cursor:pointer;
 }
 

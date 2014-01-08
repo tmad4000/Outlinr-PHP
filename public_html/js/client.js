@@ -19,8 +19,9 @@ $(document).ready(function() {
         	$('#postform').submit();
         }
         else {
-        	if(rootNodeViewModel!==null)
+        	if(rootNodeViewModel!==null){
         		rootNodeViewModel.filter($(this).val() || "");
+        	}
         }
     });
 	$('textarea#newpost').change(function (event) {
@@ -132,12 +133,8 @@ function displayPosts() {
 			offset: 10,
 			html:true
 		});
-
-		linkifyHashtags($('.sidebar-nav-fixed'));
-		linkifyHashtags($('#currentposts'));
-		
+	
 	}
-
 
 	//ADD #JQUERY HERE
 	$('a.suggname').click(function(e){
@@ -163,7 +160,13 @@ function displayPosts() {
 		rootNodeViewModel.filter(targetName);
 	});
 
+	$('.hashtag').click(function(e){
+		e.preventDefault();
 
+		var targetName=$(e.target).html();
+		$('#newpost').val(targetName).focus();
+		rootNodeViewModel.filter(targetName);
+	})
 }
 // Now implemented through an EntryNodeViewModel object and the .filter method
 /*function filterIdeas(query){//#TODO 
