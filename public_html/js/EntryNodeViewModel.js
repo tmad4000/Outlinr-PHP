@@ -113,17 +113,14 @@ function EntryNodeViewModel(entryNodeModel) {
 
 			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+comments+"</td>" + 
 		   	// '<td><div class="progressbar"></div></td>' +
-		   	"<td class='uid'><a href='#' class='uid'>" + (this.entryNodeModel.uid!=0 ? this.entryNodeModel.uid : "anon") + "</a></td>" +
-		   	"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
-		   	"</td></tr>";
+		   	"<td class='timecol'><a href='#' class='uid'>" + (this.entryNodeModel.uid!=0 ? this.entryNodeModel.uid : "anon") + "</a>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" /></td></tr>";
 
 		   	table+="</table>";
 
 		   	entryNodeBody="<div>"+table+"</div>";
 
 		   	entryNodeBody=$($.parseHTML(entryNodeBody));
-
-		   	var addLink = $("<input style=\"width:160px; float:right\" id=\"LinkCreateType\" placeholder=\"Type a Connection\" />").appendTo(entryNodeBody);
 
 			var eTView=this.eT.render();
 
