@@ -41,6 +41,9 @@ require_once('../config.inc.php');
       padding-bottom: 40px;
       padding-top: 60px;
     }
+    .navbar {
+      letter-spacing: 1px !important;
+    }
 
     .sidebar-nav-fixed {
       padding: 13px 0;
@@ -91,7 +94,9 @@ require_once('../config.inc.php');
 
 }
 
-
+.outline:hover{
+  text-decoration: none;
+}
 
 .vote {
   display: block;
@@ -298,7 +303,7 @@ td.uid {
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
         </form>
-
+        <div id="numResults"></div>
         <div id="currentposts"></div>
 
       </div>

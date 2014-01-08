@@ -22,7 +22,11 @@ $r = mysqli_fetch_assoc($result)
         <span class="icon-bar"></span>
       </a>
       
-      <a class="brand" href="index.1.7_suggestionbox_ideamaps.php"><img src="" height="20" width="20"><!--<img src="http://www.dpcma.org/Portals/1/massachusetts-seal.gif" height="20" width="20">--> &nbsp; Outline <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span></a> 
+      <span class="brand">
+        <img src="" height="20" width="20">
+        &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>Outline</a> 
+        <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
+      </span> 
       <div class="nav-collapse">
         <ul class="nav">
 

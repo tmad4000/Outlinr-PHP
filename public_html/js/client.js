@@ -1,7 +1,9 @@
 //getPosts() -> displayPosts() 
 $(document).ready(function() {
 	$('#postform').submit(function() {
+		numberOfIdeasVisible =0;	
 		submitPostAndGetPosts();
+		// never gets here
 		return false;
 	});
 
@@ -28,9 +30,11 @@ $(document).ready(function() {
         		rootNodeViewModel.filter($(this).val() || "");
         	}
         }
+		updateNrOfIdeasVisible()
     });
 	$('textarea#newpost').change(function (event) {
 		rootNodeViewModel.filter($(this).val());
+		updateNrOfIdeasVisible()
 	});
 	//Handles new line (shift+enter) in the omnibox
 	function getCaret(el) { 
@@ -115,7 +119,6 @@ function displayPosts() {
 
 		// Right hand bar
 		displayIdeaNames();
-
 		// Voting click
 		$('td.votes').click(function() {
 			$(this).children('.vote').toggleClass('on'); 
@@ -152,7 +155,13 @@ function displayPosts() {
 		//$('#newpost').val('');
 
 		var targetName=$(e.target).attr('href').substr(1);
+		if($('[-idea-id="'+targetName+'"]').css('display')=='none'){
+			numberOfIdeasVisible+=1;
+			updateNrOfIdeasVisible()
+		}
 		$('[-idea-id="'+targetName+'"]').show();
+		
+
 		var offset = $($("a[name='"+targetName+"']")).offset();
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
 		$('html, body').animate({scrollTop:scrollto}, 0);

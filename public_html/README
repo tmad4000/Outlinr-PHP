@@ -88,3 +88,5 @@ util.js // utility functions to be used by other functions
 Issues
 
 	- viewDomE is not actually connected to the html page, we can use a getter method to select the jquery object based on the parents pid.
+
+We have 554 Pixels in width used up without considering the ideas innerwidth

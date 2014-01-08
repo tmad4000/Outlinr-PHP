@@ -1,5 +1,21 @@
 var hashtag_regexp = /#([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+var numberOfIdeasVisible = 0; // #HACK
+
+function updateNrOfIdeasVisible(){
+    if($('textarea#newpost').val() == ""){
+        $('#numResults').html("Showing "+numberOfIdeasVisible+" Ideas");
+    }
+    else {
+        if(numberOfIdeasVisible==1){
+            $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+$('textarea#newpost').val()+"\"");
+        }
+        else {
+            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+$('textarea#newpost').val()+"\"");
+        }
+        
+    }
+}
 
 function timeToString(hours, minutes) {
 	var xm = hours < 12 ? "am" : "pm";
@@ -23,7 +39,7 @@ function nl2br(str) {
 }
 
 function removeCommonWords(str) {
-	return str.replace(/\b(?:(the)|(it)|(is)|(we)|(all)|(a)|(an)|(by)|(to)|(you)|(me)|(he)|(she)|(they)|(we)|(how)|(it)|(i)|(are)|(to)|(for)|(of))\b/ig, '');
+	return str.replace(/\b(?:(the)|(it)|(is)|(we)|(all)|(a)|(an)|(by)|(to)|(you)|(me)|(he)|(she)|(they)|(we)|(how)|(it)|(i)|(are)|(to)|(for)|(of)|(with))\b/ig, '');
 }
 
 function findTitleEnd(idea) {

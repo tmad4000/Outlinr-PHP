@@ -34,6 +34,9 @@ function EntryNodeViewModel(entryNodeModel) {
 			console.log("viewDomE is null")
 			return;
 		}
+		if(this.getViewDomE().css('display')=='none'){
+			numberOfIdeasVisible += 1;
+		}
 		this.getViewDomE().css("display","inherit");
 		this.getViewDomE().visible=true;
 	}
@@ -43,6 +46,9 @@ function EntryNodeViewModel(entryNodeModel) {
 		if(this.viewDomE === null){
 			console.log("viewDomE is null")
 			return;
+		}
+		if(this.getViewDomE().css('display')!='none'){
+			numberOfIdeasVisible -= 1;
 		}
 		this.getViewDomE().css("display","none");
 		this.getViewDomE().visible=false;
@@ -77,6 +83,9 @@ function EntryNodeViewModel(entryNodeModel) {
 		
 		var entryNodeBody="";
 		if(this.entryNodeModel.pid!==null) {
+			numberOfIdeasVisible +=1;
+			updateNrOfIdeasVisible()
+	
 			var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
 			this.entryNodeModel;
 
