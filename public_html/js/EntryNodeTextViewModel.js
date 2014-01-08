@@ -15,9 +15,22 @@ function EntryNodeTextViewModel(txt,pid) {
 	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
 		if(!query) return true
+		query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
+		query = query.split(/[\r\n ,]+/);
+		var h = true;
+		var t =this.txt.toLowerCase()
 		
-
-		return (this.txt.toLowerCase().indexOf(query.toLowerCase()) >= 0)
+		for(var i=0;i<query.length;i++){
+			var mi = t.indexOf(query[i]);
+			if(mi>=0&&query[i]!=""){//ignore empty strings from query
+				console.log();
+				this.setBold(mi,query[i].length);
+				var r = this.render();
+				//this.getViewDomE().html(r); //need parent render
+				h=false;
+			}
+		}
+		return (!h||(query.length==1 && query[0]==""))
 	}
 
 	//adds splits to a split array
@@ -128,6 +141,8 @@ function EntryNodeTextViewModel(txt,pid) {
 		var strWTags=[];
 		var openB=false;
 		var lastI;
+		if(this.critPts.length==0) lastI=0;
+
 		for(var j=0;j<this.critPts.length;j++) {
 
 			var o="";
@@ -175,8 +190,8 @@ function EntryNodeTextViewModel(txt,pid) {
 
 			//			strWTags.push([o,i]);
 		}
+		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
 		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
-		//linkifyHashtags(this.viewDomE);
 		return this.viewDomE;
 
 		/*

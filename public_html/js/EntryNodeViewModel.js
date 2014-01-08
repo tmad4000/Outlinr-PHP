@@ -35,7 +35,7 @@ function EntryNodeViewModel(entryNodeModel) {
 			return;
 		}
 		console.log(x=this.getViewDomE())
-		this.getViewDomE().css("display","block");
+		this.getViewDomE().css("display","inherit");
 		this.getViewDomE().visible=true;
 	}
 
@@ -65,6 +65,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				this.show();
 		}
 		$.each(this.children,function() {this.filter(query)})
+
 		//#TODO #future should we show parents of children who match?
 	}
 
@@ -146,7 +147,6 @@ function EntryNodeViewModel(entryNodeModel) {
 		this.viewDomE.append(cLVLi);
 		// if(this.eT !==null)	
 		// 	this.eT.killHTML();
-
 		return this.viewDomE;
 	}
 }
