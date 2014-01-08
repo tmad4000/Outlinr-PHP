@@ -295,7 +295,7 @@ td.uid {
 
         <form id="postform">
           <div class="input-append" style="width:100%">
-            <textarea class="span12" placeholder="Enter your own cool project idea, suggestion, goal for your group, or complaint here!" id="newpost" ></textarea>
+            <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
         </form>
 
