@@ -57,6 +57,7 @@ require_once('../config.inc.php');
     #ideanames, #ideatags {
       overflow:auto;
       max-height:300px;
+      margin-left:10px;
     }
 
     #ideanames li{
@@ -263,7 +264,7 @@ td.uid {
         <div class="well sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
 
-            <li class="nav-header">Ideas</li>
+            <li class="nav-header">All Ideas</li>
             <ul id="ideanames" class="">
               <!--<li class="active"><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>

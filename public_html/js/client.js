@@ -16,6 +16,11 @@ $(document).ready(function() {
         	event.stopPropagation();
         } 
         else if(event.keyCode == 13){ // enter
+        	// removes the newline
+        	var content = this.value;
+        	var caret = getCaret(this);
+        	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+        	event.stopPropagation();
         	$('#postform').submit();
         }
         else {
@@ -144,9 +149,10 @@ function displayPosts() {
 	//fix offset
 	$('#ideanames a').click(function(e){	
 		e.preventDefault();
-		$('#newpost').val('');
-		
+		//$('#newpost').val('');
+
 		var targetName=$(e.target).attr('href').substr(1);
+		$('[-idea-id="'+targetName+'"]').show();
 		var offset = $($("a[name='"+targetName+"']")).offset();
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
 		$('html, body').animate({scrollTop:scrollto}, 0);
@@ -159,14 +165,6 @@ function displayPosts() {
 		$('#newpost').val(targetName).focus();
 		rootNodeViewModel.filter(targetName);
 	});
-
-	$('.hashtag').click(function(e){
-		e.preventDefault();
-
-		var targetName=$(e.target).html();
-		$('#newpost').val(targetName).focus();
-		rootNodeViewModel.filter(targetName);
-	})
 }
 // Now implemented through an EntryNodeViewModel object and the .filter method
 /*function filterIdeas(query){//#TODO 

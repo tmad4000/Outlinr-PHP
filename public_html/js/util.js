@@ -59,6 +59,13 @@ function replaceIdeaName(idea,pid) {
     return $.trim('<a class="ideaname suggname" href="#?q=$1" name="'+pid+'">'+idea.substr(0,te)+'</a>'+idea.substr(te)); //$$$ replaced index.1.7_suggestionbox_inProgress.php#?post='+pid+'
 }
 
+function hashtag(e){
+        e.preventDefault();
+
+        var targetName=$(e.target).html();
+        $('#newpost').val(targetName).focus();
+        rootNodeViewModel.filter(targetName);
+}
 
 String.prototype.regexMatchOffset = function(regex, startpos) {
     var matchObj = this.substring(startpos || 0).match(regex);

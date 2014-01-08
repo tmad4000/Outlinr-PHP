@@ -19,7 +19,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			var r = this.render();
 			this.getViewDomE().html(r);
 			return true
-		} 
+		}
 		query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
 		query = query.split(/[\r\n ,-\/]+/);
 		var nomatch = true;
@@ -178,7 +178,7 @@ function EntryNodeTextViewModel(txt,pid) {
 
 			//i is a this.hSplit open
 			if(this.isASplitOpenOrClose(i,this.hSplits,0)){
-				o+='<a class="hashtag" href="#">'
+				o+='<a class="hashtag" onclick="hashtag(event)" href="#">'
 			}
 
 			//i is a this.hSplit close
@@ -200,6 +200,7 @@ function EntryNodeTextViewModel(txt,pid) {
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
 		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
+		
 		return this.viewDomE;
 	}
 
