@@ -15,7 +15,11 @@ function EntryNodeTextViewModel(txt,pid) {
 	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
 		this.bSplits=[];
-		if(!query) return true
+		if(!query){
+			var r = this.render();
+			this.getViewDomE().html(r);
+			return true
+		} 
 		query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
 		query = query.split(/[\r\n ,-\/]+/);
 		var nomatch = true;
