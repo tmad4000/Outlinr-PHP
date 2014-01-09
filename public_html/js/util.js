@@ -1,4 +1,6 @@
 var hashtag_regexp = /#([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 var numberOfIdeasVisible = 0; // #HACK
 
@@ -7,14 +9,25 @@ function updateNrOfIdeasVisible(){
         $('#numResults').html("Showing "+numberOfIdeasVisible+" Ideas");
     }
     else {
+        // so that chunks of text dont happen
+        var store = $('textarea#newpost').val();
+        if(store.length>50) store = store.substring(0,50)+"...";
         if(numberOfIdeasVisible==1){
-            $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+$('textarea#newpost').val()+"\"");
+            $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
         }
         else {
-            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+$('textarea#newpost').val()+"\"");
-        }
-        
+            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+store+"...\"");
+        }     
     }
+}
+
+String.prototype.repeat = function(times) {
+   return (new Array(times + 1)).join(this);
+};
+
+function moreText(id){
+    $('#m'+id).css('display','none');
+    $('#t'+id).css('display','inline');
 }
 
 function timeToString(hours, minutes) {
@@ -58,6 +71,39 @@ function findTitleEnd(idea) {
 	titleEnd=i3//Math.min(titleEnd,i3);
 
 	return titleEnd;
+}
+
+function findMoreTextStart(idea){
+    /*var indices = new Array();
+    var index = 0;
+    var i = 0;
+    while(idea.indexOf("\n", index) > 0) {
+        index=idea.indexOf("\n", index) > 0
+        indices[i] = index;
+        i++;
+    }
+    indices[i]= 219;
+    var total = 0;
+    var iter = 0
+    while(total<300 && iter<indices.length){
+        if(total + indices[iter] + 80 >300)
+            break;
+        total += (indices[iter] + 80)
+        iter++;
+    }
+    var chCutoff = 300 - (iter*80)
+    */
+    var newIdea = idea.replace('\n',"n".repeat(80))
+    return 250-newIdea.substr(0,250).split('').reverse().join('').indexOf(" ");//poss off by 1 error
+}
+
+function urlPress(e){
+
+    if($(e.target).html().indexOf('www')>=0 && $(e.target).html().indexOf('http')==-1){
+        window.location.href = "http://"+$(e.target).html();
+    }
+    else
+        window.location.href = $(e.target).html();
 }
 
 function extractIdeaName(idea) {

@@ -68,9 +68,9 @@ function EntryNodeViewModel(entryNodeModel) {
 				this.hide();
 			else 
 				this.show();
+			updateNrOfIdeasVisible()
 		}
 		$.each(this.children,function() {this.filter(query)})
-
 		//#TODO #future should we show parents of children who match?
 	}
 

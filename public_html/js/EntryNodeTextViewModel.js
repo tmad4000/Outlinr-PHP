@@ -11,6 +11,8 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.bSplits=[]; //bolds
 	this.hSplits=[]; //hashtags
 	this.tSplit=[]; //title/nontitle
+	this.mSplit=[];// "show more.."
+	this.uSplits=[]; // urls
 	
 	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
@@ -50,28 +52,38 @@ function EntryNodeTextViewModel(txt,pid) {
 				ray.push(m[i][0],m[i][1]+m[i][0]);//start and end of substring
 			}
 		}
-
 	}
 
 	//may contain duplicates
 	//Determines all the critical points in any given idea (bolds, hashtags, title)
 	this.setCritPts = function() {// should be private
 		this.critPts=[];
-		var a1=0;
-		while(a1<this.tSplit.length){
-			this.critPts.push(this.tSplit[a1]);
-			a1++;
+		var iter=0;
+		while(iter<this.tSplit.length){
+			this.critPts.push(this.tSplit[iter]);
+			iter++;
 		}
-		a1 = 0;
-		while(a1<this.hSplits.length){
-			this.critPts.push(this.hSplits[a1]);
-			a1++;
+		iter = 0;
+		while(iter<this.hSplits.length){
+			this.critPts.push(this.hSplits[iter]);
+			iter++;
 		}
-		a1=0;
-		while(a1<this.bSplits.length){
-			this.critPts.push(this.bSplits[a1]);
-			a1++;
+		iter=0;
+		while(iter<this.bSplits.length){
+			this.critPts.push(this.bSplits[iter]);
+			iter++;
 		}
+		iter=0;
+		while(iter<this.uSplits.length){
+			this.critPts.push(this.uSplits[iter]);
+			iter++;
+		}
+		iter=0;
+		while(iter<this.mSplit.length){
+			this.critPts.push(this.mSplit[iter]);
+			iter++;
+		}
+
 		this.critPts = this.critPts.sort(sortNumber);
 
 		// Required since js does lexicographic sorting
@@ -126,7 +138,6 @@ function EntryNodeTextViewModel(txt,pid) {
 		this.critPtsSet=false;
 	}
 
-
 	//oOrC is 0 or 1 for open or close
 	this.isASplitOpenOrClose=function(i,whichSplit,oOrC) {// should be private
 		for(var n=0;n<whichSplit.length;n++) {
@@ -141,12 +152,10 @@ function EntryNodeTextViewModel(txt,pid) {
 		this.viewDomE.html("");
 	}
 
+	//build tags
 	this.render = function() {
-		//bulid tagsI: (tags, index to insert)
 		if(!this.critPtsSet)
 			this.setCritPts();
-
-		console.log(this.bSplits)
 		var strWTags=[];
 		var openB=false;
 		var lastI;
@@ -176,6 +185,21 @@ function EntryNodeTextViewModel(txt,pid) {
 					o+="</b>"+o+"<b>"
 			}			
 
+			if(this.isASplitOpenOrClose(i,this.mSplit,0)){
+				o+=' <a id="m'+this.pid+'" onclick="moreText('+this.pid+')">show more...</a><span id="t'+this.pid+'" class="hiddenText">'
+			}
+			if(this.isASplitOpenOrClose(i,this.mSplit,1)){
+				o+="</span>"
+			}
+
+			if(this.isASplitOpenOrClose(i,this.uSplits,0)){
+				o+='<a class="url" onclick="urlPress(event)">'
+			}
+
+			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
+				o+="</a>"
+			}
+
 			//i is a this.hSplit open
 			if(this.isASplitOpenOrClose(i,this.hSplits,0)){
 				o+='<a class="hashtag" onclick="hashtag(event)" href="#">'
@@ -199,7 +223,8 @@ function EntryNodeTextViewModel(txt,pid) {
 
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
-		this.viewDomE = $($.parseHTML("<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>"));
+		var temp = "<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>";
+		this.viewDomE = $($.parseHTML(temp));
 		
 		return this.viewDomE;
 	}
@@ -210,6 +235,9 @@ function EntryNodeTextViewModel(txt,pid) {
 
 	
 	this.pushSplits(hashtag_regexp,this.hSplits);
+	this.pushSplits(url_regexp,this.uSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
-
+	if(this.txt.length>300){
+		this.mSplit=[findMoreTextStart(this.txt),this.txt.length];
+	}
 }

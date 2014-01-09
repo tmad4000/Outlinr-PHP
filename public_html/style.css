@@ -137,6 +137,13 @@ div.commentform div.commentsinput {
 	margin-left:5px;
 	height:50px;
 }
+#postform{
+	margin-bottom:0px;
+}
+
+.hiddenText{
+	display:none;
+}
 
 .LinkCreateType {
 	width:120px;

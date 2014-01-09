@@ -30,11 +30,11 @@ $(document).ready(function() {
         		rootNodeViewModel.filter($(this).val() || "");
         	}
         }
-		updateNrOfIdeasVisible()
     });
 	$('textarea#newpost').change(function (event) {
 		rootNodeViewModel.filter($(this).val());
-		updateNrOfIdeasVisible()
+		//#TODO never gets here
+
 	});
 	//Handles new line (shift+enter) in the omnibox
 	function getCaret(el) { 
