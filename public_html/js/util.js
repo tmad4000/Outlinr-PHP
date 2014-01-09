@@ -100,10 +100,13 @@ function findMoreTextStart(idea){
 function urlPress(e){
 
     if($(e.target).html().indexOf('www')>=0 && $(e.target).html().indexOf('http')==-1){
-        window.location.href = "http://"+$(e.target).html();
+        window.open("http://"+$(e.target).html());
+    }
+    else if($(e.target).html().indexOf('@')>=0 && $(e.target).html().indexOf('mailto:')==-1){
+        window.open("mailto:"+$(e.target).html());
     }
     else
-        window.location.href = $(e.target).html();
+        window.open($(e.target).html());
 }
 
 function extractIdeaName(idea) {
@@ -188,3 +191,54 @@ function processIdea(idea,pid) {
 // 		rootNodeViewModel.filter(targetName);
 // 	});
 // }
+
+// NAV BAR UTIL METHODS
+function initiateCookie(){ 
+    if(getCookie("name")!="" || getCookie("email")!=""){
+        var n = unescape(getCookie("name"));
+        var e = unescape(getCookie("email")); 
+        $("#usrremember").attr("value","Forget");
+        $("#usrname").val(n); //FILLS WITH "USERNAME" COOKIE
+        $("#usremail").val(e); //FILLS WITH "PASSWORD" COOKIE
+    }
+}
+
+function rememberMeToggle(){
+    if(getCookie("name")!="" || getCookie("email")!=""){
+        // untoggle (val remember)
+        $("#usrremember").attr("value","Remember");
+        deleteCookie() 
+   }
+   else {
+        // toggle (val forget)
+        $("#usrremember").attr("value","Forget");
+        var u = $("#usrname").val();
+        var e = $("#usremail").val();
+        setCookie(u,e,365) // 365 days cookie
+   }
+}
+
+// Cookie Functions
+
+function setCookie(name,email,exdays){
+    var d = new Date();
+    d.setTime(d.getTime()+(exdays*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = "name=" + escape(name) 
+    document.cookie = "email="+escape(email)+";"+ expires;
+}
+
+function getCookie(label){
+    var cname = label + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++){
+        var c = ca[i].trim();
+        if (c.indexOf(cname)==0) return c.substring(cname.length,c.length);
+    }
+    return "";
+}
+
+function deleteCookie(){
+    document.cookie="name=;"
+    document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
+}

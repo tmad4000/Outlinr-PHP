@@ -7,6 +7,8 @@ $(document).ready(function() {
 		return false;
 	});
 
+	initiateCookie();
+
 	//Omnibox (input field) operations
 	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
@@ -76,7 +78,6 @@ function displayPosts() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
-
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
 
 		//entryList = new EntryList(data);
@@ -246,9 +247,18 @@ function doUpvote(ideaid,upOrDown) {
 }
 
 function submitPostAndGetPosts() {
+	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
+	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
+		var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
+	}
+	else {
+		var processedname = name;
+	}
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val())},
+		'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : processedname},
+		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);

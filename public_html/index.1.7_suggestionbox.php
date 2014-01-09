@@ -23,7 +23,7 @@ require_once('../config.inc.php');
   <title>IdeaOverflow -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   
   <script src="js/lib/jquery-1.10.2.min.js"></script>
-  <script src="js/lib/bootstrap.min.js"></script> 
+  <script src="js/lib/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/util.js"></script>
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    

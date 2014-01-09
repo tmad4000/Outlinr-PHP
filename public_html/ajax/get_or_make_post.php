@@ -5,7 +5,7 @@ require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 $body = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['newpost'])));
 $mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0);
 $path = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['path'])));
-
+$usrname = mysqli_real_escape_string($MYSQLI_LINK, (trim($_REQUEST['uid'])));
 
 $defaultpath="";
 $defaultparent=0;
@@ -33,7 +33,7 @@ if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
 	if(!$tmptitle)
 		$tmptitle=substr($body,0,80);
-    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle','$body', 0, NULL, '', 0,$defaultparent,$mapid,'$path')";
+    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path')";
 //	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
 }
@@ -51,7 +51,7 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 
 $rows = array();
 
-$data=array("pid"=>NULL,"children"=>array()); //root
+$data=array("uid"=>0,"pid"=>NULL,"children"=>array()); //root
 
 while ($r = mysqli_fetch_assoc($result)) {
 	$rows[]=$r;
@@ -72,8 +72,4 @@ while ($r = mysqli_fetch_assoc($result)) {
 	$pData["pid".(string)$entry['pid']]=$entry;
 	
 }
-
-
-
-
 print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows));

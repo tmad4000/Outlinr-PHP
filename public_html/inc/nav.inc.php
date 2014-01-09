@@ -39,7 +39,7 @@ $r = mysqli_fetch_assoc($result)
         </ul>
         <p class="navbar-text pull-right"><a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">&nbsp;&nbsp;</a></p>
 <!--        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>-->
-        <p class="navbar-text pull-right"><a href="http://ideaoverflowideplan.tk/" target="_blank">Grand Vision</a> &nbsp; &nbsp; &nbsp; &nbsp;</p>
+        <p class="navbar-text pull-right"><input type="text" id="usremail" placeholder="(optional) Email"><input type="text" id="usrname" placeholder="(optional) Name"><input id="usrremember" type="button" onclick="rememberMeToggle()" value="Remember"></p>
       </div><!--/.nav-collapse -->
 
     </div>

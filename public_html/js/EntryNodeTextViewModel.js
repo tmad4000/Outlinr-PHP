@@ -177,7 +177,7 @@ function EntryNodeTextViewModel(txt,pid) {
 				openB=false;
 			}
 			if(i==this.tSplit[0]){
-				o+='<a class="ideaname suggname" href="#" name="'+this.pid+'">';
+				o+='<a class="ideaname suggname" name="'+this.pid+'">';
 			}
 			if(i==this.tSplit[1]){
 				o+="</a>";
