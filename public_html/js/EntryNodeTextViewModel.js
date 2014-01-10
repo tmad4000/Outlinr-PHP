@@ -234,7 +234,7 @@ function EntryNodeTextViewModel(txt,pid) {
 	}
 
 	
-	this.pushSplits(hashtag_regexp,this.hSplits);
+	this.pushSplits(tag_regexp,this.hSplits);
 	this.pushSplits(url_regexp,this.uSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
 	if(this.txt.length>300){

@@ -1,4 +1,6 @@
 //getPosts() -> displayPosts() 
+var isDefaultUsrHandle = true;
+
 $(document).ready(function() {
 	$('#postform').submit(function() {
 		numberOfIdeasVisible =0;	
@@ -6,20 +8,56 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
+
 	initiateCookie();
 	$('#usrname').change(function (){
        	 updateCookie()
 	});
 	$('#usrname').keyup(function (){
-       	 updateCookie()
+       	updateCookie()
 	});
-	$('#usremail').change(function (){
-       	 updateCookie()
-	})
-	$('#usremail').keyup(function (){
-       	 updateCookie()
-	})
+	$('#usremail').keyup(function(){
 
+		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+			isDefaultUsrHandle=true;
+		}
+		if(isDefaultUsrHandle){
+			var defaultUsrHandle = $('#usremail').val();
+			var emailBeginningI = $('#usremail').val().indexOf('@');
+			if(emailBeginningI>=0){
+				defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
+			}
+			$('#usrhandle').val(defaultUsrHandle);
+		}
+		updateCookie()
+	});
+	$('#usremail').change(function(){
+		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+			isDefaultUsrHandle=true;
+		}
+		if(isDefaultUsrHandle){
+			var defaultUsrHandle = $('#usremail').val();
+			var emailBeginningI = $('#usremail').val().indexOf('@');
+			if(emailBeginningI>=0){
+				defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
+			}
+			$('#usrhandle').val(defaultUsrHandle);
+		}
+		updateCookie()
+	});
+	$('#usrhandle').keyup(function(){
+		isDefaultUsrHandle = false;
+		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+			isDefaultUsrHandle=true;
+		}
+		updateCookie()
+	});
+	$('#usrhandle').change(function(){
+		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+			isDefaultUsrHandle=true;
+		}
+		updateCookie()
+	});
 	//Omnibox (input field) operations
 	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
@@ -179,7 +217,7 @@ function displayPosts() {
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
 	
-	$('#ideatags a').click(function(e){	
+	$('.ideatags a').click(function(e){	
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
@@ -224,21 +262,25 @@ function displayIdeaNames() {
 
 		var nameul = $('ul#ideanames').empty();
 		var tags={};
+
 		$.each( data,function(i,data) {
 			var n=extractIdeaName(data.body);
-			var t=extractTags(data.body);
-			if(t)
-				$.each(t,function(i,tag) {tags[tag]=true;});
-
+			var h=extractTags(data.body);
+			if(h)
+				$.each(h,function(i,tag) {tags[tag]=true;});
 			nameul.append('<li><a href="#'+data.pid+'">'+n + '</a></li>');
 
 		});
 
 		localStorage.setItem("tags", tags);
-		var tagsul = $('ul#ideatags').empty();
+		var tagsul = $('ul#idea-hashtags').empty();
+		var tildesul = $('ul#people-list').empty();		
 		$.each( tags,function(tag,trueval) {
+			if(tag.substring(0,1)=="#")
+				tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
+			else if(tag.substring(0,1)=="~")
+				tildesul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
 
-			tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
 		//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
 
 	});

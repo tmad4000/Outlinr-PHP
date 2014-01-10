@@ -204,7 +204,7 @@ function EntryText(txt,pid) {
 
 
 	//constructor #ERROR HERE!
-	this.pushSplits(hashtag_regexp,this.hSplits);
+	this.pushSplits(tag_regexp,this.hSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
 
 }
