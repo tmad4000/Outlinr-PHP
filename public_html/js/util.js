@@ -60,9 +60,10 @@ function removeCommonWords(str) {
 
 function findTitleEnd(idea) {
 	var i1=idea.indexOf("--");
-	var i2=-1//idea.indexOf(":");
 
-	var i=Math.min(i1-2,i2-1);
+	//var i2=-1;//idea.indexOf(":");
+    var i = i1-2;
+	//var i=Math.min(i1-2,i2-1);
 
 	if(i<0) i=idea.length;
 
@@ -71,7 +72,7 @@ function findTitleEnd(idea) {
 	var i3=idea.indexOf(" ",titleEnd);
 	if(i3<0) i3=idea.length;
 
-	titleEnd=i3//Math.min(titleEnd,i3);
+	titleEnd=i3;//Math.min(titleEnd,i3);
 
 	return titleEnd;
 }

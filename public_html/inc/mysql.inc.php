@@ -8,10 +8,7 @@ if(!REMOTE_PASS) define('REMOTE_PASS', '');
 if(LOCAL) {
 	define('DB_NAME', 'ideaoverflow2_ma');
 	define('DB_USER', 'root');
-	define('DB_PASS', 'root');
 
-	
-	
 } 
 else {
 

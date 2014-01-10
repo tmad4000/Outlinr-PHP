@@ -40,7 +40,14 @@ function EntryNodeTextViewModel(txt,pid) {
 			var r = this.render();
 			this.getViewDomE().html(r); //need parent render
 		}
-		return (!nomatch||(query.length==1 && query[0]==""))
+		
+		var isMatch = (!nomatch||(query.length==1 && query[0]==""));
+
+		if(isMatch)
+			moreText(this.pid);
+		
+		return isMatch;
+		
 	}
 
 	//adds splits to a split array
@@ -237,7 +244,7 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.pushSplits(tag_regexp,this.hSplits);
 	this.pushSplits(url_regexp,this.uSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
-	if(this.txt.length>300){
+	if(this.txt.length>1000){
 		this.mSplit=[findMoreTextStart(this.txt),this.txt.length];
 	}
 }
