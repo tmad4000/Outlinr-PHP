@@ -29,6 +29,8 @@ td.timecol {
     color:#AAA;
     font-size:10px;
     padding-right:15px;
+	
+	display:none; /* hack */
 }
 
 

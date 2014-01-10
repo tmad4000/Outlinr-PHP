@@ -196,7 +196,7 @@ function displayPosts() {
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
 	
-	$('#ideatags a').click(function(e){	
+	$('#idea-hashtags a').click(function(e){	
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
@@ -293,7 +293,7 @@ function displayIdeaNames() {
 		});
 
 		localStorage.setItem("tags", tags);
-		var tagsul = $('ul#ideatags').empty();
+		var tagsul = $('ul#idea-hashtags').empty();
 		$.each( tags,function(tag,trueval) {
 
 			tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO

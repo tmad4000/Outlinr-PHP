@@ -163,7 +163,7 @@ function displayIdeaNames() {
          });
          
          localStorage.setItem("tags", tags);
-         var tagsul = $('ul#ideatags').empty();
+         var tagsul = $('ul#idea-hashtags').empty();
          $.each( tags,function(tag,trueval) {
              
             tagsul.append('<li><a href="#">'+tag + '</a> </li>');
@@ -217,21 +217,21 @@ function replaceIdeaName(idea,pid) {
 
 /*
 function linkHashtags(text) {
-    hashtag_regexp = /#([a-zA-Z0-9]+)/g;
+    tag_regexp = /#([a-zA-Z0-9]+)/g;
     return text.match(
-        hashtag_regexp,
+        tag_regexp,
         '<a class="hashtag" href="http://twitter.com/#search?q=$1">#$1</a>'
     );
 } */
-var hashtag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
 function extractTags(idea) {
     
-    return idea.match(hashtag_regexp)
+    return idea.match(tag_regexp)
     
 }
 function replaceTags(idea) {
     
-    return idea.replace(hashtag_regexp,'<a class="hashtag" href="#?q=$1">#$1</a>')
+    return idea.replace(tag_regexp,'<a class="hashtag" href="#?q=$1">#$1</a>')
     
 }
 

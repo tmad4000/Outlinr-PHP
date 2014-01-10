@@ -1,4 +1,7 @@
-var hashtag_regexp = /#([a-zA-Z0-9~\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var tag_regexp = /[#~]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var hash_regexp = /[#]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var tilde_regexp = /[~]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+
 var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
@@ -57,9 +60,10 @@ function removeCommonWords(str) {
 
 function findTitleEnd(idea) {
 	var i1=idea.indexOf("--");
-	var i2=-1//idea.indexOf(":");
 
-	var i=Math.min(i1-2,i2-1);
+	//var i2=-1;//idea.indexOf(":");
+    var i = i1-2;
+	//var i=Math.min(i1-2,i2-1);
 
 	if(i<0) i=idea.length;
 
@@ -68,7 +72,7 @@ function findTitleEnd(idea) {
 	var i3=idea.indexOf(" ",titleEnd);
 	if(i3<0) i3=idea.length;
 
-	titleEnd=i3//Math.min(titleEnd,i3);
+	titleEnd=i3;//Math.min(titleEnd,i3);
 
 	return titleEnd;
 }
@@ -157,19 +161,25 @@ String.prototype.regexMatchOffset = function(regex, startpos) {
 
 /*
 function linkHashtags(text) {
-    hashtag_regexp = /#([a-zA-Z0-9]+)/g;
+    tag_regexp = /#([a-zA-Z0-9]+)/g;
     return text.match(
-        hashtag_regexp,
+        tag_regexp,
         '<a class="hashtag" href="http://twitter.com/#search?q=$1">#$1</a>'
     );
 } */
-
 function extractTags(idea) {
-	return idea.match(hashtag_regexp)
+    return idea.match(tag_regexp)
+}
+
+function extractHashes(idea) {
+	return idea.match(hash_regexp)
+}
+function extractTildes(idea) {
+    return idea.match(tilde_regexp)
 }
 // never gets called
 function replaceTags(idea) {
-    var temp = idea.replace(hashtag_regexp,'<a class="hashtag" href="&#35;?q=$1">&#35;$1</a>') // problematic using <> inside here breaks it, same with ""
+    var temp = idea.replace(tag_regexp,'<a class="hashtag" href="&#35;?q=$1">&#35;$1</a>') // problematic using <> inside here breaks it, same with ""
     linkifyHashtags(idea);
     return temp;
 }
@@ -194,18 +204,24 @@ function processIdea(idea,pid) {
 
 // NAV BAR UTIL METHODS
 function initiateCookie(){ 
-    if(getCookie("name")!="" || getCookie("email")!=""){
+    if(getCookie("name")!="" || getCookie("email")!=""|| getCookie("handle")!=""){
         var n = unescape(getCookie("name"));
         var e = unescape(getCookie("email")); 
-        $("#usrname").val(n); //FILLS WITH "USERNAME" COOKIE
-        $("#usremail").val(e); //FILLS WITH "PASSWORD" COOKIE
+        var h = unescape(getCookie("handle"));
+        var d = unescape(getCookie("isDefaultUsrHandle"));
+        $("#usrname").val(n); 
+        $("#usremail").val(e); 
+        $("#usrhandle").val(h);
+        isDefaultUsrHandle = d == "true";
     }
 }
 
 function updateCookie(){
     var u = $("#usrname").val();
     var e = $("#usremail").val();
-    setCookie(u,e,365) // 365 days cookie
+    var h = $("#usrhandle").val();
+    var d = isDefaultUsrHandle;
+    setCookie(u,e,h,d,3650) // 365 days cookie
 }
 /*
 function rememberMeToggle(){
@@ -225,11 +241,13 @@ function rememberMeToggle(){
 
 // Cookie Functions
 
-function setCookie(name,email,exdays){
+function setCookie(name,email,handle,isDefaultUsrHandle,exdays){
     var d = new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
-    document.cookie = "name=" + escape(name) 
+    document.cookie = "name=" + escape(name);
+    document.cookie = "handle=" + escape(handle);
+    document.cookie = "isDefaultUserHandle=" + escape(isDefaultUsrHandle);
     document.cookie = "email=" + escape(email)+";"+ expires;
 }
 

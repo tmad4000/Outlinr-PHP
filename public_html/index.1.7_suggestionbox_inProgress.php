@@ -35,7 +35,7 @@ require_once('../config.inc.php');
         margin-right: 290px;
     }
     
-    #ideanames, #ideatags {
+    #ideanames, #idea-hashtags {
     overflow:auto;
     max-height:300px;
     }
@@ -45,7 +45,7 @@ require_once('../config.inc.php');
     padding-bottom: 6px;
     }
     
-     ul#ideatags li {
+     ul#idea-hashtags li {
      display:inline;
      margin:1px
      }
@@ -270,7 +270,7 @@ td.uid {
           </ul>
           <li class="nav-header">Categories</li>
 
-          <ul id="ideatags" class="">
+          <ul id="idea-hashtags" class="">
               <!--<li class="active"><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
