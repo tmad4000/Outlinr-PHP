@@ -6,8 +6,19 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
-
 	initiateCookie();
+	$('#usrname').change(function (){
+       	 updateCookie()
+	});
+	$('#usrname').keyup(function (){
+       	 updateCookie()
+	});
+	$('#usremail').change(function (){
+       	 updateCookie()
+	})
+	$('#usremail').keyup(function (){
+       	 updateCookie()
+	})
 
 	//Omnibox (input field) operations
 	$('textarea#newpost').focus();

@@ -1,4 +1,4 @@
-var hashtag_regexp = /#([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var hashtag_regexp = /#([a-zA-Z0-9~\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
@@ -197,12 +197,17 @@ function initiateCookie(){
     if(getCookie("name")!="" || getCookie("email")!=""){
         var n = unescape(getCookie("name"));
         var e = unescape(getCookie("email")); 
-        $("#usrremember").attr("value","Forget");
         $("#usrname").val(n); //FILLS WITH "USERNAME" COOKIE
         $("#usremail").val(e); //FILLS WITH "PASSWORD" COOKIE
     }
 }
 
+function updateCookie(){
+    var u = $("#usrname").val();
+    var e = $("#usremail").val();
+    setCookie(u,e,365) // 365 days cookie
+}
+/*
 function rememberMeToggle(){
     if(getCookie("name")!="" || getCookie("email")!=""){
         // untoggle (val remember)
@@ -216,7 +221,7 @@ function rememberMeToggle(){
         var e = $("#usremail").val();
         setCookie(u,e,365) // 365 days cookie
    }
-}
+}*/
 
 // Cookie Functions
 
@@ -225,7 +230,7 @@ function setCookie(name,email,exdays){
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
     document.cookie = "name=" + escape(name) 
-    document.cookie = "email="+escape(email)+";"+ expires;
+    document.cookie = "email=" + escape(email)+";"+ expires;
 }
 
 function getCookie(label){
@@ -237,8 +242,8 @@ function getCookie(label){
     }
     return "";
 }
-
+/*
 function deleteCookie(){
     document.cookie="name=;"
     document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
-}
+}*/
