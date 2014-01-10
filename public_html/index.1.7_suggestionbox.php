@@ -100,11 +100,12 @@ require_once('../config.inc.php');
 
 .vote {
   display: block;
-  background: url('images/upvote.png');
+  background: url('images/upvote-small.png');
   background-repeat: no-repeat;
-  width: 40px;
+  width: 20px;
   height: 14px;
-  background-position: 0px -25px;
+  background-position: 0px -14px;
+  margin-left:1px;
 } 
 
 
@@ -116,7 +117,7 @@ td.votes {
 	color:#AAA;
 	text-align:center;
   vertical-align: middle;
-	width:40px;
+	width:24px;
   cursor:pointer;
 }
 

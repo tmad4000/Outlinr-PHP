@@ -1,6 +1,5 @@
 body {
     background: #FFF;
-    /*background: #661B21;*/
     font-weight:300;
 }
 
@@ -142,6 +141,7 @@ div.commentform div.commentsinput {
 	margin-bottom:0px;
 }
 
+
 .hiddenText{
 	display:none;
 }
@@ -172,6 +172,11 @@ div.commentform div.commentsinput {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+}
+
+#numResults {
+	color:#999;
+	margin-bottom:10px;
 }
 
 .navbar-text input[type="button"]:active{

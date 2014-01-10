@@ -6,7 +6,7 @@ var numberOfIdeasVisible = 0; // #HACK
 
 function updateNrOfIdeasVisible(){
     if($('textarea#newpost').val() == ""){
-        $('#numResults').html("Showing "+numberOfIdeasVisible+" Ideas");
+        $('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
     }
     else {
         // so that chunks of text dont happen
