@@ -102,7 +102,7 @@ require_once('../config.inc.php');
   display: block;
   background: url('images/upvote-small.png');
   background-repeat: no-repeat;
-  width: 20px;
+  width: 23px;
   height: 14px;
   background-position: 0px -14px;
   margin-left:1px;
@@ -119,6 +119,8 @@ td.votes {
   vertical-align: middle;
 	width:24px;
   cursor:pointer;
+  float:center;
+  text-align: middle;
 }
 
 /*popover */
