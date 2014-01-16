@@ -191,6 +191,16 @@ function displayPosts() {
 			offset: 10,
 			html:true
 		});
+		
+		//$('.tildetag').tooltip();
+		/*
+			// Voting hover status
+		$("[rel='popover']").popover({
+			trigger: "hover", 
+			//placement: 'top', IDEALLY want this but it goes wrong
+			offset: 10,
+			html:true
+		});*/
 	
 	}
 
@@ -277,10 +287,46 @@ function displayIdeaNames() {
 		var tildesul = $('ul#people-list').empty();		
 		$.each( tags,function(tag,trueval) {
 			if(tag.substring(0,1)=="#")
-				tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
+				tagsul.append('<li><a class="linkedtag hashtag" href="#">'+tag + '</a> </li>'); //TODO
 			else if(tag.substring(0,1)=="~")
-				tildesul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
-
+				tildesul.append('<li><a class="linkedtag tildetag" href="#">'+tag+'</a></li>').find('a').tooltip({
+					trigger: "hover", 
+					title:'User Name <a href=\'andemail@here.com\'>andemail@here.com</a>', 
+					placement: 'top',
+					delay: { show: 100, hide: 5000 },
+					html:true
+					})
+					/*.hover(function() {
+						isOverTT=false;
+						$(this).tooltip('show')
+					},
+					function(){
+						if(!isOverTT) $(this).tooltip('hide')
+					} 
+				)*/; //TODO #o
+				
+		/*
+		tildesul.append('<li><a class="linkedtag tildetag" href="#">'+tag+'</a></li>').find('a').tooltip({
+					title:'username <a href=\'andemail@here.com\'>andemail@here.com</a>', 
+					html:true
+				}); //TODO #o
+				
+				
+		$("[rel='popover']").popover({
+				trigger: "hover", 
+				//placement: 'top', IDEALLY want this but it goes wrong
+				offset: 10,
+				html:true
+			});
+		
+		 $('.UofTennesseeKnox').popover({
+        'selector': '',
+        'placement': 'bottom',
+        'title': '<a href="home.html">University of Tennessee-Knoxville</a>',
+        'content': 'Facilities Services Department 2233 Volunteer Boulevard, Room 203 Knoxville, TN 37996-3010',
+        'html': 'true'
+      });*/
+	  
 		//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
 
 	});

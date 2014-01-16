@@ -147,7 +147,7 @@ function EntryText(txt,pid) {
 
 			//i is a this.hSplit open
 			if(this.isASplitOpenOrClose(i,this.hSplits,0)){
-				o='<a class="hashtag" href="#">'
+				o='<a class="linkedtag" href="#">'
 			}
 
 			//i is a this.hSplit close

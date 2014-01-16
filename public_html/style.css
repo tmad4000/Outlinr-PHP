@@ -30,7 +30,7 @@ td.timecol {
     font-size:10px;
     padding-right:15px;
 	
-	display:none; /* hack */
+	display:visible; /* hack */
 }
 
 

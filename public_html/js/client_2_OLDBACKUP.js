@@ -208,7 +208,7 @@ function displayPosts() {
 }
 
 function linkifyBodyHashtags(){
-	$('.hashtag').click(function(e){
+	$('.linkedtag').click(function(e){
 		e.preventDefault();
 
 		var targetName=$(e.target).html();

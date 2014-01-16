@@ -128,7 +128,7 @@ function replaceIdeaName(idea,pid) {
     return $.trim('<a class="ideaname suggname" href="#?q=$1" name="'+pid+'">'+idea.substr(0,te)+'</a>'+idea.substr(te)); //$$$ replaced index.1.7_suggestionbox_inProgress.php#?post='+pid+'
 }
 
-function hashtag(e){
+function linkedtag(e){
         e.preventDefault();
 
         var targetName=$(e.target).html();
@@ -177,9 +177,11 @@ function extractHashes(idea) {
 function extractTildes(idea) {
     return idea.match(tilde_regexp)
 }
-// never gets called
+
+/*
+// never gets called 
 function replaceTags(idea) {
-    var temp = idea.replace(tag_regexp,'<a class="hashtag" href="&#35;?q=$1">&#35;$1</a>') // problematic using <> inside here breaks it, same with ""
+    var temp = idea.replace(tag_regexp,'<a class="linkedtag" href="&#35;?q=$1">&#35;$1</a>') // problematic using <> inside here breaks it, same with ""
     linkifyHashtags(idea);
     return temp;
 }
@@ -190,7 +192,7 @@ function processIdea(idea) {
 // never gets called
 function processIdea(idea,pid) {
     return replaceIdeaName(replaceTags(idea),pid); // order matters; as replaceIdeaName creates # signs
-}
+}*/
 
 // function linkifyHashtags(context){//#TODO broken
 // 	context.find('.hashtag').click(function(e){

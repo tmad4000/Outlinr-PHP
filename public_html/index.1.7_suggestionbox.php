@@ -200,7 +200,8 @@ td.uid {
 }
 
 .ideaTxt {
-  color:#777;
+	color:rgb(68, 68, 68);
+  /*color:#130f30;  shades of black*/
 }
 </style>
 

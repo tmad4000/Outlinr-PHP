@@ -211,7 +211,7 @@ function extractTags(idea) {
 }
 function replaceTags(idea) {
     
-    return idea.replace(tag_regexp,'<a class="hashtag" href="#?q=$1">#$1</a>')
+    return idea.replace(tag_regexp,'<a class="linkedtag" href="#?q=$1">#$1</a>')
     
 }
 
