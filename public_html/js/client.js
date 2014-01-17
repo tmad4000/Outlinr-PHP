@@ -300,6 +300,8 @@ function doUpvote(ideaid,upOrDown) {
 }
 
 function submitPostAndGetPosts() {
+	//#HACK only usrhandle currently visible
+	
 	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
 	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
@@ -308,9 +310,28 @@ function submitPostAndGetPosts() {
 	else {
 		var processedname = name;
 	}
+	
+	
+	//+$('#usrhandle').val()+\
+	//#hack
+	var np = $('#newpost').val();
+	var ind=np.indexOf('~'+$('#usrhandle').val());
+	
+	if($('#usrhandle').val()!="" && ind==-1) { //bug -- doesn't catch included word
+//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+			
+		np+=' ~'+$('#usrhandle').val();
+	}
+	
+	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+	function extractTags(idea) {
+    
+    return idea.match(tag_regexp)
+	*/
+	
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : processedname},
+		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
