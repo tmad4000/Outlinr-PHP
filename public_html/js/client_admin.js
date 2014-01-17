@@ -135,8 +135,13 @@ function displayPosts() {
 
 		$("#currentposts").html("");
 		$("#currentposts").append(rootNodeViewModel.render());
-		$(".status").click(function() {
+		$("div.status-box").click(function() {
 			cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
+		});
+		$(".star-off").click(function() {
+			console.log(t=$(this))
+			$(this).toggleClass("star-on");
+			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
 		//$("#currentposts").html(entrylist);
 		/*

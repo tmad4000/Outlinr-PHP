@@ -3,8 +3,7 @@ require_once('../config.inc.php');
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
   <?php 
 
   require_once('inc/mysql.inc.php');
@@ -27,11 +26,18 @@ require_once('../config.inc.php');
   <script type="text/javascript" src="js/util.js"></script>
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
-  <script type="text/javascript" src="js/client.js"></script>
+  <script type="text/javascript" src="js/client_admin.js"></script>
+  
+  
 
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-
+  
+  <!--
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  -->
+  
   <link href="style.css" rel="stylesheet">
   
   
@@ -45,7 +51,7 @@ require_once('../config.inc.php');
     }
 
     .sidebar-nav-fixed {
-		display:none;
+		/*display:none;*/
       padding: 13px 0;
       position:fixed;
       right:20px;
@@ -307,8 +313,6 @@ td.uid {
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
         <!--<span class="vote"> </span>-->
-
-
         <form id="postform">
           <div class="input-append" style="width:100%">
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>

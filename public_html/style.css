@@ -222,3 +222,78 @@ a {
 a:hover {
     text-decoration: underline;
 }*/
+
+
+.star {
+	width:18px;
+	height:18px;
+	margin-left:-60px;
+	margin-top:-6px;
+	float:left;
+	display:none
+}
+
+.star-on {
+	background-position: 0px -190px;
+	display:none
+}
+
+.star-off,.star-on {
+	background-position: 0px -150px;
+	width: 33px;
+	height: 31px;
+	background-color:red;
+	background-image: url(images/stars.png);
+	
+	
+	-webkit-background-clip: border-box;
+	-webkit-background-origin: padding-box;
+	-webkit-background-size: auto;
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-color: rgba(0, 0, 0, 0);
+	background-origin: padding-box;
+	background-repeat: no-repeat;
+	background-size: auto;
+	border-bottom-color: rgb(0, 119, 204);
+	border-bottom-style: none;
+	border-bottom-width: 0px;
+	border-collapse: collapse;
+	border-image-outset: 0px;
+	border-image-repeat: stretch;
+	border-image-slice: 100%;
+	border-image-source: none;
+	border-image-width: 1;
+	border-left-color: rgb(0, 119, 204);
+	border-left-style: none;
+	border-left-width: 0px;
+	border-right-color: rgb(0, 119, 204);
+	border-right-style: none;
+	border-right-width: 0px;
+	border-top-color: rgb(0, 119, 204);
+	border-top-style: none;
+	border-top-width: 0px;
+	color: rgb(0, 119, 204);
+	cursor: pointer;
+	display: block;
+	font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+	font-size: 1px;
+	height: 31px;
+	line-height: 1px;
+	margin-bottom: 0px;
+	margin-left: 13.5px;
+	margin-right: 13.5px;
+	margin-top: 0px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	text-align: center;
+	text-decoration: none solid rgb(0, 119, 204);
+	text-indent: -9999px;
+	vertical-align: baseline;
+	width: 33px;
+	zoom: 1;
+}
