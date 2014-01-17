@@ -46,7 +46,6 @@ require_once('../config.inc.php');
     }
 
     .sidebar-nav-fixed {
-		display:none;
       padding: 13px 0;
       position:fixed;
       right:20px;

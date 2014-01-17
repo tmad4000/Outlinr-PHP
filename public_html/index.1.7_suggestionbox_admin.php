@@ -27,7 +27,7 @@ require_once('../config.inc.php');
   <script type="text/javascript" src="js/util.js"></script>
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
-  <script type="text/javascript" src="js/client.js"></script>
+  <script type="text/javascript" src="js/client_admin.js"></script>
   
 
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -308,7 +308,7 @@ td.uid {
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
         <!--<span class="vote"> </span>-->
-
+		<h3 style="margin-top:-15px">Admin</h3>
 
         <form id="postform">
           <div class="input-append" style="width:100%">
