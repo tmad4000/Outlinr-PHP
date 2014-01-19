@@ -297,3 +297,7 @@ a:hover {
 	width: 33px;
 	zoom: 1;
 }
+
+input[type="text"].usr {
+	width:114px
+}
