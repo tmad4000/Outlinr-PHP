@@ -1,8 +1,7 @@
 Outlinr-PHP
 ===========
 
-Demo URLs include
-Main: 
+Demo URLs include:
 http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/pika/public_html/index.1.7_suggestionbox_ideamaps.php
 
 Example:
