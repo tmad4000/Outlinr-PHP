@@ -135,7 +135,8 @@ function displayPosts() {
 
 		$("#currentposts").html("");
 		$("#currentposts").append(rootNodeViewModel.render());
-		$("div.status-box").click(function() {
+		$("div.status-box").click(function(e) {
+			e.preventDefault();
 			cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
 		$(".star-off").click(function() {
