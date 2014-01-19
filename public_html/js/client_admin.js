@@ -314,6 +314,7 @@ function cycleStatus(ideaid) {
 		'url': 'ajax/cyclestatus.php',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
+			numberOfIdeasVisible =0;	
 			getPosts();
 		},
 	});
