@@ -50,13 +50,16 @@ div.sc0 { /*Status: not acknowledged*/
 	border:1px solid #DDDDDD;
 }
 div.sc1 { /*Status: acknowledged*/
-	background:#FF0
+	background:#FF0;
+	border:1px solid #FF0;
 }
 div.sc2 { /*Status: acknowledged and in progress*/
-	background:#2eabe6
+	background:#2eabe6;
+	border:1px solid #2eabe6;
 }
 div.sc3 { /*Status: complete*/
-	background:#0F0
+	background:#0F0;
+	border:1px solid #0F0;
 }
 
 td.status {
