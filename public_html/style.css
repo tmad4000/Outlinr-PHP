@@ -112,7 +112,9 @@ td.status {
 	max-width:400px;
 }
 
-
+.hero-unit-light {
+	padding-left:40px !important;
+}
 
 .progress {
 	/* #101010, #181818 */
