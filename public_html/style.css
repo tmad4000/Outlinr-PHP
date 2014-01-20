@@ -68,17 +68,17 @@ td.status {
 }
 
 .popover {
-
+	padding:7px 7px;
 }
 
 .popover-content{
-	height:0;
 	padding:0;
 }
 
 .popover-title {
 	background:white;
 	border:0;
+	padding:0;
 }
 
 .progress {
