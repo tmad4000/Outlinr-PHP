@@ -318,3 +318,13 @@ a:hover {
 input[type="text"].usr {
 	width:114px
 }
+
+div.delete {
+	float:right;
+	height:0px;
+	margin-top:-5px;
+	
+}
+div.delete a {	
+	display:none;
+}

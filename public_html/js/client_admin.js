@@ -139,6 +139,19 @@ function displayPosts() {
 			e.preventDefault();
 			cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
+		
+		$("div.delete > a").click(function(e) {
+			e.preventDefault();
+			$(this).closest($(this).closest('.entryNode')).hide(); //hack #faked
+		//	deletePost(this).closest($(this).closest('.entryNode')).attr('-idea-id'));
+		});		
+		
+		$("ul.entryNode table").hover (function() {
+			$(this).find('div.delete a').show();
+		},function() {
+			$(this).find('div.delete a').hide();
+		});
+		
 		$(".star-off").click(function() {
 			console.log(t=$(this))
 			$(this).toggleClass("star-on");

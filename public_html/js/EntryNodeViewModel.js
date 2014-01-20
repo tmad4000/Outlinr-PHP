@@ -116,6 +116,7 @@ function EntryNodeViewModel(entryNodeModel) {
 			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+comments+"</td>" + 
 		   	// '<td><div class="progressbar"></div></td>' +
 		   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+			"<div class='delete'><a href='#'>Delete</a></div>" +
 //		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
 			"</td></tr>";
 
