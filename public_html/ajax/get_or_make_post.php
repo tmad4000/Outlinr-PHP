@@ -41,11 +41,11 @@ if (!empty($body)) {
 
 //return progress bars info if queried
 if($_GET['inProgress']) {
-	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND status > 0 ORDER BY path ASC,status ASC,time DESC";
+	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND status > 0 AND deleted_time IS NULL ORDER BY path ASC,status ASC,time DESC";
 }
 //normally, return suggestions info
 else {
-	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid ORDER BY path ASC,time DESC";
+	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND deleted_time IS NULL ORDER BY path ASC,time DESC";
 }
 $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 

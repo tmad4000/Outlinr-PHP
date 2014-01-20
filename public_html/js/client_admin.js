@@ -142,14 +142,16 @@ function displayPosts() {
 		
 		$("div.delete > a").click(function(e) {
 			e.preventDefault();
-			$(this).closest($(this).closest('.entryNode')).hide(); //hack #faked
-		//	deletePost(this).closest($(this).closest('.entryNode')).attr('-idea-id'));
+			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
+			if (r==true)
+				deleteNode($(this).closest('.entryNode').attr('-idea-id'));
+			
 		});		
 		
-		$("ul.entryNode table").hover (function() {
-			$(this).find('div.delete a').show();
+		$(".entryNode table").hover (function() {
+			$(this).find('div.delete > a').fadeIn();
 		},function() {
-			$(this).find('div.delete a').hide();
+			$(this).find('div.delete > a').hide();
 		});
 		
 		$(".star-off").click(function() {
@@ -325,6 +327,18 @@ function cycleStatus(ideaid) {
 
 	$.ajax({
 		'url': 'ajax/cyclestatus.php',
+		'data': {'ideaid':ideaid},
+		'success': function(jsonData) {
+			numberOfIdeasVisible =0;	
+			getPosts();
+		},
+	});
+}
+
+function deleteNode(ideaid) {
+
+	$.ajax({
+		'url': 'ajax/deleteNode.php',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
 			numberOfIdeasVisible =0;	
