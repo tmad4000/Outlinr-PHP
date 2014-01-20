@@ -14,7 +14,7 @@ $time = time();
 $ideastbl = IDEAS_TBL;
 
 if (!empty($ideaid)) {
-    $query = "UPDATE $ideastbl SET status=(status+1)%4 WHERE pid=$ideaid";
+    $query = "UPDATE $ideastbl SET status=(status+1)%5 WHERE pid=$ideaid";
 	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("UPDATE Error: " . mysqli_error($MYSQLI_LINK));
 }

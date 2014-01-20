@@ -4,9 +4,9 @@ var tilde_regexp = /[~]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistical
 
 var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
 
-var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK
-var filterToggle = 'Date'; // Date, Upvote, Hot (TODO)
+var filterToggle = 'Date'; // Date, Upvote, Hot, Status
 
 function changeOrder(nodeChildren){
     // if filtertoggle upvotes

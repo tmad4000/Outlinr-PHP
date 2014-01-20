@@ -61,6 +61,10 @@ div.sc3 { /*Status: complete*/
 	background:#0F0;
 	border:1px solid #0F0;
 }
+div.sc4 { /*Status: rejected*/
+	background:orange;
+	border:1px solid orange;
+}
 
 td.status {
 	width:28px;
