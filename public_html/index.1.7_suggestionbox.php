@@ -318,7 +318,10 @@ td.uid {
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
         </form>
-        <div id="numResults"></div>
+        <div id="tableHeaderDiv">
+          <div id="numResults"></div>
+          <div id="filterBy">Sort by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a><!--#FUTURE<a>Hot</a>--></div>
+        </div>
         <div id="currentposts"></div>
 
       </div>

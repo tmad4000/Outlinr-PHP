@@ -127,6 +127,7 @@ function displayPosts() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
+
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
 
 		//entryList = new EntryList(data);
@@ -336,7 +337,6 @@ function submitPostAndGetPosts() {
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
-
                  $('#newpost').val('');
                  displayPosts();
              },

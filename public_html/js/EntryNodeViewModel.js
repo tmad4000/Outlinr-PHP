@@ -13,8 +13,13 @@ function EntryNodeViewModel(entryNodeModel) {
 
 	//children
 	this.children = {};
-	for(var key in this.entryNodeModel.children) {
-		this.children[key]=new EntryNodeViewModel(this.entryNodeModel.children[key]);
+
+	var sortable = changeOrder(this.entryNodeModel.children);
+	var i=0;
+	while(i<sortable.length) {
+		var key = sortable[i][0];
+		this.children[key]=new EntryNodeViewModel(this.entryNodeModel.children[key]);		
+		i++;
 	}
 
 	// only for debugging

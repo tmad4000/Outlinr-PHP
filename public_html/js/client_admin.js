@@ -8,6 +8,27 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
+	$('#sortByDate').click( function(){
+	    if(!$(this).hasClass('toggled')){
+	        filterToggle = "Date";
+	        $('#sortByUpvotes').removeClass('toggled'); 
+	        $(this).addClass("toggled");
+	        numberOfIdeasVisible =0;	
+
+	        displayPosts()
+	    }
+	});
+
+	$('#sortByUpvotes').click( function(){
+	    if(!$(this).hasClass('toggled')){
+	        filterToggle = "Upvotes";
+	        $('#sortByDate').removeClass('toggled'); 
+	        $(this).addClass("toggled");
+	       	numberOfIdeasVisible =0;	
+
+	        displayPosts()        
+	    }
+	})
 
 	initiateCookie();
 	$('#usrname').change(function (){
@@ -127,6 +148,7 @@ function displayPosts() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
+
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
 
 		//entryList = new EntryList(data);

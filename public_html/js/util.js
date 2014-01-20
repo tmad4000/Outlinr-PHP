@@ -6,6 +6,17 @@ var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 var numberOfIdeasVisible = 0; // #HACK
+var filterToggle = 'Date'; // Date, Upvote, Hot (TODO)
+
+function changeOrder(nodeChildren){
+    // if filtertoggle upvotes
+    var sortable = [];
+    for (var key in nodeChildren)
+    sortable.push([key, nodeChildren[key].upvotes])
+    if(filterToggle == 'Upvotes')
+        sortable.sort(function(a, b) {return b[1] - a[1]})  
+    return sortable
+}
 
 function updateNrOfIdeasVisible(){
     if($('textarea#newpost').val() == ""){
