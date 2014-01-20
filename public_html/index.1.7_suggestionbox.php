@@ -122,7 +122,6 @@ td.votes {
 	font-size:10pt;
 	color:#AAA;
 	text-align:center;
-  vertical-align: middle;
 	width:24px;
   cursor:pointer;
   float:center;
@@ -134,7 +133,6 @@ td.votes {
 
 td.ideaTxt {
 	/*width:100%;*/
-  vertical-align: middle;
 }
 
 td.ideaTxt > b {
@@ -201,7 +199,8 @@ td.uid {
 
 #currentposts .suggname {
   text-decoration:none;
-  color:#D41528;
+  /*color:#D41528;*/
+  color:#090909;
   cursor:text!important;
 }
 

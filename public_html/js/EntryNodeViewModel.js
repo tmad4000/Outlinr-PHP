@@ -108,15 +108,14 @@ function EntryNodeViewModel(entryNodeModel) {
 
 			//entryNodeBody="<div>"+table+"</div>";
 			comments=""
-			/*
 			comments="<div class='showcomments'><a href='#' class='showcomments'>7+ Comments</a>";
 			
 			comments+='<div class="commentform"> \
 					<div class="commentsinput" contenteditable="true" placeholder="" -idea-id="'+this.entryNodeModel.pid+'"></div> \
 					<input class="btn" type="button" value="Comment"> \
+					<div class="commentcontent"><ul></ul></div> \
 				</div>';
 			comments+='</div>';
-			*/
 			//entryNodeBody+=comments;
 			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+comments+"</td>" + 
 		   	// '<td><div class="progressbar"></div></td>' +

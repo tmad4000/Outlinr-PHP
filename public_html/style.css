@@ -62,13 +62,12 @@ div.sc3 { /*Status: complete*/
 	border:1px solid #0F0;
 }
 div.sc4 { /*Status: rejected*/
-	background:orange;
-	border:1px solid orange;
+	background:#D41528;
+	border:1px solid #D41528;
 }
 
 td.status {
 	width:28px;
-	vertical-align: middle;
 }
 
 .popover {
@@ -154,12 +153,11 @@ a.showcomments {
 	background-repeat:no-repeat;
 }
 a.showcomments:hover {
-	background-position: 0 -16px;
-	
+	background-position: 0 -16px;	
 }
 
 div.showcomments {
-	margin-left:47px;
+	margin-left:0px;
 	margin-top:5px;
 /*	position:relative;
 	top:-35px;*/
@@ -169,6 +167,10 @@ div.commentform input[type=button] {
 	
 	height:24px;
 	line-height:14px;
+}
+
+div.commentform {
+	display:none;
 }
 
 div.commentform div.commentsinput {

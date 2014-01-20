@@ -181,6 +181,10 @@ function displayPosts() {
 			$(this).toggleClass("star-on");
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
+
+		$('.showcomments > a').click(function(){
+			$(this).parent().find('.commentform').toggle();
+		});
 		//$("#currentposts").html(entrylist);
 		/*
 					var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
