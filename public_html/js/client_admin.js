@@ -358,7 +358,6 @@ function cycleStatus(ideaid) {
 		'success': function(jsonData) {
 			numberOfIdeasVisible =0;	
 			getPosts();
-			updateNrOfIdeasVisible()				
 		},
 	});
 }

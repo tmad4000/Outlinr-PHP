@@ -46,7 +46,6 @@ require_once('../config.inc.php');
       padding-top: 60px;
     }
     .navbar {
-      letter-spacing: 1px !important;
     }
 
     .sidebar-nav-fixed {
