@@ -241,7 +241,7 @@ require_once('../config.inc.php');
       <form id="postform">
         <div class="input-append" style="width:100%">
           <textarea class="span12" placeholder="New idea map name" id="newpost" ></textarea>
-          <input class="btn" type="submit"></input>
+          <input class="btn" id="ideamapbox" type="submit"></input>
         </div>
       </form>
       

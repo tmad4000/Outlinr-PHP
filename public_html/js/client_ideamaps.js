@@ -16,6 +16,8 @@ $(document).ready(function() {
           }else if(event.keyCode == 13)
           {
               $('#postform').submit();
+              $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
           }
     });
     function getCaret(el) { 
