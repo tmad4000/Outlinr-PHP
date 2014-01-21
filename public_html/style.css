@@ -68,6 +68,7 @@ div.sc4 { /*Status: rejected*/
 
 td.status {
 	width:28px;
+	padding-top:12px !important;
 }
 
 .popover {
@@ -187,6 +188,10 @@ div.commentform div.commentsinput {
 	-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
 	-o-transition: border linear 0.2s, box-shadow linear 0.2s;
 	transition: border linear 0.2s, box-shadow linear 0.2s;
+	margin-right:7px;
+	border-radius:3px;
+	outline:none;
+	padding:2px 5px 2px 5px;
 }
 
 #postform textarea {
@@ -197,6 +202,11 @@ div.commentform div.commentsinput {
 	margin-left:5px;
 	height:50px;
 }
+
+.commentform .btn {
+	height:80px;
+}
+
 #postform{
 	margin-bottom:0px;
 }
@@ -281,7 +291,6 @@ a:hover {
 	width:18px;
 	height:18px;
 	margin-left:-60px;
-	margin-top:-6px;
 	float:left;
 	display:none
 }

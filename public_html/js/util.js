@@ -25,12 +25,12 @@ function updateNrOfIdeasVisible(){
     else {
         // so that chunks of text dont happen
         var store = $('textarea#newpost').val();
-        if(store.length>50) store = store.substring(0,50)+"...";
+        if(store.length>40) store = store.substring(0,40)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
         }
         else {
-            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+store+"...\"");
+            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+store+"\"");
         }     
     }
 }

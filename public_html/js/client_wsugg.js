@@ -87,7 +87,7 @@ function displayPosts() {
 
             var time = new Date(data[i].time * 1000);
 
-			var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+			var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done",4:"Rejected"};
 			var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
 			
 			status ="<td class='status'>" + '<a href="index.1.7_suggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
