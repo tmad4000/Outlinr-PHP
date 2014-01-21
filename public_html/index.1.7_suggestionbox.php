@@ -283,7 +283,7 @@ td.uid {
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
             </ul>
-            <li class="nav-header">Categories (#-)</li>
+            <li class="nav-header">Categories (#)</li>
 
             <ul id="idea-hashtags" class="ideatags">
               <!--<li class="active"><a href="#">Link</a></li>
@@ -291,7 +291,7 @@ td.uid {
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
             </ul>
-            <li class="nav-header">People (~-)</li>
+            <li class="nav-header">People (~)</li>
 
             <ul id="people-list" class="ideatags">
               <!--<li class="active"><a href="#">Link</a></li>

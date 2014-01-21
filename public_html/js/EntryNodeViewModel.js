@@ -108,7 +108,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 			//entryNodeBody="<div>"+table+"</div>";
 			comments=""
-			comments="<div class='showcomments'><a href='#' class='showcomments'>X Comments</a>";
+			comments="<div class='showcomments'><a class='showcomments'>X Comments</a>";
 			
 			comments+='<div class="commentform"> \
 					<div class="commentsinput" contenteditable="true" placeholder="" -idea-id="'+this.entryNodeModel.pid+'"></div> \
