@@ -20,7 +20,10 @@ function changeOrder(nodeChildren){
 
 function updateNrOfIdeasVisible(){
     if($('textarea#newpost').val() == ""){
-        $('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
+        if(numberOfIdeasVisible==0)
+            $('#numResults').html("There are no ideas here. Add the first!");            
+        else
+            $('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
     }
     else {
         // so that chunks of text dont happen

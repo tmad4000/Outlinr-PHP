@@ -1,11 +1,267 @@
+/* Index:
+ * 	Page
+ *		Page Topbar
+ *		Page Rightbar
+ *		Page Footer
+ *		Page Content
+ * 			Controls & Textarea
+ *			Ideas Structure
+ *			Inside Ideas
+ */
+
+/*
+ * Page
+ *
+ */
+
 body {
     background: #FFF;
     font-weight:300;
 }
 
+	/*
+	 * Page Topbar
+	 *
+	 */		 
+	.navbar-text input[type="text"] {
+		width:150px;
+		font-size:12px;
+		margin:1px 0px 5px 10px;
+	}
+
+	.navbar-text input[type="button"]{
+		background-color: #eee;
+	    border: 1px solid #cccccc;
+	    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	    -webkit-transition: border linear .2s, box-shadow linear .2s;
+	    -moz-transition: border linear .2s, box-shadow linear .2s;
+	    -o-transition: border linear .2s, box-shadow linear .2s;
+	    transition: border linear .2s, box-shadow linear .2s;
+	    display: inline-block;
+	    margin:0px 0px 5px 10px;
+	    height: 30px;
+	    padding: 4px 6px;
+	    font-size: 14px;
+	    line-height: 20px;
+	    color: #555555;
+	    -webkit-border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    border-radius: 4px;
+	}
+
+	.navbar-text input[type="button"]:active{
+		background-color: #ddd;
+	}
+
+	input[type="text"].usr {
+		width:114px
+	}
+
+	 /*
+	  * Page Rightbar
+	  *
+	  */
+
+	 /*
+	  * Page Footer
+	  *
+	  */
+
+	 /*
+	  * Page Content
+	  *
+	  */
+
+	 	/* 
+	 	 * Page Content: Controls and Textarea
+	 	 *
+	 	 */
+	 	#filterBy .toggled{
+			text-decoration: underline;
+		}
+
+		#filterBy {
+			display:inline;
+			float:right;
+			position:relative;
+			top:-20px;
+		}
+
+		#filterBy a {
+			color:#666;
+			cursor:pointer;
+		}
+		#numResults {
+			max-width:400px;
+		}
+
+	 	/* 
+	 	* Page Content: Ideas Structure
+	 	*
+	 	*/
+	 	.hero-unit-light {
+			padding-left:40px !important;
+		}
+		/* 
+	 	* Page Content: Inside Ideas
+	 	*
+	 	*/
+	 	td.timecol {
+		    width: 80px;
+		    color:#AAA;
+		    padding-right:0;
+		    text-align:right;
+		    font-size:10px;
+			white-space:nowrap;
+		}
+
+		.uid {
+		    color:#AAA;
+		    font-size:10px;
+		    padding-right:15px;
+			
+			display:none; /* hack */
+		}
+
+		div.status{
+			width:20px;
+			height:20px;
+			border-radius:50px;
+			font-size:20px;
+			color:#fff;
+			line-height:100px;
+			text-align:center;
+		}
+
+		div.sc0 { /*Status: not acknowledged*/
+			/*background:#AAA*/
+			background:transparent;
+			border:1px solid #DDDDDD;
+		}
+		div.sc1 { /*Status: acknowledged ff0*/
+			background:#fbed42;
+			border:1px solid #fbed42;
+		}
+		div.sc2 { /*Status: acknowledged and in progress*/
+			background:#2eabe6;
+			border:1px solid #2eabe6;
+		}
+		div.sc3 { /*Status: complete 0f0*/
+			background:#00d64b; 
+			border:1px solid #00d64b;
+		}
+		div.sc4 { /*Status: rejected*/
+			background:#D41528;
+			border:1px solid #D41528;
+		}
+
+		td.status {
+			width:28px;
+			padding-top:12px !important;
+		}
+
+		.popover {
+			padding:10px;
+		}
+
+		.popover-content{
+			padding:0;
+		}
+
+		.popover-title {
+			background:white;
+			border:0;
+			padding:0;
+		}
+		div.delete {
+			float:right;
+			height:0px;
+			margin-top:-5px;
+			
+		}
+		div.delete a {	
+			display:none;
+		}
+
+		a.showcomments {
+			background-image: url(images/commenticon.gif);
+			padding-left:15px;
+			background-position: 0px 1px;
+			background-repeat:no-repeat;
+		}
+		a.showcomments:hover {
+			background-position: 0 -16px;
+			cursor:pointer;	
+		}
+
+		div.showcomments {
+			margin-left:0px;
+			margin-top:5px;
+			font-size:11px;
+		/*	position:relative;
+			top:-35px;*/
+		}
+
+		div.commentform input[type=button] {
+			
+			height:24px;
+			line-height:14px;
+		}
+
+		div.commentform {
+			display:none;
+		}
+
+		div.commentform div.commentsinput {
+			float:left;
+			height:18px;
+			width:220px;
+			
+			background-color: #ffffff;
+			border: 1px solid #cccccc;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+			-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+			-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+			-o-transition: border linear 0.2s, box-shadow linear 0.2s;
+			transition: border linear 0.2s, box-shadow linear 0.2s;
+			margin-right:7px;
+			border-radius:3px;
+			outline:none;
+			padding:2px 5px 2px 5px;
+		}
+		.progress {
+			/* #101010, #181818 */
+			height: 20px;
+			margin-bottom: 20px;
+			background-color: #f7f7f7;
+			background-image: -moz-linear-gradient(top, #f5f5f5, #f9f9f9);
+			background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f9f9f9));
+			background-image: -webkit-linear-gradient(top, #f5f5f5, #f9f9f9);
+			background-image: -o-linear-gradient(top, #f5f5f5, #f9f9f9);
+			background-image: linear-gradient(to bottom, #f5f5f5, #f9f9f9);
+			background-repeat: repeat-x;
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0);
+			-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+			-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+			box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			
+		}
+
+		.hasUnexpandedChildren {
+			background-color:#f9f9f9;
+		}
+
+
+
 div.container {
-    background: white;
-    
+    background: white;    
 }
 
 div.container h1 {
@@ -16,93 +272,11 @@ div.container textarea.span11 {
     height: 20px;
 }
 
-td.timecol {
-    width: 80px;
-    color:#AAA;
-    padding-right:0;
-    text-align:right;
-    font-size:10px;
-	white-space:nowrap;
-}
-
-.uid {
-    color:#AAA;
-    font-size:10px;
-    padding-right:15px;
-	
-	display:none; /* hack */
-}
 
 
-div.status{
-	width:20px;
-	height:20px;
-	border-radius:50px;
-	font-size:20px;
-	color:#fff;
-	line-height:100px;
-	text-align:center;
-}
-
-div.sc0 { /*Status: not acknowledged*/
-	/*background:#AAA*/
-	background:transparent;
-	border:1px solid #DDDDDD;
-}
-div.sc1 { /*Status: acknowledged ff0*/
-	background:#fbed42;
-	border:1px solid #fbed42;
-}
-div.sc2 { /*Status: acknowledged and in progress*/
-	background:#2eabe6;
-	border:1px solid #2eabe6;
-}
-div.sc3 { /*Status: complete 0f0*/
-	background:#00d64b; 
-	border:1px solid #00d64b;
-}
-div.sc4 { /*Status: rejected*/
-	background:#D41528;
-	border:1px solid #D41528;
-}
-
-td.status {
-	width:28px;
-	padding-top:12px !important;
-}
-
-.popover {
-	padding:10px;
-}
-
-.popover-content{
-	padding:0;
-}
-
-.popover-title {
-	background:white;
-	border:0;
-	padding:0;
-}
-
-#filterBy .toggled{
-	text-decoration: underline;
-
-}
 
 
-#filterBy {
-	display:inline;
-	float:right;
-	position:relative;
-	top:-20px;
-}
 
-#filterBy a {
-	color:#666;
-
-	cursor:pointer;
-}
 
 .nav-header {
 	color:#666;
@@ -112,88 +286,10 @@ td.status {
 	color:#999;
 }
 
-#numResults {
-	max-width:400px;
-}
-
-.hero-unit-light {
-	padding-left:40px !important;
-}
-
-.progress {
-	/* #101010, #181818 */
-	height: 20px;
-	margin-bottom: 20px;
-	background-color: #f7f7f7;
-	background-image: -moz-linear-gradient(top, #f5f5f5, #f9f9f9);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#f9f9f9));
-	background-image: -webkit-linear-gradient(top, #f5f5f5, #f9f9f9);
-	background-image: -o-linear-gradient(top, #f5f5f5, #f9f9f9);
-	background-image: linear-gradient(to bottom, #f5f5f5, #f9f9f9);
-	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0);
-	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	
-}
-
-.hasUnexpandedChildren {
-	background-color:#f9f9f9;
-}
 
 
 
-a.showcomments {
-	background-image: url(images/commenticon.gif);
-	padding-left:15px;
-	background-position: 0px 1px;
-	background-repeat:no-repeat;
-}
-a.showcomments:hover {
-	background-position: 0 -16px;
-	cursor:pointer;	
-}
 
-div.showcomments {
-	margin-left:0px;
-	margin-top:5px;
-/*	position:relative;
-	top:-35px;*/
-}
-
-div.commentform input[type=button] {
-	
-	height:24px;
-	line-height:14px;
-}
-
-div.commentform {
-	display:none;
-}
-
-div.commentform div.commentsinput {
-	float:left;
-	height:18px;
-	width:220px;
-	
-	background-color: #ffffff;
-	border: 1px solid #cccccc;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
-	-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-	-o-transition: border linear 0.2s, box-shadow linear 0.2s;
-	transition: border linear 0.2s, box-shadow linear 0.2s;
-	margin-right:7px;
-	border-radius:3px;
-	outline:none;
-	padding:2px 5px 2px 5px;
-}
 
 #postform textarea {
 	font-weight:200!important;
@@ -217,38 +313,6 @@ div.commentform div.commentsinput {
 	display:none;
 }
 
-.navbar-text input[type="text"] {
-	width:150px;
-	font-size:12px;
-	margin:1px 0px 5px 10px;
-}
-
-.navbar-text input[type="button"]{
-	background-color: #eee;
-    border: 1px solid #cccccc;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border linear .2s, box-shadow linear .2s;
-    -moz-transition: border linear .2s, box-shadow linear .2s;
-    -o-transition: border linear .2s, box-shadow linear .2s;
-    transition: border linear .2s, box-shadow linear .2s;
-    display: inline-block;
-    margin:0px 0px 5px 10px;
-    height: 30px;
-    padding: 4px 6px;
-    font-size: 14px;
-    line-height: 20px;
-    color: #555555;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-.navbar-text input[type="button"]:active{
-	background-color: #ddd;
-}
-
 .LinkCreateType {
 	width:120px;
 	-webkit-border-radius:5px;
@@ -259,33 +323,6 @@ div.commentform div.commentsinput {
 	outline:none;
 	padding:2px 2px 1px 4px;
 }
-
-
-/*
-
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-li {
-    background-image: url(page.png);
-    background-position: 0 1px;
-    background-repeat: no-repeat;
-    padding-left: 20px;
-}
-li.folder {
-    background-image: url(folder.png);
-}
-
-a {
-    color: #000000;
-    cursor: pointer;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}*/
 
 
 .star {
@@ -361,16 +398,4 @@ a:hover {
 	zoom: 1;
 }
 
-input[type="text"].usr {
-	width:114px
-}
 
-div.delete {
-	float:right;
-	height:0px;
-	margin-top:-5px;
-	
-}
-div.delete a {	
-	display:none;
-}

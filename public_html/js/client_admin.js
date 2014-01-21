@@ -2,6 +2,7 @@
 var isDefaultUsrHandle = true;
 
 $(document).ready(function() {
+	updateNrOfIdeasVisible()
 	$('#postform').submit(function() {
 		numberOfIdeasVisible =0;	
 		submitPostAndGetPosts();
@@ -357,6 +358,7 @@ function cycleStatus(ideaid) {
 		'success': function(jsonData) {
 			numberOfIdeasVisible =0;	
 			getPosts();
+			updateNrOfIdeasVisible()				
 		},
 	});
 }
@@ -367,8 +369,9 @@ function deleteNode(ideaid) {
 		'url': 'ajax/deleteNode.php',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
-			numberOfIdeasVisible =0;	
+			numberOfIdeasVisible =0;
 			getPosts();
+			updateNrOfIdeasVisible()	
 		},
 	});
 }

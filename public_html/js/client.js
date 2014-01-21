@@ -8,7 +8,6 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
-
 	initiateCookie();
 	$('#usrname').change(function (){
        	 updateCookie()
