@@ -4,7 +4,7 @@ require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 
 $pid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['pid']))+0);
-$commenttext = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['comment_text']));
+$commenttext = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['comment_text'])));
 $deletecid= (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['deletecid']))+0);
 
 	
