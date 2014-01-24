@@ -5,7 +5,6 @@ function EntryNodeViewModel(entryNodeModel) {
 
 	//attributes of this object
 	this.visible=true;
-
 	//self
 	if(this.entryNodeModel.pid !== null)
 		this.eT = new EntryNodeTextViewModel(this.entryNodeModel.body,this.entryNodeModel.pid);
@@ -117,9 +116,10 @@ function EntryNodeViewModel(entryNodeModel) {
 						postCommentsModel=commentsModel[this.entryNodeModel.pid];
 						
 						$.each(postCommentsModel,function(i,currComment) {
+							var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 							var commentTime = new Date(currComment.time * 1000);
 							var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
-							var commentS='<div class="comment-text">' + currComment.comment_text + '</div>'+
+							var commentS='<div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
 							'<div class="comment-time timecol">' + commentTimeS + '</div>';
 							commentsListH+="<li>"+commentS+"</li>";
 						})

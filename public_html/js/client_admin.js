@@ -111,27 +111,7 @@ $(document).ready(function() {
 		//#TODO never gets here
 
 	});
-	//Handles new line (shift+enter) in the omnibox
-	function getCaret(el) { 
-		if (el.selectionStart) { 
-			return el.selectionStart; 
-		} else if (document.selection) { 
-			el.focus(); 
-
-			var r = document.selection.createRange(); 
-			if (r == null) { 
-				return 0; 
-			} 
-
-			var re = el.createTextRange(), 
-			rc = re.duplicate(); 
-			re.moveToBookmark(r.getBookmark()); 
-			rc.setEndPoint('EndToStart', re); 
-
-			return rc.text.length; 
-		}  
-		return 0; 
-	}
+	
 
 		/*
 	$('#myTab a').click(function(e) {
@@ -143,6 +123,28 @@ $(document).ready(function() {
 	*/
 	getPosts();
 });
+
+//Handles new line (shift+enter) in the omnibox
+function getCaret(el) { 
+	if (el.selectionStart) { 
+		return el.selectionStart; 
+	} else if (document.selection) { 
+		el.focus(); 
+
+		var r = document.selection.createRange(); 
+		if (r == null) { 
+			return 0; 
+		} 
+
+		var re = el.createTextRange(), 
+		rc = re.duplicate(); 
+		re.moveToBookmark(r.getBookmark()); 
+		rc.setEndPoint('EndToStart', re); 
+
+		return rc.text.length; 
+	}  
+	return 0; 
+}
 
 //var entryList = null;
 var rootNodeViewModel = null;
@@ -208,7 +210,9 @@ function displayPosts() {
 		$('.commentsinput').keyup(function(e){
 			e.preventDefault();
 			if(event.keyCode == 13) { // enter
-
+				var content = this.value;
+        		var caret = getCaret(this);
+        		this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
 	        	//below unneeded if using text input
 	        	// removes the newline
 	        	/*var content = this.value;

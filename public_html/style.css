@@ -33,6 +33,9 @@ div.container textarea.span11 {
 	display:none; /* hack */
 }
 
+.status-box {
+	margin-top:5px;
+}
 
 div.status{
 	width:20px;
