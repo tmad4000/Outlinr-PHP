@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2014 at 03:36 AM
+-- Generation Time: Jan 24, 2014 at 03:50 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -36,25 +36,6 @@ CREATE TABLE IF NOT EXISTS `comments` (
   PRIMARY KEY (`cid`),
   KEY `p_id` (`pid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
-
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`cid`, `pid`, `comment_text`, `time`, `uid`, `deleted_time`) VALUES
-(14, 565, 'aoeu', 1390531768, '', NULL),
-(15, 565, 'aoeu', 1390531773, '', NULL),
-(16, 565, 'aoe', 1390532010, '', NULL),
-(17, 565, 'aoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu aaoeu aoeu a\n', 1390532215, '', NULL),
-(18, 565, '.,''p.p\n', 1390532623, '', NULL),
-(19, 565, 'cgrcf\n', 1390532777, '', NULL),
-(20, 565, 'thtnh\n', 1390532828, '', NULL),
-(21, 565, 'tnh s\n', 1390533026, '', NULL),
-(22, 558, 'th th\n', 1390533030, '', NULL),
-(23, 560, 'tht\n ~jcoth', 1390533509, '', NULL),
-(24, 560, 'aoenhtu \n ~jcoth', 1390534339, '', NULL),
-(25, 560, 'noateuh \n ~jcoth', 1390534342, '', NULL),
-(26, 560, 'nte huaosen\n ~jcoth', 1390534347, '', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

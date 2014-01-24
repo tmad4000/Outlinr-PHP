@@ -1,4 +1,5 @@
 <?php 
+
 require_once('../config.inc.php');
 ?>
 
@@ -13,9 +14,10 @@ require_once('../config.inc.php');
   $getmapid=$_GET['mapid']+0;
 
   $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
-//echo $query;
+  //echo $query;
+  //var_dump($MYSQLI_LINK);
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-  $r = mysqli_fetch_assoc($result)
+  $r = mysqli_fetch_assoc($result);
 
   ?>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">

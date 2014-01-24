@@ -59,7 +59,10 @@ while ($r = mysqli_fetch_assoc($result)) {
 	$pid=$r['pid'];
 	$countQuery = "SELECT COUNT(*) FROM $commentstbl WHERE pid=$pid AND deleted_time IS NULL";
 	$countResult=mysqli_query($MYSQLI_LINK, $countQuery) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-	$num_comments = mysqli_fetch_array($countResult)[0]+0;
+
+	$num_comments = (mysqli_fetch_array($countResult));
+	$num_comments=$num_comments[0];
+	//var_dump($num_comments);
 	$r['num_comments']=$num_comments;
 
 	//var_dump($num_comments);
