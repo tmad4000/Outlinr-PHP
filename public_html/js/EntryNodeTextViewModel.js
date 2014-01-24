@@ -54,10 +54,13 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.pushSplits = function(re,ray) { // should be private
 		var m=this.txt.regexMatchOffset(re,0);
 		// Removes Duplicates
-		for(var i=0;i<m.length;i++) {
+		var i=0;
+		while(i<m.length) {
 			if(i==0 || !(m[i][0]==m[i-1][0] && m[i][1]==m[i-1][1])){
-				ray.push(m[i][0],m[i][1]+m[i][0]);//start and end of substring
+				if(this.txt.charAt(m[i][0]-1)!='~' && this.txt.charAt(m[i][0]-1)!='#')
+					ray.push(m[i][0],m[i][1]+m[i][0]);//start and end of substring
 			}
+			i++;
 		}
 	}
 
