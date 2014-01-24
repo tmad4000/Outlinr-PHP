@@ -21,6 +21,7 @@ define('DB_HOST', 'localhost');
 
 
 define('IDEAS_TBL', 'post_ideas_mitsugg');
+define('COMMENTS_TBL', 'comments');
 define('LINKS_TBL', 'links');
 define('IDEAMAPS_TBL', 'ideamaps');
 

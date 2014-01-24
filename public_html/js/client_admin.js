@@ -1,6 +1,9 @@
 //getPosts() -> displayPosts() 
 var isDefaultUsrHandle = true;
 
+var commentsModel = {};
+var expandedComments = {};
+
 $(document).ready(function() {
 	$('#postform').submit(function() {
 		numberOfIdeasVisible =0;	
@@ -13,7 +16,7 @@ $(document).ready(function() {
 	        filterToggle = "Date";
 	        $('#sortByUpvotes').removeClass('toggled'); 
 	        $(this).addClass("toggled");
-	        numberOfIdeasVisible =0;	
+	        
 
 	        displayPosts()
 	    }
@@ -24,7 +27,7 @@ $(document).ready(function() {
 	        filterToggle = "Upvotes";
 	        $('#sortByDate').removeClass('toggled'); 
 	        $(this).addClass("toggled");
-	       	numberOfIdeasVisible =0;	
+	       		
 
 	        displayPosts()        
 	    }
@@ -83,7 +86,7 @@ $(document).ready(function() {
 	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
 		// #TODO #Future trim repeated enters       
-		if (event.keyCode == 13 && event.shiftKey) { // enter
+		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
         	var content = this.value;
         	var caret = getCaret(this);
         	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
@@ -145,7 +148,10 @@ $(document).ready(function() {
 var rootNodeViewModel = null;
 
 function displayPosts() {
+	numberOfIdeasVisible =0;
 	if (localStorage.getItem("posts") !== null){
+		
+
 		var jsonData = localStorage.getItem("posts");
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
 
@@ -176,15 +182,48 @@ function displayPosts() {
 			$(this).find('div.delete > a').hide();
 		});
 		
-		$(".star-off").click(function() {
+		/*$(".star-off").click(function() {
 			console.log(t=$(this))
 			$(this).toggleClass("star-on");
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
+		});*/
+
+		$('.showcomments > a').click(function(e){
+			e.preventDefault();
+			//$(this).parent().find('.commentform').toggle();
+			var idS=$(this).closest('.entryNode').attr('-idea-id');
+			//console.log("qqq" + idS)
+			if(!(idS in expandedComments)) {
+			//	console.log("eue")
+				expandedComments[idS]=1;
+			}
+			else {
+			//	console.log("hhh")
+				delete expandedComments[idS];
+			}
+
+			getComments(idS);
 		});
 
-		$('.showcomments > a').click(function(){
-			$(this).parent().find('.commentform').toggle();
+		$('.commentsinput').keyup(function(e){
+			e.preventDefault();
+			if(event.keyCode == 13) { // enter
+
+	        	//below unneeded if using text input
+	        	// removes the newline
+	        	/*var content = this.value;
+	        	var caret = getCaret(this);
+	        	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+	        	*/
+	        	event.stopPropagation();
+				//$(this).parent().find('.commentform').toggle();
+				var idS=$(this).closest('.entryNode').attr('-idea-id');
+				//console.log("qqq" + idS)
+				submitAndGetComments(idS);
+			}
 		});
+
+
 		//$("#currentposts").html(entrylist);
 		/*
 					var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
@@ -273,6 +312,10 @@ function displayPosts() {
 		$('#newpost').val(targetName).focus();
 		rootNodeViewModel.filter(targetName);
 	});
+
+
+	
+    rootNodeViewModel.filter($('textarea#newpost').val());
 }
 // Now implemented through an EntryNodeViewModel object and the .filter method
 /*function filterIdeas(query){//#TODO 
@@ -355,8 +398,8 @@ function cycleStatus(ideaid) {
 		'url': 'ajax/cyclestatus.php',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
-			numberOfIdeasVisible =0;	
 			getPosts();
+
 		},
 	});
 }
@@ -367,7 +410,6 @@ function deleteNode(ideaid) {
 		'url': 'ajax/deleteNode.php',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
-			numberOfIdeasVisible =0;	
 			getPosts();
 		},
 	});
@@ -391,7 +433,7 @@ function submitPostAndGetPosts() {
 	var np = $('#newpost').val();
 	var ind=np.indexOf('~'+$('#usrhandle').val());
 	
-	if($('#usrhandle').val()!="" && ind==-1) { //bug -- doesn't catch included word
+	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
 //		if(np.substr(ind+$('#usrhandle').val().length+1),1)
 			
 		np+=' ~'+$('#usrhandle').val();
@@ -424,7 +466,50 @@ function getPosts() {
 		'success': function(jsonData) {
 			localStorage.setItem("posts", jsonData);
 			displayPosts();
+
 		},
 	});
 }
+
+function getComments(pid) {
+	$.ajax({
+		'url': 'ajax/comment.php',
+		'data': {'pid':pid},
+		'success': function(jsonData) {
+			commentsModel[pid]=$.parseJSON(jsonData);
+			console.log(commentsModel)
+			displayPosts();
+		},
+	});
+}
+
+function submitAndGetComments(pid) {
+
+
+	var n=$('.entryNode[-idea-id="'+pid+'"]');
+	var c =n.find('.commentsinput').first();
+	var t = c.val();
+	
+	var ind=t.indexOf('~'+$('#usrhandle').val());
+	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
+//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+		t+=' ~'+$('#usrhandle').val();
+	}
+
+
+	if(t) {
+		$.ajax({
+			'url': 'ajax/comment.php',
+			'data': {'pid':pid,'comment_text':t},
+			'success': function(jsonData) {
+				commentsModel[pid]= $.parseJSON(jsonData);
+
+				displayPosts();
+				// c.val(''); //Redundant?
+			},
+		});
+	}
+}
+
+
 

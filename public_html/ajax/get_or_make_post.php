@@ -10,7 +10,7 @@ $usrname = mysqli_real_escape_string($MYSQLI_LINK, (trim($_REQUEST['uid'])));
 $defaultpath="";
 $defaultparent=0;
 
-//mit specific hack
+//mit specific #hack
 //Utopia/Misc 197/199
 if(!$path&&$mapid==3) {
 	$path=$defaultpath="197/199/";
@@ -26,7 +26,7 @@ if(!$path&&$mapid==3) {
 $time = time();
 
 $ideastbl = IDEAS_TBL;
-
+$commentstbl = COMMENTS_TBL;
 
 
 if (!empty($body)) {
@@ -56,7 +56,13 @@ $data=array("uid"=>0,"pid"=>NULL,"children"=>array()); //root
 while ($r = mysqli_fetch_assoc($result)) {
 	$rows[]=$r;
 	
-	
+	$pid=$r['pid'];
+	$countQuery = "SELECT COUNT(*) FROM $commentstbl WHERE pid=$pid AND deleted_time IS NULL";
+	$countResult=mysqli_query($MYSQLI_LINK, $countQuery) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+	$num_comments = mysqli_fetch_array($countResult)[0]+0;
+	$r['num_comments']=$num_comments;
+
+	//var_dump($num_comments);
 	$entry=array_map(trim,array_map(stripslashes,$r));
 	$entry["children"]=array();
 		

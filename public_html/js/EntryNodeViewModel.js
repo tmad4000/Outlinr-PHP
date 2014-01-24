@@ -1,7 +1,8 @@
 function EntryNodeViewModel(entryNodeModel) {
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
-	
+	this.myCommentsExpanded="init-hidden";
+
 	//attributes of this object
 	this.visible=true;
 
@@ -92,44 +93,88 @@ function EntryNodeViewModel(entryNodeModel) {
 			updateNrOfIdeasVisible()
 	
 			var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
-			this.entryNodeModel;
 
-			var time = new Date(this.entryNodeModel.time * 1000);
+				var time = new Date(this.entryNodeModel.time * 1000);
+				//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+				var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
 
-			//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
-			var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
-
-			status ="<td class='status'>" +'<div class="star">' +
-			'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+			
-			'</div>' + '<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a><div>' + "</td>";
-			upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
-
+				status ="<td class='status'>" +
+						'<div class="star">'+'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+'</div>' +
+						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a><div>' + 
+					"</td>";
+				
+				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 
 
-			//entryNodeBody="<div>"+table+"</div>";
-			comments=""
-			comments="<div class='showcomments'><a href='#' class='showcomments'>7+ Comments</a>";
-			
-			comments+='<div class="commentform"> \
-					<div class="commentsinput" contenteditable="true" placeholder="" -idea-id="'+this.entryNodeModel.pid+'"></div> \
-					<input class="btn" type="button" value="Comment"> \
-					<div class="commentcontent"><ul></ul></div> \
-				</div>';
-			comments+='</div>';
-			//entryNodeBody+=comments;
-			table += '<tr>'+status + upvoter+'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>"+comments+"</td>" + 
-		   	// '<td><div class="progressbar"></div></td>' +
-		   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
-			"<div class='delete'><a href='#'>Delete</a></div>" +
-//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
-			"</td></tr>";
+				//Comments
+				var postCommentsModel=null;
+				var commentsListH='<ul class="comments">';
+					//note: commentsModel is global
+					//console.log("aoeu"+this.entryNodeModel.pid+" " + (this.entryNodeModel.pid+"" in commentsModel) );
+					//console.log(e=commentsModel)
+					if(this.entryNodeModel.pid+"" in commentsModel){
+						//console.log("")
+						postCommentsModel=commentsModel[this.entryNodeModel.pid];
+						
+						$.each(postCommentsModel,function(i,currComment) {
+							var commentTime = new Date(currComment.time * 1000);
+							var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
+							var commentS='<div class="comment-text">' + currComment.comment_text + '</div>'+
+							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							commentsListH+="<li>"+commentS+"</li>";
+						})
+					}
+					else {
+						//console.log("comment key " + this.entryNodeModel.pid + " not found")
+					}
+				commentsListH+='</ul>';
+				
+				var numComments;
+				if(postCommentsModel!==null)
+					numComments=postCommentsModel.length;
+				else
+					numComments=this.entryNodeModel.num_comments;
+
+				var numCommentsMsg="Comment";
+				if(numComments == 1)
+					numCommentsMsg=numComments + " Comment";
+				else if(numComments > 1)
+					numCommentsMsg=numComments + " Comments";
+
+				//entryNodeBody="<div>"+table+"</div>";
+				//comments=""
+
+				//note: expandedComments is global
+				if(this.entryNodeModel.pid in expandedComments)
+					this.myCommentsExpanded="init-expanded";
+				else
+					this.myCommentsExpanded="init-hidden";
+
+				comments='<div class="showcomments"><a href="#" class="showcomments">'+numCommentsMsg+'</a> \
+					<div class="commentform '+this.myCommentsExpanded+'"> ' +
+						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="'+this.entryNodeModel.pid+'"></textarea>' +
+//						'<input class="btn" type="button" value="Comment">' +
+						commentsListH +
+					'</div>' +
+				'</div>';
+
+
+				//entryNodeBody+=comments;
+				table += '<tr>'+
+					status + 
+					upvoter+
+					'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>" +
+					comments+"</td>" + 
+				   	// '<td><div class="progressbar"></div></td>' +
+				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+					"<div class='delete'><a href='#'>Delete</a></div>" +
+		//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
+					"</td></tr>";
 
 		   	table+="</table>";
 
 		   	entryNodeBody="<div>"+table+"</div>";
-
 		   	entryNodeBody=$($.parseHTML(entryNodeBody));
-
 			var eTView=this.eT.render();
 
 			// there should only ever be one

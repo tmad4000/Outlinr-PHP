@@ -16,7 +16,7 @@ div.container textarea.span11 {
     height: 20px;
 }
 
-td.timecol {
+.timecol {
     width: 80px;
     color:#AAA;
     padding-right:0;
@@ -151,14 +151,17 @@ a.showcomments {
 	padding-left:15px;
 	background-position: 0px 1px;
 	background-repeat:no-repeat;
+	float:right;
+	margin-right: 3px;
 }
 a.showcomments:hover {
 	background-position: 0 -16px;	
 }
 
 div.showcomments {
-	margin-left:0px;
-	margin-top:5px;
+	margin-left:3px;
+	font-size: 12px;
+	float: right;
 /*	position:relative;
 	top:-35px;*/
 }
@@ -170,8 +173,52 @@ div.commentform input[type=button] {
 }
 
 div.commentform {
-	display:none;
 }
+
+.init-expanded {
+	display: block;
+}
+
+.init-hidden {
+	display: none;
+}
+
+
+ul.comments {
+	list-style-type: none;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.comment-text {
+	width:428px;
+
+	font-size: 12px;
+}
+.comments li {
+
+}
+
+.comments li div {
+	display: table-cell;
+	border-bottom: 1px solid #ddd;
+}
+
+
+.comments li div {
+	display: table-cell;
+
+}
+
+textarea.commentsinput {
+	width:494px;
+	height:18px;
+	resize:vertical;
+	font-size: 12px;
+}
+
+
+
 
 div.commentform div.commentsinput {
 	float:left;
@@ -363,4 +410,8 @@ div.delete {
 }
 div.delete a {	
 	display:none;
+}
+
+.entryNodeText {
+	float:left;
 }
