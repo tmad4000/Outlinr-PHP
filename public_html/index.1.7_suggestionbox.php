@@ -322,7 +322,7 @@ td.uid {
         </form>
         <div id="tableHeaderDiv">
           <div id="numResults"></div>
-          <div id="filterBy">Sort by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a><!--#FUTURE<a>Hot</a>--></div>
+          <div id="filterBy">Filter by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a> <a id='sortByStatus'>Status</a><!--#FUTURE<a>Hot</a>--></div>
         </div>
         <div id="currentposts"></div>
 

@@ -15,6 +15,7 @@ $(document).ready(function() {
 	    if(!$(this).hasClass('toggled')){
 	        filterToggle = "Date";
 	        $('#sortByUpvotes').removeClass('toggled'); 
+	        $('#sortByStatus').removeClass('toggled'); 	        
 	        $(this).addClass("toggled");
 	        
 
@@ -26,8 +27,19 @@ $(document).ready(function() {
 	    if(!$(this).hasClass('toggled')){
 	        filterToggle = "Upvotes";
 	        $('#sortByDate').removeClass('toggled'); 
-	        $(this).addClass("toggled");
-	       		
+	        $('#sortByStatus').removeClass('toggled'); 
+	        $(this).addClass("toggled");	       		
+
+	        displayPosts()        
+	    }
+	})
+
+	$('#sortByStatus').click( function(){
+	    if(!$(this).hasClass('toggled')){
+	        filterToggle = "Status";
+	        $('#sortByDate').removeClass('toggled');
+	       	$('#sortByUpvotes').removeClass('toggled'); 
+	        $(this).addClass("toggled");  		
 
 	        displayPosts()        
 	    }
@@ -209,7 +221,11 @@ function displayPosts() {
 
 		$('.commentsinput').keyup(function(e){
 			e.preventDefault();
-			if(event.keyCode == 13) { // enter
+			if (event.keyCode == 13 && event.shiftKey) { // shift-enter
+	        	
+	        	event.stopPropagation();
+	        } 
+			else if(event.keyCode == 13) { // enter
 				var content = this.value;
         		var caret = getCaret(this);
         		this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
@@ -225,6 +241,7 @@ function displayPosts() {
 				//console.log("qqq" + idS)
 				submitAndGetComments(idS);
 			}
+
 		});
 
 

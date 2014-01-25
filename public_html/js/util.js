@@ -15,8 +15,16 @@ function changeOrder(nodeChildren){
     for (var key in nodeChildren)
     sortable.push([key, nodeChildren[key].upvotes])
     if(filterToggle == 'Upvotes')
-        sortable.sort(function(a, b) {return b[1] - a[1]})  
+        sortable.sort(function(a, b) {return b[1] - a[1]}) 
+
+    if(filterToggle == 'Status'){
+        sortable = []
+        for (var key in nodeChildren)
+        sortable.push([key, nodeChildren[key].status])
+        sortable.sort(function(a, b) {return b[1].localeCompare(a[1])})
+    }
     return sortable
+    
 }
 
 function updateNrOfIdeasVisible(){
@@ -80,11 +88,30 @@ function findTitleEnd(idea) {
 	if(i<0) i=idea.length;
 
 	var titleEnd=Math.min(80,i); // max 80 chars
-
+    var i4=idea.indexOf(".",titleEnd);
+    var i5=idea.indexOf(",",titleEnd);
 	var i3=idea.indexOf(" ",titleEnd);
-	if(i3<0) i3=idea.length;
+    var iuse = Math.min(Math.min(i4,i3),i5);
+	if(iuse<0){
+            if(i4<0){
+                if(i5<0){
+                    if(i3<0){
+                        iuse=idea.length
+                    }
+                    else{
+                        iuse=i3;
+                    }
+                }
+                else{
+                    iuse=i5;
+                }
+            }
+            else{
+                iuse=i4;
+            }
+    }
 
-	titleEnd=i3;//Math.min(titleEnd,i3);
+	titleEnd=iuse;//Math.min(titleEnd,i3);
 
 	return titleEnd;
 }

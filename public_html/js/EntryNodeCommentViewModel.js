@@ -189,7 +189,6 @@ function EntryNodeCommentViewModel(txt,cid) {
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
 		var temp = nl2br(strWTags.join(""));
 		this.viewDomE = temp;
-		console.log(x=typeof temp)
 		return this.viewDomE;
 	}
 	

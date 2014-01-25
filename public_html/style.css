@@ -162,9 +162,9 @@ a.showcomments:hover {
 }
 
 div.showcomments {
+	width:100%;
 	margin-left:3px;
 	font-size: 12px;
-	float: right;
 /*	position:relative;
 	top:-35px;*/
 }
@@ -176,6 +176,7 @@ div.commentform input[type=button] {
 }
 
 div.commentform {
+	margin-left:20px;
 }
 
 .init-expanded {
