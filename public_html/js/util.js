@@ -137,7 +137,7 @@ function findMoreTextStart(idea){
     var chCutoff = 300 - (iter*80)
     */
     var newIdea = idea.replace('\n',"n".repeat(80))
-    return 250-newIdea.substr(0,250).split('').reverse().join('').indexOf(" ");//poss off by 1 error
+    return 1000-newIdea.substr(0,1000).split('').reverse().join('').indexOf(" ");//poss off by 1 error
 }
 
 function urlPress(e){
