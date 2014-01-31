@@ -243,9 +243,9 @@ function processIdea(idea,pid) {
 
 // NAV BAR UTIL METHODS
 function initiateCookie(){ 
-    if(getCookie("name")!="" || getCookie("email")!=""|| getCookie("handle")!=""){
+    if(getCookie("name")!="" || getCookie("usremail")!=""|| getCookie("handle")!=""){
         var n = unescape(getCookie("name"));
-        var e = unescape(getCookie("email")); 
+        var e = unescape(getCookie("usremail")); 
         var h = unescape(getCookie("handle"));
         var d = unescape(getCookie("isDefaultUsrHandle"));
         $("#usrname").val(n); 
@@ -280,14 +280,14 @@ function rememberMeToggle(){
 
 // Cookie Functions
 
-function setCookie(name,email,handle,isDefaultUsrHandle,exdays){
+function setCookie(name,usremail,handle,isDefaultUsrHandle,exdays){
     var d = new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
     document.cookie = "name=" + escape(name);
     document.cookie = "handle=" + escape(handle);
     document.cookie = "isDefaultUserHandle=" + escape(isDefaultUsrHandle);
-    document.cookie = "email=" + escape(email)+";"+ expires;
+    document.cookie = "usremail=" + escape(usremail)+";"+ expires;
 }
 
 function getCookie(label){

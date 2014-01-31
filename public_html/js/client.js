@@ -170,7 +170,7 @@ function displayPosts() {
 
 		// Right hand bar
 		displayIdeaNames();
-		// Voting click
+		// Voting click FOR POSTS
 		$('td.votes').click(function() {
 			$(this).children('.vote').toggleClass('on'); 
 			var num=$(this).children('span.votes').html()-0; 
@@ -183,6 +183,19 @@ function displayPosts() {
 				doUpvote($(this).attr('-idea-id')-0,'down');
 			}
 			$(this).children('span.votes').html(num) 
+		});
+		$('.comment-upvote').click(function() {
+			var num=$(this).html()-0; 
+			$(this).toggleClass('on'); 
+			if ($(this).hasClass('on')) {
+				num+=1;
+				doUpvoteComment($(this).attr('-comment-id')-0,'up');
+			}
+			else {
+				num-=1;
+				doUpvoteComment($(this).attr('-comment-id')-0,'down');
+			}
+			$(this).html(num) 
 		});
 
 		// Voting hover status
@@ -299,6 +312,18 @@ function doUpvote(ideaid,upOrDown) {
 		},
 	});
 }
+
+function doUpvoteComment(commentid,upOrDown) {
+
+	$.ajax({
+		'url': 'ajax/upvote.php?'+upOrDown+'=true',
+		'data': {'commentid':commentid},
+		'success': function(jsonData) {
+
+		},
+	});
+}
+
 
 function submitPostAndGetPosts() {
 	//#HACK only usrhandle currently visible

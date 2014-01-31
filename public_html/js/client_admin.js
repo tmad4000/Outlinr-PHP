@@ -4,8 +4,11 @@ var isDefaultUsrHandle = true;
 var commentsModel = {};
 var expandedComments = {};
 var emailAddress;
-
 $(document).ready(function() {
+	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
+	$(window).resize(function() {
+		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
+	});
 	getEmail();
 	$('#emailicon').popover({
 		placement:"bottom",
@@ -14,6 +17,7 @@ $(document).ready(function() {
 		html:true,
 		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
+
 
 	function emailPopoverLoad(){
 		
