@@ -28,12 +28,12 @@ function changeOrder(nodeChildren){
 }
 
 function updateNrOfIdeasVisible(){
-    if($('textarea#newpost').val() == ""){
+    var store = codeMirror.getValue()
+    if(store == ""){
         $('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
     }
     else {
         // so that chunks of text dont happen
-        var store = $('textarea#newpost').val();
         if(store.length>50) store = store.substring(0,50)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");

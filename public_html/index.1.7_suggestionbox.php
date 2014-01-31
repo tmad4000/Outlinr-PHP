@@ -19,6 +19,19 @@ require_once('../config.inc.php');
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
   $r = mysqli_fetch_assoc($result);
 
+  // ~cj grab list of idea maps for CODEMIRROR autocomplete @mapname
+  $query = "SELECT * FROM ideamaps";
+  $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+  $ideamap_names = [];
+  while($ideamap_r = mysqli_fetch_assoc($result)){
+    $name = $ideamap_r["mapname"];
+    $name = str_replace(" ","_", $name); // mapnames should have _ in the backend anyway
+    $ideamap_names[] = $name;
+  } 
+  $ideamap_list_json = json_encode($ideamap_names);
+  // note: for now, idea map list only updates on page load
+
+
   ?>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>IdeaOverflow -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
@@ -31,6 +44,16 @@ require_once('../config.inc.php');
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client_admin.js"></script>
   
+
+  <!-- code mirror  -->
+  <script src="codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="js/codemirror-xn-mode.js"></script>
+  <script src="codemirror/addon/hint/show-hint.js"></script>
+  <script src="js/codemirror-xn-hint.js"></script>
+  <script src="codemirror/addon/display/placeholder.js"></script>
+  <link rel="stylesheet" href="codemirror/addon/hint/show-hint.css">
+  <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+  <link href="style-codemirror.css" rel="stylesheet">
   
 
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -210,6 +233,40 @@ td.uid {
 .ideaTxt {
   color:#777;
 }
+
+#codeMirror-container { 
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 6px 4px;
+}
+.CodeMirror {
+
+  height: auto;
+  min-height: 3.7em;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+
+}
+
+.CodeMirror pre.CodeMirror-placeholder { 
+  color: #999; }
+
+}
+#codeMirror-container div {
+  color: rgb(85, 85, 85);
+}
+#codeMirror-container div, .CodeMirror pre.CodeMirror-placeholder  {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 200;
+}
+.cm-disabled {
+  color: #ccc;
+  background-color: #f9f9f9
+}
+
 </style>
 
 
@@ -220,6 +277,13 @@ td.uid {
    
 
 <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
+
+
+
+<script>
+// note: currently this map list only updates on page load
+map_tags = <?=$ideamap_list_json ?>;
+</script>
 
 
 
@@ -315,11 +379,16 @@ td.uid {
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
         <!--<span class="vote"> </span>-->
+
+        <div id="codeMirror-container"></div>
+
+        <!--
         <form id="postform">
           <div class="input-append" style="width:100%">
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
         </form>
+      -->
         <div id="tableHeaderDiv">
           <div id="numResults"></div>
           <div id="filterBy">Filter by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a> <a id='sortByStatus'>Status</a><!--#FUTURE<a>Hot</a>--></div>

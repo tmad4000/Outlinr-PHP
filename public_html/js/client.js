@@ -1,6 +1,7 @@
 //getPosts() -> displayPosts() 
 var isDefaultUsrHandle = true;
 
+
 $(document).ready(function() {
 	$('#postform').submit(function() {
 		numberOfIdeasVisible =0;	
@@ -59,6 +60,68 @@ $(document).ready(function() {
 		updateCookie()
 	});
 	//Omnibox (input field) operations
+
+
+	// ~cj codemirror:
+	codeMirror = CodeMirror(document.getElementById('codeMirror-container'), {
+		lineNumbers: false,
+		lineWrapping: true,
+		smartIndent: true,
+		autofocus: true,
+        viewportMargin: Infinity,
+        placeholder: "Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit.",
+		extraKeys: { 
+		  "Tab": function(cm) {
+		     var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+		     if(token.type == "xn-hashtag"){
+		      var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
+		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
+
+		     }else if(token.type == "xn-persontag"){
+		      var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
+		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
+		     }else if(token.type == "xn-maptag"){
+		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
+		     }
+		  },
+		  "Enter": function(cm){
+		  	// straight up enter, not shift+enter
+		  	if(!codeMirror.hintOpen){
+		        // don't submit post if we hit enter when the hint box was open 
+		        submitPostAndGetPosts();
+		    }
+		  },
+		  "Shift-Enter": function(cm){
+		  	// do nothing special
+		  },
+		},
+		onKeyEvent: function(e , event){
+		  if (event.type == "keyup"){   
+		    if(rootNodeViewModel!==null){
+		    	// filter search results 
+		        rootNodeViewModel.filter(codeMirror.getValue() || "");
+		    }
+		  }
+		},
+		mode: 'xn'
+	});
+	codeMirror.hintOpen = false
+	codeMirror.on("change",function(){
+	  var textinput = codeMirror.getValue();
+	  rootNodeViewModel.filter(textinput);
+	});
+	codeMirror.on("startCompletion", function(target, name){
+		codeMirror.hintOpen = true
+	});
+	codeMirror.on("endCompletion", function(){
+		// timeout delay after closing the hintbox, and before post submissions are allowed
+		// this is to prevent submissions when using "enter" on the autocomplete menu 
+		setTimeout(function(){codeMirror.hintOpen = false;},200)
+	})
+
+	/* #TODO: REMOVE old TEXTAREA code */
+
+	/*
 	$('textarea#newpost').focus();
 	$('textarea#newpost').keyup(function (event) {
 		// #TODO #Future trim repeated enters       
@@ -87,6 +150,7 @@ $(document).ready(function() {
 		//#TODO never gets here
 
 	});
+	*/
 	//Handles new line (shift+enter) in the omnibox
 	function getCaret(el) { 
 		if (el.selectionStart) { 
@@ -108,6 +172,7 @@ $(document).ready(function() {
 		}  
 		return 0; 
 	}
+	
 
 		/*
 	$('#myTab a').click(function(e) {
@@ -286,7 +351,26 @@ function displayIdeaNames() {
 
 		});
 
-		localStorage.setItem("tags", tags);
+		// ~cj we need to json.stringify before storing dictionaries
+		localStorage.setItem("tags", JSON.stringify(tags));
+
+		// ~cj generate lists of hash tags and person tags, save to localStorage
+		hashTags = [];
+		peopleTags = [];
+		$.each(tags, function(tag,contained){
+		    if(contained){
+		    	if(tag.substring(0,1)=="#"){
+		     		hashTags.push(tag.replace("#",""));
+		     	}else if(tag.substring(0,1)=="~"){
+		     		peopleTags.push(tag.replace("~",""));
+		     	}
+		    }
+		});
+		localStorage.setItem("autocompletionHashtags", JSON.stringify(hashTags));
+		// note: this only grabs persons from this one map 
+		localStorage.setItem("autocompletionPersontags", JSON.stringify(peopleTags));
+
+
 		var tagsul = $('ul#idea-hashtags').empty();
 		var tildesul = $('ul#people-list').empty();		
 		$.each( tags,function(tag,trueval) {
@@ -355,6 +439,7 @@ function submitPostAndGetPosts() {
     return idea.match(tag_regexp)
 	*/
 	
+	$("#codeMirror-container, #codeMirror-container div").addClass("cm-disabled")
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
 		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
@@ -362,10 +447,15 @@ function submitPostAndGetPosts() {
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
-                 $('#newpost').val('');
+                 codeMirror.setValue('')
                  displayPosts();
-             },
-         });
+        },
+        'complete': function(e){
+        	// enable textarea when ajax returns
+         	$("#codeMirror-container, #codeMirror-container div").removeClass("cm-disabled")
+        }
+    });
+         
 }
 
 function getPosts() {

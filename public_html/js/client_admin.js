@@ -1,5 +1,6 @@
 //getPosts() -> displayPosts() 
 var isDefaultUsrHandle = true;
+var codeMirror;
 
 var commentsModel = {};
 var expandedComments = {};
@@ -116,6 +117,67 @@ $(document).ready(function() {
 	});
 	//Omnibox (input field) operations
 	
+	// ~cj codemirror:
+	autocomplete = function(cm){
+		var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+		if(token.type == "xn-hashtag"){
+			var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
+		}else if(token.type == "xn-persontag"){
+			var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
+		}else if(token.type == "xn-maptag"){
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
+		}
+	}
+	codeMirror = CodeMirror(document.getElementById('codeMirror-container'), {
+		lineNumbers: false,
+		lineWrapping: true,
+		smartIndent: true,
+		autofocus: true,
+        viewportMargin: Infinity,
+        placeholder: "Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit.",
+		extraKeys: { 
+		  "Tab": autocomplete,
+		  "Enter": function(cm){
+		  	// straight up enter, not shift+enter
+		  	if(!codeMirror.hintOpen){
+		        // don't submit post if we hit enter when the hint box was open 
+		        submitPostAndGetPosts();
+		    }
+		  } 
+		},
+		onKeyEvent: function(cm, event){
+		  if (event.type == "keyup"){  
+		  	if((event.keyCode==51||event.keyCode==50||event.keyCode==192) && event.shiftKey){
+		  		// 	Autocomplete as you type
+		  		// doesn't always work .. why?
+		  		setTimeout(function(){autocomplete(cm)},1)
+		  	}
+		    if(rootNodeViewModel!==null){
+		    	// filter search results 
+		        rootNodeViewModel.filter(codeMirror.getValue() || "");
+		    }
+		  }
+		},
+		mode: 'xn'
+	});
+	codeMirror.hintOpen = false
+	codeMirror.on("change",function(){
+	  var textinput = codeMirror.getValue();
+	  rootNodeViewModel.filter(textinput);
+	});
+	codeMirror.on("startCompletion", function(target, name){
+		codeMirror.hintOpen = true
+	});
+	codeMirror.on("endCompletion", function(){
+		// timeout delay after closing the hintbox, and before post submissions are allowed
+		// this is to prevent submissions when using "enter" on the autocomplete menu 
+		setTimeout(function(){codeMirror.hintOpen = false;},200)
+	})
+
+
+	/* 
 	$('textarea').focus(function(){
 		$(this).css("border-color","#59b4de");
 	});
@@ -156,7 +218,7 @@ $(document).ready(function() {
 		//#TODO never gets here
 
 	});
-	
+	*/
 
 		/*
 	$('#myTab a').click(function(e) {
@@ -168,6 +230,7 @@ $(document).ready(function() {
 	*/
 	getPosts();
 });
+
 
 //Handles new line (shift+enter) in the omnibox
 function getCaret(el) { 
@@ -401,7 +464,26 @@ function displayIdeaNames() {
 
 		});
 
-		localStorage.setItem("tags", tags);
+
+		// ~cj we need to json.stringify before storing dictionaries
+		localStorage.setItem("tags", JSON.stringify(tags));
+
+		// ~cj generate lists of hash tags and person tags, save to localStorage
+		hashTags = [];
+		peopleTags = [];
+		$.each(tags, function(tag,contained){
+		    if(contained){
+		    	if(tag.substring(0,1)=="#"){
+		     		hashTags.push(tag.replace("#",""));
+		     	}else if(tag.substring(0,1)=="~"){
+		     		peopleTags.push(tag.replace("~",""));
+		     	}
+		    }
+		});
+		localStorage.setItem("autocompletionHashtags", JSON.stringify(hashTags));
+		// note: this only grabs persons from this one map 
+		localStorage.setItem("autocompletionPersontags", JSON.stringify(peopleTags));
+
 		var tagsul = $('ul#idea-hashtags').empty();
 		var tildesul = $('ul#people-list').empty();		
 		$.each( tags,function(tag,trueval) {
@@ -492,7 +574,7 @@ function submitPostAndGetPosts() {
 	
 	//+$('#usrhandle').val()+\
 	//#hack
-	var np = $('#newpost').val();
+	var np = codeMirror.getValue()
 	var ind=np.indexOf('~'+$('#usrhandle').val());
 	
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
@@ -508,19 +590,25 @@ function submitPostAndGetPosts() {
 	*/
 	
 
+	// turn textarea gray during ajax call 
+	$("#codeMirror-container, #codeMirror-container div").addClass("cm-disabled")
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
+		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName(np),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
                  
-                 $('#newpost').val('');
+                 codeMirror.setValue('')
                  displayPosts();
-             },
-         });
+        },
+        'complete': function(e){
+        	// enable textarea when ajax returns
+         	$("#codeMirror-container, #codeMirror-container div").removeClass("cm-disabled")
+        }
+    });
 }
 
 function getPosts() {
