@@ -437,6 +437,20 @@ function doUpvoteComment(commentid,upOrDown) {
 
 
 function cycleStatus(ideaid) {
+	var x = $('.entryNode[-idea-id="'+ideaid+'"]').find('.status');
+	var cn = 0;
+	if(x.hasClass('sc0'))
+		cn = 0;
+	else if(x.hasClass('sc1'))
+		cn = 1;
+	else if(x.hasClass('sc2'))
+		cn = 2;
+	else if(x.hasClass('sc3'))
+		cn = 3;
+	else if(x.hasClass('sc4'))
+		cn = 4;
+	x.removeClass(cn);
+	x.addClass('sc'+(cn+1)%5);
 
 	$.ajax({
 		'url': 'ajax/cyclestatus.php',
