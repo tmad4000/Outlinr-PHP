@@ -419,3 +419,7 @@ div.delete a {
 .entryNodeText {
 	float:left;
 }
+
+#emailicon {
+	width: 12px;
+}
