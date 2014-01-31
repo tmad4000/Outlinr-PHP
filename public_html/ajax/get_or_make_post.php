@@ -54,7 +54,7 @@ function emailNotify($MYSQLI_LINK,$mapid,$body){
 	$mn = $m['mapname'];
 	$u = dirname(dirname(curPageURL()))."/index.1.7_suggestionbox.php?mapid=$mapid";
 	$headers  = "From: GestaltBox<noreply@gestaltbox.com>\r\n";
-	$headers .= "Reply-To: gestaltbox@gmail.com\r\n";
+	$headers .= "Reply-To: gestaltbox+$mapid@gmail.com\r\n";
 	$b = "Dear $mn,\nWe have a suggestion for you:\n $body\n\nSee all suggestions at $u";
 	mail($e,"[GestaltBox] New Suggestion for $mn",$b,$headers);
 }
