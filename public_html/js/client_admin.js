@@ -3,8 +3,24 @@ var isDefaultUsrHandle = true;
 
 var commentsModel = {};
 var expandedComments = {};
+var emailAddress;
 
 $(document).ready(function() {
+	getEmail();
+	$('#emailicon').popover({
+		placement:"bottom",
+		title:"Notification email address",
+//		content:"<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onload='emailPopoverLoad()' placeholder='email'/>",
+		html:true,
+		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
+	});
+
+	function emailPopoverLoad(){
+		
+		$(this).val(emailAddress);
+		$(this).focus();
+	}
+	
 	$('#postform').submit(function() {
 		numberOfIdeasVisible =0;	
 		submitPostAndGetPosts();
@@ -95,7 +111,20 @@ $(document).ready(function() {
 		updateCookie()
 	});
 	//Omnibox (input field) operations
+	
+	$('textarea').focus(function(){
+		$(this).css("border-color","#59b4de");
+	});
+	$('input[type="text"]').focus(function(){
+		$(this).css("border-color","#59b4de");
+	});
 	$('textarea#newpost').focus();
+	$('textarea').blur(function(){
+		$(this).css("border-color","#ddd");
+	});
+	$('input[type="text"]').blur(function(){
+		$(this).css("border-color","#ddd");
+	});
 	$('textarea#newpost').keyup(function (event) {
 		// #TODO #Future trim repeated enters       
 		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
@@ -215,8 +244,8 @@ function displayPosts() {
 			//	console.log("hhh")
 				delete expandedComments[idS];
 			}
-
 			getComments(idS);
+			$(this).parent().find('textarea').focus();//#TENNIS
 		});
 
 		$('.commentsinput').keyup(function(e){
@@ -244,38 +273,6 @@ function displayPosts() {
 
 		});
 
-
-		//$("#currentposts").html(entrylist);
-		/*
-					var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
-			
-			
-					for (var i = 0; i < data.length; i++) {
-						
-			
-						var time = new Date(data[i].time * 1000);
-			
-						var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
-						var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
-						
-						status ="<td class='status'>" + '<a href="index.1.7_suggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
-						upvoter='<td class="votes" -idea-id="'+data[i].pid+'"><span class="vote"> </span><span class="votes" >'+data[i].upvotes+'</span></td>';
-						
-						table += '<tr>'+status + upvoter+'<td>' + nl2br(processIdea(data[i].body,data[i].pid)) + "</td>" + 
-						   // '<td><div class="progressbar"></div></td>' +
-							"<td><a href='#' class='uid'>" + (data[i].uid!=0 ? data[i].uid : "anon") + "</a></td>" +
-							"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
-							"</td></tr>";
-					}
-					
-					table += "</table>";
-					$("#currentposts").html(table);
-					
-					//$( ".progressbar" ).progressbar({
-				//		value: 59
-					//});
-		*/
-
 		// Right hand bar
 		displayIdeaNames();
 		// Voting click
@@ -291,6 +288,19 @@ function displayPosts() {
 				doUpvote($(this).attr('-idea-id')-0,'down');
 			}
 			$(this).children('span.votes').html(num) 
+		});
+		$('.comment-upvote').click(function() {
+			var num=$(this).html()-0; 
+			$(this).toggleClass('on'); 
+			if ($(this).hasClass('on')) {
+				num+=1;
+				doUpvoteComment($(this).attr('-comment-id')-0,'up');
+			}
+			else {
+				num-=1;
+				doUpvoteComment($(this).attr('-comment-id')-0,'down');
+			}
+			$(this).html(num) 
 		});
 
 		// Voting hover status
@@ -372,9 +382,11 @@ function displayIdeaNames() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
 		var data = $.parseJSON(jsonData)['flatPosts'];
-
+		console.log(x=localStorage)
 		var nameul = $('ul#ideanames').empty();
 		var tags={};
+
+		
 
 		$.each( data,function(i,data) {
 			var n=extractIdeaName(data.body);
@@ -406,6 +418,17 @@ function doUpvote(ideaid,upOrDown) {
 	$.ajax({
 		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'ideaid':ideaid},
+		'success': function(jsonData) {
+
+		},
+	});
+}
+
+function doUpvoteComment(commentid,upOrDown) {
+
+	$.ajax({
+		'url': 'ajax/upvotecomment.php?'+upOrDown+'=true',
+		'data': {'commentid':commentid},
 		'success': function(jsonData) {
 
 		},
@@ -466,6 +489,8 @@ function submitPostAndGetPosts() {
     return idea.match(tag_regexp)
 	*/
 	
+
+
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
 		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
@@ -473,7 +498,7 @@ function submitPostAndGetPosts() {
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
-
+                 
                  $('#newpost').val('');
                  displayPosts();
              },
@@ -500,6 +525,29 @@ function getComments(pid) {
 			commentsModel[pid]=$.parseJSON(jsonData);
 			console.log(commentsModel)
 			displayPosts();
+		},
+	});
+}
+
+function submitAndGetEmail(){
+
+	$.ajax({
+		'url': 'ajax/email.php',
+		'data': {'notificationemail':$('#notificationemail').val(),'mapid':$('#mapidform').val()},
+		'success': function(jsonData) {
+			emailAddress=$.parseJSON(jsonData).email;
+			$('#notificationemail').val(emailAddress);
+		},
+	});
+}
+
+function getEmail(){
+	$.ajax({
+		'url': 'ajax/email.php',
+		'data': {'mapid':$('#mapidform').val()},
+		'success': function(jsonData) {
+			emailAddress=$.parseJSON(jsonData).email;
+			$('#notificationemail').val(emailAddress);
 		},
 	});
 }

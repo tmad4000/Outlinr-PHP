@@ -28,6 +28,36 @@ $time = time();
 $ideastbl = IDEAS_TBL;
 $commentstbl = COMMENTS_TBL;
 
+function getMap($MYSQLI_LINK,$mapid){
+	$query = "SELECT * FROM ideamaps WHERE mapid={$mapid}";
+	//echo $query;
+	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+	$r = mysqli_fetch_assoc($result);
+	return $r;
+}
+
+function curPageURL() {
+	 $pageURL = 'http';
+	 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+	 $pageURL .= "://";
+	 if ($_SERVER["SERVER_PORT"] != "80") {
+	  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	 } else {
+	  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	 }
+	 return $pageURL;
+}
+
+function emailNotify($MYSQLI_LINK,$mapid,$body){
+	$m = getMap($MYSQLI_LINK,$mapid);
+	$e = $m['email'];
+	$mn = $m['mapname'];
+	$u = dirname(dirname(curPageURL()))."/index.1.7_suggestionbox.php?mapid=$mapid";
+	$headers  = "From: GestaltBox<noreply@gestaltbox.com>\r\n";
+	$headers .= "Reply-To: gestaltbox@gmail.com\r\n";
+	$b = "Dear $mn,\nWe have a suggestion for you:\n $body\n\nSee all suggestions at $u";
+	mail($e,"[GestaltBox] New Suggestion for $mn",$b,$headers);
+}
 
 if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
@@ -36,6 +66,8 @@ if (!empty($body)) {
     $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path')";
 //	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
+
+    emailNotify($MYSQLI_LINK,$mapid,$body);
 }
 
 

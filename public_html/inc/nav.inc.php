@@ -25,20 +25,21 @@ $r = mysqli_fetch_assoc($result)
       <span class="brand">
         <img src="" height="20" width="20">
         &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>Outline</a> 
-        <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
+        <span>&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
+        <img src="images/email.png" id="emailicon"/>
       </span> 
       <div class="nav-collapse">
         <ul class="nav">
 
 
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox.php?mapid=<?= $_GET['mapid'] ?>">IdeaMap</a></li>
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">InProgress</a></li>
+          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox.php?mapid=<?= $_GET['mapid'] ?>">Ideas</a></li>
+          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">Progress</a></li>
           <!--<li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_proposals.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_proposals.php?mapid=<?= $_GET['mapid'] ?>">Proposals</a></li>-->
           <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
          
         </ul>
         <p class="navbar-text pull-right"><a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">&nbsp;&nbsp;</a></p>
-         <p class="navbar-text pull-right">&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://ideaoverflowideplan.tk/" target="_blank">Grand Vision</a></p>
+         <p class="navbar-text pull-right"></p>
 <!--        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>-->
         <p class="navbar-text pull-right">
         <!--<input type="text" id="usremail" placeholder="(optional) Email"><input type="text" id="usrname" placeholder="(optional) Name">-->
