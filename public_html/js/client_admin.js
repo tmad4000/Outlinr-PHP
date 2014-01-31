@@ -32,11 +32,11 @@ $(document).ready(function() {
 		return false;
 	});
 	$('#sortByDate').click( function(){
-	    if(!$(this).hasClass('toggled')){
+	    if(!$(this).hasClass('active')){
 	        filterToggle = "Date";
-	        $('#sortByUpvotes').removeClass('toggled'); 
-	        $('#sortByStatus').removeClass('toggled'); 	        
-	        $(this).addClass("toggled");
+	        $('#sortByUpvotes').removeClass('active'); 
+	        $('#sortByStatus').removeClass('active'); 	        
+	        $(this).addClass("active");
 	        
 
 	        displayPosts()
@@ -44,22 +44,22 @@ $(document).ready(function() {
 	});
 
 	$('#sortByUpvotes').click( function(){
-	    if(!$(this).hasClass('toggled')){
+	    if(!$(this).hasClass('active')){
 	        filterToggle = "Upvotes";
-	        $('#sortByDate').removeClass('toggled'); 
-	        $('#sortByStatus').removeClass('toggled'); 
-	        $(this).addClass("toggled");	       		
+	        $('#sortByDate').removeClass('active'); 
+	        $('#sortByStatus').removeClass('active'); 
+	        $(this).addClass("active");	       		
 
 	        displayPosts()        
 	    }
 	})
 
 	$('#sortByStatus').click( function(){
-	    if(!$(this).hasClass('toggled')){
+	    if(!$(this).hasClass('active')){
 	        filterToggle = "Status";
-	        $('#sortByDate').removeClass('toggled');
-	       	$('#sortByUpvotes').removeClass('toggled'); 
-	        $(this).addClass("toggled");  		
+	        $('#sortByDate').removeClass('active');
+	       	$('#sortByUpvotes').removeClass('active'); 
+	        $(this).addClass("active");  		
 
 	        displayPosts()        
 	    }

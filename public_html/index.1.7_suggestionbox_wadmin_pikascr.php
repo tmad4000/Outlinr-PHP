@@ -30,9 +30,8 @@ require_once('../config.inc.php');
   
   
 
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-  
+  <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
   <!--
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>

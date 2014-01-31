@@ -12,9 +12,8 @@ require_once('../config.inc.php');
     <!--      <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
           <link rel="stylesheet" type="text/css" href="http://twitter.github.io/bootstrap/1.4.0/bootstrap.min.css">
     -->
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-    
+    <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
       
     <style type='text/css'>
@@ -241,7 +240,6 @@ require_once('../config.inc.php');
       <form id="postform">
         <div class="input-append" style="width:100%">
           <textarea class="span12" placeholder="New idea map name" id="newpost" ></textarea>
-          <input class="btn" type="submit"></input>
         </div>
       </form>
       

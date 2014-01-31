@@ -3,7 +3,7 @@ var hash_regexp = /[#]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistica
 var tilde_regexp = /[~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 // /[~]([^(." ")]+)/g
 
-var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-.;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK
@@ -29,17 +29,21 @@ function changeOrder(nodeChildren){
 
 function updateNrOfIdeasVisible(){
     if($('textarea#newpost').val() == ""){
-        $('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
+        //$('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
+        if(numberOfIdeasVisible ==0)
+            $('#numResults').html("No Ideas here yet");
+        else
+            $('#numResults').html("");
     }
     else {
         // so that chunks of text dont happen
         var store = $('textarea#newpost').val();
-        if(store.length>50) store = store.substring(0,50)+"...";
+        if(store.length>40) store = store.substring(0,40)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
         }
         else {
-            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+store+"...\"");
+            $('#numResults').html("Found "+numberOfIdeasVisible+' Ideas which match"'+store+'"');
         }     
     }
 }

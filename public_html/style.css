@@ -1,3 +1,8 @@
+/** {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+  Helvetica, Arial, "Lucida Grande", sans-serif;
+}*/
+
 body {
     background: #FFF;
     font-weight:300;
@@ -5,7 +10,38 @@ body {
 
 div.container {
     background: white;
-    
+}
+
+textarea,input[type="text"] {
+	-webkit-box-shadow:none !important;
+	box-shadow:none !important;
+	-moz-box-shadow:none !important;
+	border:2px solid #ddd;
+	outline:none !important;
+}
+
+.navbar-inner{
+	-webkit-box-shadow:none !important;
+	-moz-box-shadow:none !important;
+	box-shadow:none !important;
+	background:white;
+	border:0px;
+}
+
+.sidebar-nav-fixed{
+	height:100%;/*#TENNIS*/
+}
+
+.active a {
+	background:white !important;
+	-webkit-box-shadow:none !important;
+	box-shadow:none !important;
+	-moz-box-shadow:none !important;
+	text-decoration:underline !important;
+}
+
+#filterBy a {
+	margin-left:5px;
 }
 
 div.container h1 {
@@ -81,29 +117,49 @@ td.status {
 	padding:0;
 }
 
+.popover-content input[type="text"]{
+	margin-bottom:0px;
+	margin-top:5px;
+}
+
 .popover-title {
 	background:white;
 	border:0;
 	padding:0;
 }
 
-#filterBy .toggled{
-	text-decoration: underline;
 
+#filterBy .active{
+	background-image: none;
+	outline: 0;
+	border:1px solid #ddd;
+}
+
+#filterBy a:hover {
+	border:1px solid rgb(89, 180, 222);
+	text-decoration:none;
 }
 
 
 #filterBy {
+	margin-top:5px;
 	display:inline;
 	float:right;
 	position:relative;
-	top:-20px;
 }
 
 #filterBy a {
+	padding:5px;
+	border-radius: 4px;
+
 	color:#666;
+	border:1px solid white;
 
 	cursor:pointer;
+}
+
+.table td {
+	border-top:1px solid #eee;
 }
 
 .nav-header {
@@ -112,14 +168,23 @@ td.status {
 
 #tableHeaderDiv {
 	color:#999;
+	margin:5px 0px 5px 0px;
+	height:30px;
 }
 
 #numResults {
 	max-width:400px;
+	float:left;
+
 }
 
 .hero-unit-light {
 	padding-left:40px !important;
+	padding-right:10px !important;
+}
+
+.navbar .brand {
+	margin-left:-17px;
 }
 
 .progress {
@@ -156,6 +221,7 @@ a.showcomments {
 	background-repeat:no-repeat;
 	float:right;
 	margin-right: 3px;
+	margin-left: 0px;
 }
 a.showcomments:hover {
 	background-position: 0 -16px;	
@@ -163,8 +229,8 @@ a.showcomments:hover {
 
 div.showcomments {
 	width:100%;
-	margin-left:3px;
-	font-size: 12px;
+	margin-left:0px;
+	font-size: 14px;
 /*	position:relative;
 	top:-35px;*/
 }
@@ -176,7 +242,7 @@ div.commentform input[type=button] {
 }
 
 div.commentform {
-	margin-left:20px;
+	margin-left:0px;
 }
 
 .init-expanded {
@@ -245,6 +311,8 @@ textarea.commentsinput {
 	height:18px;
 	resize:vertical;
 	font-size: 12px;
+	margin-top:5px;
+
 }
 
 
@@ -268,6 +336,10 @@ div.commentform div.commentsinput {
 
 #postform textarea {
 	font-weight:200!important;
+	margin-bottom:0px;
+}
+#postform div {
+	margin-bottom:0px;
 }
 #postform .btn {
 	font-weight:200!important;
@@ -353,6 +425,9 @@ a:hover {
     text-decoration: underline;
 }*/
 
+.currentposts {
+	margin-top:5px;
+}
 
 .star {
 	width:18px;
@@ -406,7 +481,6 @@ a:hover {
 	color: rgb(0, 119, 204);
 	cursor: pointer;
 	display: block;
-	font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
 	font-size: 1px;
 	height: 31px;
 	line-height: 1px;

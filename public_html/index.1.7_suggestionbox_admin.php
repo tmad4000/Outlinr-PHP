@@ -32,9 +32,8 @@ require_once('../config.inc.php');
   
   
 
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-  
+  <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
   <!--
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -46,7 +45,7 @@ require_once('../config.inc.php');
   <style type='text/css'>
     body {
       padding-bottom: 40px;
-      padding-top: 60px;
+      padding-top: 45px;
     }
     .navbar {
       letter-spacing: 1px !important;
@@ -54,11 +53,12 @@ require_once('../config.inc.php');
 
     .sidebar-nav-fixed {
 		/*display:none;*/
-      padding: 13px 0;
+      padding: 0px;
       position:fixed;
       right:20px;
       top:36px;
       width:250px;
+      word-wrap:break-word;
     }
 
     .row-fluid > .span-fixed-sidebar {
@@ -67,7 +67,6 @@ require_once('../config.inc.php');
 
     #ideanames, .ideatags {
       overflow:auto;
-      max-height:300px;
       margin-left:10px;
     }
 
@@ -118,10 +117,10 @@ require_once('../config.inc.php');
 
 
 .vote.on {
-  background-position: 0px 0px;
+  background-position: 0px 1px;
 }
 td.votes {
-	font-size:10pt;
+	font-size:14px;
 	color:#AAA;
 	text-align:center;
   vertical-align: middle;
@@ -129,6 +128,12 @@ td.votes {
   cursor:pointer;
   float:center;
   text-align: middle;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /*popover */
@@ -161,6 +166,7 @@ ul.entrylist {
 ul.entryNode table{
 	padding-top:5px;		
 	margin-bottom:0;
+  top:0px;
 	
 }
 
@@ -261,8 +267,8 @@ td.uid {
           <ul class="nav">
 
 
-            <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
-            <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+            <li class="active"><a href="index.1.7_suggestionbox.php">Ideas</a></li>
+            <li><a href="index.1.7_suggestionbox_inProgress.php">Progress</a></li>
             <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
 
 
@@ -324,7 +330,13 @@ td.uid {
         </form>
         <div id="tableHeaderDiv">
           <div id="numResults"></div>
-          <div id="filterBy">Filter by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a> <a id='sortByStatus'>Status</a><!--#FUTURE<a>Hot</a>--></div>
+          <div id="filterBy">
+            <ul>
+              <li id='sortByDate' class="active">New</li>
+              <li id="sortByUpvotes">Top</li>
+              <li id='sortByStatus'>Status</li>
+            </ul>
+          </div>
         </div>
         <div id="currentposts"></div>
 

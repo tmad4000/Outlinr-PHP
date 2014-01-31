@@ -33,8 +33,8 @@ require_once('../config.inc.php');
   
   
 
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
   
   <!--
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@ require_once('../config.inc.php');
   <style type='text/css'>
     body {
       padding-bottom: 40px;
-      padding-top: 60px;
+      padding-top: 45px;
     }
     .navbar {
       letter-spacing: 1px !important;
@@ -55,7 +55,7 @@ require_once('../config.inc.php');
 
     .sidebar-nav-fixed {
 	  <?php if($isMobile) { ?> display:none; <?php } ?>
-      padding: 13px 0;
+      padding:0;
       position:fixed;
       right:20px;
       top:36px;
@@ -66,7 +66,7 @@ require_once('../config.inc.php');
       margin-right: 290px;
     }
 
-    #ideanames, .ideatags {
+    #ideanames, .idea-hashtags, .people-list {
       overflow:auto;
       max-height:300px;
       margin-left:10px;
@@ -119,10 +119,10 @@ require_once('../config.inc.php');
 
 
 .vote.on {
-  background-position: 0px 0px;
+  background-position: 0px 1px;
 }
 td.votes {
-	font-size:10pt;
+	font-size:14px;
 	color:#AAA;
 	text-align:center;
 	width:24px;
@@ -261,8 +261,8 @@ td.uid {
           <ul class="nav">
 
 
-            <li class="active"><a href="index.1.7_suggestionbox.php">IdeaMap</a></li>
-            <li><a href="index.1.7_suggestionbox_inProgress.php">InProgress</a></li>
+            <li class="active"><a href="index.1.7_suggestionbox.php">Ideas</a></li>
+            <li><a href="index.1.7_suggestionbox_inProgress.php">Progress</a></li>
             <li><a href="index.1.7_suggestionbox_proposals.php">Proposals</a></li>
 
 
@@ -279,14 +279,6 @@ td.uid {
       <div class="">
         <div class="well sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
-
-            <li class="nav-header">All Ideas</li>
-            <ul id="ideanames" class="">
-              <!--<li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>-->
-            </ul>
             <li class="nav-header">Categories (#)</li>
 
             <ul id="idea-hashtags" class="ideatags">
@@ -303,6 +295,14 @@ td.uid {
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
             </ul>
+            <li class="nav-header">All Ideas</li>
+            <ul id="ideanames" class="">
+              <!--<li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>-->
+            </ul>
+            
 <!--
           <li class="nav-header">Sidebar</li>
           <li><a href="#">Link</a></li>
@@ -322,7 +322,11 @@ td.uid {
         </form>
         <div id="tableHeaderDiv">
           <div id="numResults"></div>
-          <div id="filterBy">Filter by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a> <a id='sortByStatus'>Status</a><!--#FUTURE<a>Hot</a>--></div>
+          <div id="filterBy">
+              <a id='sortByDate' class="active">New</a>
+              <a id="sortByUpvotes">Top</a>
+              <a id='sortByStatus'>Status</a>
+          </div>
         </div>
         <div id="currentposts"></div>
 

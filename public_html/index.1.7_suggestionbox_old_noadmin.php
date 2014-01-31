@@ -29,9 +29,8 @@ require_once('../config.inc.php');
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client.js"></script>
 
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-
+  <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
   
   

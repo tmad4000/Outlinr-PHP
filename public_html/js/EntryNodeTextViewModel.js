@@ -22,8 +22,10 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.getViewDomE().html(r);
 			return true
 		}
-		query = removeCommonWords(query.replace(/[^a-zA-Z0-9~# ,\r\n]/gi,"").toLowerCase());
+		console.log(query) // #TENNIS
+		query = removeCommonWords(query.replace(/[^.@a-zA-Z0-9~#\/, \r\n]/gi,"").toLowerCase());
 		query = query.split(/[\r\n ,-\/]+/);
+		console.log(query)
 		var nomatch = true;
 		var t = this.txt.toLowerCase()
 		
