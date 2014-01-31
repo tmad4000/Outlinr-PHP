@@ -10,7 +10,7 @@ $usrname = mysqli_real_escape_string($MYSQLI_LINK, (trim($_REQUEST['uid'])));
 $defaultpath="";
 $defaultparent=0;
 
-//mit specific hack
+//mit specific #hack
 //Utopia/Misc 197/199
 if(!$path&&$mapid==3) {
 	$path=$defaultpath="197/199/";
@@ -26,8 +26,38 @@ if(!$path&&$mapid==3) {
 $time = time();
 
 $ideastbl = IDEAS_TBL;
+$commentstbl = COMMENTS_TBL;
 
+function getMap($MYSQLI_LINK,$mapid){
+	$query = "SELECT * FROM ideamaps WHERE mapid={$mapid}";
+	//echo $query;
+	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+	$r = mysqli_fetch_assoc($result);
+	return $r;
+}
 
+function curPageURL() {
+	 $pageURL = 'http';
+	 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+	 $pageURL .= "://";
+	 if ($_SERVER["SERVER_PORT"] != "80") {
+	  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	 } else {
+	  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	 }
+	 return $pageURL;
+}
+
+function emailNotify($MYSQLI_LINK,$mapid,$body){
+	$m = getMap($MYSQLI_LINK,$mapid);
+	$e = $m['email'];
+	$mn = $m['mapname'];
+	$u = dirname(dirname(curPageURL()))."/index.1.7_suggestionbox.php?mapid=$mapid";
+	$headers  = "From: GestaltBox<noreply@gestaltbox.com>\r\n";
+	$headers .= "Reply-To: gestaltbox+$mapid@gmail.com\r\n";
+	$b = "Dear $mn,\nWe have a suggestion for you:\n $body\n\nSee all suggestions at $u";
+	mail($e,"[GestaltBox] New Suggestion for $mn",$b,$headers);
+}
 
 if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
@@ -36,16 +66,18 @@ if (!empty($body)) {
     $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path')";
 //	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
+
+    emailNotify($MYSQLI_LINK,$mapid,$body);
 }
 
 
 //return progress bars info if queried
 if($_GET['inProgress']) {
-	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND status > 0 ORDER BY path ASC,status ASC,time DESC";
+	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND status > 0 AND deleted_time IS NULL ORDER BY path ASC,status ASC,time DESC";
 }
 //normally, return suggestions info
 else {
-	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid ORDER BY path ASC,time DESC";
+	$query = "SELECT * FROM $ideastbl WHERE body<>'' AND mapid=$mapid AND deleted_time IS NULL ORDER BY path ASC,time DESC";
 }
 $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 
@@ -56,7 +88,16 @@ $data=array("uid"=>0,"pid"=>NULL,"children"=>array()); //root
 while ($r = mysqli_fetch_assoc($result)) {
 	$rows[]=$r;
 	
-	
+	$pid=$r['pid'];
+	$countQuery = "SELECT COUNT(*) FROM $commentstbl WHERE pid=$pid AND deleted_time IS NULL";
+	$countResult=mysqli_query($MYSQLI_LINK, $countQuery) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+
+	$num_comments = (mysqli_fetch_array($countResult));
+	$num_comments=$num_comments[0];
+	//var_dump($num_comments);
+	$r['num_comments']=$num_comments;
+
+	//var_dump($num_comments);
 	$entry=array_map(trim,array_map(stripslashes,$r));
 	$entry["children"]=array();
 		

@@ -45,3 +45,5 @@ else {
 	error_reporting(E_ALL & ~ E_NOTICE);
 }
 
+if(!isset($isMobile))
+	$isMobile=false; //for monitor disply, eg pika

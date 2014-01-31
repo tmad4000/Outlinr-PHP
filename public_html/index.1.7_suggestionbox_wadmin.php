@@ -1,5 +1,4 @@
 <?php 
-
 require_once('../config.inc.php');
 ?>
 
@@ -14,10 +13,9 @@ require_once('../config.inc.php');
   $getmapid=$_GET['mapid']+0;
 
   $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
-  //echo $query;
-  //var_dump($MYSQLI_LINK);
+//echo $query;
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-  $r = mysqli_fetch_assoc($result);
+  $r = mysqli_fetch_assoc($result)
 
   ?>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -26,7 +24,6 @@ require_once('../config.inc.php');
   <script src="js/lib/jquery-1.10.2.min.js"></script>
   <script src="js/lib/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/util.js"></script>
-  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client_admin.js"></script>
@@ -54,7 +51,7 @@ require_once('../config.inc.php');
     }
 
     .sidebar-nav-fixed {
-	  <?php if($isMobile) { ?> display:none; <?php } ?>
+		/*display:none;*/
       padding: 13px 0;
       position:fixed;
       right:20px;
@@ -125,6 +122,7 @@ td.votes {
 	font-size:10pt;
 	color:#AAA;
 	text-align:center;
+  vertical-align: middle;
 	width:24px;
   cursor:pointer;
   float:center;
@@ -136,6 +134,7 @@ td.votes {
 
 td.ideaTxt {
 	/*width:100%;*/
+  vertical-align: middle;
 }
 
 td.ideaTxt > b {
@@ -202,8 +201,7 @@ td.uid {
 
 #currentposts .suggname {
   text-decoration:none;
-  /*color:#D41528;*/
-  color:#090909;
+  color:#D41528;
   cursor:text!important;
 }
 
@@ -287,7 +285,7 @@ td.uid {
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
             </ul>
-            <li class="nav-header">Categories (#)</li>
+            <li class="nav-header">Categories (#-)</li>
 
             <ul id="idea-hashtags" class="ideatags">
               <!--<li class="active"><a href="#">Link</a></li>
@@ -295,7 +293,7 @@ td.uid {
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
             </ul>
-            <li class="nav-header">People (~)</li>
+            <li class="nav-header">People (~-)</li>
 
             <ul id="people-list" class="ideatags">
               <!--<li class="active"><a href="#">Link</a></li>
@@ -320,17 +318,14 @@ td.uid {
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
         </form>
-        <div id="tableHeaderDiv">
-          <div id="numResults"></div>
-          <div id="filterBy">Filter by: <a id='sortByDate' class='toggled'>Date</a> <a id="sortByUpvotes">Upvotes</a> <a id='sortByStatus'>Status</a><!--#FUTURE<a>Hot</a>--></div>
-        </div>
+        <div id="numResults"></div>
         <div id="currentposts"></div>
 
       </div>
       <hr>
 
       <footer>
-        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
+        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
       </footer>
     </div><!--/.fluid-container-->
   </body>
