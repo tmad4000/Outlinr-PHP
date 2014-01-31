@@ -447,7 +447,7 @@ div.delete a {
 }
 
 #emailicon {
-	width: 12px;
-	margin-bottom: 2px;
+	width: 20px;
+	margin-bottom: -1px;
 	vertical-align: bottom;
 }
