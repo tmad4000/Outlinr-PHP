@@ -119,7 +119,7 @@ function EntryNodeViewModel(entryNodeModel) {
 							var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 							var commentTime = new Date(currComment.time * 1000);
 							var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
-							var commentS='<div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+							var commentS='<div class="comment-upvote">'+currComment.upvotes+'</div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
 							'<div class="comment-time timecol">' + commentTimeS + '</div>';
 							commentsListH+="<li>"+commentS+"</li>";
 						})

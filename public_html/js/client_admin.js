@@ -294,11 +294,11 @@ function displayPosts() {
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
 				num+=1;
-				doUpvoteComment($(this).attr('-comment-id')-0,'up');
+				doUpvoteComment($(this).parent().find('.comment-text').attr('-comment-id')-0,'up');
 			}
 			else {
 				num-=1;
-				doUpvoteComment($(this).attr('-comment-id')-0,'down');
+				doUpvoteComment($(this).parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
 			$(this).html(num) 
 		});
