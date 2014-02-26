@@ -198,7 +198,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			}			
 
 			if(this.isASplitOpenOrClose(i,this.mSplit,0)){
-				o+=' <a id="m'+this.pid+'" onclick="moreText('+this.pid+')">show more...</a><span id="t'+this.pid+'" class="hiddenText">'
+				o+=' <a id="m'+this.pid+'" onclick="moreText('+this.pid+')" class="showmore">show more...</a><span id="t'+this.pid+'" class="hiddenText">'
 			}
 			if(this.isASplitOpenOrClose(i,this.mSplit,1)){
 				o+="</span>"
@@ -209,7 +209,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			}
 
 			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+="</a>"
+				o+=" <i class='fa fa-external-link'></i></a>"
 			}
 
 			//i is a this.hSplit open

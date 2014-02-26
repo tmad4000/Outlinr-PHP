@@ -2,7 +2,7 @@ var tag_regexp = /[#~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistica
 var hash_regexp = /[#]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 var tilde_regexp = /[~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 // /[~]([^(." ")]+)/g
-
+// <i class="fa fa-external-link"></i>
 var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-.;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
@@ -55,6 +55,11 @@ String.prototype.repeat = function(times) {
 function moreText(id){
     $('#m'+id).css('display','none');
     $('#t'+id).css('display','inline');
+}
+
+function moreTextComment(id){
+    $('#mc'+id).css('display','none');
+    $('#tc'+id).css('display','inline');
 }
 
 function timeToString(hours, minutes) {
@@ -213,7 +218,6 @@ function linkHashtags(text) {
 function extractTags(idea) {
     return idea.match(tag_regexp)
 }
-
 function extractHashes(idea) {
 	return idea.match(hash_regexp)
 }
@@ -294,6 +298,14 @@ function setCookie(name,usremail,handle,isDefaultUsrHandle,exdays){
     document.cookie = "usremail=" + escape(usremail)+";"+ expires;
 }
 
+// Cookie for storing upvotes
+function setCookie(contentid){
+    var d = new Date();
+    d.setTime(d.getTime()+(365*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = contentid.toString()+"=voted;"+ expires;
+}
+
 function getCookie(label){
     var cname = label + "=";
     var ca = document.cookie.split(';');
@@ -303,8 +315,7 @@ function getCookie(label){
     }
     return "";
 }
-/*
-function deleteCookie(){
-    document.cookie="name=;"
-    document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
-}*/
+
+function deleteCookie(name){
+    document.cookie = name+"=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
+}

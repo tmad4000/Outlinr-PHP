@@ -303,7 +303,12 @@ function displayIdeaNames() {
 
 //ajax
 function doUpvote(ideaid,upOrDown) {
-
+	if(upOrDown){
+		setCookie(ideaid);
+	}
+	else {
+		deleteCookie(ideaid);
+	}
 	$.ajax({
 		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'ideaid':ideaid},
@@ -314,7 +319,12 @@ function doUpvote(ideaid,upOrDown) {
 }
 
 function doUpvoteComment(commentid,upOrDown) {
-
+	if(upOrDown){
+		setCookie(commentid);
+	}
+	else {
+		deleteCookie(commentid);
+	}
 	$.ajax({
 		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'commentid':commentid},

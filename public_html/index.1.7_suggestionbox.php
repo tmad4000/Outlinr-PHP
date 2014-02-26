@@ -20,6 +20,7 @@ require_once('../config.inc.php');
   $r = mysqli_fetch_assoc($result);
 
   ?>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>IdeaOverflow -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   
@@ -289,7 +290,7 @@ td.uid {
             </ul>
             <li class="nav-header">People (~)</li>
 
-            <ul id="people-list" class="ideatags">
+            <ul id="people-list" class="peopletags">
               <!--<li class="active"><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>

@@ -12,6 +12,44 @@ div.container {
     background: white;
 }
 
+#idea-hashtags {
+	margin-left:10px;
+}
+
+#people-list {
+	margin-left:10px;
+	word-break:break-all;
+}
+
+.peopletags {
+	list-style-type: none;
+}
+
+#ideanames {
+	word-break:break-all;
+}
+
+#emailicon {
+	cursor:pointer;
+}
+
+.showmore {
+	cursor:pointer;
+}
+
+.badge {
+	display: inline-block;
+	padding: 0px 8px;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 14px;
+	color: #ffffff;
+	vertical-align: baseline;
+	white-space: nowrap;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color:lightgray;
+}
+
 textarea,input[type="text"] {
 	-webkit-box-shadow:none !important;
 	box-shadow:none !important;
@@ -286,13 +324,19 @@ ul.comments {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	border-bottom-width:0px !important;
 }
 .comment-upvote.on {
   background-position: 5px 4px;
 }
 
-.comments li {
+.comments {
+	width:100%;
+}
 
+.comments li {
+	float:left;
+	clear:both;
 }
 
 .comments li div {
@@ -307,13 +351,15 @@ ul.comments {
 }
 
 textarea.commentsinput {
-	width:494px;
+	width:100%;
 	height:18px;
 	resize:vertical;
 	font-size: 12px;
 	margin-top:5px;
-
+	float:left;
+	clear:both;
 }
+
 
 
 
@@ -358,7 +404,7 @@ div.commentform div.commentsinput {
 .navbar-text input[type="text"] {
 	width:150px;
 	font-size:12px;
-	margin:1px 0px 5px 10px;
+	margin:1px 0px 5px 2px;
 }
 
 .navbar-text input[type="button"]{

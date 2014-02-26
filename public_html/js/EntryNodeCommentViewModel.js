@@ -151,7 +151,7 @@ function EntryNodeCommentViewModel(txt,cid) {
 				openB=false;
 			}		
 			if(this.isASplitOpenOrClose(i,this.mSplit,0)){
-				o+=' <a id="'+this.cid+'" onclick="moreText('+this.cid+')">show more...</a><span id="t'+this.pid+'" class="hiddenText">'
+				o+=' <a id="mc'+this.cid+'" onclick="moreTextComment('+this.cid+')" class="showmore">show more...</a><span id="tc'+this.cid+'" class="hiddenText">'
 			}
 			if(this.isASplitOpenOrClose(i,this.mSplit,1)){
 				o+="</span>"
@@ -162,7 +162,7 @@ function EntryNodeCommentViewModel(txt,cid) {
 			}
 
 			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+="</a>"
+				o+=" <i class='fa fa-external-link'></i></a>"
 			}
 
 			//i is a this.hSplit open

@@ -248,7 +248,7 @@ function displayPosts() {
 			//	console.log("hhh")
 				delete expandedComments[idS];
 			}
-			getComments(idS);
+			getComment(idS);
 			$(this).parent().find('textarea').focus();//#TENNIS
 		});
 
@@ -298,13 +298,13 @@ function displayPosts() {
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
 				num+=1;
-				doUpvoteComment($(this).parent().find('.comment-text').attr('-comment-id')-0,'up');
+				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'up');
 			}
 			else {
 				num-=1;
-				doUpvoteComment($(this).parent().find('.comment-text').attr('-comment-id')-0,'down');
+				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
-			$(this).html(num) 
+			$(this).html(num);
 		});
 
 		// Voting hover status
@@ -323,7 +323,7 @@ function displayPosts() {
 	});
 
 	//fix offset
-	$('#ideanames a').click(function(e){	
+	$('#ideanames li a').click(function(e){	
 		e.preventDefault();
 		//$('#newpost').val('');
 
@@ -340,7 +340,7 @@ function displayPosts() {
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
 	
-	$('.ideatags a').click(function(e){	
+	$('.ideatags a, .peopletags a').click(function(e){	
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
@@ -386,55 +386,163 @@ function displayIdeaNames() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
 		var data = $.parseJSON(jsonData)['flatPosts'];
-		console.log(x=localStorage)
 		var nameul = $('ul#ideanames').empty();
 		var tags={};
-
+		var hashtags={};
+		var peopletags={};
 		
+		getComments();
+		var cs = $.parseJSON(localStorage.getItem("comments"));
+		console.log(cs);
+		// idea names 
+		// Idea Names by Upvotes
+		var sortable = [];
+		$.each( data,function(i,data){
+			
+			var n=extractIdeaName(data.body);
+			var h=extractHashes(data.body);
+			var t=extractTildes(data.body);
+			// idea hashtags
+			if(h){
+				$.each(h,function(i,tag) {
+					if(typeof hashtags[tag] != 'undefined')
+						hashtags[tag] = parseInt(hashtags[tag])+1;
+					else
+						hashtags[tag] = 1;
+					tags[h] = true;
+				});
+			}
+			if(t){
+				$.each(t,function(i,tag) {
+					if(typeof peopletags[tag] != 'undefined')
+						peopletags[tag] = parseInt(peopletags[tag])+parseInt(data.upvotes);
+					else
+						peopletags[tag] = data.upvotes;
+					tags[t] = true;
+				});
+			}
 
+			sortable[data.pid] = [n,data.upvotes.toString(),data.pid.toString()];
+		});
+
+		$.each( cs,function(i,cs){
+			
+			var n=extractIdeaName(cs.comment_text);
+			var h=extractHashes(cs.comment_text);
+			var t=extractTildes(cs.comment_text);
+			// idea hashtags
+			if(h){
+				$.each(h,function(i,tag) {
+					if(typeof hashtags[tag] != 'undefined')
+						hashtags[tag] = parseInt(hashtags[tag])+1;
+					else
+						hashtags[tag] = 1;
+					tags[h] = true;
+				});
+			}
+			if(t){
+				$.each(t,function(i,tag) {
+					if(typeof peopletags[tag] != 'undefined')
+						peopletags[tag] = parseInt(peopletags[tag])+parseInt(cs.upvotes);
+					else
+						peopletags[tag] = data.upvotes;
+					tags[t] = true;
+				});
+			}
+
+			// Could list comments here
+			//sortable[data.pid] = [n,data.upvotes.toString()]; 
+		});
+
+		sortable.sort(function(a, b) {return b[1] - a[1]})
+		for(var i =0;i<sortable.length;i++){
+			if(typeof sortable[i] == 'undefined') break;
+			nameul.append('<li><a href="#'+sortable[i][2]+'">'+sortable[i][0] +/*' <span class="badge">'+sortable[i][1]+'</span>'+*/'</a></li>');
+		}
+
+		/* Idea Names by Recent
 		$.each( data,function(i,data) {
 			var n=extractIdeaName(data.body);
 			var h=extractTags(data.body);
+			// idea hashtags
 			if(h)
 				$.each(h,function(i,tag) {tags[tag]=true;});
+
 			nameul.append('<li><a href="#'+data.pid+'">'+n + '</a></li>');
 
 		});
+		*/
+		var hashtagssorted = [];
+	    for (var key in hashtags)
+	    	hashtagssorted.push([hashtags[key],key]);
+	    hashtagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+	    var peopletagssorted = [];
+	    for (var key in peopletags)
+	    	peopletagssorted.push([peopletags[key],key]);
+	   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+
+	    console.log(peopletagssorted);
+	    console.log(hashtagssorted);
 
 		localStorage.setItem("tags", tags);
 		var tagsul = $('ul#idea-hashtags').empty();
 		var tildesul = $('ul#people-list').empty();		
-		$.each( tags,function(tag,trueval) {
-			if(tag.substring(0,1)=="#")
-				tagsul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
-			else if(tag.substring(0,1)=="~")
-				tildesul.append('<li><a href="#">'+tag + '</a> </li>'); //TODO
+		for(var k=0;k<hashtagssorted.length;k++){
+			//if(tag.substring(0,1)=="#")
+			tagsul.append('<li><a href="#">'+hashtagssorted[k][1] + '</a> </li>');
+		}
+		for(var k=0;k<peopletagssorted.length;k++){
+			var tag = peopletagssorted[k][1];
+			var upv = peopletagssorted[k][0];
+			if(upv>=200){
+				tildesul.append('<li><span class="badge badge-inverse">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+			}
+			else if(upv>=50){
+				tildesul.append('<li><span class="badge badge-important">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+			}
+			else if(upv>=30){
+				tildesul.append('<li><span class="badge badge-warning">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+			}
+			else if(upv>=10){
+				tildesul.append('<li><span class="badge badge-info">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+			}
+			else if(upv==1){
+				tildesul.append('<li><span class="badge">'+upv+'pt</span> <a href="#">'+tag + '</a> </li>'); //TODO
+			}
+			else
+				tildesul.append('<li><span class="badge">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+		}
 
-		//			tagsul.append('<li><a href="#'+data.pid+'">'+tag + '</a> </li>');
-
-	});
 	}
 }
 
 //ajax
-function doUpvote(ideaid,upOrDown) {
-
+function doUpvote(ideaid,upOrDown) { 	
 	$.ajax({
 		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
-
+			if(upOrDown=="up"){
+				setCookie("i"+ideaid);
+			}
+			else {
+				deleteCookie("i"+ideaid);
+			}		
 		},
 	});
 }
 
 function doUpvoteComment(commentid,upOrDown) {
-
 	$.ajax({
-		'url': 'ajax/upvotecomment.php?'+upOrDown+'=true',
+		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'commentid':commentid},
 		'success': function(jsonData) {
-
+			if(upOrDown=="up"){
+				setCookie("c"+commentid);
+			}
+			else {
+				deleteCookie("c"+commentid);
+			}
 		},
 	});
 }
@@ -535,14 +643,23 @@ function getPosts() {
 	});
 }
 
-function getComments(pid) {
+function getComment(pid) {
 	$.ajax({
 		'url': 'ajax/comment.php',
 		'data': {'pid':pid},
 		'success': function(jsonData) {
 			commentsModel[pid]=$.parseJSON(jsonData);
-			console.log(commentsModel)
 			displayPosts();
+		},
+	});
+}
+
+function getComments() {
+	$.ajax({
+		'url': 'ajax/comment.php',
+		'data': {'mapid':$('#mapidform').val()},
+		'success': function(jsonData) {
+			localStorage.setItem("comments", jsonData);
 		},
 	});
 }
@@ -587,7 +704,7 @@ function submitAndGetComments(pid) {
 	if(t) {
 		$.ajax({
 			'url': 'ajax/comment.php',
-			'data': {'pid':pid,'comment_text':t},
+			'data': {'pid':pid,'comment_text':t,'mapid':$('#mapidform').val()},
 			'success': function(jsonData) {
 				commentsModel[pid]= $.parseJSON(jsonData);
 

@@ -243,7 +243,7 @@ require_once('../config.inc.php');
         </div>
       </form>
       
-      <div id="currentposts"></div>
+      <div id="currentposts" style="margin-top:20px"></div>
       
       </div>
       

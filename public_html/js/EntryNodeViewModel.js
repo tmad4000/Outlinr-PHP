@@ -101,8 +101,12 @@ function EntryNodeViewModel(entryNodeModel) {
 						'<div class="star">'+'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+'</div>' +
 						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a><div>' + 
 					"</td>";
-				
-				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+				if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
+					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+				}
+				else {
+					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+				}
 
 
 				//Comments
@@ -119,8 +123,15 @@ function EntryNodeViewModel(entryNodeModel) {
 							var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 							var commentTime = new Date(currComment.time * 1000);
 							var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
-							var commentS='<div class="comment-upvote">'+currComment.upvotes+'</div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+							if(getCookie("c"+currComment.cid)!= ""){
+								var commentS='<div><div class="comment-upvote on">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
 							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							}
+							else {
+								var commentS='<div><div class="comment-upvote">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							}
+							
 							commentsListH+="<li>"+commentS+"</li>";
 						})
 					}
