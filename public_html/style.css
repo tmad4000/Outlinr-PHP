@@ -55,11 +55,7 @@ div.container {
 	word-break:break-all;
 }
 
-#emailicon {
-	cursor:pointer;
-}
-
-.showmore {
+#emailicon, .showmore, .url {
 	cursor:pointer;
 }
 
