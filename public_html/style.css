@@ -51,6 +51,19 @@ div.container {
 	background-color:lightgray;
 }
 
+.badge-10 {
+	background-color:royalblue;
+}
+.badge-30 {
+	background-color:orange;
+}
+.badge-50 {
+	background-color:red;
+}
+.badge-200 {
+	background-color:black;
+}
+
 textarea,input[type="text"] {
 	-webkit-box-shadow:none !important;
 	box-shadow:none !important;

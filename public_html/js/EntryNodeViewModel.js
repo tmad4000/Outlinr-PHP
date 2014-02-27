@@ -93,7 +93,8 @@ function EntryNodeViewModel(entryNodeModel) {
 	
 			var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
 
-				var time = new Date(this.entryNodeModel.time * 1000);
+				//dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())
+				var time = moment(this.entryNodeModel.time * 1000).fromNow();
 				//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 				var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
 
@@ -177,7 +178,7 @@ function EntryNodeViewModel(entryNodeModel) {
 					'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>" +
 					comments+"</td>" + 
 				   	// '<td><div class="progressbar"></div></td>' +
-				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
 					"<div class='delete'><a href='#'>Delete</a></div>" +
 		//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
 					"</td></tr>";

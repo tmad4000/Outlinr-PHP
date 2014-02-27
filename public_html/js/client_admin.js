@@ -495,16 +495,16 @@ function displayIdeaNames() {
 			var tag = peopletagssorted[k][1];
 			var upv = peopletagssorted[k][0];
 			if(upv>=200){
-				tildesul.append('<li><span class="badge badge-inverse">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-200">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv>=50){
-				tildesul.append('<li><span class="badge badge-important">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-50">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv>=30){
-				tildesul.append('<li><span class="badge badge-warning">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-30">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv>=10){
-				tildesul.append('<li><span class="badge badge-info">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-10">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv==1){
 				tildesul.append('<li><span class="badge">'+upv+'pt</span> <a href="#">'+tag + '</a> </li>'); //TODO
