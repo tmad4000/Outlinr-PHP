@@ -146,11 +146,11 @@ function EntryNodeViewModel(entryNodeModel) {
 				else
 					numComments=this.entryNodeModel.num_comments;
 
-				var numCommentsMsg="Comment";
+				var numCommentsMsg='<i class="fa fa-comments-o"></i> '+'Comment';
 				if(numComments == 1)
-					numCommentsMsg=numComments + " Comment";
+					numCommentsMsg='<i class="fa fa-comments-o"></i> '+numComments + " Comment";
 				else if(numComments > 1)
-					numCommentsMsg=numComments + " Comments";
+					numCommentsMsg='<i class="fa fa-comments-o"></i> '+numComments + " Comments";
 
 				//entryNodeBody="<div>"+table+"</div>";
 				//comments=""

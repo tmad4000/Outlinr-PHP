@@ -254,10 +254,10 @@ td.status {
 
 
 a.showcomments {
-	background-image: url(images/commenticon.gif);
+	//background-image: url(images/commenticon.gif);
 	padding-left:15px;
-	background-position: 0px 1px;
-	background-repeat:no-repeat;
+	//background-position: 0px 1px;
+	//background-repeat:no-repeat;
 	float:right;
 	margin-right: 3px;
 	margin-left: 0px;

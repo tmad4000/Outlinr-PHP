@@ -26,7 +26,8 @@ $r = mysqli_fetch_assoc($result)
         <img src="" height="20" width="20">
         &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>GestaltBox</a> 
         <span>&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
-        <img src="images/email.png" id="emailicon"/>
+        <i class="fa fa-envelope-o" id="emailicon"></i>
+        <!--<img src="images/email.png" id="emailicon"/>-->
       </span> 
       <div class="nav-collapse">
         <ul class="nav">
