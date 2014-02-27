@@ -108,7 +108,7 @@ div.container textarea.span11 {
     width: 80px;
     color:#AAA;
     padding-right:0;
-    text-align:right;
+    text-align:right !important;
     font-size:10px;
 	white-space:nowrap;
 }
@@ -568,7 +568,6 @@ input[type="text"].usr {
 }
 
 div.delete {
-	float:right;
 	height:0px;
 	margin-top:-5px;
 	

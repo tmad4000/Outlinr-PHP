@@ -393,7 +393,6 @@ function displayIdeaNames() {
 		
 		getComments();
 		var cs = $.parseJSON(localStorage.getItem("comments"));
-		console.log(cs);
 		// idea names 
 		// Idea Names by Upvotes
 		var sortable = [];
