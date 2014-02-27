@@ -23,7 +23,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			return true
 		}
 		console.log(query) // #TENNIS
-		query = removeCommonWords(query.replace(/[^.@a-zA-Z0-9~#\/, \r\n]/gi,"").toLowerCase());
+		query = removeCommonWords(query/*.replace(/[^.@a-zA-Z0-9~#\/, \r\n]/gi,"")*/.toLowerCase());
 		query = query.split(/[\r\n ,-\/]+/);
 		console.log(query)
 		var nomatch = true;
@@ -209,7 +209,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			}
 
 			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+=" <i class='fa fa-external-link'></i></a>"
+				o+=" <i class='fa fa-external-link-square'></i></a>"
 			}
 
 			//i is a this.hSplit open

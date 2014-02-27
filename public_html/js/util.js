@@ -154,15 +154,17 @@ function findMoreTextStart(idea){
 }
 
 function urlPress(e){
-
-    if($(e.target).html().indexOf('www')>=0 && $(e.target).html().indexOf('http')==-1){
-        window.open("http://"+$(e.target).html());
+    var s = $(e.target).text();
+    s.replace('<i class="fa fa-external-link-square"></i>','');
+    s.substr(0,s.length-1);
+    if(s.indexOf('www')>=0 && s.indexOf('http')==-1){
+        window.open("http://"+s);
     }
-    else if($(e.target).html().indexOf('@')>=0 && $(e.target).html().indexOf('mailto:')==-1){
-        window.open("mailto:"+$(e.target).html());
+    else if(s.indexOf('@')>=0 && s.indexOf('mailto:')==-1){
+        window.open("mailto:"+s);
     }
     else
-        window.open($(e.target).html());
+        window.open(s);
 }
 
 function extractIdeaName(idea) {
