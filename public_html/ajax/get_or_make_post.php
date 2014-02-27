@@ -6,6 +6,7 @@ $body = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST[
 $mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0);
 $path = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['path'])));
 $usrname = mysqli_real_escape_string($MYSQLI_LINK, (trim($_REQUEST['uid'])));
+$uip = $_SERVER['REMOTE_ADDR'];
 
 $defaultpath="";
 $defaultparent=0;
@@ -63,7 +64,7 @@ if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
 	if(!$tmptitle)
 		$tmptitle=substr($body,0,80);
-    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path')";
+    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`,`uip`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path','$uip')";
 //	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
 

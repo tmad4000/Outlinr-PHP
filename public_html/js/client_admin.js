@@ -534,7 +534,7 @@ function doUpvote(ideaid,upOrDown) {
 
 function doUpvoteComment(commentid,upOrDown) {
 	$.ajax({
-		'url': 'ajax/upvote.php?'+upOrDown+'=true',
+		'url': 'ajax/upvotecomment.php?'+upOrDown+'=true',
 		'data': {'commentid':commentid},
 		'success': function(jsonData) {
 			if(upOrDown=="up"){
