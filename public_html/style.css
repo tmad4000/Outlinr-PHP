@@ -8,6 +8,32 @@ body {
     font-weight:300;
 }
 
+#feedbackbutton{
+	background:red;
+	/* Safari */
+	-webkit-transform: rotate(90deg);
+	/* Firefox */
+	-moz-transform: rotate(90deg);
+	/* IE */
+	-ms-transform: rotate(90deg);
+	/* Opera */
+	-o-transform: rotate(90deg);
+	/* Internet Explorer */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	font-size:16pt;
+	text-decoration: none;
+	width:100px;
+	height:30px;
+	position:fixed;
+	bottom:150px;
+	left:-40px;
+	z-index:10;
+	padding:6px 0px 0px 10px;
+}
+#feedbackbutton a {
+		color:white !important;
+}
+
 div.container {
     background: white;
 }

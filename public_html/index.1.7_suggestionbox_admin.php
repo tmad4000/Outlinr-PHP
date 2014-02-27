@@ -253,6 +253,7 @@ td.uid {
   include('inc/nav.inc.php');
 	if(0) { // GONE. POOF
    ?>
+
    <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">

@@ -162,7 +162,7 @@ function EntryNodeCommentViewModel(txt,cid) {
 			}
 
 			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+=" <i class='fa fa-external-link'></i></a>"
+				o+=" <i class='fa fa-external-link-square'></i></a>"
 			}
 
 			//i is a this.hSplit open
