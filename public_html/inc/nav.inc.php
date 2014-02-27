@@ -3,7 +3,7 @@ require_once('inc/mysql.inc.php');
 
 include_once("inc/analyticstracking.inc.php");
 
-$getmapid=$_GET['mapid']+0;
+$getmapid=intval((mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0));
 
 $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
 //echo $query;

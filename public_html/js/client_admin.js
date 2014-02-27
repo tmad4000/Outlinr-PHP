@@ -4,7 +4,10 @@ var isDefaultUsrHandle = true;
 var commentsModel = {};
 var expandedComments = {};
 var emailAddress;
+var isAdmin = false;
 $(document).ready(function() {
+	isAdmin = $('#is-admin').val() === 'true';
+
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 	$(window).resize(function() {
 		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");

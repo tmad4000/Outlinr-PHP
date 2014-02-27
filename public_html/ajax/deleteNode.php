@@ -1,6 +1,9 @@
 <?php
 require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
+require_once('util_mapid.php');
+require_once('util_admin_check.php');
+
 
 $ideaid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['ideaid']))+0);
 

@@ -1,5 +1,11 @@
 <?php 
+
 require_once('../config.inc.php');
+if(isset($_GET['logout'])) {
+      session_destroy();
+      session_start();
+      header('Location:index.1.7_suggestionbox.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -13,9 +19,10 @@ require_once('../config.inc.php');
   $getmapid=$_GET['mapid']+0;
 
   $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
-//echo $query;
+  //echo $query;
+  //var_dump($MYSQLI_LINK);
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-  $r = mysqli_fetch_assoc($result)
+  $r = mysqli_fetch_assoc($result);
 
   ?>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -25,8 +32,7 @@ require_once('../config.inc.php');
   <script src="js/lib/jquery-1.10.2.min.js"></script>
   <script src="js/lib/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/util.js"></script>
-  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script>
-
+  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client_admin.js"></script>
@@ -35,6 +41,7 @@ require_once('../config.inc.php');
 
   <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
   <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
+  
   <!--
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -53,21 +60,21 @@ require_once('../config.inc.php');
     }
 
     .sidebar-nav-fixed {
-		/*display:none;*/
-      padding: 0px;
+	  <?php if($isMobile) { ?> display:none; <?php } ?>
+      padding:0;
       position:fixed;
       right:20px;
       top:36px;
       width:250px;
-      word-wrap:break-word;
     }
 
     .row-fluid > .span-fixed-sidebar {
       margin-right: 290px;
     }
 
-    #ideanames, .ideatags {
+    #ideanames, .idea-hashtags, .people-list {
       overflow:auto;
+      max-height:300px;
       margin-left:10px;
     }
 
@@ -124,17 +131,10 @@ td.votes {
 	font-size:14px;
 	color:#AAA;
 	text-align:center;
-  vertical-align: middle;
 	width:24px;
   cursor:pointer;
   float:center;
   text-align: middle;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 /*popover */
@@ -142,7 +142,6 @@ td.votes {
 
 td.ideaTxt {
 	/*width:100%;*/
-  vertical-align: middle;
 }
 
 td.ideaTxt > b {
@@ -167,7 +166,6 @@ ul.entrylist {
 ul.entryNode table{
 	padding-top:5px;		
 	margin-bottom:0;
-  top:0px;
 	
 }
 
@@ -210,7 +208,8 @@ td.uid {
 
 #currentposts .suggname {
   text-decoration:none;
-  color:#D41528;
+  /*color:#D41528;*/
+  color:#090909;
   cursor:text!important;
 }
 
@@ -253,7 +252,6 @@ td.uid {
   include('inc/nav.inc.php');
 	if(0) { // GONE. POOF
    ?>
-
    <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
@@ -287,14 +285,6 @@ td.uid {
       <div class="">
         <div class="well sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
-
-            <li class="nav-header">All Ideas</li>
-            <ul id="ideanames" class="">
-              <!--<li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>-->
-            </ul>
             <li class="nav-header">Categories (#)</li>
 
             <ul id="idea-hashtags" class="ideatags">
@@ -305,12 +295,20 @@ td.uid {
             </ul>
             <li class="nav-header">People (~)</li>
 
-            <ul id="people-list" class="ideatags">
+            <ul id="people-list" class="peopletags">
               <!--<li class="active"><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
             </ul>
+            <li class="nav-header">All Ideas</li>
+            <ul id="ideanames" class="">
+              <!--<li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>-->
+            </ul>
+            
 <!--
           <li class="nav-header">Sidebar</li>
           <li><a href="#">Link</a></li>
@@ -322,9 +320,42 @@ td.uid {
 
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
-        <!--<span class="vote"> </span>-->
-		<h3 style="margin-top:-15px">Admin</h3>
+      <h3>Admin</h3>
+      <?php 
+	  if($r['password']===''){
+			$_SESSION['admin_'.$getmapid]=TRUE;
+      echo 'No password set. ';
+    }
+			
+	  
+	  //if(isset($_GET['login'])) {
+	  	
+		if($r['password']===$_GET['pw'])
+			$_SESSION['admin_'.$getmapid]=TRUE;
+		else
+			echo "Invalid Password<br>";
 
+	  //}
+	  if($_SESSION['admin_'.$getmapid]!==TRUE) {
+		  ?>
+       
+       <form name="login" action="<?= $_SERVER['PHP_SELF'] ?>" method="get">
+       Password <input type="text" name="pw">
+       <input type="hidden" name="mapid" value="<?= "{$getmapid}" ?>" />
+       <input type="submit" name="login">
+       </form>
+
+       
+          <?php
+	  }
+	  else {
+	  	echo "Logged in to map <em>{$r['mapname']}</em>. <a href='?logout'>Logout</a>.";
+		?>
+      <input type="hidden" id="is-admin" value="true"/>
+       
+    
+       <hr>
+        <!--<span class="vote"> </span>-->
         <form id="postform">
           <div class="input-append" style="width:100%">
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
@@ -333,21 +364,25 @@ td.uid {
         <div id="tableHeaderDiv">
           <div id="numResults"></div>
           <div id="filterBy">
-            <ul>
-              <li id='sortByDate' class="active">New</li>
-              <li id="sortByUpvotes">Top</li>
-              <li id='sortByStatus'>Status</li>
-            </ul>
+              <a id='sortByDate' class="active">New</a>
+              <a id="sortByUpvotes">Top</a>
+              <a id='sortByStatus'>Status</a>
           </div>
         </div>
         <div id="currentposts"></div>
 
       </div>
+      
+          <?php
+	  }
+	  ?>
       <hr>
 
       <footer>
-        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
+        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
       </footer>
+      <div id="feedbackbutton"><a href="http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/pika/public_html/index.1.7_suggestionbox.php?mapid=95" target="_blank">Feedback</a></div>
+
     </div><!--/.fluid-container-->
   </body>
   </html>

@@ -1,12 +1,12 @@
 <?php
-
 require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
+require_once('util_mapid.php');
+
 
 $pid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['pid']))+0);
 $commenttext = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['comment_text'])));
 $deletecid= (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['deletecid']))+0);
-$mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['mapid']))+0);
 
 	
 $time = time();
@@ -14,6 +14,8 @@ $commentstbl = COMMENTS_TBL;
 
 //Delete
 if (!empty($deletecid)) {
+	require_once('util_admin_check.php');
+	
 	$query = "UPDATE $commentstbl SET deleted_time=$time WHERE cid=$deletecid";
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("UPDATE Error: " . mysqli_error($MYSQLI_LINK));
 }

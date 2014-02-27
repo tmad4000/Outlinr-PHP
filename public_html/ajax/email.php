@@ -1,12 +1,15 @@
 <?php
 require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
+require_once('util_mapid.php');
 
-$mapid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0);
+
 $email = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['notificationemail'])));
 
 $ideamaps = IDEAMAPS_TBL;
 	if(isset($_REQUEST['notificationemail'])){
+		
+		require_once('util_admin_check.php');
     	$query = "UPDATE `ideamaps` SET `email`='$email' WHERE `mapid`=$mapid";
     	$result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));	
     }

@@ -1,6 +1,6 @@
 <?php
+session_start();
 //include at the top of every PHP page
-
 $_SERVER['DOCUMENT_ROOT'] = dirname(__FILE__);
 
 

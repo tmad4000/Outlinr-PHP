@@ -9,7 +9,8 @@ body {
 }
 
 #feedbackbutton{
-	background:red;
+	border:1px solid #CC0000;
+	background:transparent;
 	/* Safari */
 	-webkit-transform: rotate(90deg);
 	/* Firefox */
@@ -20,18 +21,18 @@ body {
 	-o-transform: rotate(90deg);
 	/* Internet Explorer */
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-	font-size:16pt;
+	font-size:14pt;
 	text-decoration: none;
-	width:100px;
+	width:90px;
 	height:30px;
 	position:fixed;
 	bottom:150px;
-	left:-40px;
+	left:-35px;
 	z-index:10;
 	padding:6px 0px 0px 10px;
 }
 #feedbackbutton a {
-	color:white !important;
+	color:#CC0000 !important;
 }
 
 div.container {
@@ -607,3 +608,6 @@ div.delete a {
 	margin-bottom: -1px;
 	vertical-align: bottom;
 }
+
+footer {
+	padding-left:40px
