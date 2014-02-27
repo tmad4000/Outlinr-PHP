@@ -129,6 +129,11 @@ $(document).ready(function() {
 	$('input[type="text"]').blur(function(){
 		$(this).css("border-color","#ddd");
 	});
+	$('textarea#newpost').keydown(function (event) {
+		if(event.keyCode == 13 && !event.shiftKey){ // enter
+        	event.preventDefault();
+        }
+	});
 	$('textarea#newpost').keyup(function (event) {
 		// #TODO #Future trim repeated enters       
 		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
@@ -141,7 +146,7 @@ $(document).ready(function() {
         	// removes the newline
         	var content = this.value;
         	var caret = getCaret(this);
-        	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+        	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
         	event.stopPropagation();
         	$('#postform').submit();
         }
@@ -249,9 +254,12 @@ function displayPosts() {
 				delete expandedComments[idS];
 			}
 			getComment(idS);
-			$(this).parent().find('textarea').focus();//#TENNIS
 		});
-
+		$('.commentsinput').keydown(function (event) {
+			if(event.keyCode == 13 && !event.shiftKey){ // enter
+	        	event.preventDefault();
+	        }
+		});
 		$('.commentsinput').keyup(function(e){
 			e.preventDefault();
 			if (event.keyCode == 13 && event.shiftKey) { // shift-enter
@@ -261,7 +269,7 @@ function displayPosts() {
 			else if(event.keyCode == 13) { // enter
 				var content = this.value;
         		var caret = getCaret(this);
-        		this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+        		//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
 	        	//below unneeded if using text input
 	        	// removes the newline
 	        	/*var content = this.value;
@@ -649,6 +657,7 @@ function getComment(pid) {
 		'success': function(jsonData) {
 			commentsModel[pid]=$.parseJSON(jsonData);
 			displayPosts();
+			($('.entryNode [-idea-id="'+pid+'"]').find('textarea')[0]).focus();
 		},
 	});
 }
