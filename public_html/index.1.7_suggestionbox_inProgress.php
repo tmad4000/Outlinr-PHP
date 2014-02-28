@@ -5,7 +5,7 @@ require_once('../config.inc.php');
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>IdeaOverflow -- Ideas</title>
+  <title>GestaltBox -- Ideas</title>
   
   
     
@@ -17,9 +17,12 @@ require_once('../config.inc.php');
     <link href="style.css" rel="stylesheet">
       
     <style type='text/css'>
-        body {
+    body {
         padding-bottom: 40px;
         padding-top: 60px;
+    }
+    .navbar {
+      letter-spacing: 1px !important;
     }
     
     .sidebar-nav-fixed {
