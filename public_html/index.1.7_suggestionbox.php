@@ -325,7 +325,7 @@ td.uid {
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
           
-          <div class='related-ideas-all'>
+       <div class='related-ideas-all'>
 		<ul class='related-ideas'>
 			
 		</ul>

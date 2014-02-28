@@ -170,13 +170,23 @@ function EntryNodeViewModel(entryNodeModel) {
 					'</div>' +
 				'</div>';
 
+				var addRel="<div class='related-ideas-all'>" + 
+						"<ul class='related-ideas'>" + 
+						"</ul>" + 
+						"<div class='related-idea-input'>" +
+						"	<input class='related-idea-add' width='200'>" +
+						"</div>" +
+				"</div>";
+
 
 				//entryNodeBody+=comments;
 				var del = isAdmin ? "<div class='delete'><a href='#'>Delete</a></div>" : "";
+
 				table += '<tr>'+
 					status + 
 					upvoter+
 					'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>" +
+					addRel +
 					comments+"</td>" + 
 				   	// '<td><div class="progressbar"></div></td>' +
 				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
