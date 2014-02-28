@@ -324,16 +324,17 @@ td.uid {
       <?php 
 	  if($r['password']===''){
 			$_SESSION['admin_'.$getmapid]=TRUE;
-      echo 'No password set. ';
-    }
-			
+      		echo 'No password set. ';
+      }
+	  elseif($r['password']===$_GET['pw'])
+			$_SESSION['admin_'.$getmapid]=TRUE;
+	  else
+			echo "Invalid Password<br>";
+	  
 	  
 	  //if(isset($_GET['login'])) {
 	  	
-		if($r['password']===$_GET['pw'])
-			$_SESSION['admin_'.$getmapid]=TRUE;
-		else
-			echo "Invalid Password<br>";
+		
 
 	  //}
 	  if($_SESSION['admin_'.$getmapid]!==TRUE) {
