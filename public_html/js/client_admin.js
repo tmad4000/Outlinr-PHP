@@ -457,7 +457,7 @@ function displayIdeaNames() {
 					if(typeof peopletags[tag] != 'undefined')
 						peopletags[tag] = parseInt(peopletags[tag])+parseInt(cs.upvotes);
 					else
-						peopletags[tag] = data.upvotes;
+						peopletags[tag] = cs.upvotes;
 					tags[t] = true;
 				});
 			}
