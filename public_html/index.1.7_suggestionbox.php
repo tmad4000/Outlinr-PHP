@@ -26,6 +26,10 @@ require_once('../config.inc.php');
   <script src="js/lib/moment-with-langs.js"></script>
   <script src="js/lib/jquery-1.10.2.min.js"></script>
   <script src="js/lib/bootstrap.min.js"></script>
+  
+  <link rel="stylesheet" href="js/lib/magicsuggest-1.3.1-min.css">
+  <script type="text/javascript" src="js/lib/magicsuggest-1.3.1-min.js"></script>
+  
   <script type="text/javascript" src="js/util.js"></script>
   <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
@@ -320,6 +324,19 @@ td.uid {
           <div class="input-append" style="width:100%">
             <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
           </div>
+          
+          <div class='related-ideas-all'>
+		<ul class='related-ideas'>
+			
+		</ul>
+
+		<div class='related-idea-input'>
+			<input class='related-idea-add' width="200">
+		</div>
+
+	</div>
+    
+          <!--<input type="text" class="related-idea-add" placeholder="Add related idea">-->
         </form>
         <div id="tableHeaderDiv">
           <div id="numResults"></div>

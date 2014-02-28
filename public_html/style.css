@@ -616,3 +616,63 @@ div.delete a {
 
 footer {
 	padding-left:40px
+}
+
+
+
+.related-ideas > li {
+	display: inline;
+
+	background-color: #3a87ad;
+	color: #EEE;
+
+	font-size: 12px;
+	line-height: 22px;
+
+	padding: 3px 6px;
+	border-radius: 3px;
+	margin-left: 5px;
+	margin-top: 4px;
+	margin-bottom: 10px;
+}
+
+.related-ideas  {
+	padding-top: 1px;
+	padding-left: 0px;
+	margin-left: -3px;
+	float:left;
+
+	line-height:22px;
+}
+
+.related-ideas-all {
+	height:22px;
+	line-height: 22px;
+/*	width:1000px;*/
+	/*background-color: red; for alignment check*/ 
+}
+/*
+.related-idea-input > .ms-ctn { /* also .related-idea-add-ms */
+    float: right !important;
+}
+
+
+.related-idea-submit {
+    float: right;
+}*/
+
+.label-info.expanded, .label-info, .ms-sel-ctn .ms-sel-item {
+  background-color: #3a87ad;
+  color:#EEE;
+  float:left;
+  font-size:12px;
+  padding:0 5px;
+  border-radius:3px;
+  margin-left:5px;
+  margin-top:4px
+
+}
+
+.ms-res-ctn {
+    height: auto !important;
+}
