@@ -172,6 +172,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 
 				//entryNodeBody+=comments;
+				var del = isAdmin ? "<div class='delete'><a href='#'>Delete</a></div>" : "";
 				table += '<tr>'+
 					status + 
 					upvoter+
@@ -179,7 +180,7 @@ function EntryNodeViewModel(entryNodeModel) {
 					comments+"</td>" + 
 				   	// '<td><div class="progressbar"></div></td>' +
 				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
-					"<div class='delete'><a href='#'>Delete</a></div>" +
+					del +
 		//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
 					"</td></tr>";
 

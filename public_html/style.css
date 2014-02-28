@@ -93,6 +93,8 @@ textarea,input[type="text"] {
 	-moz-box-shadow:none !important;
 	border:2px solid #ddd;
 	outline:none !important;
+	border-radius:0px;
+	border-width:1px;
 }
 
 .navbar-inner{
@@ -101,6 +103,11 @@ textarea,input[type="text"] {
 	box-shadow:none !important;
 	background:white;
 	border:0px;
+}
+
+.nav-list {
+	border:1px solid #ddd;
+	padding-top:10px;
 }
 
 .sidebar-nav-fixed{
@@ -290,10 +297,7 @@ td.status {
 
 
 a.showcomments {
-	//background-image: url(images/commenticon.gif);
 	padding-left:15px;
-	//background-position: 0px 1px;
-	//background-repeat:no-repeat;
 	float:right;
 	margin-right: 3px;
 	margin-left: 0px;
@@ -431,6 +435,7 @@ div.commentform div.commentsinput {
 	height:50px;
 }
 #postform{
+	margin-top:10px;
 	margin-bottom:0px;
 }
 

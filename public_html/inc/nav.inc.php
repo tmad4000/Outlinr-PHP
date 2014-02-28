@@ -26,7 +26,7 @@ $r = mysqli_fetch_assoc($result)
         <img src="" height="20" width="20">
         &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>GestaltBox</a> 
         <span>&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
-        <i class="fa fa-envelope-o" id="emailicon"></i>
+        
         <!--<img src="images/email.png" id="emailicon"/>-->
       </span> 
       <div class="nav-collapse">
@@ -39,8 +39,8 @@ $r = mysqli_fetch_assoc($result)
           <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
          
         </ul>
-        <p class="navbar-text pull-right"><a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">&nbsp;&nbsp;</a></p>
-         <p class="navbar-text pull-right"></p>
+        <!--<p class="navbar-text pull-right"><a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">&nbsp;&nbsp;</a></p>
+         <p class="navbar-text pull-right"></p>-->
 <!--        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>-->
         <p class="navbar-text pull-right">
         <!--<input type="text" id="usremail" placeholder="(optional) Email"><input type="text" id="usrname" placeholder="(optional) Name">-->

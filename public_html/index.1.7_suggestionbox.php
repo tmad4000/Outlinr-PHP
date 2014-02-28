@@ -59,7 +59,7 @@ require_once('../config.inc.php');
       padding:0;
       position:fixed;
       right:20px;
-      top:36px;
+      top:55px;
       width:250px;
     }
 

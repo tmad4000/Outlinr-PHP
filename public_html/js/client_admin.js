@@ -8,6 +8,7 @@ var isAdmin = false;
 $(document).ready(function() {
 	isAdmin = $('#is-admin').val() === 'true';
 
+	if(isAdmin) $('.brand').append('<i class="fa fa-envelope-o" id="emailicon"></i>');
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 	$(window).resize(function() {
 		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
@@ -220,7 +221,8 @@ function displayPosts() {
 		$("#currentposts").append(rootNodeViewModel.render());
 		$("div.status-box").click(function(e) {
 			e.preventDefault();
-			cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
+			if(isAdmin)
+				cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
 		
 		$("div.delete > a").click(function(e) {
