@@ -124,13 +124,14 @@ function EntryNodeViewModel(entryNodeModel) {
 							var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 							var commentTime = new Date(currComment.time * 1000);
 							var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
+							var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
 							if(getCookie("c"+currComment.cid)!= ""){
 								var commentS='<div><div class="comment-upvote on">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							'<div class="comment-time timecol">' + commentTimeS + '</div>'+del;
 							}
 							else {
 								var commentS='<div><div class="comment-upvote">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							'<div class="comment-time timecol">' + commentTimeS + '</div>'+del;
 							}
 							
 							commentsListH+="<li>"+commentS+"</li>";

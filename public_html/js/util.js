@@ -8,6 +8,8 @@ tilde_regexp = /[~]([^\s\n.,<>]+)/g;
 // /[~]([^(." ")]+)/g
 // <i class="fa fa-external-link"></i>
 var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-.;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+//var url_regexp = /#(?i)\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))#iS/g;
+
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK

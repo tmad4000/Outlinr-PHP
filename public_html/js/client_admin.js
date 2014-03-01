@@ -228,16 +228,24 @@ function displayPosts() {
 		$("div.delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
-			if (r==true)
+			if (r)
 				deleteNode($(this).closest('.entryNode').attr('-idea-id'));
+			
+		});
+		$(".ideaTxt").on("click","div.delete-comment > a",function(e) {
+			e.preventDefault();
+			var r=confirm("Are you sure you want to delete "+$(this).closest('li').find(".comment-text").text() + "?");
+			if (r){
+				deleteComment($(this).closest('li').find(".comment-text").attr('-comment-id'),$(this).closest('.entryNode').attr('-idea-id'));	
+			}
 			
 		});		
 		
-		$(".entryNode table").hover (function() {
+		/*$(".entryNode table").hover (function() {
 			$(this).find('div.delete > a').fadeIn();
 		},function() {
 			$(this).find('div.delete > a').hide();
-		});
+		});)*/
 		
 		/*$(".star-off").click(function() {
 			console.log(t=$(this))
@@ -593,6 +601,18 @@ function deleteNode(ideaid) {
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
 			getPosts();
+		},
+	});
+}
+
+function deleteComment(commentid,pid) {
+
+	$.ajax({
+		'url': 'ajax/deleteComment.php',
+		'data': {'commentid':commentid},
+		'success': function(jsonData) {
+			getPosts();
+			getComment(pid);
 		},
 	});
 }

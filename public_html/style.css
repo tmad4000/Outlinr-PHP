@@ -8,6 +8,15 @@ body {
     font-weight:300;
 }
 
+.delete-comment {
+	padding-left:5px;
+	font-size:12px;
+}
+.delete-comment a, .delete a {
+	color:red !important;
+
+}
+
 #feedbackbutton{
 	border:1px solid #CC0000;
 	background:transparent;
@@ -601,7 +610,6 @@ div.delete {
 	
 }
 div.delete a {	
-	display:none;
 }
 
 .entryNodeText {
