@@ -6,6 +6,7 @@
 body {
     background: #FFF;
     font-weight:300;
+    -webkit-font-smoothing: antialiased;
 }
 
 .delete-comment {
