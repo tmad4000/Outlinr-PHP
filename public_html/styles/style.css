@@ -232,6 +232,16 @@ td.status {
 	text-decoration:none;
 }
 
+.loginadminbutton {
+	display:inline;
+	height:30px;
+	position:relative;
+	top:-5px;
+	background:white;
+	border:1px solid gray;
+	outline:none;
+}
+
 
 #filterBy {
 	margin-top:5px;
@@ -242,7 +252,7 @@ td.status {
 
 #filterBy a {
 	padding:5px;
-	border-radius: 4px;
+	//border-radius: 4px;
 
 	color:#666;
 	border:1px solid white;
@@ -360,7 +370,7 @@ ul.comments {
 }
 
 .comment-upvote{
-	background: url('images/upvote-tiny.png');
+	background: url('../images/upvote-tiny.png');
 	width:23px;
 	height:8px !important;
 	font-size:10px;

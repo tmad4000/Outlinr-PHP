@@ -47,7 +47,7 @@ if(isset($_GET['logout'])) {
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   -->
   
-  <link href="style.css" rel="stylesheet">
+  <link href="styles/style.css" rel="stylesheet">
   
   
   <style type='text/css'>
@@ -60,11 +60,11 @@ if(isset($_GET['logout'])) {
     }
 
     .sidebar-nav-fixed {
-	  <?php if($isMobile) { ?> display:none; <?php } ?>
+    <?php if($isMobile) { ?> display:none; <?php } ?>
       padding:0;
       position:fixed;
       right:20px;
-      top:36px;
+      top:55px;
       width:250px;
     }
 
@@ -284,6 +284,14 @@ td.uid {
     <div class="row-fluid row">
       <div class="">
         <div class="well sidebar-nav-fixed navbar-inner">
+        <?php 
+        if($r['password']===''){
+              $_SESSION['admin_'.$getmapid]=TRUE;
+                  echo 'No password set. ';
+              }
+        elseif($r['password']===$_GET['pw'])
+              $_SESSION['admin_'.$getmapid]=TRUE;
+        if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
           <ul class="nav nav-list">
             <li class="nav-header">Categories (#)</li>
 
@@ -315,6 +323,7 @@ td.uid {
           <li><a href="#">Link</a></li>
           <li><a href="#">Link</a></li>-->
         </ul>
+        <?php } ?>
       </div><!--/.well -->
     </div><!--/span-->
 
@@ -339,11 +348,11 @@ td.uid {
 	  //}
 	  if($_SESSION['admin_'.$getmapid]!==TRUE) {
 		  ?>
-       
        <form name="login" action="<?= $_SERVER['PHP_SELF'] ?>" method="get">
-       Password <input type="text" name="pw">
+       <br>
+       <input type="text" name="pw" placeholder="Enter Password">
        <input type="hidden" name="mapid" value="<?= "{$getmapid}" ?>" />
-       <input type="submit" name="login">
+       <input type="submit" name="login" class="loginadminbutton">
        </form>
 
        

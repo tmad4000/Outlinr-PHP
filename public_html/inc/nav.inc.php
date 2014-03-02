@@ -32,9 +32,9 @@ $r = mysqli_fetch_assoc($result)
       <div class="nav-collapse">
         <ul class="nav">
 
-
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox.php?mapid=<?= $_GET['mapid'] ?>">Ideas</a></li>
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">Progress</a></li>
+          <li><a href="index.1.7_suggestionbox_ideamaps.php">+ Make a suggestion box</a></li>
+          <!--<li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox.php?mapid=<?= $_GET['mapid'] ?>">Ideas</a></li>-->
+          <!--<li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">Progress</a></li>-->
           <!--<li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_proposals.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_proposals.php?mapid=<?= $_GET['mapid'] ?>">Proposals</a></li>-->
           <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
          

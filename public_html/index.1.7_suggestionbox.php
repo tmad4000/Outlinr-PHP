@@ -42,7 +42,7 @@ require_once('../config.inc.php');
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   -->
   
-  <link href="style.css" rel="stylesheet">
+  <link href="styles/style.css" rel="stylesheet">
   
   
   <style type='text/css'>

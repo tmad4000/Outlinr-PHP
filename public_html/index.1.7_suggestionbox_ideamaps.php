@@ -14,7 +14,7 @@ require_once('../config.inc.php');
     -->
     <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
     <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
       
     <style type='text/css'>
         body {
@@ -22,15 +22,16 @@ require_once('../config.inc.php');
             padding-top: 60px;
         }
         .navbar {
-      letter-spacing: 1px !important;
-    }
+          letter-spacing: 1px !important;
+        }
         
         .sidebar-nav-fixed {
-            padding: 9px 0;
-            position:fixed;
-            right:20px;
-            top:40px;
-            width:250px;
+        <?php if($isMobile) { ?> display:none; <?php } ?>
+          padding:0;
+          position:fixed;
+          right:20px;
+          top:55px;
+          width:250px;
         }
         
         .row-fluid > .span-fixed-sidebar {
@@ -207,21 +208,29 @@ require_once('../config.inc.php');
       <div class="well sidebar-nav-fixed navbar-inner">
         <ul class="nav nav-list">
 
-          <li class="nav-header">Ideas</li>
-          <ul id="ideanames" class="">
-              <!--<li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>-->
-          </ul>
-          <li class="nav-header">Categories</li>
+          <li class="nav-header">Categories (#)</li>
 
-          <ul id="idea-hashtags" class="">
+            <ul id="idea-hashtags" class="ideatags">
               <!--<li class="active"><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>-->
-          </ul>
+            </ul>
+            <li class="nav-header">People (~)</li>
+
+            <ul id="people-list" class="peopletags">
+              <!--<li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>-->
+            </ul>
+            <li class="nav-header">All Ideas</li>
+            <ul id="ideanames" class="">
+              <!--<li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>-->
+            </ul>
           <!--
           <li class="nav-header">Sidebar</li>
           <li><a href="#">Link</a></li>
@@ -242,7 +251,7 @@ require_once('../config.inc.php');
           </div>-->
       <form id="postform">
         <div class="input-append" style="width:100%">
-          <textarea class="span12" placeholder="New idea map name" id="newpost" ></textarea>
+          <textarea class="span12" placeholder="New Suggestion Box name" id="newpost" ></textarea>
         </div>
       </form>
       
