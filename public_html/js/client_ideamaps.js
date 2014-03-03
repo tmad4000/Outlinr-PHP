@@ -149,13 +149,14 @@ function displayIdeaNames() {
         var nameul = $('ul#ideanames').empty();
         var tags={};
          $.each( data,function(i,data) {
-            var n=extractIdeaName(data.body);
-            var t=extractTags(data.body);
-            if(t)
-                $.each(t,function(i,tag) {tags[tag]=true;});
-            
-            nameul.append('<li><a href="#">'+n + '</a></li>');
-            
+            if(data.body !=null){
+              var n=extractIdeaName(data.body);
+              var t=extractTags(data.body);
+              if(t)
+                  $.each(t,function(i,tag) {tags[tag]=true;});
+              
+              nameul.append('<li><a href="#">'+n + '</a></li>');
+            }
          });
          
          localStorage.setItem("tags", tags);
