@@ -2,95 +2,95 @@
 
 require_once('../config.inc.php');
 if(isset($_GET['logout'])) {
-      session_destroy();
-      session_start();
-      header('Location:index.1.7_suggestionbox.php');
-    }
+  session_destroy();
+  session_start();
+  header('Location:index.1.7_suggestionbox.php');
+}
 ?>
 
 <!DOCTYPE html>
 <html><head>
-  <?php 
+<?php 
 
-  require_once('inc/mysql.inc.php');
+require_once('inc/mysql.inc.php');
 
-  include_once("inc/analyticstracking.inc.php");
+include_once("inc/analyticstracking.inc.php");
 
-  $getmapid=$_GET['mapid']+0;
+$getmapid=$_GET['mapid']+0;
 
-  $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
+$query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
   //echo $query;
   //var_dump($MYSQLI_LINK);
-  $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-  $r = mysqli_fetch_assoc($result);
+$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+$r = mysqli_fetch_assoc($result);
 
-  ?>
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>GestaltBox -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
-  <script src="js/lib/moment-with-langs.js"></script>
-  <script src="js/lib/jquery-1.10.2.min.js"></script>
-  <script src="js/lib/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/util.js"></script>
-  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
-  <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
-  <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
-  <script type="text/javascript" src="js/client_admin.js"></script>
-  
-  
+?>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>GestaltBox -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+<script src="js/lib/moment-with-langs.js"></script>
+<script src="js/lib/jquery-1.10.2.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
+<script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
+<script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
+<script type="text/javascript" src="js/client_admin.js"></script>
 
-  <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
-  
+
+
+<link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
+<link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
+
   <!--
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-  -->
-  
-  <link href="styles/style.css" rel="stylesheet">
-  
-  
-  <style type='text/css'>
-    body {
-      padding-bottom: 40px;
-      padding-top: 45px;
-    }
-    .navbar {
-      letter-spacing: 1px !important;
-    }
+-->
 
-    .sidebar-nav-fixed {
+<link href="styles/style.css" rel="stylesheet">
+
+
+<style type='text/css'>
+  body {
+    padding-bottom: 40px;
+    padding-top: 45px;
+  }
+  .navbar {
+    letter-spacing: 1px !important;
+  }
+
+  .sidebar-nav-fixed {
     <?php if($isMobile) { ?> display:none; <?php } ?>
-      padding:0;
-      position:fixed;
-      right:20px;
-      top:55px;
-      width:250px;
-    }
+    padding:0;
+    position:fixed;
+    right:20px;
+    top:55px;
+    width:250px;
+  }
 
-    .row-fluid > .span-fixed-sidebar {
-      margin-right: 290px;
-    }
+  .row-fluid > .span-fixed-sidebar {
+    margin-right: 290px;
+  }
 
-    #ideanames, .idea-hashtags, .people-list {
-      overflow:auto;
-      max-height:300px;
-      margin-left:10px;
-    }
+  #ideanames, .idea-hashtags, .people-list {
+    overflow:auto;
+    max-height:300px;
+    margin-left:10px;
+  }
 
-    #ideanames li{
-      line-height: 14px;
-      padding-bottom: 6px;
-    }
+  #ideanames li{
+    line-height: 14px;
+    padding-bottom: 6px;
+  }
 
-    ul.ideatags li {
-     display:inline;
-     margin:1px
-   }
+  ul.ideatags li {
+   display:inline;
+   margin:1px
+ }
 
-   .hero-unit-light {
-    padding: 60px;
-    margin-bottom: 30px;
+ .hero-unit-light {
+  padding: 60px;
+  margin-bottom: 30px;
  /* font-size: 18px;
   font-weight: 200;
   line-height: 30px;*/
@@ -222,8 +222,8 @@ td.uid {
 
 <!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
- -->
-   
+-->
+
 
 <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
 
@@ -284,14 +284,14 @@ td.uid {
     <div class="row-fluid row">
       <div class="">
         <div class="well sidebar-nav-fixed navbar-inner">
-        <?php 
-        if($r['password']===''){
-              $_SESSION['admin_'.$getmapid]=TRUE;
-                  echo 'No password set. ';
-              }
-        elseif($r['password']===$_GET['pw'])
-              $_SESSION['admin_'.$getmapid]=TRUE;
-        if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
+          <?php 
+          if($r['password']===''){
+            $_SESSION['admin_'.$getmapid]=TRUE;
+            echo 'No password set. ';
+          }
+          elseif($r['password']===$_GET['pw'])
+            $_SESSION['admin_'.$getmapid]=TRUE;
+          if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
           <ul class="nav nav-list">
             <li class="nav-header">Categories (#)</li>
 
@@ -329,70 +329,75 @@ td.uid {
 
     <div class="span9 span-fixed-sidebar">
       <div class="hero-unit-light" style="padding-top:0">
-      <h3>Admin</h3>
-      <?php 
-	  if($r['password']===''){
-			$_SESSION['admin_'.$getmapid]=TRUE;
-      		echo 'No password set. ';
+        <h3>Admin</h3>
+        <?php 
+        if($r['password']===''){
+         $_SESSION['admin_'.$getmapid]=TRUE;
+         echo 'No password set. ';
+       }
+       elseif($r['password']===$_GET['pw'])
+         $_SESSION['admin_'.$getmapid]=TRUE;
+       elseif(isset($_GET['login'])) {
+        if($_SESSION['admin_'.$getmapid]===TRUE){
+          echo "Note: password not in url<br>";
+        }
+        else
+          echo "Invalid Password<br>";
       }
-	  elseif($r['password']===$_GET['pw'])
-			$_SESSION['admin_'.$getmapid]=TRUE;
-	  else
-			echo "Invalid Password<br>";
-	  
-	  
+      
+      
 	  //if(isset($_GET['login'])) {
-	  	
-		
+      
+      
 
 	  //}
-	  if($_SESSION['admin_'.$getmapid]!==TRUE) {
-		  ?>
-       <form name="login" action="<?= $_SERVER['PHP_SELF'] ?>" method="get">
-       <br>
-       <input type="text" name="pw" placeholder="Enter Password">
-       <input type="hidden" name="mapid" value="<?= "{$getmapid}" ?>" />
-       <input type="submit" name="login" class="loginadminbutton">
+      if($_SESSION['admin_'.$getmapid]!==TRUE) {
+        ?>
+        <form name="login" action="<?= $_SERVER['PHP_SELF'] ?>" method="get">
+         <br>
+         <input type="text" name="pw" placeholder="Enter Password">
+         <input type="hidden" name="mapid" value="<?= "{$getmapid}" ?>" />
+         <input type="submit" name="login" class="loginadminbutton">
        </form>
 
        
-          <?php
-	  }
-	  else {
-	  	echo "Logged in to map <em>{$r['mapname']}</em>. <a href='?logout'>Logout</a>.";
-		?>
+       <?php
+     }
+     else {
+      echo "Logged in to map <em>{$r['mapname']}</em>. <a href='?logout'>Logout</a>.";
+      ?>
       <input type="hidden" id="is-admin" value="true"/>
-       
-    
-       <hr>
-        <!--<span class="vote"> </span>-->
-        <form id="postform">
-          <div class="input-append" style="width:100%">
-            <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
-          </div>
-        </form>
-        <div id="tableHeaderDiv">
-          <div id="numResults"></div>
-          <div id="filterBy">
-              <a id='sortByDate' class="active">New</a>
-              <a id="sortByUpvotes">Top</a>
-              <a id='sortByStatus'>Status</a>
-          </div>
-        </div>
-        <div id="currentposts"></div>
-
-      </div>
       
-          <?php
-	  }
-	  ?>
+      
       <hr>
+      <!--<span class="vote"> </span>-->
+      <form id="postform">
+        <div class="input-append" style="width:100%">
+          <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
+        </div>
+      </form>
+      <div id="tableHeaderDiv">
+        <div id="numResults"></div>
+        <div id="filterBy">
+          <a id='sortByDate' class="active">New</a>
+          <a id="sortByUpvotes">Top</a>
+          <a id='sortByStatus'>Status</a>
+        </div>
+      </div>
+      <div id="currentposts"></div>
 
-      <footer>
-        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
-      </footer>
-      <div id="feedbackbutton"><a href="http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/pika/public_html/index.1.7_suggestionbox.php?mapid=95" target="_blank">Feedback</a></div>
+    </div>
+    
+    <?php
+  }
+  ?>
+  <hr>
 
-    </div><!--/.fluid-container-->
-  </body>
-  </html>
+  <footer>
+    <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
+  </footer>
+  <div id="feedbackbutton"><a href="http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/pika/public_html/index.1.7_suggestionbox.php?mapid=95" target="_blank">Feedback</a></div>
+
+</div><!--/.fluid-container-->
+</body>
+</html>

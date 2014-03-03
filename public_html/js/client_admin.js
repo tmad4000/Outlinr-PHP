@@ -595,7 +595,7 @@ function cycleStatus(ideaid) {
 }
 
 function deleteNode(ideaid) {
-
+	$('[-idea-id="'+ideaid+'"]').closest('li').hide();
 	$.ajax({
 		'url': 'ajax/deleteNode.php',
 		'data': {'ideaid':ideaid},
@@ -606,7 +606,7 @@ function deleteNode(ideaid) {
 }
 
 function deleteComment(commentid,pid) {
-
+	$('[-comment-id="'+commentid+'"]').closest('li').hide();
 	$.ajax({
 		'url': 'ajax/deleteComment.php',
 		'data': {'commentid':commentid},

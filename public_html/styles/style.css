@@ -15,7 +15,7 @@ body {
 }
 .delete-comment a, .delete a {
 	color:red !important;
-
+	font-size:10px;
 }
 
 #feedbackbutton{
@@ -634,4 +634,5 @@ div.delete a {
 }
 
 footer {
-	padding-left:40px
+	padding-left:40px;
+}
