@@ -22,10 +22,8 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.getViewDomE().html(r);
 			return true
 		}
-		console.log(query) // #TENNIS
 		query = removeCommonWords(query/*.replace(/[^.@a-zA-Z0-9~#\/, \r\n]/gi,"")*/.toLowerCase());
 		query = query.split(/[\r\n ,-\/]+/);
-		console.log(query)
 		var nomatch = true;
 		var t = this.txt.toLowerCase()
 		
@@ -75,6 +73,11 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.critPts.push(this.tSplit[iter]);
 			iter++;
 		}
+		iter=0;
+		while(iter<this.uSplits.length){
+			this.critPts.push(this.uSplits[iter]);
+			iter++;
+		}
 		iter = 0;
 		while(iter<this.hSplits.length){
 			this.critPts.push(this.hSplits[iter]);
@@ -85,11 +88,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.critPts.push(this.bSplits[iter]);
 			iter++;
 		}
-		iter=0;
-		while(iter<this.uSplits.length){
-			this.critPts.push(this.uSplits[iter]);
-			iter++;
-		}
+		
 		iter=0;
 		while(iter<this.mSplit.length){
 			this.critPts.push(this.mSplit[iter]);
@@ -208,10 +207,6 @@ function EntryNodeTextViewModel(txt,pid) {
 				o+='<a class="url" onclick="urlPress(event)">'
 			}
 
-			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+=" <i class='fa fa-external-link-square'></i></a>"
-			}
-
 			//i is a this.hSplit open
 			if(this.isASplitOpenOrClose(i,this.hSplits,0)){
 				o+='<a class="hashtag" onclick="hashtag(event)" href="#">'
@@ -220,6 +215,9 @@ function EntryNodeTextViewModel(txt,pid) {
 			//i is a this.hSplit close
 			if(this.isASplitOpenOrClose(i,this.hSplits,1)){
 				o+="</a>"
+			}
+			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
+				o+=" <i class='fa fa-external-link-square'></i></a>"
 			}
 
 			//i is a this.bSplit open

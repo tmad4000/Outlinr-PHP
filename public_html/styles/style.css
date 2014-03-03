@@ -1,7 +1,7 @@
-/** {
+* {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
-  Helvetica, Arial, "Lucida Grande", sans-serif;
-}*/
+  Helvetica,"Lato", Arial, "Lucida Grande", sans-serif;
+}
 
 body {
     background: #FFF;
@@ -625,6 +625,7 @@ div.delete a {
 
 .entryNodeText {
 	float:left;
+	word-break:break-all;
 }
 
 #emailicon {

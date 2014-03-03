@@ -1,17 +1,17 @@
 <?php 
-
 require_once('../config.inc.php');
+
 if(isset($_GET['logout'])) {
   session_destroy();
   session_start();
-  header('Location:index.1.7_suggestionbox.php');
+
+  header('Location:index.1.7_suggestionbox.php?mapid=138'); // TODO auto map id recognize
 }
 ?>
 
 <!DOCTYPE html>
 <html><head>
 <?php 
-
 require_once('inc/mysql.inc.php');
 
 include_once("inc/analyticstracking.inc.php");
@@ -46,6 +46,7 @@ $r = mysqli_fetch_assoc($result);
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 -->
+<link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
 <link href="styles/style.css" rel="stylesheet">
 
@@ -285,12 +286,9 @@ td.uid {
       <div class="">
         <div class="well sidebar-nav-fixed navbar-inner">
           <?php 
-          if($r['password']===''){
+          if($r['password']==='' || $r['password']===$_GET['pw']){
             $_SESSION['admin_'.$getmapid]=TRUE;
-            echo 'No password set. ';
           }
-          elseif($r['password']===$_GET['pw'])
-            $_SESSION['admin_'.$getmapid]=TRUE;
           if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
           <ul class="nav nav-list">
             <li class="nav-header">Categories (#)</li>

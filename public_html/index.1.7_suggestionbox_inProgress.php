@@ -14,6 +14,8 @@ require_once('../config.inc.php');
     -->
       <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
       <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+
     <link href="styles/style.css" rel="stylesheet">
       
     <style type='text/css'>

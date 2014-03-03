@@ -306,26 +306,31 @@ function displayPosts() {
 			var num=$(this).children('span.votes').html()-0; 
 			if ($(this).children('.vote').hasClass('on')) {
 				num+=1;
+				$(this).children('span.votes').html(num) 
 				doUpvote($(this).attr('-idea-id')-0,'up');
 			}
 			else {
 				num-=1;
+				$(this).children('span.votes').html(num) 
 				doUpvote($(this).attr('-idea-id')-0,'down');
 			}
-			$(this).children('span.votes').html(num) 
+			
 		});
 		$('.comment-upvote').click(function() {
 			var num=$(this).html()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
 				num+=1;
+				$(this).html(num);
+
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'up');
 			}
 			else {
 				num-=1;
+				$(this).html(num);
+
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
-			$(this).html(num);
 		});
 
 		// Voting hover status
