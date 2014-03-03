@@ -1,11 +1,12 @@
 <?php 
 require_once('../config.inc.php');
+$getmapid=$_GET['mapid']+0;
 
 if(isset($_GET['logout'])) {
   session_destroy();
   session_start();
 
-  header('Location:index.1.7_suggestionbox.php?mapid=138'); // TODO auto map id recognize
+  header("Location:index.1.7_suggestionbox.php?mapid=$getmapid"); // TODO auto map id recognize
 }
 ?>
 
@@ -16,7 +17,7 @@ require_once('inc/mysql.inc.php');
 
 include_once("inc/analyticstracking.inc.php");
 
-$getmapid=$_GET['mapid']+0;
+
 
 $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
   //echo $query;
@@ -362,7 +363,7 @@ td.uid {
        <?php
      }
      else {
-      echo "Logged in to map <em>{$r['mapname']}</em>. <a href='?logout'>Logout</a>.";
+      echo "Logged in to map <em>{$r['mapname']}</em>. <a href='?mapid=$getmapid&logout'>Logout</a>.";
       ?>
       <input type="hidden" id="is-admin" value="true"/>
       
