@@ -2,6 +2,7 @@
 var isDefaultUsrHandle = true;
 var setStatusRequest = null;
 var setStatusRequestTimeout = null;
+var setStatusRequestIdeaid = null;
 var commentsModel = {};
 var expandedComments = {};
 var emailAddress;
@@ -574,9 +575,13 @@ function doUpvoteComment(commentid,upOrDown) {
 
 
 function cycleStatus(ideaid) {
-	if(setStatusRequest !==null) setStatusRequest.abort();
-	if(setStatusRequestTimeout !==null) clearTimeout(setStatusRequestTimeout);
-
+	if(setStatusRequest !==null && setStatusRequestIdeaid==ideaid){
+		setStatusRequest.abort();
+	} 
+	if(setStatusRequestTimeout !==null && setStatusRequestIdeaid==ideaid){
+		clearTimeout(setStatusRequestTimeout);
+	} 
+	setStatusRequestIdeaid = ideaid;
 	var x = $('.entryNode[-idea-id="'+ideaid+'"]').find('.status');
 	var cn = 0;
 	if(x.hasClass('sc0'))
@@ -592,16 +597,16 @@ function cycleStatus(ideaid) {
 	x.removeClass('sc'+cn);
 	cn = (cn+1)%5;
 	x.addClass('sc'+cn);
-	setStatusRequestTimeout = setTimeout(500,function(){
+	setStatusRequestTimeout = setTimeout(function(){
 		setStatusRequest = $.ajax({
-		'url': 'ajax/setstatus.php',
-		'data': {'ideaid':ideaid,'sts':cn},
-		'success': function(jsonData) {
-			console.log('gp');
-			getPosts();
-
-		},
-	});});
+			'url': 'ajax/setstatus.php',
+			'data': {'ideaid':ideaid,'sts':cn},
+			'success': function(jsonData) {
+				console.log('gp');
+				getPosts();
+			},
+		});
+	},500);
 	
 	
 }

@@ -339,7 +339,7 @@ td.uid {
         <a href="<?="index.1.7_suggestionbox_admin.php?mapid=$getmapid" ?>">Admin</a><br>
         <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
       </footer>
-      <div id="feedbackbutton"><a href="http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/pika/public_html/index.1.7_suggestionbox.php?mapid=95" target="_blank">Feedback</a></div>
+      <div id="feedbackbutton"><a href="?mapid=95" target="_blank">Feedback</a></div>
 
     </div><!--/.fluid-container-->
   </body>

@@ -31,7 +31,7 @@ function changeOrder(nodeChildren){
         sortable = []
         for (var key in nodeChildren)
         sortable.push([key, nodeChildren[key].status])
-        sortable.sort(function(a, b) {return b[1].localeCompare(a[1])})
+        sortable.sort(function(a, b) {return a[1].localeCompare(b[1])})
     }
     return sortable
     

@@ -267,6 +267,7 @@ require_once('../config.inc.php');
   <footer>
     <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a></p>
   </footer>
+  <div id="feedbackbutton"><a href="?mapid=95" target="_blank">Feedback</a></div>
 
 </div><!--/.fluid-container-->
   
