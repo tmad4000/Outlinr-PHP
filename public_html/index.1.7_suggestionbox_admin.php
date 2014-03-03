@@ -383,7 +383,7 @@ td.uid {
           <a id='sortByStatus'>Status</a>
         </div>
       </div>
-      <div id="currentposts"></div>
+      <div id="currentposts"><center>Loading...</center></div>
 
     </div>
     

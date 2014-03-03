@@ -1,6 +1,7 @@
 //getPosts() -> displayPosts() 
 var isDefaultUsrHandle = true;
-
+var setStatusRequest = null;
+var setStatusRequestTimeout = null;
 var commentsModel = {};
 var expandedComments = {};
 var emailAddress;
@@ -506,8 +507,7 @@ function displayIdeaNames() {
 	    	peopletagssorted.push([peopletags[key],key]);
 	   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
 
-	    console.log(peopletagssorted);
-	    console.log(hashtagssorted);
+	    
 
 		localStorage.setItem("tags", tags);
 		var tagsul = $('ul#idea-hashtags').empty();
@@ -574,6 +574,9 @@ function doUpvoteComment(commentid,upOrDown) {
 
 
 function cycleStatus(ideaid) {
+	if(setStatusRequest !==null) setStatusRequest.abort();
+	if(setStatusRequestTimeout !==null) clearTimeout(setStatusRequestTimeout);
+
 	var x = $('.entryNode[-idea-id="'+ideaid+'"]').find('.status');
 	var cn = 0;
 	if(x.hasClass('sc0'))
@@ -586,17 +589,21 @@ function cycleStatus(ideaid) {
 		cn = 3;
 	else if(x.hasClass('sc4'))
 		cn = 4;
-	x.removeClass(cn);
-	x.addClass('sc'+(cn+1)%5);
-
-	$.ajax({
-		'url': 'ajax/cyclestatus.php',
-		'data': {'ideaid':ideaid},
+	x.removeClass('sc'+cn);
+	cn = (cn+1)%5;
+	x.addClass('sc'+cn);
+	setStatusRequestTimeout = setTimeout(500,function(){
+		setStatusRequest = $.ajax({
+		'url': 'ajax/setstatus.php',
+		'data': {'ideaid':ideaid,'sts':cn},
 		'success': function(jsonData) {
+			console.log('gp');
 			getPosts();
 
 		},
-	});
+	});});
+	
+	
 }
 
 function deleteNode(ideaid) {
