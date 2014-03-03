@@ -1,4 +1,20 @@
+var docReady=false;
+var postsLoaded=false;
+getPosts();
+
 //getPosts() -> displayPosts() 
+
+function getURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++){
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam){
+            return sParameterName[1];
+        }
+    }
+}
+
 var isDefaultUsrHandle = true;
 var setStatusRequest = null;
 var setStatusRequestTimeout = null;
@@ -8,6 +24,8 @@ var expandedComments = {};
 var emailAddress;
 var isAdmin = false;
 $(document).ready(function() {
+	
+
 	isAdmin = $('#is-admin').val() === 'true';
 
 	if(isAdmin) $('.brand').append('<i class="fa fa-envelope-o" id="emailicon"></i>');
@@ -23,6 +41,8 @@ $(document).ready(function() {
 		html:true,
 		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
+
+
 
 
 	function emailPopoverLoad(){
@@ -167,7 +187,14 @@ $(document).ready(function() {
 		//#TODO never gets here
 
 	});
-	
+
+
+
+	docReady=true;
+	//if(localStorage.getItem("posts")!==null) {
+	if(postsLoaded) {
+		displayPosts();
+	}
 
 		/*
 	$('#myTab a').click(function(e) {
@@ -177,7 +204,7 @@ $(document).ready(function() {
 	
 	$('#myTab a:last').tab('show');
 	*/
-	getPosts();
+
 });
 
 //Handles new line (shift+enter) in the omnibox
@@ -668,7 +695,7 @@ function submitPostAndGetPosts() {
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
+		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
@@ -680,14 +707,17 @@ function submitPostAndGetPosts() {
          });
 }
 
+
 function getPosts() {
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':$('#mapidform').val(), 'newpost': ''},
+		'data': {'mapid':getURLParameter("mapid"), 'newpost': ''},
 		'success': function(jsonData) {
 			localStorage.setItem("posts", jsonData);
-			displayPosts();
-
+			postsLoaded=true;
+			if(docReady) {
+				displayPosts();
+			}
 		},
 	});
 }
@@ -707,7 +737,7 @@ function getComment(pid) {
 function getComments() {
 	$.ajax({
 		'url': 'ajax/comment.php',
-		'data': {'mapid':$('#mapidform').val()},
+		'data': {'mapid':getURLParameter("mapid")},
 		'success': function(jsonData) {
 			localStorage.setItem("comments", jsonData);
 		},
@@ -718,7 +748,7 @@ function submitAndGetEmail(){
 
 	$.ajax({
 		'url': 'ajax/email.php',
-		'data': {'notificationemail':$('#notificationemail').val(),'mapid':$('#mapidform').val()},
+		'data': {'notificationemail':$('#notificationemail').val(),'mapid':getURLParameter("mapid")},
 		'success': function(jsonData) {
 			emailAddress=$.parseJSON(jsonData).email;
 			$('#notificationemail').val(emailAddress);
@@ -729,7 +759,7 @@ function submitAndGetEmail(){
 function getEmail(){
 	$.ajax({
 		'url': 'ajax/email.php',
-		'data': {'mapid':$('#mapidform').val()},
+		'data': {'mapid':getURLParameter("mapid")},
 		'success': function(jsonData) {
 			emailAddress=$.parseJSON(jsonData).email;
 			$('#notificationemail').val(emailAddress);
@@ -754,7 +784,7 @@ function submitAndGetComments(pid) {
 	if(t) {
 		$.ajax({
 			'url': 'ajax/comment.php',
-			'data': {'pid':pid,'comment_text':t,'mapid':$('#mapidform').val()},
+			'data': {'pid':pid,'comment_text':t,'mapid':getURLParameter("mapid")},
 			'success': function(jsonData) {
 				commentsModel[pid]= $.parseJSON(jsonData);
 
