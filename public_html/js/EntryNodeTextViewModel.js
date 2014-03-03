@@ -233,7 +233,7 @@ function EntryNodeTextViewModel(txt,pid) {
 
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
-		var temp = "<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>";
+		var temp = "<div class='entryNodeText' style='width:"+($('#currentposts').width()-132)+"px'>"+nl2br(strWTags.join(""))+"</div>";
 		this.viewDomE = $($.parseHTML(temp));
 		
 		return this.viewDomE;

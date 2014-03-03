@@ -211,6 +211,7 @@ td.uid {
 
 .ideaTxt {
   color:#777;
+  max-width:100%;
 }
 </style>
 

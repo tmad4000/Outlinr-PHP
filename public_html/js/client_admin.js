@@ -156,7 +156,7 @@ $(document).ready(function() {
 		$(this).css("border-color","#ddd");
 	});
 	$('textarea#newpost').keydown(function (event) {
-		if(event.keyCode == 13 && !event.shiftKey){ // enter
+		if(event.keyCode == 13){ // enter
         	event.preventDefault();
         }
 	});
@@ -165,7 +165,7 @@ $(document).ready(function() {
 		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
         	var content = this.value;
         	var caret = getCaret(this);
-        	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
+        	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
         	event.stopPropagation();
         } 
         else if(event.keyCode == 13){ // enter
