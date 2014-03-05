@@ -4,8 +4,8 @@ getPosts();
 
 //getPosts() -> displayPosts() 
 
+var filterTo=null;
 var numFilterTos=0;
-var nextFilter=null;
 
 function getURLParameter(sParam){
     var sPageURL = window.location.search.substring(1);
@@ -186,37 +186,29 @@ $(document).ready(function() {
         else {
         	if(rootNodeViewModel!==null){
 				
-				
-				var numIdeas=Object.keys(rootNodeViewModel).length
-				
-				var minQPer=30
-				if(numIdeas>20)
-					minQPer=200
-				if(numIdeas>50)
-					minQPer=400
+				if(filterTo!==null&&numFilterTos>0){
+					numFilterTos--;
+					clearTimeout(filterTo);
+					console.log("cancelled");
 					
-				//c/onsole.log(numFilterTos)
-				//if no filter pending
-				if(numFilterTos<=0){
-					rootNodeViewModel.filter(newpostObj.val() || "");
 					
-					setTimeout(function() {
-						if(nextFilter!=null) {
-							rootNodeViewModel.filter(nextFilter);					
-							nextFilter=null;
-						}
-							
+					filterTo=setTimeout(function() {
 						numFilterTos--;
-					}, minQPer);
-					
-					numFilterTos++;
+						rootNodeViewModel.filter(newpostObj.val() || "");
+					},
+					400);
 				}
-				//if filter pending
 				else {
-					nextFilter=newpostObj.val() || "";
+					filterTo=setTimeout(function() {
+						rootNodeViewModel.filter(newpostObj.val() || "");
+						
+						filterTo=setTimeout(function() {
+							numFilterTos--;
+						}, 300);
+					}, 100);
 				}
 				
-				
+				numFilterTos++;
 				
 				
         	}
