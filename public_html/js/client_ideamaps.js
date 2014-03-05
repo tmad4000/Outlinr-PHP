@@ -94,8 +94,8 @@ function displayPosts() {
 					
 					
 							
-						var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a>' ;
-						
+						//var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a>' ;
+						var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea">'+n + '</a>' ;
 						//if(data[i].parent+0!=0)
 						//	tablerow='<tr><td></td><td colspan="4"><table class="subrow">'+tablerow+'</table></td></tr>'
 			
@@ -149,7 +149,7 @@ function displayIdeaNames() {
         var nameul = $('ul#ideanames').empty();
         var tags={};
          $.each( data,function(i,data) {
-            if(data.body !=null){
+            if(data.body != null){
               var n=extractIdeaName(data.body);
               var t=extractTags(data.body);
               if(t)
