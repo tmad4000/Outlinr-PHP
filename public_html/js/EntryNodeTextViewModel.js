@@ -1,6 +1,5 @@
 function EntryNodeTextViewModel(txt,pid) {
 	this.viewDomE=null; //until render is called for first time
-
 	//replace with this.critPts=[]; (i,code)
 	//model
 	this.txt=txt;
@@ -52,6 +51,7 @@ function EntryNodeTextViewModel(txt,pid) {
 
 	//adds splits to a split array
 	this.pushSplits = function(re,ray) { // should be private
+		console.log(this);
 		var m=this.txt.regexMatchOffset(re,0);
 		// Removes Duplicates
 		var i=0;
@@ -233,7 +233,7 @@ function EntryNodeTextViewModel(txt,pid) {
 
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
-		var temp = "<div class='entryNodeText' style='width:"+($('#currentposts').width()-132)+"px'>"+nl2br(strWTags.join(""))+"</div>";
+		var temp = "<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>";
 		this.viewDomE = $($.parseHTML(temp));
 		
 		return this.viewDomE;

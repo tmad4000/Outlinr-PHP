@@ -145,19 +145,7 @@ $(document).ready(function() {
 	});
 	//Omnibox (input field) operations
 	
-	$('textarea').focus(function(){
-		$(this).css("border-color","#59b4de");
-	});
-	$('input[type="text"]').focus(function(){
-		$(this).css("border-color","#59b4de");
-	});
 	$('textarea#newpost').focus();
-	$('textarea').blur(function(){
-		$(this).css("border-color","#ddd");
-	});
-	$('input[type="text"]').blur(function(){
-		$(this).css("border-color","#ddd");
-	});
 	$('textarea#newpost').keydown(function (event) {
 		if(event.keyCode == 13){ // enter
         	event.preventDefault();

@@ -2,11 +2,11 @@ function EntryNodeViewModel(entryNodeModel) {
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
 	this.myCommentsExpanded="init-hidden";
-
+	console.log(this.entryNodeModel);
 	//attributes of this object
 	this.visible=true;
 	//self
-	if(this.entryNodeModel.pid !== null)
+	if(this.entryNodeModel.pid !== null && this.entryNodeModel.pid !== undefined)
 		this.eT = new EntryNodeTextViewModel(this.entryNodeModel.body,this.entryNodeModel.pid);
 	else
 		this.eT = null;
@@ -180,7 +180,7 @@ function EntryNodeViewModel(entryNodeModel) {
 					'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>" +
 					comments+"</td>" + 
 				   	// '<td><div class="progressbar"></div></td>' +
-				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
+				   	"<td class='timecol'>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
 					del +
 		//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
 					"</td></tr>";

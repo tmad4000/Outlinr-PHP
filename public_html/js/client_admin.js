@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 	isAdmin = $('#is-admin').val() === 'true';
 
-	if(isAdmin) $('.brand').append('<i class="fa fa-envelope-o" id="emailicon"></i>');
+	if(isAdmin) $('.brand').append('<i class="fa fa-bell-o" id="emailicon"></i>');
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 	$(window).resize(function() {
 		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
@@ -145,19 +145,9 @@ $(document).ready(function() {
 	});
 	//Omnibox (input field) operations
 	
-	$('textarea').focus(function(){
-		$(this).css("border-color","#59b4de");
-	});
-	$('input[type="text"]').focus(function(){
-		$(this).css("border-color","#59b4de");
-	});
+	
 	$('textarea#newpost').focus();
-	$('textarea').blur(function(){
-		$(this).css("border-color","#ddd");
-	});
-	$('input[type="text"]').blur(function(){
-		$(this).css("border-color","#ddd");
-	});
+
 	$('textarea#newpost').keydown(function (event) {
 		if(event.keyCode == 13){ // enter
         	event.preventDefault();
