@@ -164,16 +164,21 @@ function entryNodeToHTML(entryNode) {
 						var time = new Date(entryNode.time * 1000);
 										n=extractIdeaName(entryNode.body)		
 		
-				var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+				var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done",4:"Rejected"};
 				var progEntry=entryNode.progress && entryNode.progress != "null" ? entryNode.progress + '% - ': "";
 				
 				status ="<td class='status'>" + '<a href="index.1.7_suggestionbox_inProgress.php" rel="popover" data-content="'+statusTable[entryNode.status]+'" data-original-title=""><div class="status sc'+entryNode.status +'" >'+ '</div></a>' + "</td>";
-						
-								
+							var changer;
+							if(entryNode.progress==100){
+								changer = "progress-bar-success"
+							}
+							else{
+								changer="progress-bar-info"
+							}
 							var tablerow = "<tr>"+status+
 								"<td style='width:150px'>" + '<a href="#" class="idea" rel="popover" data-content="'+entryNode.body+'" data-original-title="">'+n + '</a>' + "</td>" + 
 								"<td class='progbarcell' style='width:400px;padding-right:100px'>" + 
-									'<!-- **PROGBAR** -->      <div class="container">        <div class="progress progress-striped active">            <div class="bar" style="width: ' + entryNode.progress + '%;">'+entryNode.progress+ '%</div>        </div>	 <span class="metric">' + entryNode.metric + ' </span> </div>' + 
+									'<!-- **PROGBAR** -->      <div class="container">        <div class="progress active">            <div class="bar progress-bar '+changer+'" style="width: ' + entryNode.progress + '%;">'+entryNode.progress+ '%</div>        </div>	 <span class="metric">' + entryNode.metric + ' </span> </div>' + 
 								"</td>" + 
 							   // '<td><div class="progressbar"></div></td>' +
 								"<td class='progbaruser'><a href='#' class='uid'>" + (entryNode.uid!=0 ? entryNode.uid : "anon") + "</a></td>" +

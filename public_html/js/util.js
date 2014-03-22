@@ -1,25 +1,59 @@
-var tag_regexp = /[#~]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
-var hash_regexp = /[#]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
-var tilde_regexp = /[~]([a-zA-Z0-9\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var tag_regexp = /[#~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var hash_regexp = /[#]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
+var tilde_regexp = /[~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 
-var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+tag_regexp = /\B[#~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!><]+))/g;
+hash_regexp = /\B[#](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/g;
+//var emailsubregexp = "[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
-var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+tilde_regexp = /\B[~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/gi;
+// /[~]([^(." ")]+)/g
+// <i class="fa fa-external-link"></i>
+var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-.;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+//var url_regexp = /#(?i)\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))#iS/g;
+//UNPICKY REGEX
+url_regexp = /((www|http|https)([^\s]+))|([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/g;
+
+
+var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK
+var filterToggle = 'Date'; // Date, Upvote, Hot, Status
+
+function changeOrder(nodeChildren){
+    // if filtertoggle upvotes
+    var sortable = [];
+    for (var key in nodeChildren)
+    sortable.push([key, nodeChildren[key].upvotes])
+    if(filterToggle == 'Upvotes')
+        sortable.sort(function(a, b) {return b[1] - a[1]}) 
+
+    if(filterToggle == 'Status'){
+        sortable = []
+        for (var key in nodeChildren)
+        sortable.push([key, nodeChildren[key].status])
+        sortable.sort(function(a, b) {return a[1].localeCompare(b[1])})
+    }
+    return sortable
+    
+}
 
 function updateNrOfIdeasVisible(){
     if($('textarea#newpost').val() == ""){
-        $('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
+        //$('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
+        if(numberOfIdeasVisible ==0)
+            $('#numResults').html("No Ideas here yet");
+        else
+            $('#numResults').html("");
     }
     else {
         // so that chunks of text dont happen
         var store = $('textarea#newpost').val();
-        if(store.length>50) store = store.substring(0,50)+"...";
+        if(store.length>40) store = store.substring(0,40)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
         }
         else {
-            $('#numResults').html("Found "+numberOfIdeasVisible+" Ideas which match \""+store+"...\"");
+            $('#numResults').html("Found "+numberOfIdeasVisible+' Ideas which match"'+store+'"');
         }     
     }
 }
@@ -31,6 +65,11 @@ String.prototype.repeat = function(times) {
 function moreText(id){
     $('#m'+id).css('display','none');
     $('#t'+id).css('display','inline');
+}
+
+function moreTextComment(id){
+    $('#mc'+id).css('display','none');
+    $('#tc'+id).css('display','inline');
 }
 
 function timeToString(hours, minutes) {
@@ -68,11 +107,30 @@ function findTitleEnd(idea) {
 	if(i<0) i=idea.length;
 
 	var titleEnd=Math.min(80,i); // max 80 chars
-
+    var i4=idea.indexOf(" ",titleEnd); // HACK
+    var i5=idea.indexOf(" ",titleEnd);
 	var i3=idea.indexOf(" ",titleEnd);
-	if(i3<0) i3=idea.length;
+    var iuse = Math.min(Math.min(i4,i3),i5);
+	if(iuse<0){
+            if(i4<0){
+                if(i5<0){
+                    if(i3<0){
+                        iuse=idea.length
+                    }
+                    else{
+                        iuse=i3;
+                    }
+                }
+                else{
+                    iuse=i5;
+                }
+            }
+            else{
+                iuse=i4;
+            }
+    }
 
-	titleEnd=i3;//Math.min(titleEnd,i3);
+	titleEnd=iuse;//Math.min(titleEnd,i3);
 
 	return titleEnd;
 }
@@ -98,19 +156,21 @@ function findMoreTextStart(idea){
     var chCutoff = 300 - (iter*80)
     */
     var newIdea = idea.replace('\n',"n".repeat(80))
-    return 250-newIdea.substr(0,250).split('').reverse().join('').indexOf(" ");//poss off by 1 error
+    return 1000-newIdea.substr(0,1000).split('').reverse().join('').indexOf(" ");//poss off by 1 error
 }
 
 function urlPress(e){
-
-    if($(e.target).html().indexOf('www')>=0 && $(e.target).html().indexOf('http')==-1){
-        window.open("http://"+$(e.target).html());
+    var s = $(e.target).text();
+    s.replace('<i class="fa fa-external-link-square"></i>','');
+    s.substr(0,s.length-1);
+    if(s.indexOf('www')>=0 && s.indexOf('http')==-1){
+        window.open("http://"+s);
     }
-    else if($(e.target).html().indexOf('@')>=0 && $(e.target).html().indexOf('mailto:')==-1){
-        window.open("mailto:"+$(e.target).html());
+    else if(s.indexOf('@')>=0 && s.indexOf('mailto:')==-1){
+        window.open("mailto:"+s);
     }
     else
-        window.open($(e.target).html());
+        window.open(s);
 }
 
 function extractIdeaName(idea) {
@@ -131,7 +191,7 @@ function replaceIdeaName(idea,pid) {
 function hashtag(e){
         e.preventDefault();
 
-        var targetName=$(e.target).html();
+        var targetName=$(e.target).html().replace(/<(?:.|\n)*?>/gm, '');;
         $('#newpost').val(targetName).focus();
         rootNodeViewModel.filter(targetName);
 }
@@ -170,7 +230,6 @@ function linkHashtags(text) {
 function extractTags(idea) {
     return idea.match(tag_regexp)
 }
-
 function extractHashes(idea) {
 	return idea.match(hash_regexp)
 }
@@ -204,9 +263,9 @@ function processIdea(idea,pid) {
 
 // NAV BAR UTIL METHODS
 function initiateCookie(){ 
-    if(getCookie("name")!="" || getCookie("email")!=""|| getCookie("handle")!=""){
+    if(getCookie("name")!="" || getCookie("usremail")!=""|| getCookie("handle")!=""){
         var n = unescape(getCookie("name"));
-        var e = unescape(getCookie("email")); 
+        var e = unescape(getCookie("usremail")); 
         var h = unescape(getCookie("handle"));
         var d = unescape(getCookie("isDefaultUsrHandle"));
         $("#usrname").val(n); 
@@ -241,14 +300,22 @@ function rememberMeToggle(){
 
 // Cookie Functions
 
-function setCookie(name,email,handle,isDefaultUsrHandle,exdays){
+function setCookie(name,usremail,handle,isDefaultUsrHandle,exdays){
     var d = new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
     document.cookie = "name=" + escape(name);
     document.cookie = "handle=" + escape(handle);
     document.cookie = "isDefaultUserHandle=" + escape(isDefaultUsrHandle);
-    document.cookie = "email=" + escape(email)+";"+ expires;
+    document.cookie = "usremail=" + escape(usremail)+";"+ expires;
+}
+
+// Cookie for storing upvotes
+function setCookie(contentid){
+    var d = new Date();
+    d.setTime(d.getTime()+(365*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = contentid.toString()+"=voted;"+ expires;
 }
 
 function getCookie(label){
@@ -260,8 +327,7 @@ function getCookie(label){
     }
     return "";
 }
-/*
-function deleteCookie(){
-    document.cookie="name=;"
-    document.cookie = "email=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
-}*/
+
+function deleteCookie(name){
+    document.cookie = name+"=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
+}

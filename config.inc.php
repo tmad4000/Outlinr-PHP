@@ -1,6 +1,6 @@
 <?php
+session_start();
 //include at the top of every PHP page
-
 $_SERVER['DOCUMENT_ROOT'] = dirname(__FILE__);
 
 
@@ -45,3 +45,5 @@ else {
 	error_reporting(E_ALL & ~ E_NOTICE);
 }
 
+if(!isset($isMobile))
+	$isMobile=false; //for monitor disply, eg pika

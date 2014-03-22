@@ -1,15 +1,15 @@
-function EntryNodeTextViewModel(txt,pid) {
+function EntryNodeCommentViewModel(txt,cid) {
 	this.viewDomE=null; //until render is called for first time
+
 	//replace with this.critPts=[]; (i,code)
 	//model
 	this.txt=txt;
-	this.pid=pid;
+	this.cid=cid;
 	this.critPts=[];
 	this.critPtsSet=false;
 
 	this.bSplits=[]; //bolds
 	this.hSplits=[]; //hashtags
-	this.tSplit=[]; //title/nontitle
 	this.mSplit=[];// "show more.."
 	this.uSplits=[]; // urls
 	
@@ -21,7 +21,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.getViewDomE().html(r);
 			return true
 		}
-		query = removeCommonWords(query/*.replace(/[^.@a-zA-Z0-9~#\/, \r\n]/gi,"")*/.toLowerCase());
+		query = removeCommonWords(query/*.replace(/[^a-zA-Z0-9~# ,\r\n]/gi,"")*/.toLowerCase());
 		query = query.split(/[\r\n ,-\/]+/);
 		var nomatch = true;
 		var t = this.txt.toLowerCase()
@@ -51,7 +51,6 @@ function EntryNodeTextViewModel(txt,pid) {
 
 	//adds splits to a split array
 	this.pushSplits = function(re,ray) { // should be private
-		console.log(this);
 		var m=this.txt.regexMatchOffset(re,0);
 		// Removes Duplicates
 		var i=0;
@@ -69,8 +68,8 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.setCritPts = function() {// should be private
 		this.critPts=[];
 		var iter=0;
-		while(iter<this.tSplit.length){
-			this.critPts.push(this.tSplit[iter]);
+		while(iter<this.hSplits.length){
+			this.critPts.push(this.hSplits[iter]);
 			iter++;
 		}
 		iter=0;
@@ -78,17 +77,11 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.critPts.push(this.uSplits[iter]);
 			iter++;
 		}
-		iter = 0;
-		while(iter<this.hSplits.length){
-			this.critPts.push(this.hSplits[iter]);
-			iter++;
-		}
 		iter=0;
 		while(iter<this.bSplits.length){
 			this.critPts.push(this.bSplits[iter]);
 			iter++;
 		}
-		
 		iter=0;
 		while(iter<this.mSplit.length){
 			this.critPts.push(this.mSplit[iter]);
@@ -103,34 +96,6 @@ function EntryNodeTextViewModel(txt,pid) {
 		}
 		this.critPtsSet=true;
 	}
-	/*
-		var doSplit = function(t,i) {
-			return [t.substr(0,i),t.substr(i)]
-		}
-
-		var splitTxt = function(t,splitsRay) {
-				var outRay=[];
-
-				//if number
-				if(!(splitsRay instanceof Array)) {
-					return [t.substr(0,splitsRay),t.substr(splitsRay)]
-				}
-				else {
-					var start=0;
-					var end=t.length;
-					for(var i=0;i<splitsRay.length;i++) {
-
-						start=splitsRay[i][0];
-						end=splitsRay[i][1];
-						
-
-					}
-
-					return st;
-				}
-
-		}
-	*/
 
 	this.setBold = function(s1,s2) { 
 		this.bSplits.push(s1);
@@ -168,10 +133,8 @@ function EntryNodeTextViewModel(txt,pid) {
 		if(!this.critPtsSet)
 			this.setCritPts();
 		var strWTags=[];
-		var openB=false;
 		var lastI;
 		if(this.critPts.length==0) lastI=0;
-
 		for(var j=0;j<this.critPts.length;j++) {
 
 			var o="";
@@ -186,18 +149,9 @@ function EntryNodeTextViewModel(txt,pid) {
 			if(this.isASplitOpenOrClose(i,this.bSplits,1)){
 				o+="</b>"
 				openB=false;
-			}
-			if(i==this.tSplit[0]){
-				o+='<a class="ideaname suggname" name="'+this.pid+'">';
-			}
-			if(i==this.tSplit[1]){
-				o+="</a>";
-				if(openB)
-					o+="</b>"+o+"<b>"
-			}			
-
+			}		
 			if(this.isASplitOpenOrClose(i,this.mSplit,0)){
-				o+=' <a id="m'+this.pid+'" onclick="moreText('+this.pid+')" class="showmore">show more...</a><span id="t'+this.pid+'" class="hiddenText">'
+				o+=' <a id="mc'+this.cid+'" onclick="moreTextComment('+this.cid+')" class="showmore">show more...</a><span id="tc'+this.cid+'" class="hiddenText">'
 			}
 			if(this.isASplitOpenOrClose(i,this.mSplit,1)){
 				o+="</span>"
@@ -205,6 +159,10 @@ function EntryNodeTextViewModel(txt,pid) {
 
 			if(this.isASplitOpenOrClose(i,this.uSplits,0)){
 				o+='<a class="url" onclick="urlPress(event)">'
+			}
+
+			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
+				o+=" <i class='fa fa-external-link-square'></i></a>"
 			}
 
 			//i is a this.hSplit open
@@ -216,38 +174,32 @@ function EntryNodeTextViewModel(txt,pid) {
 			if(this.isASplitOpenOrClose(i,this.hSplits,1)){
 				o+="</a>"
 			}
-			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+=" <i class='fa fa-external-link-square'></i></a>"
-			}
-
 			//i is a this.bSplit open
 			if(this.isASplitOpenOrClose(i,this.bSplits,0)){
 				o+="<b>"
 				openB=true;
 			}
-
 			if(j>0) strWTags.push(this.txt.substr(lastI,i-lastI));
+			else strWTags.push(this.txt.substr(0,i))
 			strWTags.push(o);
 
 			lastI=i;
 
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
-		var temp = "<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>";
-		this.viewDomE = $($.parseHTML(temp));
-		
+		var temp = nl2br(strWTags.join(""));
+		this.viewDomE = temp;
 		return this.viewDomE;
 	}
-
+	
 	this.getViewDomE = function(){ // #HACK
-		return $('.entryNode[-idea-id="'+this.pid+'"] .entryNodeText');
+		return $('.comment-text[-comment-id="'+this.cid+'"]');
 	}
 
 	
 	this.pushSplits(tag_regexp,this.hSplits);
 	this.pushSplits(url_regexp,this.uSplits);
-	this.tSplit=[0,findTitleEnd(this.txt)];
-	if(this.txt.length>1000){
+	if(this.txt.length>300){
 		this.mSplit=[findMoreTextStart(this.txt),this.txt.length];
 	}
 }

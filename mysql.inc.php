@@ -1,5 +1,8 @@
 <?php
 
+include(PATH.PATH_SEP.'inc/remoteinfo.inc.php');
+if(!REMOTE_USER) define('REMOTE_USER', '');
+if(!REMOTE_PASS) define('REMOTE_PASS', '');
 
 
 if(LOCAL) {
@@ -8,9 +11,6 @@ if(LOCAL) {
 	define('DB_PASS', 'root');
 } 
 else {
-	include(PATH.PATH_SEP.'inc/remoteinfo.inc.php');
-	if(!REMOTE_USER) define('REMOTE_USER', '');
-	if(!REMOTE_PASS) define('REMOTE_PASS', '');
 
 	define('DB_NAME', REMOTE_DB_NAME);
 	define('DB_USER', REMOTE_USER);

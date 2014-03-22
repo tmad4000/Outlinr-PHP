@@ -127,6 +127,7 @@ function displayPosts() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
+
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
 
 		//entryList = new EntryList(data);
@@ -169,7 +170,7 @@ function displayPosts() {
 
 		// Right hand bar
 		displayIdeaNames();
-		// Voting click
+		// Voting click FOR POSTS
 		$('td.votes').click(function() {
 			$(this).children('.vote').toggleClass('on'); 
 			var num=$(this).children('span.votes').html()-0; 
@@ -182,6 +183,19 @@ function displayPosts() {
 				doUpvote($(this).attr('-idea-id')-0,'down');
 			}
 			$(this).children('span.votes').html(num) 
+		});
+		$('.comment-upvote').click(function() {
+			var num=$(this).html()-0; 
+			$(this).toggleClass('on'); 
+			if ($(this).hasClass('on')) {
+				num+=1;
+				doUpvoteComment($(this).attr('-comment-id')-0,'up');
+			}
+			else {
+				num-=1;
+				doUpvoteComment($(this).attr('-comment-id')-0,'down');
+			}
+			$(this).html(num) 
 		});
 
 		// Voting hover status
@@ -289,7 +303,12 @@ function displayIdeaNames() {
 
 //ajax
 function doUpvote(ideaid,upOrDown) {
-
+	if(upOrDown){
+		setCookie(ideaid);
+	}
+	else {
+		deleteCookie(ideaid);
+	}
 	$.ajax({
 		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'ideaid':ideaid},
@@ -299,7 +318,26 @@ function doUpvote(ideaid,upOrDown) {
 	});
 }
 
+function doUpvoteComment(commentid,upOrDown) {
+	if(upOrDown){
+		setCookie(commentid);
+	}
+	else {
+		deleteCookie(commentid);
+	}
+	$.ajax({
+		'url': 'ajax/upvote.php?'+upOrDown+'=true',
+		'data': {'commentid':commentid},
+		'success': function(jsonData) {
+
+		},
+	});
+}
+
+
 function submitPostAndGetPosts() {
+	//#HACK only usrhandle currently visible
+	
 	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
 	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
@@ -308,14 +346,32 @@ function submitPostAndGetPosts() {
 	else {
 		var processedname = name;
 	}
+	
+	
+	//+$('#usrhandle').val()+\
+	//#hack
+	var np = $('#newpost').val();
+	var ind=np.indexOf('~'+$('#usrhandle').val());
+	
+	if($('#usrhandle').val()!="" && ind==-1) { //bug -- doesn't catch included word
+//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+			
+		np+=' ~'+$('#usrhandle').val();
+	}
+	
+	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+	function extractTags(idea) {
+    
+    return idea.match(tag_regexp)
+	*/
+	
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : processedname},
+		'data': {'mapid':$('#mapidform').val(), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
-
                  $('#newpost').val('');
                  displayPosts();
              },
