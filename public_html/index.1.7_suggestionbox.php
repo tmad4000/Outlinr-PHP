@@ -27,8 +27,7 @@ require_once('../config.inc.php');
   <script src="js/lib/jquery-1.10.2.min.js"></script>
   <script src="js/lib/bootstrap.min.js"></script>
   
-  <link rel="stylesheet" href="js/lib/magicsuggest-1.3.1-min.css">
-  <script type="text/javascript" src="js/lib/magicsuggest-1.3.1-min.js"></script>
+  <script type="text/javascript" src="js/lib/selectize.js"></script>
   
   <script type="text/javascript" src="js/util.js"></script>
   <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
@@ -38,6 +37,8 @@ require_once('../config.inc.php');
 
   <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
   <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="css/lib/selectize.css" rel="stylesheet">
+  <link href="css/selectize-custom.css" rel="stylesheet">
   
   <!--
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">

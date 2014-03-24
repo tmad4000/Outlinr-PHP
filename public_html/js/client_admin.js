@@ -171,63 +171,27 @@ $(document).ready(function() {
 	getPosts();
 });
 
-function getMagicSuggestOptions(data) {
-	//console.log(data)
-      return {
-        cls: 'related-idea-add-ms',
-        selectionCls: 'related-idea-selected-ms',
-        valueField: 'pid',
-        displayField: 'title',
-        renderer: function(idea){
-            return '<div>' +
-                    '<div style="font-family: Arial; font-weight: bold">' + idea.title + '</div>' +
-                    '<div>' + idea.body + '</div>' +
-                   '</div>';
-        },
-        minChars: 0,
-        typeDelay: 20,
-        selectionStacked: true,
-        method:'GET',
-        expanded:false,
-        expandOnFocus:true,
-        maxDropHeight:'500px',
-        name:'query',
-        data: data,
-		//.map(function(x) { x.name = x.title; x._id = x.pid; delete x._id; delete x.title; return x; }), //Ideas.find().fetch(),
-        // data: Ideas.find().fetch().map(function(x) { x.name = x.title; x._id = x.id; delete x._id; delete x.title; return x; }),
-        selectionPosition: 'right',
-        emptyText:'Connect related ideas',
-        selectionStacked: true
-      };
-  };
-  
-  
-function autoSuggest(data) {
-        $('.related-idea-add').each(function() {
-          $($(this).magicSuggest(getMagicSuggestOptions(data))).on('selectionchange', function(events, combo, selection) {
-           // console.log('selected item:', selection);
-            var newRelIdeas = selection;
-            var mainIdeaId = combo.container.closest('.main-idea').data('id');
+function selectizeSetup(data) {
+	$('.related-idea-add').selectize({
+		plugins: ['remove_button'],
+	    persist: false,
+	    maxItems: null,
+	    valueField: 'title',
+	    labelField: 'title',
+	    searchField: ['title'],
+	    options: data,
+	    render: {
+	        item: function(item, escape) {
+	            return '<div>' + escape(item.title) + '</div>';
+	        },
+	        option: function(item, escape) {
+	            return '<div>' + escape(item.title) + '</div>';
+	        }
+	    }
 
-           /* for (var i = 0; i < newRelIdeas.length; i++) {
-                var existingIdea = Ideas.find(newRelIdeas[i]._id).fetch()[0]; // see if related idea is already in db
-                var relatedIdeaId;
-                if (!existingIdea) { // if not already in db, insert the idea
-                  relatedIdeaId = Ideas.insert({ title: newRelIdeas[i].title,
-                                                      description: '',
-                                                      relatedIdeas: [],
-                                                      timestamp:Date.now()
-                                                    });  //#TODO dates server side #thereisnoserver
-                } else {
-                  relatedIdeaId = existingIdea._id;
-                }
-                // relate main idea to related idea and vice versa
-                Ideas.update(mainIdeaId, { $push: { relatedIdeas: relatedIdeaId } });
-                Ideas.update(relatedIdeaId, { $push: { relatedIdeas: mainIdeaId } });
-            }*/
-          });
-        });
- }
+	});
+}
+
 
 //Handles new line (shift+enter) in the omnibox
 function getCaret(el) { 
@@ -449,7 +413,7 @@ function displayIdeaNames() {
 		var hashtags={};
 		var peopletags={};
 		
-		autoSuggest(data);
+		selectizeSetup(data);
 		
 		getComments();
 		var cs = $.parseJSON(localStorage.getItem("comments"));
