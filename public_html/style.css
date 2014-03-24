@@ -8,6 +8,15 @@ body {
     font-weight:300;
 }
 
+.related-idea-add-ms input {
+	border:none !important;
+	margin:0px;
+}
+
+.related-ideas-all {
+	margin-top:5px;
+}
+
 #feedbackbutton{
 	border:1px solid #CC0000;
 	background:transparent;

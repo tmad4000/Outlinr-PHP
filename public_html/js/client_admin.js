@@ -3,8 +3,10 @@ var isDefaultUsrHandle = true;
 
 var commentsModel = {};
 var expandedComments = {};
+var linksModel = {};
 var emailAddress;
 var isAdmin = false;
+
 $(document).ready(function() {
 	isAdmin = $('#is-admin').val() === 'true';
 
@@ -17,13 +19,11 @@ $(document).ready(function() {
 	$('#emailicon').popover({
 		placement:"bottom",
 		title:"Notification email address",
-//		content:"<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onload='emailPopoverLoad()' placeholder='email'/>",
+		//content:"<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onload='emailPopoverLoad()' placeholder='email'/>",
 		html:true,
 		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
 	
-	
-
 	function emailPopoverLoad(){
 		
 		$(this).val(emailAddress);
@@ -36,6 +36,7 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
+
 	$('#sortByDate').click( function(){
 	    if(!$(this).hasClass('active')){
 	        filterToggle = "Date";
@@ -59,16 +60,16 @@ $(document).ready(function() {
 	    }
 	})
 
-	$('#sortByStatus').click( function(){
+	$('#sortByStatus').click(function(){
 	    if(!$(this).hasClass('active')){
 	        filterToggle = "Status";
 	        $('#sortByDate').removeClass('active');
 	       	$('#sortByUpvotes').removeClass('active'); 
 	        $(this).addClass("active");  		
 
-	        displayPosts()        
+	        displayPosts();       
 	    }
-	})
+	});
 
 	initiateCookie();
 	$('#usrname').change(function (){
@@ -165,23 +166,7 @@ $(document).ready(function() {
 		rootNodeViewModel.filter($(this).val());
 		//#TODO never gets here
 
-	});
-	
-	
-	
-	
-	
-	 
-
-		/*
-	$('#myTab a').click(function(e) {
-		e.preventDefault();
-		$(this).tab('show');
-	})
-	
-	$('#myTab a:last').tab('show');
-	*/
-	
+	}); 
 	
 	getPosts();
 });

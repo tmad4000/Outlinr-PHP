@@ -35,8 +35,6 @@ require_once('../config.inc.php');
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client_admin.js"></script>
-  
-  
 
   <link href="js/lib/bootstrap-combined.min.css" rel="stylesheet">
   <link href="js/lib/bootstrap-responsive.min.css" rel="stylesheet">
@@ -308,7 +306,7 @@ td.uid {
               <li><a href="#">Link</a></li>-->
             </ul>
             
-<!--
+          <!--
           <li class="nav-header">Sidebar</li>
           <li><a href="#">Link</a></li>
           <li><a href="#">Link</a></li>
