@@ -2,12 +2,18 @@ var tag_regexp = /[#~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistica
 var hash_regexp = /[#]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 var tilde_regexp = /[~]([a-zA-Z0-9@.\-\/"&;”“]+)/g; //TODO We Cant realistically accept < if we use b tags and no spaces, since it includes </b> in the hashtag. Removed < to deal with this. Alternatively we put a space between #XXX and </b> but this causes other issues
 
-tag_regexp = /[#~]([^\s\n.,><]+)/g;
-hash_regexp = /[#]([^\s\n.,<>]+)/g;
-tilde_regexp = /[~]([^\s\n.,<>]+)/g;
+tag_regexp = /\B[#~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!><]+))/g;
+hash_regexp = /\B[#](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/g;
+//var emailsubregexp = "[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
+tilde_regexp = /\B[~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/gi;
 // /[~]([^(." ")]+)/g
 // <i class="fa fa-external-link"></i>
 var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-.;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g;
+//var url_regexp = /#(?i)\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))#iS/g;
+//UNPICKY REGEX
+url_regexp = /((www|http|https)([^\s]+))|([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/g;
+
 
 var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK
@@ -25,7 +31,7 @@ function changeOrder(nodeChildren){
         sortable = []
         for (var key in nodeChildren)
         sortable.push([key, nodeChildren[key].status])
-        sortable.sort(function(a, b) {return b[1].localeCompare(a[1])})
+        sortable.sort(function(a, b) {return a[1].localeCompare(b[1])})
     }
     return sortable
     
@@ -101,8 +107,8 @@ function findTitleEnd(idea) {
 	if(i<0) i=idea.length;
 
 	var titleEnd=Math.min(80,i); // max 80 chars
-    var i4=idea.indexOf(".",titleEnd);
-    var i5=idea.indexOf(",",titleEnd);
+    var i4=idea.indexOf(" ",titleEnd); // HACK
+    var i5=idea.indexOf(" ",titleEnd);
 	var i3=idea.indexOf(" ",titleEnd);
     var iuse = Math.min(Math.min(i4,i3),i5);
 	if(iuse<0){

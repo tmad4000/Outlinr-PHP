@@ -12,41 +12,34 @@ $r = mysqli_fetch_assoc($result)
 
 ?>
 
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
+<div class="row">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="outline navbar-brand" href='index.1.7_suggestionbox_ideamaps.php'>Suggestion.Box</a> 
+            <p class="navbar-text"><?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></p>
+          </div>
 
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      
-      <span class="brand">
-        <img src="" height="20" width="20">
-        &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>GestaltBox</a> 
-        <span>&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
-        
-        <!--<img src="images/email.png" id="emailicon"/>-->
-      </span> 
-      <div class="nav-collapse">
-        <ul class="nav">
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
 
-
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox.php?mapid=<?= $_GET['mapid'] ?>">Ideas</a></li>
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_inProgress.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_inProgress.php?mapid=<?= $_GET['mapid'] ?>">Progress</a></li>
-          <!--<li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_proposals.php") ? ' class="active"' : '' ?>><a href="index.1.7_suggestionbox_proposals.php?mapid=<?= $_GET['mapid'] ?>">Proposals</a></li>-->
-          <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
-         
-        </ul>
-        <!--<p class="navbar-text pull-right"><a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">&nbsp;&nbsp;</a></p>
-         <p class="navbar-text pull-right"></p>-->
-<!--        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>-->
-        <p class="navbar-text pull-right">
-        <!--<input type="text" id="usremail" placeholder="(optional) Email"><input type="text" id="usrname" placeholder="(optional) Name">-->
-        <span style="font-size:16pt;">~</span><input type="text" id="usrhandle" class="usr" placeholder="username"></p>
-      </div><!--/.nav-collapse -->
-
-    </div>
-  </div>
+              <li><a href="index.1.7_suggestionbox_ideamaps.php">Make a suggestion box</a></li>
+              <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
+            </ul>
+            <form class="navbar-form nav navbar-nav navbar-right" role="search">
+              <div class="form-group">
+                <span></span><input type="text" id="usrhandle" class="form-control" placeholder="Username">
+              </div>
+            </form>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 </div>

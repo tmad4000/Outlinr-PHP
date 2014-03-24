@@ -4,8 +4,8 @@ getPosts();
 
 //getPosts() -> displayPosts() 
 
+var filterTo=null;
 var numFilterTos=0;
-var nextFilter=null;
 
 function getURLParameter(sParam){
     var sPageURL = window.location.search.substring(1);
@@ -24,16 +24,14 @@ var setStatusRequestTimeout = null;
 var setStatusRequestIdeaid = null;
 var commentsModel = {};
 var expandedComments = {};
-var linksModel = {};
 var emailAddress;
 var isAdmin = false;
-
 $(document).ready(function() {
 	
 
 	isAdmin = $('#is-admin').val() === 'true';
 
-	if(isAdmin) $('.brand').append('<i class="fa fa-bell-o" id="emailicon"></i>');
+	if(isAdmin) $('.brand').append('<i class="fa fa-envelope-o" id="emailicon"></i>');
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 	$(window).resize(function() {
 		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
@@ -42,13 +40,13 @@ $(document).ready(function() {
 	$('#emailicon').popover({
 		placement:"bottom",
 		title:"Notification email address",
-		//content:"<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onload='emailPopoverLoad()' placeholder='email'/>",
+//		content:"<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onload='emailPopoverLoad()' placeholder='email'/>",
 		html:true,
 		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
-	$('body').on('click','.selectize-input div',function(){
-		//expandidea
-	});	
+
+
+
 
 	function emailPopoverLoad(){
 		
@@ -62,7 +60,6 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
-
 	$('#sortByDate').click( function(){
 	    if(!$(this).hasClass('active')){
 	        filterToggle = "Date";
@@ -86,16 +83,16 @@ $(document).ready(function() {
 	    }
 	})
 
-	$('#sortByStatus').click(function(){
+	$('#sortByStatus').click( function(){
 	    if(!$(this).hasClass('active')){
 	        filterToggle = "Status";
 	        $('#sortByDate').removeClass('active');
 	       	$('#sortByUpvotes').removeClass('active'); 
 	        $(this).addClass("active");  		
 
-	        displayPosts();       
+	        displayPosts()        
 	    }
-	});
+	})
 
 	initiateCookie();
 	$('#usrname').change(function (){
@@ -148,9 +145,7 @@ $(document).ready(function() {
 	});
 	//Omnibox (input field) operations
 	
-	
 	$('textarea#newpost').focus();
-
 	$('textarea#newpost').keydown(function (event) {
 		if(event.keyCode == 13){ // enter
         	event.preventDefault();
@@ -179,37 +174,29 @@ $(document).ready(function() {
         else {
         	if(rootNodeViewModel!==null){
 				
-				
-				var numIdeas=Object.keys(rootNodeViewModel).length
-				
-				var minQPer=30
-				if(numIdeas>20)
-					minQPer=200
-				if(numIdeas>50)
-					minQPer=400
+				if(filterTo!==null&&numFilterTos>0){
+					numFilterTos--;
+					clearTimeout(filterTo);
+					console.log("cancelled");
 					
-				//c/onsole.log(numFilterTos)
-				//if no filter pending
-				if(numFilterTos<=0){
-					rootNodeViewModel.filter(newpostObj.val() || "");
 					
-					setTimeout(function() {
-						if(nextFilter!=null) {
-							rootNodeViewModel.filter(nextFilter);					
-							nextFilter=null;
-						}
-							
+					filterTo=setTimeout(function() {
 						numFilterTos--;
-					}, minQPer);
-					
-					numFilterTos++;
+						rootNodeViewModel.filter(newpostObj.val() || "");
+					},
+					400);
 				}
-				//if filter pending
 				else {
-					nextFilter=newpostObj.val() || "";
+					filterTo=setTimeout(function() {
+						rootNodeViewModel.filter(newpostObj.val() || "");
+						
+						filterTo=setTimeout(function() {
+							numFilterTos--;
+						}, 300);
+					}, 100);
 				}
 				
-				
+				numFilterTos++;
 				
 				
         	}
@@ -241,28 +228,6 @@ $(document).ready(function() {
 	*/
 
 });
-
-function selectizeSetup(data) {
-	$('.related-idea-add').selectize({
-		plugins: ['remove_button'],
-	    persist: false,
-	    maxItems: null,
-	    valueField: 'title',
-	    labelField: 'title',
-	    searchField: ['title'],
-	    options: data,
-	    render: {
-	        item: function(item, escape) {
-	            return '<div>' + escape(item.title) + '</div>';
-	        },
-	        option: function(item, escape) {
-	            return '<div>' + escape(item.title) + '</div>';
-	        }
-	    }
-
-	});
-}
-
 
 //Handles new line (shift+enter) in the omnibox
 function getCaret(el) { 
@@ -334,6 +299,7 @@ function displayPosts() {
 		});)*/
 		
 		/*$(".star-off").click(function() {
+			console.log(t=$(this))
 			$(this).toggleClass("star-on");
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});*/
@@ -342,10 +308,13 @@ function displayPosts() {
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
+			//console.log("qqq" + idS)
 			if(!(idS in expandedComments)) {
+			//	console.log("eue")
 				expandedComments[idS]=1;
 			}
 			else {
+			//	console.log("hhh")
 				delete expandedComments[idS];
 			}
 			getComment(idS);
@@ -374,6 +343,7 @@ function displayPosts() {
 	        	event.stopPropagation();
 				//$(this).parent().find('.commentform').toggle();
 				var idS=$(this).closest('.entryNode').attr('-idea-id');
+				//console.log("qqq" + idS)
 				submitAndGetComments(idS);
 			}
 
@@ -479,6 +449,7 @@ function displayPosts() {
 				tem.setBold(mi,query[i].length);
 				var r = tem.render();
 				itN.html(r); //TODO add third param to this, pass whether bold or not so we can put it inside.
+				//console.log(itN.html().replace('a','%'));
 				h=false;
 			}
 		}
@@ -496,8 +467,6 @@ function displayIdeaNames() {
 		var tags={};
 		var hashtags={};
 		var peopletags={};
-		
-		selectizeSetup(data);
 		
 		getComments();
 		var cs = $.parseJSON(localStorage.getItem("comments"));
@@ -587,6 +556,8 @@ function displayIdeaNames() {
 	    for (var key in peopletags)
 	    	peopletagssorted.push([peopletags[key],key]);
 	   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+
+	    
 
 		localStorage.setItem("tags", tags);
 		var tagsul = $('ul#idea-hashtags').empty();
@@ -845,3 +816,6 @@ function submitAndGetComments(pid) {
 		});
 	}
 }
+
+
+

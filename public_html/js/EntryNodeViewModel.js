@@ -2,11 +2,11 @@ function EntryNodeViewModel(entryNodeModel) {
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
 	this.myCommentsExpanded="init-hidden";
-
+	console.log(this.entryNodeModel);
 	//attributes of this object
 	this.visible=true;
 	//self
-	if(this.entryNodeModel.pid !== null)
+	if(this.entryNodeModel.pid !== null && this.entryNodeModel.pid !== undefined)
 		this.eT = new EntryNodeTextViewModel(this.entryNodeModel.body,this.entryNodeModel.pid);
 	else
 		this.eT = null;
@@ -122,13 +122,14 @@ function EntryNodeViewModel(entryNodeModel) {
 							var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 							var commentTime = new Date(currComment.time * 1000);
 							var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
+							var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
 							if(getCookie("c"+currComment.cid)!= ""){
 								var commentS='<div><div class="comment-upvote on">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							'<div class="comment-time timecol">' + commentTimeS + '</div>'+del;
 							}
 							else {
 								var commentS='<div><div class="comment-upvote">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-							'<div class="comment-time timecol">' + commentTimeS + '</div>';
+							'<div class="comment-time timecol">' + commentTimeS + '</div>'+del;
 							}
 							
 							commentsListH+="<li>"+commentS+"</li>";
@@ -187,7 +188,7 @@ function EntryNodeViewModel(entryNodeModel) {
 					addRel +
 					comments+"</td>" + 
 				   	// '<td><div class="progressbar"></div></td>' +
-				   	"<td class='timecol'><span class='uid'>" + (this.entryNodeModel.uid!="0" ? this.entryNodeModel.uid : "anon") + "</span>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
+				   	"<td class='timecol'>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
 					del +
 		//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
 					"</td></tr>";
