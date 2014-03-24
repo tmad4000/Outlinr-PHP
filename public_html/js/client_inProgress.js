@@ -90,7 +90,6 @@ function makeCollapsibleTree2() {
 		else
 			entryChildrenLi.parent().removeClass('hasUnexpandedChildren');*/	
 		$(this).parent().children('li.entryChildren').slideToggle('fast', function () {
-			//console.log($(this).children('ul'));
 			
 			if($(this).children('ul.entrylist').children('li').length > 0 && !$(this).is(":visible"))
 			
