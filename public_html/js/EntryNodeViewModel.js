@@ -114,8 +114,6 @@ function EntryNodeViewModel(entryNodeModel) {
 				var postCommentsModel=null;
 				var commentsListH='<ul class="comments">';
 					//note: commentsModel is global
-					//console.log("aoeu"+this.entryNodeModel.pid+" " + (this.entryNodeModel.pid+"" in commentsModel) );
-					//console.log(e=commentsModel)
 					if(this.entryNodeModel.pid+"" in commentsModel){
 						//console.log("")
 						postCommentsModel=commentsModel[this.entryNodeModel.pid];
