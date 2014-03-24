@@ -23,7 +23,9 @@ $(document).ready(function() {
 		html:true,
 		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
-	
+	$('body').on('click','.selectize-input div',function(){
+		//expandidea
+	});	
 	function emailPopoverLoad(){
 		
 		$(this).val(emailAddress);
