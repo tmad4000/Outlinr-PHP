@@ -172,7 +172,7 @@ $(document).ready(function() {
 });
 
 function getMagicSuggestOptions(data) {
-	console.log(data)
+	//console.log(data)
       return {
         cls: 'related-idea-add-ms',
         selectionCls: 'related-idea-selected-ms',
@@ -291,7 +291,6 @@ function displayPosts() {
 		});
 		
 		/*$(".star-off").click(function() {
-			console.log(t=$(this))
 			$(this).toggleClass("star-on");
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});*/
@@ -300,13 +299,10 @@ function displayPosts() {
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
-			//console.log("qqq" + idS)
 			if(!(idS in expandedComments)) {
-			//	console.log("eue")
 				expandedComments[idS]=1;
 			}
 			else {
-			//	console.log("hhh")
 				delete expandedComments[idS];
 			}
 			getComment(idS);
@@ -335,7 +331,6 @@ function displayPosts() {
 	        	event.stopPropagation();
 				//$(this).parent().find('.commentform').toggle();
 				var idS=$(this).closest('.entryNode').attr('-idea-id');
-				//console.log("qqq" + idS)
 				submitAndGetComments(idS);
 			}
 
@@ -436,7 +431,6 @@ function displayPosts() {
 				tem.setBold(mi,query[i].length);
 				var r = tem.render();
 				itN.html(r); //TODO add third param to this, pass whether bold or not so we can put it inside.
-				//console.log(itN.html().replace('a','%'));
 				h=false;
 			}
 		}
