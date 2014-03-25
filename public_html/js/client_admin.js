@@ -27,6 +27,7 @@ var expandedComments = {};
 var linksModel = {};
 var emailAddress;
 var isAdmin = false;
+var globalData;
 
 $(document).ready(function() {
 	
@@ -286,39 +287,23 @@ function getCaret(el) {
 	return 0; 
 }
 
-//var entryList = null;
-var rootNodeViewModel = null;
-
-function displayPosts() {
-	numberOfIdeasVisible =0;
-	if (localStorage.getItem("posts") !== null){
-		
-
-		var jsonData = localStorage.getItem("posts");
-		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
-
-		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
-
-		//entryList = new EntryList(data);
-		//var entrylist=entryNodeToHTML(data);
-		//entryList = new EntryList(data);
-
-		$("#currentposts").html("");
-		$("#currentposts").append(rootNodeViewModel.render());
-		$("div.status-box").click(function(e) {
+// Add events to the given post element. Pass postEl as $(document) to do the first initialization.
+// Afterwards, if more posts are added (like in expanding linked children), just call this with the child's post element.
+function addPostEvents(postEl) {
+			$("div.status-box").click(function(e) {
 			e.preventDefault();
 			if(isAdmin)
 				cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
 		
-		$("div.delete > a").click(function(e) {
+		postEl.find("div.delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)
 				deleteNode($(this).closest('.entryNode').attr('-idea-id'));
 			
 		});
-		$(".ideaTxt").on("click","div.delete-comment > a",function(e) {
+		postEl.find(".ideaTxt").on("click","div.delete-comment > a",function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('li').find(".comment-text").text() + "?");
 			if (r){
@@ -338,7 +323,7 @@ function displayPosts() {
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});*/
 
-		$('.showcomments > a').click(function(e){
+		postEl.find('.showcomments > a').click(function(e){
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
@@ -350,12 +335,12 @@ function displayPosts() {
 			}
 			getComment(idS);
 		});
-		$('.commentsinput').keydown(function (event) {
+		postEl.find('.commentsinput').keydown(function (event) {
 			if(event.keyCode == 13 && !event.shiftKey){ // enter
 	        	event.preventDefault();
 	        }
 		});
-		$('.commentsinput').keyup(function(e){
+		postEl.find('.commentsinput').keyup(function(e){
 			e.preventDefault();
 			if (event.keyCode == 13 && event.shiftKey) { // shift-enter
 	        	
@@ -379,10 +364,8 @@ function displayPosts() {
 
 		});
 
-		// Right hand bar
-		displayIdeaNames();
-		// Voting click
-		$('td.votes').click(function() {
+
+		postEl.find('td.votes').click(function() {
 			$(this).children('.vote').toggleClass('on'); 
 			var num=$(this).children('span.votes').html()-0; 
 			if ($(this).children('.vote').hasClass('on')) {
@@ -397,7 +380,7 @@ function displayPosts() {
 			}
 			
 		});
-		$('.comment-upvote').click(function() {
+		postEl.find('.comment-upvote').click(function() {
 			var num=$(this).html()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
@@ -413,6 +396,29 @@ function displayPosts() {
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
 		});
+}
+//var entryList = null;
+var rootNodeViewModel = null;
+
+function displayPosts() {
+	numberOfIdeasVisible =0;
+	if (localStorage.getItem("posts") !== null){
+		
+
+		var jsonData = localStorage.getItem("posts");
+		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
+
+		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
+
+		//entryList = new EntryList(data);
+		//var entrylist=entryNodeToHTML(data);
+		//entryList = new EntryList(data);
+
+		$("#currentposts").html("");
+		$("#currentposts").append(rootNodeViewModel.render());
+
+		displayIdeaNames();
+		addPostEvents($(document));
 
 		// Voting hover status
 		$("[rel='popover']").popover({
@@ -497,7 +503,8 @@ function displayIdeaNames() {
 		var hashtags={};
 		var peopletags={};
 		
-		selectizeSetup(data);
+		// selectizeSetup(data);
+		globalData = data;
 		
 		getComments();
 		var cs = $.parseJSON(localStorage.getItem("comments"));
@@ -844,4 +851,108 @@ function submitAndGetComments(pid) {
 			},
 		});
 	}
+}
+
+function setupTypeahead(postEl) {
+	var substringMatcher = function(strs) {
+		return function findMatches(q, cb) {
+			var matches, substringRegex;
+				
+			// an array that will be populated with substring matches
+			matches = [];
+			
+			// regex used to determine if a string contains the substring `q`
+			substrRegex = new RegExp(q, 'i');
+			
+			// iterate through the pool of strings and for any string that
+			// contains the substring `q`, add it to the `matches` array
+			$.each(strs, function(i, str) {
+				if (substrRegex.test(str)) {
+					// the typeahead jQuery plugin expects suggestions to a
+					// JavaScript object, refer to typeahead docs for more info
+					matches.push({ value: str, blah: " know it's waaay late, but it did take me 2 minutes to write this optimized and improved version of AgileJon's answer:" });
+				}
+			});
+				
+			cb(matches);
+		};
+	};
+
+	var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+	'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+	'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+	'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+	'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+	'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+	'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+	'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+	'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+	];
+
+	var selectOption = function (el) {
+		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
+		var label = $('<a href="#">' + el.typeahead('val') + '</a>');
+		label.click(function (e) {
+			var value = 751; // TODO unhardcode
+			console.log('clicked', e, $(this));
+			// Find element to show
+			var post;
+			for (var i = 0; i < globalData.length; i++) {
+				if (globalData[i].pid == value) {
+					post = globalData[i];
+				}
+			}
+			// var copy = $(this).parents('.entryNode').clone();
+			var parent = $(this).parents('.entryNode').eq(0);
+			console.log('addpost');
+			addPost(parent, post);
+			return false;
+		});
+		labels.append(label);
+		el.typeahead('val', '');
+	};
+	postEl.find('.typeahead').on('typeahead:selected', function () {
+		console.log('selected');
+		selectOption($(this));
+	});
+	postEl.find('.typeahead').keypress(function (e) {
+		if (e.which == 13) { // enter
+			console.log('enter', $(this));
+			selectOption($(this));
+		}
+	});
+	postEl.find('.typeahead').typeahead({
+		hint: true,
+		highlight: true,
+		minLength: 1
+	},
+	{
+		name: 'states', // alters tt-dataset- html
+		displayKey: 'value',
+		source: substringMatcher(states),
+		templates: {
+			//    empty: function (o) {return ''; },
+			//    footer: function (o) {return '';},
+			//    header: function () {return '';},
+			suggestion: Handlebars.compile('<p>{{value}} - {{blah}}</p>')
+		}
+	});
+}
+
+// Dom change: add a child dom el (some post) to the given parent dom element
+function addPost(parent, post) {
+	// var parent = $('.entryNode').eq(3);
+	// var jsonData = localStorage.getItem("posts");
+	// var post = $.parseJSON(jsonData)['flatPosts'][0];
+
+	childNodeViewModel = new EntryNodeViewModel(post);
+	console.log('to render');
+	postEl = $(childNodeViewModel.render());
+	parent.append(postEl);
+	console.log('done render');
+	// selectizeSetup();
+	// console.log('done setup');
+
+	// Add events
+	addPostEvents(postEl);
 }
