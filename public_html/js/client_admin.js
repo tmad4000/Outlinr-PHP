@@ -854,66 +854,53 @@ function submitAndGetComments(pid) {
 }
 
 function setupTypeahead(postEl) {
-	var substringMatcher = function(strs) {
-		return function findMatches(q, cb) {
-			var matches, substringRegex;
-				
-			// an array that will be populated with substring matches
-			matches = [];
-			
-			// regex used to determine if a string contains the substring `q`
-			substrRegex = new RegExp(q, 'i');
-			
-			// iterate through the pool of strings and for any string that
-			// contains the substring `q`, add it to the `matches` array
-			$.each(strs, function(i, str) {
-				if (substrRegex.test(str)) {
-					// the typeahead jQuery plugin expects suggestions to a
-					// JavaScript object, refer to typeahead docs for more info
-					matches.push({ value: str, blah: " know it's waaay late, but it did take me 2 minutes to write this optimized and improved version of AgileJon's answer:" });
-				}
-			});
-				
-			cb(matches);
-		};
-	};
+	var getPostMatches = function (queryString, callback) {
+		// TODO make this a backend query; for now I'll just match on some random posts
+		var somePosts = [{title: 'idea title', description: 'the best idea ever', pid: 751},
+		{title: 'title 2', description: 'second best idea', pid: 750}]
 
-	var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-	'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-	'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-	'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-	'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-	'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-	'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-	'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-	'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-	];
+		var matches = [];
+		var regex = new RegExp(queryString, 'i');
 
-	var selectOption = function (el) {
+		$.each(somePosts, function (i, post) {
+			if (regex.test(post.title) || regex.test(post.description)) {
+				matches.push(post);
+			}
+		});
+		callback(matches);
+	}
+
+	var selectOption = function (el, suggestion) {
+		if (suggestion === undefined) {
+			// TODO make a call to the server to add this suggestion. Add the 
+			//  pid to the globalData array, and set that pid here, instead of -1
+			suggestion = {title: el.typeahead('val'), description: '', pid: -1};
+		}
 		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
-		var label = $('<a href="#">' + el.typeahead('val') + '</a>');
+		var label = $('<a href="#">' + suggestion.title + '</a>');
 		label.click(function (e) {
-			var value = 751; // TODO unhardcode
-			console.log('clicked', e, $(this));
 			// Find element to show
 			var post;
 			for (var i = 0; i < globalData.length; i++) {
-				if (globalData[i].pid == value) {
+				if (globalData[i].pid == suggestion.pid) {
 					post = globalData[i];
 				}
 			}
-			// var copy = $(this).parents('.entryNode').clone();
-			var parent = $(this).parents('.entryNode').eq(0);
-			console.log('addpost');
-			addPost(parent, post);
+			if (post) { // TODO a post should always exist. Assert this.
+				// var copy = $(this).parents('.entryNode').clone();
+				var parent = $(this).parents('.entryNode').eq(0);
+				addPost(parent, post);
+			} else {
+				console.log('ERROR: There is no such post');
+			}
 			return false;
 		});
 		labels.append(label);
 		el.typeahead('val', '');
 	};
-	postEl.find('.typeahead').on('typeahead:selected', function () {
-		console.log('selected');
-		selectOption($(this));
+	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
+		console.log('selected', suggestion);
+		selectOption($(this), suggestion);
 	});
 	postEl.find('.typeahead').keypress(function (e) {
 		if (e.which == 13) { // enter
@@ -927,14 +914,14 @@ function setupTypeahead(postEl) {
 		minLength: 1
 	},
 	{
-		name: 'states', // alters tt-dataset- html
-		displayKey: 'value',
-		source: substringMatcher(states),
+		name: 'ideas', // alters tt-dataset- html
+		displayKey: 'title',
+		source: getPostMatches,
 		templates: {
 			//    empty: function (o) {return ''; },
 			//    footer: function (o) {return '';},
 			//    header: function () {return '';},
-			suggestion: Handlebars.compile('<p>{{value}} - {{blah}}</p>')
+			suggestion: Handlebars.compile('<p>{{title}} - {{description}}</p>')
 		}
 	});
 }
