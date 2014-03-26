@@ -290,7 +290,7 @@ function getCaret(el) {
 // Add events to the given post element. Pass postEl as $(document) to do the first initialization.
 // Afterwards, if more posts are added (like in expanding linked children), just call this with the child's post element.
 function addPostEvents(postEl) {
-			$("div.status-box").click(function(e) {
+		postEl.find("div.status-box").click(function(e) {
 			e.preventDefault();
 			if(isAdmin)
 				cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
@@ -396,6 +396,7 @@ function addPostEvents(postEl) {
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
 		});
+		setupTypeahead(postEl);
 }
 //var entryList = null;
 var rootNodeViewModel = null;
@@ -908,12 +909,10 @@ function setupTypeahead(postEl) {
 		el.typeahead('val', '');
 	};
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
-		console.log('selected', suggestion);
 		selectOption($(this), suggestion);
 	});
 	postEl.find('.typeahead').keypress(function (e) {
 		if (e.which == 13) { // enter
-			console.log('enter', $(this));
 			selectOption($(this));
 		}
 	});
@@ -937,17 +936,10 @@ function setupTypeahead(postEl) {
 
 // Dom change: add a child dom el (some post) to the given parent dom element
 function addPost(parent, post) {
-	// var parent = $('.entryNode').eq(3);
-	// var jsonData = localStorage.getItem("posts");
-	// var post = $.parseJSON(jsonData)['flatPosts'][0];
-
 	childNodeViewModel = new EntryNodeViewModel(post);
-	console.log('to render');
 	postEl = $(childNodeViewModel.render());
 	parent.append(postEl);
 	console.log('done render');
-	// selectizeSetup();
-	// console.log('done setup');
 
 	// Add events
 	addPostEvents(postEl);
