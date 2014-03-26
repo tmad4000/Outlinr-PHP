@@ -939,7 +939,6 @@ function addPost(parent, post) {
 	childNodeViewModel = new EntryNodeViewModel(post);
 	postEl = $(childNodeViewModel.render());
 	parent.append(postEl);
-	console.log('done render');
 
 	// Add events
 	addPostEvents(postEl);

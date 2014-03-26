@@ -2,7 +2,7 @@ function EntryNodeViewModel(entryNodeModel) {
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
 	this.myCommentsExpanded="init-hidden";
-	console.log(this.entryNodeModel);
+	// console.log(this.entryNodeModel);
 	//attributes of this object
 	this.visible=true;
 	//self

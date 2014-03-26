@@ -51,7 +51,7 @@ function EntryNodeTextViewModel(txt,pid) {
 
 	//adds splits to a split array
 	this.pushSplits = function(re,ray) { // should be private
-		console.log(this);
+		// console.log(this);
 		var m=this.txt.regexMatchOffset(re,0);
 		// Removes Duplicates
 		var i=0;
