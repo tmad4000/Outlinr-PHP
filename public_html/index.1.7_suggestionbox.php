@@ -232,7 +232,6 @@ require_once('../config.inc.php');
             <li class="nav-header">All Ideas</li>
             <ul id="ideanames" class="">
             </ul>
-<<<<<<< HEAD
           </ul>
         </div><!--/.well -->
       </div><!--/span-->
@@ -243,57 +242,4 @@ require_once('../config.inc.php');
   ?>
 </body>
 </html>
-=======
-            
-          <!--
-          <li class="nav-header">Sidebar</li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>-->
-        </ul>
-      </div><!--/.well -->
-    </div><!--/span-->
 
-    <div class="span9 span-fixed-sidebar">
-      <div class="hero-unit-light" style="padding-top:0">
-        <!--<span class="vote"> </span>-->
-        <form id="postform">
-          <div class="input-append" style="width:100%">
-            <textarea class="span12" placeholder="Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit." id="newpost" ></textarea>
-          </div>
-          
-       <div class='related-ideas-all'>
-		<ul class='related-ideas'>
-			
-		</ul>
-
-		<div class='related-idea-input'>
-			<input class='related-idea-add' placeholder='Add Related Idea' width="200">
-		</div>
-
-	</div>
-    
-          <!--<input type="text" class="related-idea-add" placeholder="Add related idea">-->
-        </form>
-        <div id="tableHeaderDiv">
-          <div id="numResults"></div>
-          <div id="filterBy">
-              <a id='sortByDate' class="active">New</a>
-              <a id="sortByUpvotes">Top</a>
-              <a id='sortByStatus'>Status</a>
-          </div>
-        </div>
-        <div id="currentposts"></div>
-
-      </div>
-      <hr>
-
-      <footer>
-        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
-      </footer>
-      <div id="feedbackbutton"><a href="http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/pika/public_html/index.1.7_suggestionbox.php?mapid=95" target="_blank">Feedback</a></div>
-
-    </div><!--/.fluid-container-->
-  </body>
-  </html>
->>>>>>> Removed selectize; added typeahead; child view
