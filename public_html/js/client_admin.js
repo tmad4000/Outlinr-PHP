@@ -494,6 +494,13 @@ function displayPosts() {
 
 }*/
 
+function updateGlobalData(data) {
+	globalData = {};
+	for (var i = 0; i < data.length; i++) {
+		globalData[data[i].pid] = data[i];
+	}
+}
+
 function displayIdeaNames() {
 	if (localStorage.getItem("posts") !== null){
 		var jsonData = localStorage.getItem("posts");
@@ -504,7 +511,7 @@ function displayIdeaNames() {
 		var peopletags={};
 		
 		// selectizeSetup(data);
-		globalData = data;
+		updateGlobalData(data);
 		
 		getComments();
 		var cs = $.parseJSON(localStorage.getItem("comments"));
@@ -857,6 +864,7 @@ function setupTypeahead(postEl) {
 	var getPostMatches = function (queryString, callback) {
 		// TODO make this a backend query; for now I'll just match on some random posts
 		var somePosts = [{title: 'idea title', description: 'the best idea ever', pid: 751},
+		{title: 'title 3', description: 'third best idea', pid: 50},
 		{title: 'title 2', description: 'second best idea', pid: 750}]
 
 		var matches = [];
@@ -875,17 +883,19 @@ function setupTypeahead(postEl) {
 			// TODO make a call to the server to add this suggestion. Add the 
 			//  pid to the globalData array, and set that pid here, instead of -1
 			suggestion = {title: el.typeahead('val'), description: '', pid: -1};
+			console.log('TODO add post to backend');
+		} else {
+			if (!(suggestion.pid in globalData)) {
+				// TODO query this post from the server. It's better to do it here, before someone
+				//  clicks the link that this function is making, such that when that link is
+				//  clicked, the post can load automatically instead of waiting for a request.
+				console.log('TODO query for post');
+			}
 		}
 		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
 		var label = $('<a href="#">' + suggestion.title + '</a>');
 		label.click(function (e) {
-			// Find element to show
-			var post;
-			for (var i = 0; i < globalData.length; i++) {
-				if (globalData[i].pid == suggestion.pid) {
-					post = globalData[i];
-				}
-			}
+			var post = globalData[suggestion.pid];
 			if (post) { // TODO a post should always exist. Assert this.
 				// var copy = $(this).parents('.entryNode').clone();
 				var parent = $(this).parents('.entryNode').eq(0);
