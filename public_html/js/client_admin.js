@@ -510,7 +510,6 @@ function displayIdeaNames() {
 		var hashtags={};
 		var peopletags={};
 		
-		// selectizeSetup(data);
 		updateGlobalData(data);
 		
 		getComments();
