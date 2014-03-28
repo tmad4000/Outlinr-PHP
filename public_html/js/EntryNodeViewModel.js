@@ -35,7 +35,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 	//render must be called first so that viewDomE!==null
 	this.show = function() {
-		if(this.viewDomE === null){
+		if(!this.getViewDomE()){
 			console.log("viewDomE is null")
 			return;
 		}
@@ -48,7 +48,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 	//render must be called first so that viewDomE!==null
 	this.hide = function() {
-		if(this.viewDomE === null){
+		if(!this.getViewDomE()){
 			console.log("viewDomE is null")
 			return;
 		}
@@ -63,7 +63,7 @@ function EntryNodeViewModel(entryNodeModel) {
 	}
 	//render must be called first so that viewDomE!==null
 	this.filter = function(query){
-		if(this.getViewDomE() === null){ //ERROR
+		if(!this.getViewDomE()){ //ERROR
 			console.log("viewDomE is null")
 			return;
 		}
@@ -79,10 +79,159 @@ function EntryNodeViewModel(entryNodeModel) {
 		//#TODO #future should we show parents of children who match?
 	}
 
+	this.getRenderData = function() {
+		var getCommentInfo = function(entryNodeModel) {
+			var getCommentMessage = function(numComments) {
+				return numComments === 0 ? "Comment" :
+					numComments === 1 ? "1 Comment" :
+					numComments + " Comments";
+			};
+
+			var createCommentsList = function(commentModel) {
+				return $.map(model, function(comment) {
+					var time = new Date(currComment.time * 1000);
+					var timeStr = dateToString(commentTime.getMonth(), commentTime.getDate()) + ", "
+						+ timeToString(commentTime.getHours(), commentTime.getMinutes());
+
+					return {
+						id: comment.cid,
+						upvotes: comment.upvotes,
+						text: comment.comment_text,
+						time: timeStr,
+						hasVoted: getCookie("c"+currComment.cid) != ""
+					};
+				});
+			};
+
+			var comments, numComments, myCommentsExpanded;
+
+			if (entryNodeModel.pid + "" in commentsModel) {
+				comments = createCommentsList(commentsModel[entryNodeModel.pid]);
+				numComments = comments.length;
+			}
+			else {
+				comments = [];
+				numComments = entryNodeModel.num_comments;
+			}
+
+			// expandedComments is global
+			if(entryNodeModel.pid in expandedComments)
+				myCommentsExpanded="init-expanded";
+			else
+				myCommentsExpanded="init-hidden";
+
+			return {
+				numCommentsMsg: getCommentMessage(numComments),
+				myCommentsExpanded: myCommentsExpanded,
+				comments: comments
+			};
+		}
+
+		// TODO: remove this once we have the comment views working
+		var getCommentsHtml = function(entryNodeModel) {
+			var postCommentsModel=null;
+			var commentsListH='';
+			//note: commentsModel is global
+			if(entryNodeModel.pid in commentsModel){
+				//console.log("")
+				postCommentsModel=commentsModel[entryNodeModel.pid];
+				
+				$.each(postCommentsModel,function(i,currComment) {
+					var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
+					var commentTime = new Date(currComment.time * 1000);
+					var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
+					var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
+					if(getCookie("c"+currComment.cid)!= ""){
+						var commentS='<div><div class="comment-upvote on">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+					'<div class="comment-time timecol">' + commentTimeS + '</div>'+del;
+					}
+					else {
+						var commentS='<div><div class="comment-upvote">'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+					'<div class="comment-time timecol">' + commentTimeS + '</div>'+del;
+					}
+					
+					commentsListH+="<li>"+commentS+"</li>";
+				})
+			}
+			return commentsListH;
+		}
+
+		var getChildrenRenderData = function(children) {
+			return $.map(children, function(child) {
+				return child.getRenderData();
+			});
+		}
+
+		var getDataWithEntryNodeModel = function(entryNodeModel, children, entryNodeText) {
+			var progEntry = entryNodeModel.progress && entryNodeModel.progress != "null" 
+							? entryNodeModel.progress + '% - ' : "";
+
+			var commentInfo = getCommentInfo(entryNodeModel);
+
+			return {
+				hasEntryNodeModel: true,
+				entryNodeModel: entryNodeModel,
+
+				progEntry: progEntry,
+				statusTableEntry: statusTable[entryNodeModel.status],
+				hasVoted: getCookie("i" + entryNodeModel.pid) === "voted",
+
+				entryNodeTextHtml: Handlebars.SafeString(entryNodeText.render()),
+
+				numCommentsMsg: commentInfo.numCommentsMsg,
+				myCommentsExpanded: commentInfo.myCommentsExpanded,
+				comments: commentInfo.comments,
+				commentsHtml: Handlebars.SafeString(getCommentsHtml(entryNodeModel)),
+
+				time: moment(entryNodeModel.time * 1000).fromNow(),
+				isAdmin: isAdmin,
+
+				children: getChildrenRenderData(children)
+			};
+		};
+
+		var getDataNoEntryNodeModel = function(children) {
+			return {
+				hasEntryNodeModel: false,
+				children: getChildrenRenderData(children)
+			};
+		};
+
+		return this.entryNodeModel.pid !== null 
+			   ? getDataWithEntryNodeModel(this.entryNodeModel, this.children, this.eT) 
+			   : getDataNoEntryNodeModel(this.children);
+	}
+
+	this.render = function() {
+		var createHandlebarsTemplate = function(data) {
+			// TODO: update this when we have comments working in handlebars
+			var entryNodeViewSource;
+
+			$.ajax('js/views/entryNode.handlebars', {
+				async: false,
+				success: function(source) {
+					entryNodeViewSource = source;
+				}
+			});
+			
+			// commentViewSource = $('#commentView').html();
+
+			var template = Handlebars.compile(entryNodeViewSource);
+
+			Handlebars.registerPartial("entryNode", entryNodeViewSource);
+			// Handlebars.registerPartial("comment", commentViewSource);
+
+			return template(data);
+		};
+
+		this.viewDomE = createHandlebarsTemplate(this.getRenderData());
+		return this.viewDomE;
+	};
+
 
 	//render current node, and also, all its children
 	//for the root node, perhaps there needn't be self info?
-	this.render = function() {
+	this.renderA = function() {
 		//entryNodeBodyToHTML
 		//entryNodeChildrenToHTML
 		
@@ -100,7 +249,8 @@ function EntryNodeViewModel(entryNodeModel) {
 
 				status ="<td class='status'>" +
 						'<div class="star">'+'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+'</div>' +
-						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a><div>' + 
+						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'
+						+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a><div>' + 
 					"</td>";
 				if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
 					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
@@ -114,7 +264,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				var postCommentsModel=null;
 				var commentsListH='<ul class="comments">';
 					//note: commentsModel is global
-					if(this.entryNodeModel.pid+"" in commentsModel){
+					if(this.entryNodeModel.pid in commentsModel){
 						//console.log("")
 						postCommentsModel=commentsModel[this.entryNodeModel.pid];
 						

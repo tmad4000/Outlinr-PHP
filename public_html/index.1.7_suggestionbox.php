@@ -26,7 +26,8 @@ require_once('../config.inc.php');
   <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>  <script type="text/javascript" src="js/util.js"></script>
 
-  
+  <script id="entryNodeView" type="text/html" src="js/views/entryNode.handlebars"></script>
+
   <script type="text/javascript" src="js/lib/typeahead.bundle.js"></script>
   <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'></script>
   

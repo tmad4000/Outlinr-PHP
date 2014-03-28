@@ -1,0 +1,77 @@
+<ul class='entryNode' -idea-id="{{entryNodeModel.pid}}">
+    <li>
+        {{#if hasEntryNodeModel}}
+            <div>
+                <table class="table">
+                    <tr>
+                        <td class="status">
+                            <div class="star">
+                                <a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>
+                            </div>
+                            <div class="status-box">
+                                <a href="#" rel="popover" data-content="{{progEntry}}{{entryNodeModel.metric}}"
+                                    data-original-title="{{statusTableEntry}}">
+                                    <div class="status sc{{entryNodeModel.status}}"></div>
+                                </a>
+                                <div></div>
+                            </div>
+                        </td>
+
+                        <td class="votes" -idea-id=" {{entryNodeModel.pid}}">
+                            <span class="vote {{#if hasVoted}}on{{/if}}"></span>
+                            <span class="votes" >{{entryNodeModel.upvotes}}</span>
+                        </td>
+
+                        <td class="ideaTxt">
+                            <div class="ideaTxtInner">
+                                {{entryNodeTextHtml}}
+                            </div>
+
+                            <div class="related-ideas-all">
+                                <ul class="related-ideas"></ul>
+                                <div class="related-idea-input">
+                                   <input class="related-idea-add typeahead" placeholder="Add Related Idea" width="200">
+                                    <div class="suggest-labels"></div>
+                                </div>
+                            </div>
+
+                            <div class="showcomments">
+                                <a href="#" class="showcomments"><i class="fa fa-comments-o"></i> {{numCommentsMsg}}</a>
+                                <div class="commentform {{myCommentsExpanded}}">
+                                    <textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="{{entryNodeModel.pid}}"></textarea>
+                                    <ul class="comments">
+                                        {{commentsHtml}}
+
+                                        {{! TODO: uncomment below when views are working}}
+                                        {{!--
+                                        {{#each comments}}
+                                            <li>
+                                                {{> comment }}
+                                            </li>
+                                        {{/each}}
+                                        --}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="timeCol">
+                            {{time}}
+                            {{#if isAdmin}}
+                                <div class="delete"><a href="#">Delete</a></div>
+                            {{/if}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        {{/if}}
+    </li>
+    <li>
+        <ul class="entrylist">
+            {{#each children}}
+                <li>
+                    {{> entryNode }}
+                </li>
+            {{/each}}
+        </ul>
+    </li>
+</ul>
