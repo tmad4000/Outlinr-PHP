@@ -220,10 +220,10 @@ function EntryNodeViewModel(entryNodeModel) {
 		"</ul>"));
 		
 
-		var eNBLi=$($.parseHTML("<li></li>"));
+		var eNBLi=$($.parseHTML("<li class='body'></li>"));
 		eNBLi.append(entryNodeBody);
 
-		var cLVLi=$($.parseHTML("<li></li>"));
+		var cLVLi=$($.parseHTML("<li class='children'></li>"));
 		cLVLi.append(childrenListView);
 
 		this.viewDomE.append(eNBLi);

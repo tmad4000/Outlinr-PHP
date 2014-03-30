@@ -1,4 +1,11 @@
 <?php
+/*
+creates are bidirectional
+Create ex
+http://localhost/Outlinr-PHP/public_html/ajax/link.php?tid=61&pid=26
+Delete ex localhost/Outlinr-PHP/public_html/ajax/link.php?tid=61&pid=26
+*/
+
 require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 require_once('util_mapid.php');
@@ -14,6 +21,7 @@ $deletelid= (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQ
 	
 $time = time();
 $linkstbl = LINKS_TBL;
+
 
 // //Delete
 if (!empty($deletelid)) {

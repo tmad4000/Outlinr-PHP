@@ -860,10 +860,27 @@ function submitAndGetComments(pid) {
 	}
 }
 
+//bidirectional so order doesn't matter
+function linkEntryNodes(source,target) {
+	if(typeof source==="undefined")
+		console.log("link source undefined")
+
+	$.ajax({
+		'url': 'ajax/link.php',
+		'data': {'pid':source,'tid':target},
+		'success': function(jsonData) {
+			
+		},
+	});
+}
+
+				
+
+
 function setupTypeahead(postEl) {
 	var getPostMatches = function (queryString, callback) {
 
-		if (!(typeof localStorage.getItem("posts") === "undefined" || localStorage.getItem("posts") === null)){
+		if (localStorage.getItem("posts")){
 			// TODO [3/4 done] make this a backend query; for now I'll just match on some random posts
 			
 			var jsonData = localStorage.getItem("posts");
@@ -898,12 +915,21 @@ function setupTypeahead(postEl) {
 			console.log('TODO add post to backend');
 		} else {
 			if (!(suggestion.pid in globalData)) {
+
+				
+
 				// TODO query this post from the server. It's better to do it here, before someone
 				//  clicks the link that this function is making, such that when that link is
 				//  clicked, the post can load automatically instead of waiting for a request.
 				console.log('TODO query for post');
 			}
 		}
+		
+		//source, target; but bidirectional so doesn't matter
+		linkEntryNodes(el.closest('.entryNode').attr('-idea-id'),suggestion.pid)
+
+
+
 		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
 		var label = $('<a href="#">' + suggestion.title + '</a>');
 		label.click(function (e) {
@@ -917,7 +943,11 @@ function setupTypeahead(postEl) {
 			}
 			return false;
 		});
+
 		labels.append(label);
+		//frontend hack to get 
+
+
 		el.typeahead('val', '');
 	};
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
@@ -950,7 +980,7 @@ function setupTypeahead(postEl) {
 function addPost(parent, post) {
 	childNodeViewModel = new EntryNodeViewModel(post);
 	postEl = $(childNodeViewModel.render());
-	parent.append(postEl);
+	parent.children('.children').children('.entrylist').prepend(postEl);
 
 	// Add events
 	addPostEvents(postEl);
