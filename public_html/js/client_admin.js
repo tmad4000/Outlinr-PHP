@@ -772,6 +772,53 @@ function submitPostAndGetPosts() {
          });
 }
 
+function submitPostAndGetPosts(newPostText) {
+
+
+	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
+	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
+		var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
+	}
+	else {
+		var processedname = name;
+	}
+	
+	
+	//+$('#usrhandle').val()+\
+	//#hack
+	var np = $('#newpost').val();
+	var ind=np.indexOf('~'+$('#usrhandle').val());
+	
+	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
+//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+			
+		np+=' ~'+$('#usrhandle').val();
+	}
+	
+	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+	function extractTags(idea) {
+    
+    return idea.match(tag_regexp)
+	*/
+	
+
+
+	$.ajax({
+		'url': 'ajax/get_or_make_post.php',
+		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
+		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
+		'success': function(jsonData) {
+                 // todo: parse data and add into our table
+                 localStorage.setItem("posts", jsonData);
+                 
+                 $('#newpost').val('');
+                 displayPosts();
+             },
+         });
+
+}
+
 
 function getPosts() {
 	$.ajax({
@@ -878,6 +925,31 @@ function linkEntryNodes(source,target) {
 
 
 function setupTypeahead(postEl) {
+
+
+	// TODO
+	// var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
+	// for()
+	// var label = $('<a href="#">' + suggestion.title + '</a>');
+	// label.click(function (e) {
+	// 	var post = globalData[suggestion.pid];
+	// 	if (post) { // TODO a post should always exist. Assert this.
+	// 		// var copy = $(this).parents('.entryNode').clone();
+	// 		var parent = $(this).parents('.entryNode').eq(0);
+	// 		addPost(parent, post);
+	// 	} else {
+	// 		console.log('ERROR: There is no such post');
+	// 	}
+	// 	return false;
+	// });
+
+	//labels.append(label);
+
+
+	// TODO frontend change to all ideas w same -idea-id
+
+
+
 	var getPostMatches = function (queryString, callback) {
 
 		if (localStorage.getItem("posts")){
@@ -945,7 +1017,7 @@ function setupTypeahead(postEl) {
 		});
 
 		labels.append(label);
-		//frontend hack to get 
+		// TODO frontend change to all ideas w same -idea-id
 
 
 		el.typeahead('val', '');

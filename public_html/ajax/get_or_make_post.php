@@ -79,6 +79,18 @@ function getRelEntryIds($MYSQLI_LINK,$linkstbl, $pid) {
 	return $rows;
 }
 
+function getAllLinkIds($MYSQLI_LINK,$linkstbl) {
+	$query = "SELECT * FROM $linkstbl WHERE deleted_time IS NULL ORDER BY time DESC";
+	
+	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+	$rows = array();
+
+	while ($r = mysqli_fetch_assoc($result)) {
+		$rows[]=$r;
+	}
+	return $rows;
+}
+
 
 
 //Create
@@ -112,7 +124,7 @@ $rows = array();
 $data=array("uid"=>0,"pid"=>NULL,"children"=>array()); //root
 
 while ($r = mysqli_fetch_assoc($result)) {
-	$rows[]=$r;
+	
 	
 	$pid=$r['pid'];
 	$countQuery = "SELECT COUNT(*) FROM $commentstbl WHERE pid=$pid AND deleted_time IS NULL";
@@ -126,7 +138,14 @@ while ($r = mysqli_fetch_assoc($result)) {
 
 	
 	//var_dump($num_comments);
-	$entry=array_map(trim,array_map(stripslashes,$r));
+	$entry=array_map(trim,array_map(function($e) {
+			if(is_string($e)) 
+				return stripslashes($e);
+			else 
+				return $e;
+		}, $r));
+
+	
 	$entry["children"]=array();
 	
 	$entry['relEntryIds']=getRelEntryIds($MYSQLI_LINK,$linkstbl,$pid);
@@ -142,6 +161,11 @@ while ($r = mysqli_fetch_assoc($result)) {
 			$pData= & $pData["pid".$pid]['children'];
 	}
 	$pData["pid".(string)$entry['pid']]=$entry;
+
+	$rows[]= $entry;
 	
 }
-print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows));
+
+$allLinks=getAllLinkIds($MYSQLI_LINK,$linkstbl);
+
+print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows,"links"=>$allLinks));
