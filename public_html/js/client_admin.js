@@ -1068,8 +1068,9 @@ function setupTypeahead(postEl) {
 function addPost(parent, post) {
 	childNodeViewModel = new EntryNodeViewModel(post);
 	postEl = $(childNodeViewModel.render());
+	postEl.hide();
 	parent.children('.children').children('.entrylist').prepend(postEl);
-
+	$(postEl).slideDown();
 	// Add events
 	addPostEvents(postEl);
 }
