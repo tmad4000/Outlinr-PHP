@@ -173,7 +173,7 @@ function EntryNodeViewModel(entryNodeModel) {
 						"<ul class='related-ideas'>" + 
 						"</ul>" + 
 						"<div class='related-idea-input'>" +
-						"	<input class='related-idea-add typeahead' placeholder='Add Related Idea' width='200'>" +
+						"	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>" +
 						"<div class='suggest-labels'></div></div>" +
 				"</div>";
 

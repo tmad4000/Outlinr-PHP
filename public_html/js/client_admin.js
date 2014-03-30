@@ -63,7 +63,6 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
-
 	$('#sortByDate').click( function(){
 	    if(!$(this).hasClass('active')){
 	        filterToggle = "Date";
@@ -926,12 +925,10 @@ function linkEntryNodes(source,target) {
 
 function setupTypeahead(postEl) {
 
-
-	
 	$.each(globalData, function(index, node){
-		console.log(node);
 		var labels = $('.entryNode[-idea-id="'+node.pid+'"]').eq(0).find('.suggest-labels').eq(0);
 		labels.html("");
+
 		$.each(node.relEntryIds, function(i, rel){
 			if(rel.deleted_time === null){
 				var relName = "";
@@ -953,7 +950,7 @@ function setupTypeahead(postEl) {
 				else {
 					relName = dest.title;
 				}
-				var label = $('<a href="#" class="suggest-label" -idea-id["'+dest+'"]>' + relName + '</a>');
+				var label = $('<div><a href="#" -idea-id["'+dest+'"]>' + relName + '</a></div>');
 				label.click(function (e) {
 					var post = globalData[dest.pid];
 					if (post) { // TODO a post should always exist. Assert this.
@@ -1026,7 +1023,7 @@ function setupTypeahead(postEl) {
 
 
 		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
-		var label = $('<a href="#">' + suggestion.title + '</a>');
+		var label = $('<div><a href="#"  -idea-id["'+suggestion.pid+'"]>' + suggestion.title + '</a></div>');
 		label.click(function (e) {
 			var post = globalData[suggestion.pid];
 			if (post) { // TODO a post should always exist. Assert this.
@@ -1066,7 +1063,7 @@ function setupTypeahead(postEl) {
 			//    empty: function (o) {return ''; },
 			//    footer: function (o) {return '';},
 			//    header: function () {return '';},
-			suggestion: Handlebars.compile('<p>{{title}} - {{description}}</p>')
+			suggestion: Handlebars.compile('<p>{{title}}</p>')
 		}
 	});
 }
