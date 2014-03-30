@@ -967,10 +967,6 @@ function setupTypeahead(postEl) {
 		});
 	});
 
-	// TODO frontend change to all ideas w same -idea-id
-
-
-
 	var getPostMatches = function (queryString, callback) {
 
 		if (localStorage.getItem("posts")){
@@ -1037,10 +1033,9 @@ function setupTypeahead(postEl) {
 			return false;
 		});
 
-		labels.append(label);
+		//labels.append(label);
 		// TODO frontend change to all ideas w same -idea-id
-
-
+		$('.entryNode[-idea-id="'+el.closest(".entryNode").attr("-idea-id")+'"]').find('.suggest-labels').append(label);
 		el.typeahead('val', '');
 	};
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
