@@ -952,6 +952,7 @@ function setupTypeahead(postEl) {
 				}
 				var label = $('<div><a href="#" -idea-id["'+dest+'"]>' + relName + '</a></div>');
 				label.click(function (e) {
+					e.preventDefault();
 					var post = globalData[dest.pid];
 					if (post) { // TODO a post should always exist. Assert this.
 						// var copy = $(this).parents('.entryNode').clone();
