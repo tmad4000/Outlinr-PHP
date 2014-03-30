@@ -403,7 +403,7 @@ var rootNodeViewModel = null;
 
 function displayPosts() {
 	numberOfIdeasVisible =0;
-	if (localStorage.getItem("posts") !== null){
+	if (localStorage.getItem("posts")){
 		
 
 		var jsonData = localStorage.getItem("posts");
@@ -503,7 +503,7 @@ function updateGlobalData(data) {
 }
 
 function displayIdeaNames() {
-	if (localStorage.getItem("posts") !== null){
+	if (localStorage.getItem("posts")){
 		var jsonData = localStorage.getItem("posts");
 		var data = $.parseJSON(jsonData)['flatPosts'];
 		var nameul = $('ul#ideanames').empty();
@@ -862,20 +862,32 @@ function submitAndGetComments(pid) {
 
 function setupTypeahead(postEl) {
 	var getPostMatches = function (queryString, callback) {
-		// TODO make this a backend query; for now I'll just match on some random posts
-		var somePosts = [{title: 'idea title', description: 'the best idea ever', pid: 751},
-		{title: 'title 3', description: 'third best idea', pid: 50},
-		{title: 'title 2', description: 'second best idea', pid: 750}]
 
-		var matches = [];
-		var regex = new RegExp(queryString, 'i');
+		if (!(typeof localStorage.getItem("posts") === "undefined" || localStorage.getItem("posts") === null)){
+			// TODO [3/4 done] make this a backend query; for now I'll just match on some random posts
+			
+			var jsonData = localStorage.getItem("posts");
+			var data = $.parseJSON(jsonData)['flatPosts'];
+			var somePosts=data;
 
-		$.each(somePosts, function (i, post) {
-			if (regex.test(post.title) || regex.test(post.description)) {
-				matches.push(post);
-			}
-		});
-		callback(matches);
+			// var somePosts = [{title: 'idea title', description: 'the best idea ever', pid: 751},
+			// {title: 'title 3', description: 'third best idea', pid: 50},
+			// {title: 'title 2', description: 'second best idea', pid: 750}]
+
+			var matches = [];
+			var regex = new RegExp(queryString, 'i');
+			
+			//c onsole.log("oeu",somePosts)
+			
+			$.each(somePosts, function (i, post) {
+				if (regex.test(post.title) || regex.test(post.description)) {
+					matches.push(post);
+				}
+			});
+			callback(matches);
+		}
+		else
+			console.log("nullpoststypeahead")
 	}
 
 	var selectOption = function (el, suggestion) {

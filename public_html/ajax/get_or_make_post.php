@@ -8,6 +8,10 @@ $path = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST[
 $usrname = mysqli_real_escape_string($MYSQLI_LINK, (trim($_REQUEST['uid'])));
 $uip = $_SERVER['REMOTE_ADDR'];
 
+//for getting a single entry only
+if(!empty($_REQUEST['pid']))
+		$pid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['pid'])))+0);
+
 $defaultpath="";
 $defaultparent=0;
 
@@ -28,6 +32,7 @@ $time = time();
 
 $ideastbl = IDEAS_TBL;
 $commentstbl = COMMENTS_TBL;
+$linkstbl=LINKS_TBL;
 
 function getMap($MYSQLI_LINK,$mapid){
 	$query = "SELECT * FROM ideamaps WHERE mapid={$mapid}";
@@ -62,6 +67,21 @@ function emailNotify($MYSQLI_LINK,$mapid,$body){
 	}
 }
 
+function getRelEntryIds($MYSQLI_LINK,$linkstbl, $pid) {
+	$query = "SELECT * FROM $linkstbl WHERE source=$pid AND deleted_time IS NULL ORDER BY time DESC";
+	
+	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+	$rows = array();
+
+	while ($r = mysqli_fetch_assoc($result)) {
+		$rows[]=$r;
+	}
+	return $rows;
+}
+
+
+
+//Create
 if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
 	if(!$tmptitle)
@@ -73,6 +93,9 @@ if (!empty($body)) {
     emailNotify($MYSQLI_LINK,$mapid,$body);
 }
 
+
+
+//Read
 
 //return progress bars info if queried
 if($_GET['inProgress']) {
@@ -100,9 +123,14 @@ while ($r = mysqli_fetch_assoc($result)) {
 	//var_dump($num_comments);
 	$r['num_comments']=$num_comments;
 
+
+	
 	//var_dump($num_comments);
 	$entry=array_map(trim,array_map(stripslashes,$r));
 	$entry["children"]=array();
+	
+	$entry['relEntryIds']=getRelEntryIds($MYSQLI_LINK,$linkstbl,$pid);
+
 		
 	$currpath=explode('/',$entry['path']);
 	
