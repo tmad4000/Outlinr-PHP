@@ -24,7 +24,7 @@ var setStatusRequestTimeout = null;
 var setStatusRequestIdeaid = null;
 var commentsModel = {};
 var expandedComments = {};
-var linksModel = {};
+var linksModel = {}; // TODO IS THIS REDUNDANT due to globalData
 var emailAddress;
 var isAdmin = false;
 var globalData;
@@ -927,24 +927,47 @@ function linkEntryNodes(source,target) {
 function setupTypeahead(postEl) {
 
 
-	// TODO
-	// var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
-	// for()
-	// var label = $('<a href="#">' + suggestion.title + '</a>');
-	// label.click(function (e) {
-	// 	var post = globalData[suggestion.pid];
-	// 	if (post) { // TODO a post should always exist. Assert this.
-	// 		// var copy = $(this).parents('.entryNode').clone();
-	// 		var parent = $(this).parents('.entryNode').eq(0);
-	// 		addPost(parent, post);
-	// 	} else {
-	// 		console.log('ERROR: There is no such post');
-	// 	}
-	// 	return false;
-	// });
+	
+	$.each(globalData, function(index, node){
+		console.log(node);
+		var labels = $('.entryNode[-idea-id="'+node.pid+'"]').eq(0).find('.suggest-labels').eq(0);
+		labels.html("");
+		$.each(node.relEntryIds, function(i, rel){
+			if(rel.deleted_time === null){
+				var relName = "";
+				var dest = null;
 
-	//labels.append(label);
+				// Since relations are symmetric we need to figure out the "other one"
+				if(node.pid == rel.source){
+					// rel.target
+					dest = globalData[rel.target];
+				}
+				else {
+					dest = globalData[rel.source];
+				}
 
+				if(dest === undefined){
+					console.log(dest+' target is not loaded');
+					// TODO showing vertical line... delete or find link?
+				}
+				else {
+					relName = dest.title;
+				}
+				var label = $('<a href="#" class="suggest-label" -idea-id["'+dest+'"]>' + relName + '</a>');
+				label.click(function (e) {
+					var post = globalData[dest.pid];
+					if (post) { // TODO a post should always exist. Assert this.
+						// var copy = $(this).parents('.entryNode').clone();
+						var parent = $(this).parents('.entryNode').eq(0);
+						addPost(parent, post);
+					} else {
+						console.log('ERROR: There is no such post');
+					}
+				});
+				labels.append(label);
+			}
+		});
+	});
 
 	// TODO frontend change to all ideas w same -idea-id
 
