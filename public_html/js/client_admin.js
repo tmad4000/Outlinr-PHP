@@ -941,6 +941,7 @@ function linkEntryNodesAjax(source,target) {
 }
 
 
+
 //helper method; tid needs be int
 function createSetupLabel(tid) {
 	
@@ -966,6 +967,7 @@ function setupRel(postEl) {
 
 	//load rels on each node
 	var allNodesBelowElView = postEl.find('ul.entryNode').add(postEl);
+
 
 	//iterate over nodes
 	$.each(allNodesBelowElView, function(index, nodeView){
@@ -997,6 +999,20 @@ function setupRel(postEl) {
 					console.log(rel.target+' target is not loaded');					
 					// TODO showing vertical line... delete or find link?
 				}
+
+				var label = $('<div><a href="#" -idea-id["'+dest+'"]>' + relName + '</a></div>');
+				label.click(function (e) {
+					e.preventDefault();
+					var post = globalData[dest.pid];
+					if (post) { // TODO a post should always exist. Assert this.
+						// var copy = $(this).parents('.entryNode').clone();
+						var parent = $(this).parents('.entryNode').eq(0);
+						addPost(parent, post, this);
+					} else {
+						console.log('ERROR: There is no such post');
+					}
+				});
+				labels.append(label);
 			}
 			else
 				console.log("backend not filtering deleted rels")
@@ -1050,9 +1066,9 @@ function setupRel(postEl) {
 		}
 		
 		//source, target; but bidirectional so doesn't matter
+
 		linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
 
-		
 
 		el.typeahead('val', '');
 	};
@@ -1088,6 +1104,7 @@ function setupRel(postEl) {
 }
 
 // Dom change: add a child dom el (some post) to the given parent dom element
+
 function expandRelated(parent, post) {
 	childNodeViewModel = new EntryNodeViewModel(post);
 	postEl = $(childNodeViewModel.render());
@@ -1096,4 +1113,5 @@ function expandRelated(parent, post) {
 	$(postEl).slideDown();
 	// Add events
 	setupNode(postEl);
+
 }

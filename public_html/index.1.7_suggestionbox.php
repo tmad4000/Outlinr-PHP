@@ -193,7 +193,7 @@ require_once('../config.inc.php');
                 </ul>
 
                 <div class='related-idea-input'>
-                  <input id='newpostRelatedIdeas' class='related-idea-add typeahead' placeholder='Add Related Idea' width='200'>
+                  <input id='newpostRelatedIdeas' class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>
                   <div class='suggest-labels'></div>
                 </div>
 
