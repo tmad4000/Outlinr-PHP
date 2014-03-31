@@ -1000,19 +1000,6 @@ function setupRel(postEl) {
 					// TODO showing vertical line... delete or find link?
 				}
 
-				var label = $('<div><a href="#" -idea-id["'+dest+'"]>' + relName + '</a></div>');
-				label.click(function (e) {
-					e.preventDefault();
-					var post = globalData[dest.pid];
-					if (post) { // TODO a post should always exist. Assert this.
-						// var copy = $(this).parents('.entryNode').clone();
-						var parent = $(this).parents('.entryNode').eq(0);
-						addPost(parent, post, this);
-					} else {
-						console.log('ERROR: There is no such post');
-					}
-				});
-				labels.append(label);
 			}
 			else
 				console.log("backend not filtering deleted rels")
