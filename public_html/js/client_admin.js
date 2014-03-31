@@ -954,7 +954,7 @@ function setupTypeahead(postEl) {
 					if (post) { // TODO a post should always exist. Assert this.
 						// var copy = $(this).parents('.entryNode').clone();
 						var parent = $(this).parents('.entryNode').eq(0);
-						addPost(parent, post);
+						addPost(parent, post, this);
 					} else {
 						console.log('ERROR: There is no such post');
 					}
@@ -1028,9 +1028,22 @@ function setupTypeahead(postEl) {
 			return false;
 		});
 
+		var label2 = $('<div><a href="#"  -idea-id["'+el.closest(".entryNode").attr("-idea-id")+'"]>' + globalData[el.closest(".entryNode").attr("-idea-id")].title + '</a></div>');
+		label2.click(function (e) {
+			var post = globalData[el.closest(".entryNode").attr("-idea-id")];
+			if (post) { // TODO a post should always exist. Assert this.
+				// var copy = $(this).parents('.entryNode').clone();
+				var parent = $('.entryNode[-idea-id="'+suggestion.pid+'"]').eq(0);
+				addPost(parent, post);
+			} else {
+				console.log('ERROR: There is no such post');
+			}
+			return false;
+		});
 		//labels.append(label);
 		// TODO frontend change to all ideas w same -idea-id
 		$('.entryNode[-idea-id="'+el.closest(".entryNode").attr("-idea-id")+'"]').find('.suggest-labels').append(label);
+		$('.entryNode[-idea-id="'+suggestion.pid+'"]').find('.suggest-labels').append(label2);
 		el.typeahead('val', '');
 	};
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
@@ -1060,12 +1073,21 @@ function setupTypeahead(postEl) {
 }
 
 // Dom change: add a child dom el (some post) to the given parent dom element
-function addPost(parent, post) {
-	childNodeViewModel = new EntryNodeViewModel(post);
-	postEl = $(childNodeViewModel.render());
-	postEl.hide();
-	parent.children('.children').children('.entrylist').prepend(postEl);
-	$(postEl).slideDown();
-	// Add events
-	addPostEvents(postEl);
+function addPost(parent, post, suggestlabel) {
+	console.log(x=suggestlabel);
+	if($(suggestlabel).children(0).hasClass("toggled")){
+		$(suggestlabel).children(0).removeClass("toggled");
+		// todo hide
+		parent.children('.children').children('.entrylist').find('.entryNode[-idea-id="'+post.pid+'"]')[0].hide();
+	}
+	else {
+		$(suggestlabel).children(0).addClass("toggled");
+		childNodeViewModel = new EntryNodeViewModel(post);
+		postEl = $(childNodeViewModel.render());
+		postEl.hide();
+		parent.children('.children').children('.entrylist').prepend(postEl);
+		$(postEl).slideDown();
+		// Add events
+		addPostEvents(postEl);
+	}
 }
