@@ -944,7 +944,7 @@ function setupTypeahead(postEl) {
 				}
 
 				if(dest === undefined){
-					console.log(dest+' target is not loaded');
+					console.log(rel.target+' target is not loaded');
 					// TODO showing vertical line... delete or find link?
 				}
 				else {
