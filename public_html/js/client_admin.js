@@ -920,9 +920,6 @@ function linkEntryNodes(source,target) {
 	});
 }
 
-				
-
-
 function setupTypeahead(postEl) {
 
 	$.each(globalData, function(index, node){
@@ -1016,8 +1013,6 @@ function setupTypeahead(postEl) {
 		
 		//source, target; but bidirectional so doesn't matter
 		linkEntryNodes(el.closest('.entryNode').attr('-idea-id'),suggestion.pid)
-
-
 
 		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
 		var label = $('<div><a href="#"  -idea-id["'+suggestion.pid+'"]>' + suggestion.title + '</a></div>');
