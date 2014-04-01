@@ -57,6 +57,10 @@ $(document).ready(function() {
 		$(this).focus();
 	}
 	
+	$('.navbar-form').submit(function() {
+		
+		return false;
+	});	
 	$('#postform').submit(function() {
 		numberOfIdeasVisible =0;	
 		submitPostAndGetPosts();
@@ -754,7 +758,7 @@ function submitPostAndGetPosts(newPostText) {
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
+		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(newPostText),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
@@ -803,7 +807,7 @@ function submitPostAndGetPostsAndLink(newPostText,source) {
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'tid':-1,'pid':source, 'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
+		'data': {'tid':-1,'pid':source, 'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(extractIdeaName(newPostText)),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
@@ -1035,7 +1039,7 @@ function setupRel(postEl) {
 	var selectRel = function (el, suggestion) {
 		var sourceId=parseInt(el.closest('.entryNode').attr('-idea-id'));
 		var newSugg=false;
-		
+
 		// TODO decide whether to add to entry list in real time
 		if (suggestion === undefined) {
 			newSugg=true;

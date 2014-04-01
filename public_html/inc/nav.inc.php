@@ -31,7 +31,7 @@ $r = mysqli_fetch_assoc($result)
           <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
 
-              <!--<li><a href="index.1.7_suggestionbox_ideamaps.php">Make an idea box</a></li>-->
+              <!-- <li><a href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a></li> -->
               <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">

@@ -15,10 +15,12 @@ $pid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST[
 
 $tid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['tid']))+0);
 if($tid==-1) { //always included in this case
-	if(!isset($result)) 
+	if(!isset($result)) {
 		die("ERROR: not included in get_or_make_post");
+	}
 
-	$newPostId=mysqli_fetch_array($result)[0];
+	$newPostId=(mysqli_fetch_array($result));
+	$newPostId=$newPostId[0];
 	$tid=(int)$newPostId;
 	$quiet=true;
 }
@@ -33,7 +35,7 @@ $linkstbl = LINKS_TBL;
 
 
 // //Delete
-if (!empty($deletelid)) {
+if (!empty($_REQUEST['deletelid'])) {
 	require_once('util_admin_check.php');
 	
 	$query = "UPDATE $linkstbl SET deleted_time=$time WHERE prim_key=$deletelid";
@@ -44,7 +46,7 @@ if (!empty($deletelid)) {
 // else {
 
 	//Create and read
-	if(!empty($pid)&&!empty($tid)) {
+	if(!empty($_REQUEST['pid'])&&!empty($_REQUEST['tid'])) {
 
 		//create
 			//bidirectional		
