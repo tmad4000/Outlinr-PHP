@@ -478,9 +478,12 @@ a.showcomments {
 	float:right;
 	margin-right: 3px;
 	margin-left: 0px;
+	color:gray;
 }
 a.showcomments:hover {
 	background-position: 0 -16px;	
+	text-decoration: none;
+	color:#428bca;
 }
 
 div.showcomments {
@@ -629,7 +632,7 @@ div.commentform div.commentsinput {
 	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	line-height: 18.18181800842285px;
+	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
 }
@@ -647,7 +650,7 @@ textarea::-webkit-input-placeholder {
 	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	line-height: 18.18181800842285px;
+	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
 }
@@ -665,7 +668,7 @@ textarea:-moz-placeholder { /* Firefox 18- */
 	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	line-height: 18.18181800842285px;
+	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
 }
@@ -684,7 +687,7 @@ textarea::-moz-placeholder {  /* Firefox 19+ */
 	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	line-height: 18.18181800842285px;
+	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
 }
@@ -929,46 +932,4 @@ div.delete a {
 
 .ms-res-ctn {
     height: auto !important;
-}
-
-.suggest-labels {
-	vertical-align: middle;
-	div {
-		display:inline-block;
-		clear:both;
-		margin-top:2px;
-		margin-bottom:2px;
-	}
-	a {
-		padding:3px 5px 3px 5px;
-		margin-left:0px;
-		margin-right:2px;
-		border-radius:3px;
-	}
-	a.toggled {
-		background:white;
-	}
-	a:hover{
-		text-decoration: none;
-	}
-}
-.related-idea-add {
-	border-radius:3px;
-	line-height: 19px;
-	padding-left:4px;
-	border:1px solid white;
-	-webkit-transition:border-color, 0.5s linear;
-	margin-right:2px;
-	margin-bottom:1px;
-}
-.related-idea-add:hover {
-	cursor:pointer;
-}
-.related-idea-add:focus {
-	cursor:text;
-	border-width:1px;
-	-webkit-transition:border-color, 0.5s linear;
-}
-.twitter-typeahead {
-	vertical-align: middle;
 }
