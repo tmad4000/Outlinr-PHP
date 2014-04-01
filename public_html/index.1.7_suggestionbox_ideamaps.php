@@ -76,7 +76,7 @@ require_once('../config.inc.php');
           <div class="col-sm-12">
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" id="newpost" placeholder="Create a suggestion box"></textarea>
+                <textarea class="span12" id="newpost" placeholder="Name your idea box"></textarea>
               </div>
             </form>
           </div>

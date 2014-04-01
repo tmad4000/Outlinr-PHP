@@ -20,7 +20,7 @@ $r = mysqli_fetch_assoc($result)
         <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
       </div>
       <div class="col-sm-3 feedbackbuttoncontainer">
-        <a href="?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
+        <a href="index.1.7_suggestionbox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
       </div>
     </div>
   </div>
