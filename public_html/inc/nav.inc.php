@@ -24,14 +24,14 @@ $r = mysqli_fetch_assoc($result)
               <span class="icon-bar"></span>
             </button>
             <div class="outline navbar-brand" style="font-weight:700;letter-spacing:0px;"><?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>&nbsp;<a href='index.1.7_suggestionbox_ideamaps.php' style='color:#00304A;'>idea box</a></div> 
-            <p class="navbar-text"><a href="index.1.7_suggestionbox.php">Ideas</a><a href="#People">People</a></p>
+            <p class="navbar-text"><a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas</a><a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a></p>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
 
-              <li><a href="index.1.7_suggestionbox_ideamaps.php">Make an idea box</a></li>
+              <!--<li><a href="index.1.7_suggestionbox_ideamaps.php">Make an idea box</a></li>-->
               <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">
