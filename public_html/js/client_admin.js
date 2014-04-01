@@ -420,7 +420,7 @@ function displayPosts() {
 
 		displayIdeaNames();
 
-		setupNode(rootNodeView);
+		setupNode($('body'));
 
 		// TODO include in above
 			// Voting hover status
@@ -974,7 +974,8 @@ function setupRel(postEl) {
 		nodeView = $(nodeView);
 		var nodeId = nodeView.attr('-idea-id');
 
-		if (nodeId === 'null') return; //skip if rootnode
+		if (isNaN(nodeId)) return; //skip if rootnode
+		//nodeId===""||nodeId===null||nodeId === 'null') return; 
 
 		var nodeModel = globalData[parseInt(nodeId)];
 		if (typeof nodeModel==="undefined")
@@ -1064,11 +1065,11 @@ function setupRel(postEl) {
 		selectRel($(this), suggestion);
 	});
 
-	postEl.find('.typeahead').keypress(function (e) {
-		if (e.which == 13) { // enter
-			selectRel($(this));
-		}
-	});
+	// postEl.find('.typeahead').keypress(function (e) {
+	// 	if (e.which == 13) { // enter
+	// 		selectRel($(this));
+	// 	}
+	// });
 
 	postEl.find('.typeahead').typeahead(
 		{
@@ -1097,7 +1098,7 @@ function expandRelated(parent, post) {
 	postEl = $(childNodeViewModel.render());
 	postEl.hide();
 	parent.children('.children').children('.entrylist').prepend(postEl);
-	$(postEl).slideDown();
+	$(postEl).slideDown('fast');
 	// Add events
 	setupNode(postEl);
 
