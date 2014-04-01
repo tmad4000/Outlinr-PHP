@@ -920,7 +920,6 @@ function linkEntryNodesAjax(source,target) {
 }
 
 
-
 //helper method; tid needs be int
 function createSetupLabel(tid) {
 	
@@ -946,7 +945,6 @@ function setupRel(postEl) {
 
 	//load rels on each node
 	var allNodesBelowElView = postEl.find('ul.entryNode').add(postEl);
-
 
 	//iterate over nodes
 	$.each(allNodesBelowElView, function(index, nodeView){
@@ -979,7 +977,6 @@ function setupRel(postEl) {
 					console.log(rel.target+' target is not loaded');					
 					// TODO showing vertical line... delete or find link?
 				}
-
 			}
 			else
 				console.log("backend not filtering deleted rels")
@@ -1035,7 +1032,6 @@ function setupRel(postEl) {
 		//source, target; but bidirectional so doesn't matter
 
 		linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
-
 
 		el.typeahead('val', '');
 	};
