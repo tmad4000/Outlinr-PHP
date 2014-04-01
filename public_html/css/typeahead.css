@@ -119,3 +119,11 @@ ul.suggest-labels {
 .twitter-typeahead {
   vertical-align: middle;
 }
+
+#add-new-tt {
+  padding-left:15px;
+  cursor:pointer;
+  height:30px;
+  display:inline-block;
+  padding-top:8px;
+}

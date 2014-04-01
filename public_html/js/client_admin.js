@@ -56,6 +56,10 @@ $(document).ready(function() {
 		$(this).val(emailAddress);
 		$(this).focus();
 	}
+
+	$('#currentposts').on('click','#add-new-tt',function(){
+		selectRel($(this).closest('.related-idea-input').find('.tt-input'));
+	})
 	
 	$('.navbar-form').submit(function() {
 		
@@ -1074,8 +1078,6 @@ function setupRel(postEl) {
 			}
 		}
 
-
-		
 		//source, target; but bidirectional so doesn't matter
 		if(!(el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0).find('a[-idea-id="'+suggestion.pid+'"]').length > 0)){
 			if(sourceId!=suggestion.pid){
@@ -1103,12 +1105,11 @@ function setupRel(postEl) {
 		selectRel($(this), suggestion);
 	});
 
-	// todo #bug 
-	// postEl.find('.typeahead').keypress(function (e) {
-	// 	if (e.which == 13) { // enter
-	// 		selectRel($(this));
-	// 	}
-	// });
+	/*postEl.find('.typeahead').keypress(function (e) {
+		if (e.which == 13) { // enter
+			selectRel($(this));
+		}
+	});*/
 
 	postEl.find('.typeahead').typeahead(
 		{
@@ -1121,7 +1122,7 @@ function setupRel(postEl) {
 			displayKey: 'title',
 			source: getSuggestions,
 			templates: {
-				//    empty: function (o) {return ''; },
+				    empty: function (o) {return '<p><a id="add-new-tt">Add as a new idea and relate</a></p>'; },
 				//    footer: function (o) {return '';},
 				//    header: function () {return '';},
 				suggestion: Handlebars.compile('<p>{{title}}</p>')
