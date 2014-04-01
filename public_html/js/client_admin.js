@@ -1028,12 +1028,17 @@ function setupRel(postEl) {
 				console.log('TODO query for post');
 			}
 		}
-		
+
 		//source, target; but bidirectional so doesn't matter
-
-		linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
-
-		el.typeahead('val', '');
+		if(!(el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0).find('a[-idea-id="'+suggestion.pid+'"]').length > 0)){
+			linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
+			el.typeahead('val', '');
+		}
+		else {
+			console.log('idea already linked');
+			el.typeahead('val', 'This is already linked!');
+			setTimeout(function(){el.typeahead('val', '');},500)
+		}
 	};
 
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
