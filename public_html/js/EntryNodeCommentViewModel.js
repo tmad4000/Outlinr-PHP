@@ -22,7 +22,7 @@ function EntryNodeCommentViewModel(txt,cid) {
 			return true
 		}
 		query = removeCommonWords(query/*.replace(/[^a-zA-Z0-9~# ,\r\n]/gi,"")*/.toLowerCase());
-		query = query.split(/[\r\n ,-\/]+/);
+		query = query.split(/[\r\n ,-]+/);
 		var nomatch = true;
 		var t = this.txt.toLowerCase()
 		
@@ -162,7 +162,7 @@ function EntryNodeCommentViewModel(txt,cid) {
 			}
 
 			if(this.isASplitOpenOrClose(i,this.uSplits,1)){
-				o+=" <i class='fa fa-external-link-square'></i></a>"
+				o+="</a>"
 			}
 
 			//i is a this.hSplit open

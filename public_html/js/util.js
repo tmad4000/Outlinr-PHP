@@ -161,7 +161,7 @@ function findMoreTextStart(idea){
 
 function urlPress(e){
     var s = $(e.target).text();
-    s.replace('<i class="fa fa-external-link-square"></i>','');
+    s.replace('<i class="fa fa-external-link"></i>','');
     s.substr(0,s.length-1);
     if(s.indexOf('www')>=0 && s.indexOf('http')==-1){
         window.open("http://"+s);
@@ -250,16 +250,6 @@ function processIdea(idea) {
 function processIdea(idea,pid) {
     return replaceIdeaName(replaceTags(idea),pid); // order matters; as replaceIdeaName creates # signs
 }
-
-// function linkifyHashtags(context){//#TODO broken
-// 	context.find('.hashtag').click(function(e){
-// 		e.preventDefault();
-// 		var targetName=$(e.target).html();
-            
-// 		$('#newpost').val(targetName).focus();
-// 		rootNodeViewModel.filter(targetName);
-// 	});
-// }
 
 // NAV BAR UTIL METHODS
 function initiateCookie(){ 
