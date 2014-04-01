@@ -931,7 +931,7 @@ function createSetupLabel(tid) {
 		if (post) { // TODO a post should always exist. Assert this.
 			// var copy = $(this).parents('.entryNode').clone();
 			var parent = $(this).closest('.entryNode').eq(0);
-			expandRelated(parent, post);
+			expandRelated(parent, post, this);
 		} else {
 			console.log('ERROR: There is no such post');
 		}
@@ -1080,13 +1080,25 @@ function setupRel(postEl) {
 
 // Dom change: add a child dom el (some post) to the given parent dom element
 
-function expandRelated(parent, post) {
-	childNodeViewModel = new EntryNodeViewModel(post);
-	postEl = $(childNodeViewModel.render());
-	postEl.hide();
-	parent.children('.children').children('.entrylist').prepend(postEl);
-	$(postEl).slideDown('fast');
-	// Add events
-	setupNode(postEl);
+function expandRelated(parent, post, label) {
+
+	if($(label).children(0).hasClass("toggled")){
+		$(label).children(0).removeClass("toggled");
+
+		var x = $(parent.children('.children').children('.entrylist').find('.entryNode[-idea-id="'+post.pid+'"]')[0]);
+		x.slideUp('fast', function(){
+			x.remove();
+		});
+	}
+	else {
+		$(label).children(0).addClass("toggled");
+		childNodeViewModel = new EntryNodeViewModel(post);
+		postEl = $(childNodeViewModel.render());
+		postEl.hide();
+		parent.children('.children').children('.entrylist').prepend(postEl);
+		$(postEl).slideDown('fast');
+		// Add events
+		setupNode(postEl);
+	}
 
 }
