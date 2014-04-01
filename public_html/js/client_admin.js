@@ -1031,13 +1031,20 @@ function setupRel(postEl) {
 
 		//source, target; but bidirectional so doesn't matter
 		if(!(el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0).find('a[-idea-id="'+suggestion.pid+'"]').length > 0)){
-			linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
-			el.typeahead('val', '');
+			if(parseInt(el.closest('.entryNode').attr('-idea-id'))!=suggestion.pid){
+				linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
+				el.typeahead('val', '');
+			}
+			else {
+				console.log('trying to relate idea to itself');
+				el.typeahead('val', 'Its irreflexive!');
+				setTimeout(function(){el.typeahead('val', '');},700)
+			}
 		}
 		else {
 			console.log('idea already linked');
 			el.typeahead('val', 'This is already linked!');
-			setTimeout(function(){el.typeahead('val', '');},500)
+			setTimeout(function(){el.typeahead('val', '');},700)
 		}
 	};
 
