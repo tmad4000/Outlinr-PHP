@@ -263,24 +263,25 @@ function processIdea(idea,pid) {
 
 // NAV BAR UTIL METHODS
 function initiateCookie(){ 
-    if(getCookie("name")!="" || getCookie("usremail")!=""|| getCookie("handle")!=""){
-        var n = unescape(getCookie("name"));
-        var e = unescape(getCookie("usremail")); 
+    if(getCookie("handle")!=""){
+        //var n = unescape(getCookie("name"));
+        //var e = unescape(getCookie("usremail")); 
         var h = unescape(getCookie("handle"));
         var d = unescape(getCookie("isDefaultUsrHandle"));
-        $("#usrname").val(n); 
-        $("#usremail").val(e); 
+        //$("#usrname").val(n); 
+        //$("#usremail").val(e); 
         $("#usrhandle").val(h);
         isDefaultUsrHandle = d == "true";
     }
 }
 
 function updateCookie(){
-    var u = $("#usrname").val();
-    var e = $("#usremail").val();
+    //var u = $("#usrname").val();
+    //var e = $("#usremail").val();
     var h = $("#usrhandle").val();
     var d = isDefaultUsrHandle;
-    setCookie(u,e,h,d,3650) // 365 days cookie
+    //setCookie(u,e,h,d,3650) // 365 days cookie
+    setCookieUsr(h,d,3650);
 }
 /*
 function rememberMeToggle(){
@@ -300,14 +301,14 @@ function rememberMeToggle(){
 
 // Cookie Functions
 
-function setCookie(name,usremail,handle,isDefaultUsrHandle,exdays){
+function setCookieUsr(handle,isDefaultUsrHandle,exdays){
     var d = new Date();
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
-    document.cookie = "name=" + escape(name);
+   // document.cookie = "name=" + escape(name);
     document.cookie = "handle=" + escape(handle);
-    document.cookie = "isDefaultUserHandle=" + escape(isDefaultUsrHandle);
-    document.cookie = "usremail=" + escape(usremail)+";"+ expires;
+    document.cookie = "isDefaultUserHandle=" + escape(isDefaultUsrHandle)+";"+ expires;
+   // document.cookie = "usremail=" + escape(usremail)+";"+ expires;
 }
 
 // Cookie for storing upvotes
