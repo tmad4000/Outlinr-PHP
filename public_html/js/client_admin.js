@@ -242,26 +242,26 @@ $(document).ready(function() {
 
 });
 
-function selectizeSetup(data) {
-	$('.related-idea-add').selectize({
-		plugins: ['remove_button'],
-	    persist: false,
-	    maxItems: null,
-	    valueField: 'title',
-	    labelField: 'title',
-	    searchField: ['title'],
-	    options: data,
-	    render: {
-	        item: function(item, escape) {
-	            return '<div>' + escape(item.title) + '</div>';
-	        },
-	        option: function(item, escape) {
-	            return '<div>' + escape(item.title) + '</div>';
-	        }
-	    }
+// function selectizeSetup(data) {
+// 	$('.related-idea-add').selectize({
+// 		plugins: ['remove_button'],
+// 	    persist: false,
+// 	    maxItems: null,
+// 	    valueField: 'title',
+// 	    labelField: 'title',
+// 	    searchField: ['title'],
+// 	    options: data,
+// 	    render: {
+// 	        item: function(item, escape) {
+// 	            return '<div>' + escape(item.title) + '</div>';
+// 	        },
+// 	        option: function(item, escape) {
+// 	            return '<div>' + escape(item.title) + '</div>';
+// 	        }
+// 	    }
 
-	});
-}
+// 	});
+// }
 
 
 //Handles new line (shift+enter) in the omnibox
@@ -288,7 +288,7 @@ function getCaret(el) {
 
 // Add events to the given post element. Pass postEl as $(document) to do the first initialization.
 // Afterwards, if more posts are added (like in expanding linked children), just call this with the child's post element.
-function addPostEvents(postEl) {
+function setupNode(postEl) {
 		postEl.find("div.status-box").click(function(e) {
 			e.preventDefault();
 			if(isAdmin)
@@ -395,7 +395,8 @@ function addPostEvents(postEl) {
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
 		});
-		setupTypeahead(postEl);
+
+		setupRel(postEl);
 }
 //var entryList = null;
 var rootNodeViewModel = null;
@@ -415,19 +416,21 @@ function displayPosts() {
 		//entryList = new EntryList(data);
 
 		$("#currentposts").html("");
-		$("#currentposts").append(rootNodeViewModel.render());
+		var rootNodeView = $("#currentposts").append(rootNodeViewModel.render()).children('.entryNode');
 
 		displayIdeaNames();
-		addPostEvents($(document));
 
-		// Voting hover status
-		$("[rel='popover']").popover({
-			trigger: "hover", 
-			//placement: 'top', IDEALLY want this but it goes wrong
-			offset: 10,
-			html:true
-		});
-	
+		setupNode($('body'));
+
+		// TODO include in above
+			// Voting hover status
+			$("[rel='popover']").popover({
+				trigger: "hover", 
+				//placement: 'top', IDEALLY want this but it goes wrong
+				offset: 10,
+				html:true
+			});
+		
 	}
 
 	//ADD #JQUERY HERE
@@ -910,7 +913,24 @@ function submitAndGetComments(pid) {
 function linkEntryNodes(source,target) {
 	if(typeof source==="undefined")
 		console.log("link source undefined")
+	if(typeof target==="undefined")
+		console.log("link target undefined")
 
+	linkEntryNodesAjax(source,target);
+
+	var label=createSetupLabel(target);
+
+	//forward link
+	$('.entryNode[-idea-id="'+source+'"]').find('.suggest-labels').append(label);
+	
+	//backlink
+	var label2=createSetupLabel(source);
+	$('.entryNode[-idea-id="'+target+'"]').find('.suggest-labels').append(label2);
+}
+
+function linkEntryNodesAjax(source,target) {
+
+	// TODO failure case
 	$.ajax({
 		'url': 'ajax/link.php',
 		'data': {'pid':source,'tid':target},
@@ -920,57 +940,79 @@ function linkEntryNodes(source,target) {
 	});
 }
 
-function setupTypeahead(postEl) {
 
-	$.each(globalData, function(index, node){
-		var labels = $('.entryNode[-idea-id="'+node.pid+'"]').eq(0).find('.suggest-labels').eq(0);
+//helper method; tid needs be int
+function createSetupLabel(tid) {
+	
+	var title=globalData[tid].title;
+	var label = $('<div><a href="#" -idea-id="'+tid+'">' + title + '</a></div>');
+	label.click(function (e) {
+		e.preventDefault();
+		var post = globalData[tid];
+		if (post) { // TODO a post should always exist. Assert this.
+			// var copy = $(this).parents('.entryNode').clone();
+			var parent = $(this).closest('.entryNode').eq(0);
+			expandRelated(parent, post);
+		} else {
+			console.log('ERROR: There is no such post');
+		}
+	});
+	return label;
+}				
+
+// postEl should be an entryNode
+//sets up typeahead and related idea links on a node
+function setupRel(postEl) {
+
+	//load rels on each node
+	var allNodesBelowElView = postEl.find('ul.entryNode').add(postEl);
+
+	//iterate over nodes
+	$.each(allNodesBelowElView, function(index, nodeView){
+		nodeView = $(nodeView);
+		var nodeId = nodeView.attr('-idea-id');
+
+		if (isNaN(nodeId)) return; //skip if rootnode
+		//nodeId===""||nodeId===null||nodeId === 'null') return; 
+
+		var nodeModel = globalData[parseInt(nodeId)];
+		if (typeof nodeModel==="undefined")
+			console.log("ERROR: node id not found in model: " + nodeId);
+
+		var labels = nodeView.find('.suggest-labels').eq(0);
 		labels.html("");
 
-		$.each(node.relEntryIds, function(i, rel){
-			if(rel.deleted_time === null){
-				var relName = "";
-				var dest = null;
+		//load related node links
+		$.each(nodeModel.relEntryIds, function(i, rel){
+			if(rel.deleted_time === null){ 
+				var relName = "";  //#remove?
+				var destNode = null;
 
-				// Since relations are symmetric we need to figure out the "other one"
-				if(node.pid == rel.source){
-					// rel.target
-					dest = globalData[rel.target];
+				destNode = globalData[rel.target];
+
+				if(!(destNode === undefined)){
+					var label=createSetupLabel(destNode.pid);
+					labels.append(label);
 				}
 				else {
-					dest = globalData[rel.source];
-				}
-
-				if(dest === undefined){
-					console.log(rel.target+' target is not loaded');
+					console.log(rel.target+' target is not loaded');					
 					// TODO showing vertical line... delete or find link?
 				}
-				else {
-					relName = dest.title;
-				}
-				var label = $('<div><a href="#" -idea-id["'+dest+'"]>' + relName + '</a></div>');
-				label.click(function (e) {
-					e.preventDefault();
-					var post = globalData[dest.pid];
-					if (post) { // TODO a post should always exist. Assert this.
-						// var copy = $(this).parents('.entryNode').clone();
-						var parent = $(this).parents('.entryNode').eq(0);
-						addPost(parent, post, this);
-					} else {
-						console.log('ERROR: There is no such post');
-					}
-				});
-				labels.append(label);
 			}
+			else
+				console.log("backend not filtering deleted rels")
 		});
 	});
 
-	var getPostMatches = function (queryString, callback) {
 
+	//setup typeahead
+
+	var getSuggestions = function (queryString, callback) {
 		if (localStorage.getItem("posts")){
 			// TODO [3/4 done] make this a backend query; for now I'll just match on some random posts
 			
 			var jsonData = localStorage.getItem("posts");
-			var data = $.parseJSON(jsonData)['flatPosts'];
+			var data = $.parseJSON(jsonData)['flatPosts']; // TODO #later refactor to use globaldata
 			var somePosts=data;
 
 			// var somePosts = [{title: 'idea title', description: 'the best idea ever', pid: 751},
@@ -993,7 +1035,7 @@ function setupTypeahead(postEl) {
 			console.log("nullpoststypeahead")
 	}
 
-	var selectOption = function (el, suggestion) {
+	var selectRel = function (el, suggestion) {
 		if (suggestion === undefined) {
 			// TODO make a call to the server to add this suggestion. Add the 
 			//  pid to the globalData array, and set that pid here, instead of -1
@@ -1001,9 +1043,6 @@ function setupTypeahead(postEl) {
 			console.log('TODO add post to backend');
 		} else {
 			if (!(suggestion.pid in globalData)) {
-
-				
-
 				// TODO query this post from the server. It's better to do it here, before someone
 				//  clicks the link that this function is making, such that when that link is
 				//  clicked, the post can load automatically instead of waiting for a request.
@@ -1012,82 +1051,51 @@ function setupTypeahead(postEl) {
 		}
 		
 		//source, target; but bidirectional so doesn't matter
-		linkEntryNodes(el.closest('.entryNode').attr('-idea-id'),suggestion.pid)
 
-		var labels = el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0);
-		var label = $('<div><a href="#"  -idea-id["'+suggestion.pid+'"]>' + suggestion.title + '</a></div>');
-		label.click(function (e) {
-			var post = globalData[suggestion.pid];
-			if (post) { // TODO a post should always exist. Assert this.
-				// var copy = $(this).parents('.entryNode').clone();
-				var parent = $(this).parents('.entryNode').eq(0);
-				addPost(parent, post);
-			} else {
-				console.log('ERROR: There is no such post');
-			}
-			return false;
-		});
+		linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
 
-		var label2 = $('<div><a href="#"  -idea-id["'+el.closest(".entryNode").attr("-idea-id")+'"]>' + globalData[el.closest(".entryNode").attr("-idea-id")].title + '</a></div>');
-		label2.click(function (e) {
-			var post = globalData[el.closest(".entryNode").attr("-idea-id")];
-			if (post) { // TODO a post should always exist. Assert this.
-				// var copy = $(this).parents('.entryNode').clone();
-				var parent = $('.entryNode[-idea-id="'+suggestion.pid+'"]').eq(0);
-				addPost(parent, post);
-			} else {
-				console.log('ERROR: There is no such post');
-			}
-			return false;
-		});
-		//labels.append(label);
-		// TODO frontend change to all ideas w same -idea-id
-		$('.entryNode[-idea-id="'+el.closest(".entryNode").attr("-idea-id")+'"]').find('.suggest-labels').append(label);
-		$('.entryNode[-idea-id="'+suggestion.pid+'"]').find('.suggest-labels').append(label2);
 		el.typeahead('val', '');
 	};
+
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
-		selectOption($(this), suggestion);
+		selectRel($(this), suggestion);
 	});
-	postEl.find('.typeahead').keypress(function (e) {
-		if (e.which == 13) { // enter
-			selectOption($(this));
+
+	// postEl.find('.typeahead').keypress(function (e) {
+	// 	if (e.which == 13) { // enter
+	// 		selectRel($(this));
+	// 	}
+	// });
+
+	postEl.find('.typeahead').typeahead(
+		{
+			hint: true,
+			highlight: true,
+			minLength: 1
+		},
+		{
+			name: 'ideas', // alters tt-dataset- html
+			displayKey: 'title',
+			source: getSuggestions,
+			templates: {
+				//    empty: function (o) {return ''; },
+				//    footer: function (o) {return '';},
+				//    header: function () {return '';},
+				suggestion: Handlebars.compile('<p>{{title}}</p>')
+			}
 		}
-	});
-	postEl.find('.typeahead').typeahead({
-		hint: true,
-		highlight: true,
-		minLength: 1
-	},
-	{
-		name: 'ideas', // alters tt-dataset- html
-		displayKey: 'title',
-		source: getPostMatches,
-		templates: {
-			//    empty: function (o) {return ''; },
-			//    footer: function (o) {return '';},
-			//    header: function () {return '';},
-			suggestion: Handlebars.compile('<p>{{title}}</p>')
-		}
-	});
+	);
 }
 
 // Dom change: add a child dom el (some post) to the given parent dom element
-function addPost(parent, post, suggestlabel) {
-	console.log(x=suggestlabel);
-	if($(suggestlabel).children(0).hasClass("toggled")){
-		$(suggestlabel).children(0).removeClass("toggled");
-		// todo hide
-		parent.children('.children').children('.entrylist').find('.entryNode[-idea-id="'+post.pid+'"]')[0].hide();
-	}
-	else {
-		$(suggestlabel).children(0).addClass("toggled");
-		childNodeViewModel = new EntryNodeViewModel(post);
-		postEl = $(childNodeViewModel.render());
-		postEl.hide();
-		parent.children('.children').children('.entrylist').prepend(postEl);
-		$(postEl).slideDown();
-		// Add events
-		addPostEvents(postEl);
-	}
+
+function expandRelated(parent, post) {
+	childNodeViewModel = new EntryNodeViewModel(post);
+	postEl = $(childNodeViewModel.render());
+	postEl.hide();
+	parent.children('.children').children('.entrylist').prepend(postEl);
+	$(postEl).slideDown('fast');
+	// Add events
+	setupNode(postEl);
+
 }
