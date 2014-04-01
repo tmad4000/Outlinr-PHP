@@ -344,20 +344,26 @@ function setupNode(postEl) {
 
 
 		postEl.find('td.votes').click(function() {
-			$(this).children('.vote').toggleClass('on'); 
+			var ideaid=$(this).attr('-idea-id')-0;
+
+			$('td.votes[-idea-id='+ideaid+']').children('.vote').toggleClass('on'); 
+			
+
 			var num=$(this).children('span.votes').html()-0; 
 			if ($(this).children('.vote').hasClass('on')) {
 				num+=1;
 				$(this).children('span.votes').html(num) 
-				doUpvote($(this).attr('-idea-id')-0,'up');
+				doUpvote(ideaid,'up');
 			}
 			else {
 				num-=1;
 				$(this).children('span.votes').html(num) 
-				doUpvote($(this).attr('-idea-id')-0,'down');
+				doUpvote(ideaid,'down');
 			}
 			
 		});
+
+		// TODO universalize
 		postEl.find('.comment-upvote').click(function() {
 			var num=$(this).html()-0; 
 			$(this).toggleClass('on'); 
