@@ -910,6 +910,11 @@ function linkEntryNodes(source,target) {
 
 	linkEntryNodesAjax(source,target);
 
+	linkEntryNodesFE(source,target);
+}
+
+function linkEntryNodesFE(source,target) {
+
 	var label=createSetupLabel(target);
 
 	//forward link
@@ -1029,8 +1034,11 @@ function setupRel(postEl) {
 
 	var selectRel = function (el, suggestion) {
 		var sourceId=parseInt(el.closest('.entryNode').attr('-idea-id'));
+		var newSugg=false;
 		
+		// TODO decide whether to add to entry list in real time
 		if (suggestion === undefined) {
+			newSugg=true;
 			// TODO make a call to the server to add this suggestion. Add the 
 			//  pid to the globalData array, and set that pid here, instead of -1
 
@@ -1067,7 +1075,11 @@ function setupRel(postEl) {
 		//source, target; but bidirectional so doesn't matter
 		if(!(el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0).find('a[-idea-id="'+suggestion.pid+'"]').length > 0)){
 			if(sourceId!=suggestion.pid){
-				linkEntryNodes(sourceId,suggestion.pid)
+				if(!newSugg)
+					linkEntryNodes(sourceId,suggestion.pid)
+				else
+					linkEntryNodesFE(sourceId,suggestion.pid)
+
 				el.typeahead('val', '');
 			}
 			else {
