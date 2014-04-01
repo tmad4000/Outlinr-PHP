@@ -242,27 +242,6 @@ $(document).ready(function() {
 
 });
 
-// function selectizeSetup(data) {
-// 	$('.related-idea-add').selectize({
-// 		plugins: ['remove_button'],
-// 	    persist: false,
-// 	    maxItems: null,
-// 	    valueField: 'title',
-// 	    labelField: 'title',
-// 	    searchField: ['title'],
-// 	    options: data,
-// 	    render: {
-// 	        item: function(item, escape) {
-// 	            return '<div>' + escape(item.title) + '</div>';
-// 	        },
-// 	        option: function(item, escape) {
-// 	            return '<div>' + escape(item.title) + '</div>';
-// 	        }
-// 	    }
-
-// 	});
-// }
-
 
 //Handles new line (shift+enter) in the omnibox
 function getCaret(el) { 
@@ -946,7 +925,7 @@ function linkEntryNodesAjax(source,target) {
 function createSetupLabel(tid) {
 	
 	var title=globalData[tid].title;
-	var label = $('<div><a href="#" -idea-id="'+tid+'">' + title + '</a></div>');
+	var label = $('<li><a href="#" -idea-id="'+tid+'">' + title + '</a></li>');
 	label.click(function (e) {
 		e.preventDefault();
 		var post = globalData[tid];

@@ -58,9 +58,14 @@
   margin: 0;
 }
 
-.suggest-labels {
-    display: inline-block;
+ul.suggest-labels {
+    display: inline;
+    padding-left: 0;
 }
+.suggest-labels li {
+  display: inline;
+}
+
 .suggest-labels a {
     border: 1px solid;
     margin: 2px 5px;
