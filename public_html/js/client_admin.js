@@ -713,54 +713,15 @@ function deleteComment(commentid,pid) {
 	});
 }
 
-function submitPostAndGetPosts() {
-	//#HACK only usrhandle currently visible
-	
-	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
-	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
-		var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
-	}
-	else {
-		var processedname = name;
-	}
-	
-	
-	//+$('#usrhandle').val()+\
-	//#hack
-	var np = $('#newpost').val();
-	var ind=np.indexOf('~'+$('#usrhandle').val());
-	
-	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
-//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
-			
-		np+=' ~'+$('#usrhandle').val();
-	}
-	
-	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
-	function extractTags(idea) {
-    
-    return idea.match(tag_regexp)
-	*/
-	
-
-
-	$.ajax({
-		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
-		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
-		'success': function(jsonData) {
-                 // todo: parse data and add into our table
-                 localStorage.setItem("posts", jsonData);
-                 
-                 $('#newpost').val('');
-                 displayPosts();
-             },
-         });
-}
-
 function submitPostAndGetPosts(newPostText) {
+	var boxtoclear=false;
+	if(typeof newPostText === "undefined") {
+		newPostText=$('#newpost').val();
+		boxtoclear=$('#newpost');
+	}
 
+
+	//#HACK only usrhandle currently visible
 
 	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
 	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -774,7 +735,7 @@ function submitPostAndGetPosts(newPostText) {
 	
 	//+$('#usrhandle').val()+\
 	//#hack
-	var np = $('#newpost').val();
+	var np = newPostText;
 	var ind=np.indexOf('~'+$('#usrhandle').val());
 	
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
@@ -799,13 +760,59 @@ function submitPostAndGetPosts(newPostText) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
                  
-                 $('#newpost').val('');
+                 if(boxtoclear)
+	                 boxtoclear.val('');
+
                  displayPosts();
              },
          });
-
 }
 
+
+function submitPostAndGetPostsAndLink(newPostText,source) {
+//#HACK only usrhandle currently visible
+
+	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
+	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
+		var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
+	}
+	else {
+		var processedname = name;
+	}
+	
+	
+	//+$('#usrhandle').val()+\
+	//#hack
+	var np = newPostText;
+	var ind=np.indexOf('~'+$('#usrhandle').val());
+	
+	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
+//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+			
+		np+=' ~'+$('#usrhandle').val();
+	}
+	
+	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+	function extractTags(idea) {
+    
+    return idea.match(tag_regexp)
+	*/
+	
+
+
+	$.ajax({
+		'url': 'ajax/get_or_make_post.php',
+		'data': {'tid':-1,'pid':source, 'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrhandle').val()}, //#hack
+		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
+		'success': function(jsonData) {
+                 // todo: parse data and add into our table
+                 // localStorage.setItem("posts", jsonData);
+                 
+                 // displayPosts();
+             },
+         });
+}
 
 function getPosts() {
 	$.ajax({
@@ -894,7 +901,7 @@ function submitAndGetComments(pid) {
 	}
 }
 
-//bidirectional so order doesn't matter
+//bidirectional so order doesn't matter; takes ids
 function linkEntryNodes(source,target) {
 	if(typeof source==="undefined")
 		console.log("link source undefined")
@@ -906,11 +913,11 @@ function linkEntryNodes(source,target) {
 	var label=createSetupLabel(target);
 
 	//forward link
-	$('.entryNode[-idea-id="'+source+'"]').find('.suggest-labels').append(label);
+	$('.entryNode[-idea-id="'+source+'"]').find('.suggest-labels').eq(0).append(label);
 	
 	//backlink
 	var label2=createSetupLabel(source);
-	$('.entryNode[-idea-id="'+target+'"]').find('.suggest-labels').append(label2);
+	$('.entryNode[-idea-id="'+target+'"]').find('.suggest-labels').eq(0).append(label2);
 }
 
 function linkEntryNodesAjax(source,target) {
@@ -1021,10 +1028,30 @@ function setupRel(postEl) {
 	}
 
 	var selectRel = function (el, suggestion) {
+		var sourceId=parseInt(el.closest('.entryNode').attr('-idea-id'));
+		
 		if (suggestion === undefined) {
 			// TODO make a call to the server to add this suggestion. Add the 
 			//  pid to the globalData array, and set that pid here, instead of -1
-			suggestion = {title: el.typeahead('val'), description: '', pid: -1};
+
+			var newEntryTxt=el.typeahead('val');
+			//suggestion = {title: newEntryTxt.substr(0,50),body: newEntryTxt, pid: -1};
+			// todo time
+			suggestion={title: newEntryTxt.substr(0,50),body: newEntryTxt, pid: -1,children: [],deleted_time: "",metric: "",num_comments: "0",parent: "0",path: "",progress: "",relEntryIds: [],status: "0",upvotes: "0"};
+			//#bug starts upvoted if parent is
+
+			submitPostAndGetPostsAndLink(suggestion.body,sourceId);
+
+
+			var allKeys=Object.keys(globalData);
+			var newTmpFrontendPid=parseInt(allKeys[allKeys.length-1])+1;
+			console.log(allKeys)
+			suggestion.pid=newTmpFrontendPid;
+			console.log(suggestion.title)
+
+			globalData[newTmpFrontendPid]=suggestion;
+
+
 			console.log('TODO add post to backend');
 		} else {
 			if (!(suggestion.pid in globalData)) {
@@ -1035,10 +1062,12 @@ function setupRel(postEl) {
 			}
 		}
 
+
+		
 		//source, target; but bidirectional so doesn't matter
 		if(!(el.parents('.entryNode').eq(0).find('.suggest-labels').eq(0).find('a[-idea-id="'+suggestion.pid+'"]').length > 0)){
-			if(parseInt(el.closest('.entryNode').attr('-idea-id'))!=suggestion.pid){
-				linkEntryNodes(parseInt(el.closest('.entryNode').attr('-idea-id')),suggestion.pid)
+			if(sourceId!=suggestion.pid){
+				linkEntryNodes(sourceId,suggestion.pid)
 				el.typeahead('val', '');
 			}
 			else {
@@ -1058,11 +1087,11 @@ function setupRel(postEl) {
 		selectRel($(this), suggestion);
 	});
 
-	// postEl.find('.typeahead').keypress(function (e) {
-	// 	if (e.which == 13) { // enter
-	// 		selectRel($(this));
-	// 	}
-	// });
+	postEl.find('.typeahead').keypress(function (e) {
+		if (e.which == 13) { // enter
+			selectRel($(this));
+		}
+	});
 
 	postEl.find('.typeahead').typeahead(
 		{

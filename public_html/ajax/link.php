@@ -10,10 +10,19 @@ require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 require_once('util_mapid.php');
 
-
+$quiet=false;
 $pid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['pid']))+0);
 
 $tid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['tid']))+0);
+if($tid==-1) { //always included in this case
+	if(!isset($result)) 
+		die("ERROR: not included in get_or_make_post");
+
+	$newPostId=mysqli_fetch_array($result)[0];
+	$tid=(int)$newPostId;
+	$quiet=true;
+}
+
 
 // $commenttext = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['comment_text'])));
 $deletelid= (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['deletelid']))+0);
@@ -28,9 +37,9 @@ if (!empty($deletelid)) {
 	require_once('util_admin_check.php');
 	
 	$query = "UPDATE $linkstbl SET deleted_time=$time WHERE prim_key=$deletelid";
-	print $query;
+	if(!$quiet) print $query;
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("UPDATE Error: " . mysqli_error($MYSQLI_LINK));
-	print "Deleted ".$deletelid;
+	if(!$quiet) print "Deleted ".$deletelid;
 }
 // else {
 
@@ -40,7 +49,7 @@ if (!empty($deletelid)) {
 		//create
 			//bidirectional		
 		    $query = "INSERT INTO $linkstbl (prim_key, source, target, value,`time`, `uid`, `mapid`) VALUES ('', $pid, '$tid','', $time, NULL,$mapid)"; //to perfect; UID
-			print $query;
+			if(!$quiet) print $query;
 		    $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
 			
 			$query = "INSERT INTO $linkstbl (prim_key, source, target, value,`time`, `uid`, `mapid`) VALUES ('', $tid, '$pid','', $time, NULL,$mapid)"; //to perfect; UID
@@ -68,7 +77,7 @@ if (!empty($deletelid)) {
 		// while ($r = mysqli_fetch_assoc($result)) {
 		// 	$rows[]=$r;
 		// }
-		// print json_encode($rows);
+		// if(!$quiet) print json_encode($rows);
 
 
 
