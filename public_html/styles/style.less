@@ -536,7 +536,7 @@ ul.comments {
 	font-size:10px;
 	display:block;
 	background-repeat: no-repeat;
-	background-position:5px -15px;
+	background-position:5px -18px;
 	overflow:hidden;
 	cursor:pointer;
 	-webkit-touch-callout: none;
@@ -548,7 +548,7 @@ ul.comments {
 	border-bottom-width:0px !important;
 }
 .comment-upvote.on {
-  background-position: 5px 4px;
+  background-position: 5px 2px;
 }
 
 .comments {
@@ -573,7 +573,7 @@ ul.comments {
 
 textarea.commentsinput {
 	width:100%;
-	height:25px;
+	height:21px;
 	resize:vertical;
 	font-size: 12px;
 	margin-top:5px;
@@ -631,53 +631,31 @@ div.commentform div.commentsinput {
 	box-sizing: border-box;
 	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
-textarea::-webkit-input-placeholder {
-	padding-top:2px;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-	font-style: normal;
-	font-variant: normal;
 	font-weight: 300;
 	letter-spacing: 0.3px;
 	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
-textarea:-moz-placeholder { /* Firefox 18- */
-   	padding-top:2px;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
 	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
-
-textarea::-moz-placeholder {  /* Firefox 19+ */
-   	padding-top:2px;
 }
 
 :-ms-input-placeholder {  
+	
+	font-weight: 300;
+	letter-spacing: 0.3px;
+	-webkit-font-smoothing: antialiased;
+	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+}
+
+#newpost::-webkit-input-placeholder {
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 300;
@@ -691,7 +669,62 @@ textarea::-moz-placeholder {  /* Firefox 19+ */
 	white-space: pre-line;
 	word-wrap: break-word;
 }
-textarea:-ms-input-placeholder {  
+#newpost::-webkit-input-placeholder {
+	padding-top:2px;
+}
+
+#newpost:-moz-placeholder { /* Firefox 18- */
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 300;
+	letter-spacing: 0.3px;
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+	color: rgb(119, 119, 119);
+	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+	font-weight: 300;
+	line-height: 18px;
+	white-space: pre-line;
+	word-wrap: break-word;
+}
+#newpost:-moz-placeholder { /* Firefox 18- */
+   	padding-top:2px;
+}
+
+#newpost::-moz-placeholder {  /* Firefox 19+ */
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 300;
+	letter-spacing: 0.3px;
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+	color: rgb(119, 119, 119);
+	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+	font-weight: 300;
+	line-height: 18px;
+	white-space: pre-line;
+	word-wrap: break-word;
+}
+
+#newpost::-moz-placeholder {  /* Firefox 19+ */
+   	padding-top:2px;
+}
+
+#newpost:-ms-input-placeholder {  
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 300;
+	letter-spacing: 0.3px;
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+	color: rgb(119, 119, 119);
+	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+	font-weight: 300;
+	line-height: 18px;
+	white-space: pre-line;
+	word-wrap: break-word;
+}
+#newpost:-ms-input-placeholder {  
    	padding-top:2px;
 }
 
