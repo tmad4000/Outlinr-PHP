@@ -1103,11 +1103,12 @@ function setupRel(postEl) {
 		selectRel($(this), suggestion);
 	});
 
-	postEl.find('.typeahead').keypress(function (e) {
-		if (e.which == 13) { // enter
-			selectRel($(this));
-		}
-	});
+	// todo #bug 
+	// postEl.find('.typeahead').keypress(function (e) {
+	// 	if (e.which == 13) { // enter
+	// 		selectRel($(this));
+	// 	}
+	// });
 
 	postEl.find('.typeahead').typeahead(
 		{
