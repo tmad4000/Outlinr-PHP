@@ -98,11 +98,21 @@ if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
 	if(!$tmptitle)
 		$tmptitle=substr($body,0,80);
-    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`,`uip`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path','$uip')";
+    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`,`uip`) VALUES ('', $time, '$tmptitle', '$body', 0, NULL, '', '$usrname',$defaultparent,$mapid,'$path','$uip');";
+    
 //	print $query;
-    $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
+    $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));   
+	
+    // possible concurrency #bug
+	$query = "SELECT LAST_INSERT_ID();";
+	$result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));   
 
     emailNotify($MYSQLI_LINK,$mapid,$body);
+
+
+
+    require("link.php");
+    //hack
 }
 
 
@@ -169,3 +179,4 @@ while ($r = mysqli_fetch_assoc($result)) {
 $allLinks=getAllLinkIds($MYSQLI_LINK,$linkstbl);
 
 print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows,"links"=>$allLinks));
+// print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows,"links"=>$allLinks));
