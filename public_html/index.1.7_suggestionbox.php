@@ -181,6 +181,12 @@ require_once('../config.inc.php');
 
     <div class="row">
       <div class="col-sm-9">
+        <div class="row" id="box-description">
+          <div class="col-sm-12">
+            <span id="box-description-text">
+An anonymous suggestion box and discussion board for sexual health education in Hong Kong            </span>
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-12">
             <form id="postform">
@@ -224,15 +230,16 @@ require_once('../config.inc.php');
       <div class="col-sm-3">
         <div class="sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
-            <li class="nav-header">Categories (#)</li>
-            <ul id="idea-hashtags" class="ideatags">
+            <li class="nav-header">Categories</li>
+            <ul id="idea-hashtags" class="tags">
             </ul>
-            <li class="nav-header">People (~)</li>
-            <ul id="people-list" class="peopletags">
+            <li class="nav-header">People</li>
+            <ul id="people-list" class="tags">
             </ul>
-            <li class="nav-header">All Ideas</li>
+            <!--<li class="nav-header">All Ideas</li>
             <ul id="ideanames" class="">
             </ul>
+            -->
           </ul>
         </div><!--/.well -->
       </div><!--/span-->

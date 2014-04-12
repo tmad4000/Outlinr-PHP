@@ -501,7 +501,7 @@ function displayIdeaNames() {
 	if (localStorage.getItem("posts")){
 		var jsonData = localStorage.getItem("posts");
 		var data = $.parseJSON(jsonData)['flatPosts'];
-		var nameul = $('ul#ideanames').empty();
+		//var nameul = $('ul#ideanames').empty();
 		var tags={};
 		var hashtags={};
 		var peopletags={};
@@ -570,11 +570,14 @@ function displayIdeaNames() {
 			//sortable[data.pid] = [n,data.upvotes.toString()]; 
 		});
 
+		/* IDEAS ON RIGHTHAND BAR
 		sortable.sort(function(a, b) {return b[1] - a[1]})
 		for(var i =0;i<sortable.length;i++){
 			if(typeof sortable[i] == 'undefined') break;
-			nameul.append('<li><a href="#'+sortable[i][2]+'">'+sortable[i][0] +/*' <span class="badge">'+sortable[i][1]+'</span>'+*/'</a></li>');
+			nameul.append('<li><a href="#'+sortable[i][2]+'">'+sortable[i][0] +'</a></li>');
 		}
+		*/
+
 
 		/* Idea Names by Recent
 		$.each( data,function(i,data) {

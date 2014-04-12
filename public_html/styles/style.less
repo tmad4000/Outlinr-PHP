@@ -148,20 +148,11 @@ body {
 }
 
 .navbar-default {
-	border-top:1px solid #879FE6;
-	border-bottom:1px solid #879FE6;
-	outline:4px solid #2F4BA1;
-	background:royalblue;
-
-	/*background:#AE3248;
-	border-bottom:1px solid #FA4967;
-	border-top:1px solid #FA4967;
-	outline:4px solid #942B3D;
-	*/
+	background:white;
 }
 
 .navbar-text {
-	margin-top:16px;
+	margin-top:15px;
 }
 
 div.container {
@@ -169,16 +160,23 @@ div.container {
 }
 
 #idea-hashtags {
-	margin-left:10px;
 }
 
 #people-list {
-	margin-left:10px;
 	word-wrap:break-word;
 }
 
-.peopletags {
+.tags {
+	border-left:1px solid #efefef;
+	font-size:14pt;
 	list-style-type: none;
+	margin-bottom:10px;
+	margin-top:10px;
+	font-weight:600;
+	margin-left:2px;
+}
+.tags li {
+	padding-left:15px;
 }
 
 #ideanames {
@@ -193,18 +191,17 @@ div.container {
 
 .badge {
 	display: inline-block;
-	padding: 0px 8px;
-	padding-bottom:1px;
-	font-size: 12px;
-	font-weight: bold;
-	line-height: 14px;
-	color: #ffffff;
+	padding: 1px 0px;
+	text-align: center;
+	font-size: 16pt;
+	font-weight: 200;
+	color:#333;
 	vertical-align: baseline;
 	white-space: nowrap;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color:lightgray;
+	//text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color:transparent;
 }
-
+/*
 .badge-10 {
 	background-color:royalblue;
 }
@@ -217,6 +214,7 @@ div.container {
 .badge-200 {
 	background-color:black;
 }
+*/
 
 textarea,input[type="text"] {
 	-webkit-box-shadow:none !important;
@@ -242,13 +240,17 @@ textarea:focus,input[type="text"]:focus {
 	box-shadow:none !important;
 	background:white;
 	border:0px;
+	margin-top:10px;
 }
 .navbar {
-      letter-spacing: 1px !important;
-    }
+	border-bottom:0px;
+    letter-spacing: 1px !important;
+    margin-bottom:0px;
+}
 
 .nav-list {
-	padding:10px;
+	padding:0px 5px 10px 20px;
+	border-left:0px;
 }
 .nav-list ul {
 	padding-left:0px;
@@ -416,7 +418,8 @@ td.status {
 
 .nav-header {
 	color:#666;
-	font-weight:700;
+	font-weight:500;
+	font-size:18pt;
 }
 
 #tableHeaderDiv {
@@ -437,14 +440,23 @@ td.status {
 }
 
 .navbar .brand {
-	margin-left:-17px;	
+	margin-left:-17px;
+}
+
+.navbar-brand {
+	font-size:16pt;
+	margin-top:5px;
 }
 
 .navbar, .navbar-default .navbar-text,.navbar-default .navbar-brand,.navbar-default .navbar-nav>li>a {
-	color:white;
+	//color:white;
 }
 .navbar-default .navbar-nav>li>a:hover,.navbar-default .navbar-brand:hover{
-	color:white;
+	//color:white;
+}
+
+.navbar-header {
+	border-bottom:1px solid #efefef;
 }
 
 .progress {
@@ -767,25 +779,19 @@ div.commentform div.commentsinput {
 }
 
 .navbar-text a{
-	color:white;
+	//color:white;
 	margin:0px 20px;
-	font-weight:700;
+	font-weight:200;
+	font-size:16pt;
 	letter-spacing: 0px;
 }
 .navbar-text a.selected{
-	border-bottom:1px solid rgba(256,256,256,0.6);
+	border-bottom:1px solid #efefef;
 }
-.navbar-text a:hover{
-
+.navbar-text a:hover, .navbar-brand a:hover{
 	text-decoration: none;
-	border-bottom:1px solid rgba(256,256,256,0.6);
+	//border-bottom:1px solid #efefef;
 }
-
-.navbar-brand a:hover {
-	text-decoration: none;
-	border-bottom:1px solid rgba(256,256,256,0.6);
-}
-
 
 .LinkCreateType {
 	width:120px;
@@ -797,33 +803,6 @@ div.commentform div.commentsinput {
 	outline:none;
 	padding:2px 2px 1px 4px;
 }
-
-
-/*
-
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-li {
-    background-image: url(page.png);
-    background-position: 0 1px;
-    background-repeat: no-repeat;
-    padding-left: 20px;
-}
-li.folder {
-    background-image: url(folder.png);
-}
-
-a {
-    color: #000000;
-    cursor: pointer;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}*/
 
 .currentposts {
 	margin-top:5px;
@@ -988,4 +967,15 @@ div.delete a {
 
 .ms-res-ctn {
     height: auto !important;
+}
+
+#box-description-text {
+	font-size:24pt;
+	font-weight:300;
+	line-height: normal;
+	color:#444;
+}
+#box-description {
+	margin-top:10px;
+	margin-bottom: 20px;
 }

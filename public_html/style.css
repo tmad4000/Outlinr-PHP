@@ -282,6 +282,7 @@ td.status {
 }
 
 .navbar .brand {
+	font-size:36pt;
 	margin-left:-17px;
 }
 
@@ -530,6 +531,8 @@ a:hover {
     text-decoration: underline;
 }*/
 
+
+
 .currentposts {
 	margin-top:5px;
 }
@@ -692,4 +695,9 @@ footer {
 
 .ms-res-ctn {
     height: auto !important;
+}
+
+#box-description {
+	font-size:36pt;
+	font-weight:500;
 }
