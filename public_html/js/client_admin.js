@@ -373,17 +373,17 @@ function setupNode(postEl) {
 
 		// TODO universalize
 		postEl.find('.comment-upvote').click(function() {
-			var num=$(this).html()-0; 
+			var num=$(this).find('span').text()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
 				num+=1;
-				$(this).html(num);
+				$(this).find('span').text(num);
 
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'up');
 			}
 			else {
 				num-=1;
-				$(this).html(num);
+				$(this).find('span').text(num);
 
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
 			}
