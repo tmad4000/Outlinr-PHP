@@ -98,13 +98,16 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+.status i:hover {
+	cursor:pointer;
+}
+
 .delete-comment {
 	padding-left:5px;
 	font-size:12px;
 }
 .delete-comment a, .delete a {
 	color:red !important;
-	font-size:10px;
 }
 
 .feedbackbuttoncontainer {
@@ -312,28 +315,21 @@ div.container textarea.span11 {
 	//margin-top:5px;
 }
 
-div.status{
-}
-
-div.sc0 { /*Status: not acknowledged*/
+.sc0 { /*Status: not acknowledged*/
 	/*background:#AAA*/
 	background:transparent;
 }
-div.sc1 { /*Status: acknowledged*/
-	background:#FF0;
-	color:white;
+.sc1 { /*Status: acknowledged*/
+	color:#FF0;
 }
-div.sc2 { /*Status: acknowledged and in progress*/
-	background:#2eabe6;
-	color:white;
+.sc2 { /*Status: acknowledged and in progress*/
+	color:#2eabe6;
 }
-div.sc3 { /*Status: complete*/
-	background:#0F0;
-	color:white;
+.sc3 { /*Status: complete*/
+	color:#0F0;
 }
-div.sc4 { /*Status: rejected*/
-	background:#D41528;
-	color:white;
+.sc4 { /*Status: rejected*/
+	color:#D41528;
 }
 
 
@@ -885,8 +881,6 @@ input[type="text"].usr {
 }
 
 div.delete {
-	height:0px;
-	margin-top:-5px;
 	
 }
 div.delete a {	

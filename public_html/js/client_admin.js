@@ -276,7 +276,7 @@ function getCaret(el) {
 // Add events to the given post element. Pass postEl as $(document) to do the first initialization.
 // Afterwards, if more posts are added (like in expanding linked children), just call this with the child's post element.
 function setupNode(postEl) {
-		postEl.find("div.status-box").click(function(e) {
+		postEl.find("div.status").click(function(e) {
 			e.preventDefault();
 			if(isAdmin)
 				cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
