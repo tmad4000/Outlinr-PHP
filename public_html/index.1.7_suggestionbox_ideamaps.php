@@ -123,7 +123,7 @@ require_once('../config.inc.php');
 
         #currentposts {
           margin-left: 0px;
-          margin-top:60px;
+          margin-top:90px;
           z-index:20;
         }
         #currentposts a{

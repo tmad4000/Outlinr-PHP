@@ -505,7 +505,7 @@ function displayIdeaNames() {
 		var tags={};
 		var hashtags={};
 		var peopletags={};
-		
+		console.log(x=data);
 		updateGlobalData(data);
 		
 		getComments();
@@ -514,31 +514,32 @@ function displayIdeaNames() {
 		// Idea Names by Upvotes
 		var sortable = [];
 		$.each( data,function(i,data){
-			
-			var n=extractIdeaName(data.body);
-			var h=extractHashes(data.body);
-			var t=extractTildes(data.body);
-			// idea hashtags
-			if(h){
-				$.each(h,function(i,tag) {
-					if(typeof hashtags[tag] != 'undefined')
-						hashtags[tag] = parseInt(hashtags[tag])+1;
-					else
-						hashtags[tag] = 1;
-					tags[h] = true;
-				});
-			}
-			if(t){
-				$.each(t,function(i,tag) {
-					if(typeof peopletags[tag] != 'undefined')
-						peopletags[tag] = parseInt(peopletags[tag])+parseInt(data.upvotes);
-					else
-						peopletags[tag] = data.upvotes;
-					tags[t] = true;
-				});
-			}
+			if(data.deleted_time === ""){
+				var n=extractIdeaName(data.body);
+				var h=extractHashes(data.body);
+				var t=extractTildes(data.body);
+				// idea hashtags
+				if(h){
+					$.each(h,function(i,tag) {
+						if(typeof hashtags[tag] != 'undefined')
+							hashtags[tag] = parseInt(hashtags[tag])+1;
+						else
+							hashtags[tag] = 1;
+						tags[h] = true;
+					});
+				}
+				if(t){
+					$.each(t,function(i,tag) {
+						if(typeof peopletags[tag] != 'undefined')
+							peopletags[tag] = parseInt(peopletags[tag])+parseInt(data.upvotes);
+						else
+							peopletags[tag] = data.upvotes;
+						tags[t] = true;
+					});
+				}
 
-			sortable[data.pid] = [n,data.upvotes.toString(),data.pid.toString()];
+				sortable[data.pid] = [n,data.upvotes.toString(),data.pid.toString()];
+			}
 		});
 
 		$.each( cs,function(i,cs){
@@ -605,28 +606,28 @@ function displayIdeaNames() {
 		var tildesul = $('ul#people-list').empty();		
 		for(var k=0;k<hashtagssorted.length;k++){
 			//if(tag.substring(0,1)=="#")
-			tagsul.append('<li><a href="#">'+hashtagssorted[k][1] + '</a> </li>');
+			tagsul.append('<li><a href="#" onclick="hashtag(event)">'+hashtagssorted[k][1] + '</a> </li>');
 		}
 		for(var k=0;k<peopletagssorted.length;k++){
 			var tag = peopletagssorted[k][1];
 			var upv = peopletagssorted[k][0];
 			if(upv>=200){
-				tildesul.append('<li><span class="badge badge-200">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-200">'+upv+'pts</span> <a href="#" onclick="hashtag(event)>'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv>=50){
-				tildesul.append('<li><span class="badge badge-50">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-50">'+upv+'pts</span> <a href="#" onclick="hashtag(event)>'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv>=30){
-				tildesul.append('<li><span class="badge badge-30">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-30">'+upv+'pts</span> <a href="#" onclick="hashtag(event)>'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv>=10){
-				tildesul.append('<li><span class="badge badge-10">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge badge-10">'+upv+'pts</span> <a href="#" onclick="hashtag(event)>'+tag + '</a> </li>'); //TODO
 			}
 			else if(upv==1){
-				tildesul.append('<li><span class="badge">'+upv+'pt</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge">'+upv+'pt</span> <a href="#" onclick="hashtag(event)>'+tag + '</a> </li>'); //TODO
 			}
 			else
-				tildesul.append('<li><span class="badge">'+upv+'pts</span> <a href="#">'+tag + '</a> </li>'); //TODO
+				tildesul.append('<li><span class="badge">'+upv+'pts</span> <a href="#" onclick="hashtag(event)>'+tag + '</a> </li>'); //TODO
 		}
 
 	}
