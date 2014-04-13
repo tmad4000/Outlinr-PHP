@@ -269,23 +269,24 @@ textarea:focus,input[type="text"]:focus {
 }
 
 #filterBy a {
-	margin-left:5px;
 	-webkit-font-smoothing: subpixel-antialiased;
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
 	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	font-style: normal;
 	font-variant: normal;
-	font-weight: 300;
+	font-weight: 200;
 	letter-spacing: 0.3px;
 	-webkit-font-smoothing: antialiased;
 	box-sizing: border-box;
-	color: rgb(119, 119, 119);
+	color:#444;
 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-size: 14px;
-	font-weight: 300;
 	line-height: 18.18181800842285px;
 	white-space: pre-line;
 	word-wrap: break-word;
+}
+#filterBy i {
+	margin-right:5px;
 }
 
 div.container h1 {
@@ -297,12 +298,6 @@ div.container textarea.span11 {
 }
 
 .timecol {
-    width: 100px;
-    color:#AAA;
-    padding-right:0;
-    text-align:right !important;
-    font-size:10px;
-	white-space:nowrap;
 }
 
 .uid {
@@ -314,44 +309,33 @@ div.container textarea.span11 {
 }
 
 .status-box {
-	margin-top:5px;
+	//margin-top:5px;
 }
 
 div.status{
-	width:20px;
-	height:20px;
-	border-radius:50px;
-	font-size:20px;
-	color:#fff;
-	line-height:100px;
-	text-align:center;
 }
 
 div.sc0 { /*Status: not acknowledged*/
 	/*background:#AAA*/
 	background:transparent;
-	border:1px solid #DDDDDD;
 }
 div.sc1 { /*Status: acknowledged*/
 	background:#FF0;
-	border:1px solid #FF0;
+	color:white;
 }
 div.sc2 { /*Status: acknowledged and in progress*/
 	background:#2eabe6;
-	border:1px solid #2eabe6;
+	color:white;
 }
 div.sc3 { /*Status: complete*/
 	background:#0F0;
-	border:1px solid #0F0;
+	color:white;
 }
 div.sc4 { /*Status: rejected*/
 	background:#D41528;
-	border:1px solid #D41528;
+	color:white;
 }
 
-td.status {
-	width:28px;
-}
 
 .popover {
 	padding:7px 7px;
@@ -375,15 +359,15 @@ td.status {
 
 #filterBy .active{
 	outline: 0;
-	border-bottom:1px solid rgb(89, 180, 222);
+	//border-bottom:1px solid rgb(89, 180, 222);
 	text-decoration:none;
-	color:rgb(89, 180, 222);
+	color:#333;
 }
 
 #filterBy a:hover {
-	border-bottom:1px solid rgb(89, 180, 222);
+	//border-bottom:1px solid rgb(89, 180, 222);
 	text-decoration:none;
-	color:rgb(89, 180, 222);
+	//color:#111;
 }
 
 .loginadminbutton {
@@ -484,26 +468,41 @@ td.status {
 	background-color:#f9f9f9;
 }
 
+.votes {
+	height:40px;
+	width:30px;
+	cursor:pointer;
+	font-size:16pt;
+	text-align: center;
+
+}
+
+.votes:hover {
+
+}
+
+.vote {
+	text-align: center;
+    width: 30px;
+    height: 14px;
+    margin-left:0px;
+} 
+
+.vote.on {
+    color:rgb(218, 46, 38);
+}
 
 
 a.showcomments {
-	padding-left:15px;
-	float:right;
-	margin-right: 3px;
-	margin-left: 0px;
-	color:gray;
-	margin-top: -18px;
+	color:#555;
 }
 a.showcomments:hover {
 	background-position: 0 -16px;	
 	text-decoration: none;
-	color:#428bca;
+	color:#333;
 }
 
 div.showcomments {
-	width:100%;
-	margin-left:0px;
-	font-size: 14px;
 /*	position:relative;
 	top:-35px;*/
 }
@@ -893,7 +892,11 @@ div.delete {
 div.delete a {	
 }
 
+ul.entrylist li {
+}
+
 .entryNodeText {
+	font-size:15pt;
 	float:left;
 	white-space: pre;           /* CSS 2.0 */
 	white-space: pre-wrap;      /* CSS 2.1 */
@@ -927,16 +930,36 @@ div.delete a {
 	margin-bottom: 10px;
 }
 
-.related-ideas  {
-	padding-top: 1px;
-	padding-left: 0px;
-	margin-left: -3px;
-	float:left;
+.ideaTxt > div {
+	display:inline;
+}
 
+.ideaTxt {
+	color:#777;
+}
+
+div.ideaTxtInner > .entryNodeText {
+	width:100%;
+	color:#555;
+	border-bottom:1px dashed #efefef;
+	padding-bottom:5px;
+}
+
+div.ideaTxtInner {
+	overflow:hidden;
+	padding-bottom:5px;
+}
+
+.related-ideas  {
+	padding-top: 5px;
+	padding-left: 0px;
+	margin-left: 0px;
 	line-height:22px;
 }
 
+.related-idea-input {
 
+}
 
 .related-ideas-all {
 	line-height: 22px;

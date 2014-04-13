@@ -19,8 +19,9 @@ require_once('../config.inc.php');
   ?>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.4.1/css/ionicons.min.css">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>GestaltBox -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+  <title>IdeaBox -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   <script src="js/lib/moment-with-langs.js"></script>
   
   <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
@@ -65,45 +66,10 @@ require_once('../config.inc.php');
 
   }
 
-  .outline:hover{
-    text-decoration: none;
-  }
-
-  .vote {
-    display: block;
-    background: url('images/upvote-small.png');
-    background-repeat: no-repeat;
-    width: 23px;
-    height: 14px;
-    background-position: 0px -14px;
-    margin-left:1px;
-  } 
-
-
-  .vote.on {
-    background-position: 0px 1px;
-  }
-  td.votes {
-  	font-size:14px;
-  	color:#AAA;
-  	text-align:center;
-  	width:24px;
-    cursor:pointer;
-    float:center;
-    text-align: middle;
-  }
 
   /*popover */
   .idea {position: absolute; top: 100px; left: 100px;}
 
-  td.ideaTxt {
-  	/*width:100%;*/
-  }
-
-  td.ideaTxt > b {
-  	/*width:100%;*/
-  	font-weight:900;
-  }
 
 
 
@@ -166,10 +132,6 @@ require_once('../config.inc.php');
     color:#090909;
     cursor:text!important;
   }
-
-  .ideaTxt {
-    color:#777;
-  }
   </style>
 </head>
 <body>
@@ -212,9 +174,9 @@ An anonymous suggestion box and discussion board for sexual health education in 
             <div id="tableHeaderDiv">
               <div id="numResults"></div>
               <div id="filterBy">
-                  <a id='sortByDate' class="active">New</a>
-                  <a id="sortByUpvotes">Top</a>
-                  <a id='sortByStatus'>Status</a>
+                  <a id='sortByDate' class="active"><i class="ion-android-lightbulb"></i><span>New</span></a>
+                  <a id="sortByUpvotes"><i class="ion-android-star"></i>Top</a>
+                  <a id='sortByStatus'><i class="ion-contrast"></i>Status</a>
               </div>
             </div>
           </div>

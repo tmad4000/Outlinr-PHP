@@ -91,22 +91,23 @@ function EntryNodeViewModel(entryNodeModel) {
 			numberOfIdeasVisible +=1;
 			updateNrOfIdeasVisible()
 	
-			var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
+			var table = "<table class='table'>"; // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
 
 				//dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())
 				var time = moment(this.entryNodeModel.time * 1000).fromNow();
 				//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 				var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
 
-				status ="<td class='status'>" +
+				/*status ="<div class='status'>" +
 						'<div class="star">'+'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+'</div>' +
-						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a><div>' + 
-					"</td>";
+						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a></div>' + 
+					"</div>";*/
+				status = "<div class='status'>"+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</div>";
 				if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
-					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 				}
 				else {
-					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"> </span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 				}
 
 
@@ -146,11 +147,11 @@ function EntryNodeViewModel(entryNodeModel) {
 				else
 					numComments=this.entryNodeModel.num_comments;
 
-				var numCommentsMsg='<i class="fa fa-comments-o"></i> '+'Comment';
+				var numCommentsMsg=''+'Comment';
 				if(numComments == 1)
-					numCommentsMsg='<i class="fa fa-comments-o"></i> '+numComments + " Comment";
+					numCommentsMsg=''+numComments + " Comment";
 				else if(numComments > 1)
-					numCommentsMsg='<i class="fa fa-comments-o"></i> '+numComments + " Comments";
+					numCommentsMsg=''+numComments + " Comments";
 
 				//entryNodeBody="<div>"+table+"</div>";
 				//comments=""
@@ -164,7 +165,6 @@ function EntryNodeViewModel(entryNodeModel) {
 				comments='<div class="showcomments"><a href="#" class="showcomments">'+numCommentsMsg+'</a> \
 					<div class="commentform '+this.myCommentsExpanded+'"> ' +
 						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="'+this.entryNodeModel.pid+'"></textarea>' +
-//						'<input class="btn" type="button" value="Comment">' +
 						commentsListH +
 					'</div>' +
 				'</div>';
@@ -182,17 +182,13 @@ function EntryNodeViewModel(entryNodeModel) {
 				//entryNodeBody+=comments;
 				var del = isAdmin ? "<div class='delete'><a href='#'>Delete</a></div>" : "";
 
-				table += '<tr>'+
-					status + 
+				table += '<tr>'+	
 					upvoter+
-					'<td class="ideaTxt">' +"<div class='ideaTxtInner'></div>" +
-					addRel +
-					comments+"</td>" + 
-				   	// '<td><div class="progressbar"></div></td>' +
-				   	"<td class='timecol'>" + time/*dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())*/ +
-					del +
-		//		   	"<br><input class=\"LinkCreateType\" placeholder=\"Type a Connection\" />" +
-					"</td></tr>";
+					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
+					addRel + "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · " +		
+					status + " · " + 
+					"<div class='timecol'>"+time+del+"</div>"+ " · " +comments+"</td>" +  
+					"</tr>";
 
 		   	table+="</table>";
 

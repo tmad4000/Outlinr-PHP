@@ -5,11 +5,10 @@ require_once('../config.inc.php');
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>GestaltBox -- Ideas</title>
+  <title>IdeaBox</title>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>GestaltBox -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   <script src="js/lib/moment-with-langs.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>  <script type="text/javascript" src="js/util.js"></script>
