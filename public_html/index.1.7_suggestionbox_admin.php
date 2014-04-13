@@ -69,29 +69,6 @@ $r = mysqli_fetch_assoc($result);
   text-decoration: none;
 }
 
-.vote {
-  display: block;
-  background: url('images/upvote-small.png');
-  background-repeat: no-repeat;
-  width: 23px;
-  height: 14px;
-  background-position: 0px -14px;
-  margin-left:1px;
-} 
-
-
-.vote.on {
-  background-position: 0px 1px;
-}
-td.votes {
-  font-size:14px;
-  color:#AAA;
-  text-align:center;
-  width:24px;
-  cursor:pointer;
-  float:center;
-  text-align: middle;
-}
 
 /*popover */
 .idea {position: absolute; top: 100px; left: 100px;}
@@ -254,15 +231,12 @@ td.uid {
           }
           if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
           <ul class="nav nav-list">
-            <li class="nav-header">Categories (#)</li>
-            <ul id="idea-hashtags" class="ideatags">
+            <li class="nav-header">Categories</li>
+            <ul id="idea-hashtags" class="tags">
             </ul>
-            <li class="nav-header">People (~)</li>
-            <ul id="people-list" class="peopletags">
-            </ul>
-            <li class="nav-header">All Ideas</li>
-            <ul id="ideanames" class="">
-            </ul>
+            <li class="nav-header">People</li>
+            <ul id="people-list" class="tags">
+            </ul> 
             <?php } ?>
           </ul>
         </div><!--/.well -->
