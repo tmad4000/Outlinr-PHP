@@ -93,7 +93,8 @@ ul.suggest-labels {
 .related-idea-input {
   margin-top:3px;
   min-height:25px;
-  margin-bottom:15px;
+  padding-bottom:5px;
+  border-bottom:1px dashed #efefef;
 }
 
 .related-idea-add {
