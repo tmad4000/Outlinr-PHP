@@ -3,19 +3,32 @@
 $(document).ready(function() {
     $('#postform').submit(function() {
         submitPostAndGetPosts();
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
         return false;
     });
     
-    $('textarea#newpost').keyup(function (event) {
+    $('#newpost').keyup(function (event) {
            if (event.keyCode == 13 && event.shiftKey) {
                var content = this.value;
                var caret = getCaret(this);
                this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
-               event.stopPropagation();
-               
-          }else if(event.keyCode == 13)
-          {
-              $('#postform').submit();
+               event.stopPropagation();   
+          }
+          else if(event.keyCode == 13){
+              $('#postform').submit();              
+          }
+          else {
+            // FILTER RESULTS
+            var query = $(this).val();
+            query = query.split(' ');
+            console.log(query);
+            $.each($('#currentposts > .progbarlist').children(), function(index, element){
+              $(element).show();
+              $.each(query,function(i,el){
+                if($(element).find('a').text().toLowerCase().indexOf(el)==-1)
+                  $(element).hide();
+              });        
+            });
           }
     });
     function getCaret(el) { 

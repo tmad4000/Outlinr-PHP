@@ -43,7 +43,7 @@ require_once('../config.inc.php');
   
   <script>
   $(document).ready(function(){
-  $('#peopletable').height($( window ).height()-73-59);
+  $('#peopletable').height($( window ).height()-73-65);
   $('#peopletable').width($( window ).width());
   });
   </script>
@@ -53,7 +53,7 @@ require_once('../config.inc.php');
     <?php 
     include('inc/nav.inc.php');
     ?>
-    <iframe id="peopletable" src="http://107.170.218.111/" style="height:100%;width:100%;border:0px;margin-left:-15px;margin-top:-17px;margin-right:-30px;"></iframe>
+    <iframe id="peopletable" src="http://107.170.218.111/" style="height:100%;width:100%;border:0px;margin-left:-15px;margin-top:0px;margin-right:-30px;"></iframe>
   </div><!--/.fluid-container-->
   <?php 
   include('inc/footer.inc.php');

@@ -17,7 +17,7 @@ $r = mysqli_fetch_assoc($result)
     <div class="row">
       <div class="col-sm-9">
         <a href="<?="index.1.7_suggestionbox_admin.php?mapid=$getmapid" ?>">Admin Dashboard</a><br>
-        <p>Created by <a target="_blank" href="mailto:jcole@mit.edu">Jacob Cole</a> and <a target="_blank" href="mailto:david.furlong@stcatz.ox.ac.uk">David Furlong</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
+        <p>Powered by <a href="index.1.7_suggestionbox_ideamaps.php">IdeaBox</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
       </div>
       <div class="col-sm-3 feedbackbuttoncontainer">
 <a style="margin-left:-120px; margin-right:40px" href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a>
