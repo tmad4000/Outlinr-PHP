@@ -48,10 +48,16 @@
   /*line-height: 24px;*/
 }
 
-.tt-suggestion.tt-cursor {
+.tt-suggestion.tt-cursor,.add-new-tt.sel {
   color: #fff;
   background-color: #0097cf;
+}
 
+.add-new-tt.sel a {
+  color: #fff;
+}
+.add-new-tt a:hover {
+  text-decoration: none;
 }
 
 .tt-suggestion p {
@@ -123,10 +129,9 @@ ul.suggest-labels {
   vertical-align: middle;
 }
 
-#add-new-tt {
-  padding-left:15px;
+.add-new-tt {
   cursor:pointer;
-  height:30px;
-  display:inline-block;
-  padding-top:8px;
+  margin: 0px;
+  padding: 3px 3px;
+  font-size: 12px;
 }

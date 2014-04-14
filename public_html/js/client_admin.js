@@ -1102,13 +1102,46 @@ function setupRel(postEl) {
 		}
 	};
 
+
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
 		selectRel($(this), suggestion);
 	});
 
+	$('#currentposts').on('keydown','.tt-input',function(e){
+		// figure out $(this), suggestion
+		if($('.add-new-tt')){
+			if(e.keyCode == 13){ //enter key
+				if($('.add-new-tt').hasClass('sel')){
+					selectRel($(this).closest('.related-ideas-all').find('.tt-input'));
+				}
+				else
+					$('.add-new-tt').addClass('sel');
+			}
+			else if(e.keyCode == 40){ // down arrow
+				$('.add-new-tt').addClass('sel');
+			}
+			else if(e.keyCode == 38){ // up arrow
+				$('.add-new-tt').removeClass('sel');
+			}
+		}
+	});
+
+	$('#currentposts').on('mouseover','.add-new-tt',function(e){
+		if($('.add-new-tt')){
+			$('.add-new-tt').addClass('sel');
+		}
+	});
+
+	$('#currentposts').on('mouseout','.add-new-tt',function(e){
+		if($('.add-new-tt')){
+			$('.add-new-tt').removeClass('sel');
+		}
+	});
+
+
 	$('#currentposts').on('click','#add-new-tt',function(){
 		selectRel($(this).closest('.related-idea-input').find('.tt-input'));
-	})
+	});
 
 	/*postEl.find('.typeahead').keypress(function (e) {
 		if (e.which == 13) { // enter
@@ -1120,14 +1153,15 @@ function setupRel(postEl) {
 		{
 			hint: true,
 			highlight: true,
-			minLength: 1
+			minLength: 1,
+			autoselect: true
 		},
 		{
 			name: 'ideas', // alters tt-dataset- html
 			displayKey: 'title',
 			source: getSuggestions,
 			templates: {
-				    empty: function (o) {return '<p><a id="add-new-tt">Add as a new idea and relate</a></p>'; },
+				    empty: function (o) {return '<p class="add-new-tt"><a id="add-new-tt"><i style="font-size:18px;position:relative;top:2px;margin-right:5px;" class="ion-ios7-plus-empty"></i>Add as a new idea and relate</a></p>'; },
 				//    footer: function (o) {return '';},
 				//    header: function () {return '';},
 				suggestion: Handlebars.compile('<p>{{title}}</p>')
