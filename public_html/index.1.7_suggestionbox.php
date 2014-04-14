@@ -174,9 +174,9 @@ An anonymous suggestion box and discussion board for sexual health education in 
             <div id="tableHeaderDiv">
               <div id="numResults"></div>
               <div id="filterBy">
-                  <a id='sortByDate' class="active"><i class="ion-android-lightbulb"></i><span>New</span></a>
-                  <a id="sortByUpvotes"><i class="ion-android-star"></i>Top</a>
-                  <a id='sortByStatus'><i class="ion-contrast"></i>Status</a>
+                  <a id='sortByDate' class="active"><i class="ion-ios7-lightbulb-outline"></i><span>New</span></a>
+                  <a id="sortByUpvotes"><i class="ion-ios7-star-outline"></i>Top</a>
+                  <a id='sortByStatus'><i class="ion-ios7-checkmark-outline"></i>Progress</a>
               </div>
             </div>
           </div>

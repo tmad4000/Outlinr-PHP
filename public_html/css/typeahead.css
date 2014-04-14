@@ -70,12 +70,13 @@ ul.suggest-labels {
 .suggest-labels a {
     border: 1px solid lightgray;
     color:gray;
-    margin: 0px 3px;
+    margin:0px 4px 2px 0px;
     background: white;
-    padding:3px 5px 3px 5px;
+    padding:0px 5px 0px 5px;
     border-radius:3px;
     font-size:12px;
     -webkit-transition:all 0.3s linear;
+    display: inline-block;
 }
 
 .suggest-labels a:hover {
@@ -106,8 +107,8 @@ ul.suggest-labels {
   -webkit-transition:border-color, 0.5s linear;
   margin-right:3px;
   margin-top:1px;
-  padding-top:2px;
-  padding-bottom: 2px;
+  padding-top:3px;
+  padding-bottom: 3px;
 }
 .related-idea-add:hover {
   cursor:pointer;

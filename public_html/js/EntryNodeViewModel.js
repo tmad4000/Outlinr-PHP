@@ -185,7 +185,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				table += '<tr>'+	
 					upvoter+
 					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
-					addRel + "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · " +		
+					addRel /*+ "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · "*/ +		
 					status + " · " + 
 					"<div class='timecol'>"+time+"</div>"+del+" · " +comments+"</td>" +  
 					"</tr>";
