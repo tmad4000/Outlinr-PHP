@@ -306,7 +306,7 @@ function setupNode(postEl) {
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});*/
 
-		postEl.find('.showcomments > a').click(function(e){
+		postEl.find('a.showcomments').click(function(e){
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');

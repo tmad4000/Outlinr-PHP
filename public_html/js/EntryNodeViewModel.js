@@ -102,7 +102,7 @@ function EntryNodeViewModel(entryNodeModel) {
 						'<div class="star">'+'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+'</div>' +
 						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a></div>' + 
 					"</div>";*/
-				status = "<div class='status'><i class='ion-record status sc"+this.entryNodeModel.status +"'></i> "+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</div>";
+				status = "<span class='status'><i class='ion-record status sc"+this.entryNodeModel.status +"'></i> "+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</span>";
 				if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
 					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 				}
@@ -162,7 +162,9 @@ function EntryNodeViewModel(entryNodeModel) {
 				else
 					this.myCommentsExpanded="init-hidden";
 
-				comments='<div class="showcomments"><a href="#" class="showcomments">'+numCommentsMsg+'</a> \
+				var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
+				
+				comments='<div class="showcomments"> \
 					<div class="commentform '+this.myCommentsExpanded+'"> ' +
 						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="'+this.entryNodeModel.pid+'"></textarea>' +
 						commentsListH +
@@ -186,8 +188,8 @@ function EntryNodeViewModel(entryNodeModel) {
 					upvoter+
 					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
 					addRel /*+ "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · "*/ +		
-					status + " · " + 
-					"<div class='timecol'>"+time+"</div>"+del+" · " +comments+"</td>" +  
+					"<div class='ideaTxtFooter'>"+status + " · " + 
+					"<span class='timecol'>"+time+"</span>"+del+" · " +commentExpandLink+"</div>"+comments+"</td>" +  
 					"</tr>";
 
 		   	table+="</table>";
