@@ -132,6 +132,7 @@ ul.suggest-labels {
 .add-new-tt {
   cursor:pointer;
   margin: 0px;
-  padding: 3px 3px;
+  padding: 2px 3px 5px 3px;
   font-size: 12px;
+  line-height:18px;
 }
