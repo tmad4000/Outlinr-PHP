@@ -57,9 +57,6 @@ $(document).ready(function() {
 		$(this).focus();
 	}
 
-	$('#currentposts').on('click','#add-new-tt',function(){
-		selectRel($(this).closest('.related-idea-input').find('.tt-input'));
-	})
 	
 	$('.navbar-form').submit(function() {
 		
@@ -1108,6 +1105,10 @@ function setupRel(postEl) {
 	postEl.find('.typeahead').on('typeahead:selected', function (el, suggestion) {
 		selectRel($(this), suggestion);
 	});
+
+	$('#currentposts').on('click','#add-new-tt',function(){
+		selectRel($(this).closest('.related-idea-input').find('.tt-input'));
+	})
 
 	/*postEl.find('.typeahead').keypress(function (e) {
 		if (e.which == 13) { // enter

@@ -184,7 +184,7 @@ An anonymous suggestion box and discussion board for sexual health education in 
         <div class="row">
           <div class="col-sm-12">
             <div id="currentposts">
-              <center>Loading...</center>
+              <center><i class="ion-loading-c"></i></center>
             </div>
           </div>
         </div>
