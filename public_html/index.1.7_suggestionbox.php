@@ -145,8 +145,8 @@ require_once('../config.inc.php');
       <div class="col-sm-9">
         <div class="row" id="box-description">
           <div class="col-sm-12">
-            <span id="box-description-text">
-An anonymous suggestion box and discussion board for sexual health education in Hong Kong            </span>
+            <span id="box-description-text" >
+<?= $r['mapdesc'] ?> </span>
           </div>
         </div>
         <div class="row">

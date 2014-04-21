@@ -31,6 +31,10 @@ $r = mysqli_fetch_assoc($result);
   <script src="js/lib/moment-with-langs.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>  <script type="text/javascript" src="js/util.js"></script>
+  
+  <script type="text/javascript" src="js/lib/typeahead.bundle.js"></script>
+  <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'></script>
+  
   <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
@@ -194,6 +198,13 @@ td.uid {
     </div>
     <div class="row">
       <div class="col-sm-9">
+        <div class="row" id="box-description">
+          <div class="col-sm-12">
+            <span id="box-description-text" >
+  <?= $r['mapdesc'] ?> </span>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-sm-12">
             <form id="postform">

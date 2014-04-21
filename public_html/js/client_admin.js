@@ -34,7 +34,30 @@ $(document).ready(function() {
 
 	isAdmin = $('#is-admin').val() === 'true';
 
-	if(isAdmin) $('.brand').append('<i class="fa fa-bell-o" id="emailicon"></i>');
+	if(isAdmin) {
+		$('.brand').append('<i class="fa fa-bell-o" id="emailicon"></i>');
+		
+		$('#box-description-text').attr('contentEditable',true);
+		$('[contenteditable]').on('focus', function() { // http://stackoverflow.com/questions/1391278/contenteditable-change-events
+		    var $this = $(this);
+		    $this.data('before', $this.html());
+		    return $this;
+		}).on('blur keyup paste', function() {
+		    var $this = $(this);
+		    if ($this.data('before') !== $this.html()) {
+		        $this.data('before', $this.html());
+		        $this.trigger('change');
+		    }
+		    return $this;
+		});
+
+		$('#box-description-text').change(editDesc);
+
+		
+	}
+	
+	
+
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 	$(window).resize(function() {
 		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
@@ -45,7 +68,7 @@ $(document).ready(function() {
 		title:"Notification email address",
 		//content:"<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onload='emailPopoverLoad()' placeholder='email'/>",
 		html:true,
-		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' value='"+emailAddress+"' placeholder='email'/>"; }
+		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onkeypress='hideOnEnter(event)' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
 	$('body').on('click','.selectize-input div',function(){
 		//expandidea
@@ -859,6 +882,18 @@ function getComments() {
 	});
 }
 
+function editDesc(){
+
+	$.ajax({
+		'url': 'ajax/api.php', //#todo
+		'data': {'mapdesc':$('#box-description-text').text(),'mapid':getURLParameter("mapid")},
+		'success': function(jsonData) {
+			var t=$.parseJSON(jsonData).email;
+			//$('#box-description-text').val(t);
+		},
+	});
+}
+
 function submitAndGetEmail(){
 
 	$.ajax({
@@ -870,6 +905,17 @@ function submitAndGetEmail(){
 		},
 	});
 }
+
+
+//#todo
+function hideOnEnter(event){
+	if(event.keyCode == 13) //enter key
+		$(this).popover('hide');
+	//console.log(this)
+
+}
+
+
 
 function getEmail(){
 	$.ajax({

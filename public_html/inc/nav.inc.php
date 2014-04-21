@@ -23,8 +23,20 @@ $r = mysqli_fetch_assoc($result)
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <div class="outline navbar-brand"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/St-Catherines_College_Oxford_Coat_Of_Arms_(Motto).svg/524px-St-Catherines_College_Oxford_Coat_Of_Arms_(Motto).svg.png" style="height:35px;width:30px;margin-top:-5px;margin-right:10px"><?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></div> 
-            <span class="navbar-text"><a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas</a><a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a></span>
+            <div class="outline navbar-brand">
+              <?php if($r['maplogourl']) { ?>
+                <img src="<?=$r['maplogourl'] ?>" style="height:35px;width:30px;margin-top:-5px;margin-right:10px">
+                <?php
+                }
+              ?>
+
+              <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></div> 
+              
+            <span class="navbar-text"><a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas (List)</a>
+            <a href="index.1.7_suggestionbox_graph.php?mapid=<?= $getmapid ?>">Ideas (Graph)</a>
+            <a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a>
+            
+            </span>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
