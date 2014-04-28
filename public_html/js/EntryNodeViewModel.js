@@ -112,6 +112,16 @@ function EntryNodeViewModel(entryNodeModel) {
 		}
 	}
 
+/* //#future -- needs post dict
+	this.hideComments = function() {
+		this.getViewDomE().children("li.body").find("ul.comments").removeClass('init-expanded').addClass('init-hidden');
+	}
+
+	this.hideComments = function() {
+		this.getViewDomE().children("li.body").find("ul.comments").removeClass('init-hidden').addClass('init-hidden');
+	}
+	*/
+
 	this.loadCommentsRecurs = function() {
 		this.loadComments();
 
