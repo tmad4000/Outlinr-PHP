@@ -86,7 +86,7 @@ function EntryNodeViewModel(entryNodeModel) {
 		if(this.entryNodeModel.pid+"" in commentsModel){
 			//console.log("")
 			postCommentsModel=commentsModel[this.entryNodeModel.pid];
-			
+			console.log(commentsModel);
 			$.each(postCommentsModel,function(i,currComment) {
 				var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 				var commentTime = moment(currComment.time * 1000).fromNow();

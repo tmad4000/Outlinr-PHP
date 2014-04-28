@@ -1,4 +1,6 @@
 function EntryNodeCommentViewModel(txt,cid) {
+	console.assert(txt);
+	
 	this.viewDomE=null; //until render is called for first time
 
 	//replace with this.critPts=[]; (i,code)

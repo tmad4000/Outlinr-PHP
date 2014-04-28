@@ -876,7 +876,6 @@ function getComment(pid) {
 }
 
 function getComments() {
-	alert();
 	$.ajax({
 		'url': 'ajax/comment.php',
 		'data': {'mapid':getURLParameter("mapid")},
@@ -885,9 +884,10 @@ function getComments() {
 
 			var cs = $.parseJSON(localStorage.getItem("comments"));
 			$.each(cs,function(i,comment) {
-				commentsModel[comment.pid]=comment;				
+				if(!(comment.pid+"" in commentsModel))
+					commentsModel[comment.pid] = [];
+				commentsModel[comment.pid].push(comment);				
 			})
-
 
 			rootNodeViewModel.loadCommentsRecurs();
 
