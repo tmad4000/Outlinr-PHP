@@ -25,7 +25,7 @@ else {
 	//if(!empty($pid)) {
 
 		//create
-		if (!empty($commenttext)) {
+		if (!empty($pid)&&!empty($commenttext)) {
 			$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
 			if(!$tmptitle)
 				$tmptitle=substr($body,0,80);
@@ -36,12 +36,12 @@ else {
 
 		//read
 		
-		if(!empty($pid))
+		if(!empty($pid)) //list all from post
 			$where="pid=$pid AND";
-		else if(!empty($mapid))
+		else if(!empty($mapid)) //list all from map
 			$where="mapid=$mapid AND";
 		else
-			$where="";
+			$where=""; //list all
 
 		
 

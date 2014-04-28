@@ -79,7 +79,47 @@ function EntryNodeViewModel(entryNodeModel) {
 		//#TODO #future should we show parents of children who match?
 	}
 
+	this.loadComments = function() {
+		var postCommentsModel=null;
+		var cl="":
+		//note: commentsModel is global
+		if(this.entryNodeModel.pid+"" in commentsModel){
+			//console.log("")
+			postCommentsModel=commentsModel[this.entryNodeModel.pid];
+			
+			$.each(postCommentsModel,function(i,currComment) {
+				var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
+				var commentTime = moment(currComment.time * 1000).fromNow();
+				//var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
+				var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
+				if(getCookie("c"+currComment.cid)!= ""){
+					var commentS='<div><div class="comment-upvote on"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
+				}
+				else {
+					var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i>'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
+				}
+				
+				cl+="<li>"+commentS+"</li>";
+			})
 
+			this.getViewDomE().children("li.body").find("ul.comments").html("").append(cl);
+
+		}
+		else {
+			//console.log("comment key " + this.entryNodeModel.pid + " not found")
+		}
+	}
+
+	this.loadCommentsRecurs = function() {
+		this.loadComments();
+
+		for(var key in this.children) {
+			this.children[key].loadCommentsRecurs();
+		}
+	}
+	
 	//render current node, and also, all its children
 	//for the root node, perhaps there needn't be self info?
 	this.render = function() {
@@ -112,33 +152,21 @@ function EntryNodeViewModel(entryNodeModel) {
 
 
 				//Comments
-				var postCommentsModel=null;
+				
 				var commentsListH='<ul class="comments">';
+
+				var postCommentsModel=null;
 					//note: commentsModel is global
 					if(this.entryNodeModel.pid+"" in commentsModel){
 						//console.log("")
 						postCommentsModel=commentsModel[this.entryNodeModel.pid];
-						
-						$.each(postCommentsModel,function(i,currComment) {
-							var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
-							var commentTime = moment(currComment.time * 1000).fromNow();
-							//var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
-							var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
-							if(getCookie("c"+currComment.cid)!= ""){
-								var commentS='<div><div class="comment-upvote on"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-							'<div class="comment-time timecol">' + commentTime + '</div>'+del;
-							}
-							else {
-								var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i>'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-							'<div class="comment-time timecol">' + commentTime + '</div>'+del;
-							}
-							
-							commentsListH+="<li>"+commentS+"</li>";
-						})
 					}
 					else {
 						//console.log("comment key " + this.entryNodeModel.pid + " not found")
 					}
+
+				//comments load now asynch
+
 				commentsListH+='</ul>';
 				
 				var numComments;

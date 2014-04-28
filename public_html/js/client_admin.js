@@ -1,6 +1,7 @@
 var docReady=false;
 var postsLoaded=false;
 getPosts();
+getComments();
 
 //getPosts() -> displayPosts() 
 
@@ -528,7 +529,7 @@ function displayIdeaNames() {
 		console.log(x=data);
 		updateGlobalData(data);
 		
-		getComments();
+
 		var cs = $.parseJSON(localStorage.getItem("comments"));
 		// idea names 
 		// Idea Names by Upvotes
@@ -878,6 +879,14 @@ function getComments() {
 		'data': {'mapid':getURLParameter("mapid")},
 		'success': function(jsonData) {
 			localStorage.setItem("comments", jsonData);
+
+			var cs = $.parseJSON(localStorage.getItem("comments"));
+			$.each(cs,function(i,comment) {
+				commentsModel[comment.pid]=comment;				
+			}
+
+
+			rootNodeViewModel.loadCommentsRecurs();
 		},
 	});
 }
@@ -930,7 +939,7 @@ function getEmail(){
 
 function submitAndGetComments(pid) {
 
-
+		
 	var n=$('.entryNode[-idea-id="'+pid+'"]');
 	var c =n.find('.commentsinput').first();
 	var t = c.val();
@@ -947,9 +956,10 @@ function submitAndGetComments(pid) {
 			'url': 'ajax/comment.php',
 			'data': {'pid':pid,'comment_text':t,'mapid':getURLParameter("mapid")},
 			'success': function(jsonData) {
-				commentsModel[pid]= $.parseJSON(jsonData);
-
+				
+/*				commentsModel[pid]= $.parseJSON(jsonData); //optimistic
 				displayPosts();
+				*/
 				// c.val(''); //Redundant?
 			},
 		});
