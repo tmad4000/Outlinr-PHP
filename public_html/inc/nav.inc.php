@@ -25,17 +25,20 @@ $r = mysqli_fetch_assoc($result)
             </button>
             <div class="outline navbar-brand">
               <?php if($r['maplogourl']) { ?>
-                <img src="<?=$r['maplogourl'] ?>" style="height:35px;width:30px;margin-top:-5px;margin-right:10px">
+                <!--width:30px;-->
+                <img src="<?=$r['maplogourl'] ?>" style="height:35px;margin-top:-5px;margin-right:10px">
                 <?php
                 }
               ?>
 
               <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></div> 
               
-            <span class="navbar-text"><a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas (List)</a>
+            <span class="navbar-text">
+            <!--
+            <a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas (List)</a>
             <a href="index.1.7_suggestionbox_graph.php?mapid=<?= $getmapid ?>">Ideas (Graph)</a>
             <a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a>
-            
+            -->
             </span>
           </div>
 
@@ -48,7 +51,7 @@ $r = mysqli_fetch_assoc($result)
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">
               <div class="form-group">
-                <span></span><input type="text" id="usrhandle" class="form-control" placeholder="Username">
+                <span style="font-size:16pt;">~</span><input type="text" id="usrhandle" class="form-control" placeholder="Username">
               </div>
             </form>
           </div><!-- /.navbar-collapse -->
