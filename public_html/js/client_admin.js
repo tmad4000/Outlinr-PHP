@@ -333,14 +333,13 @@ function setupNode(postEl) {
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
-			if(!(idS in expandedComments)) {
-				expandedComments[idS]=1;
-			}
-			else {
-				delete expandedComments[idS];
-			}
-			getComment(idS);
+			toggleComments(pid);
+
+
+//			getComment(idS);
+
 		});
+
 		postEl.find('.commentsinput').keydown(function (event) {
 			if(event.keyCode == 13 && !event.shiftKey){ // enter
 	        	event.preventDefault();
@@ -512,6 +511,17 @@ function displayPosts() {
 	});
 
 }*/
+
+function toggleComment(pid) {
+	if(!(pid in expandedComments)) { //hide
+		expandedComments[pid]=1;
+		$('.comments[-idea-id="pid"]').removeClass('init-expanded').addClass('init-hidden');
+	}
+	else {
+		delete expandedComments[pid];
+		$('.comments[-idea-id="pid"]').removeClass('init-expanded').addClass('init-hidden');
+	}
+}
 
 function updateGlobalData(data) {
 	globalData = {};
@@ -876,7 +886,7 @@ function getComment(pid) {
 }
 
 function getComments() {
-	alert();
+
 	$.ajax({
 		'url': 'ajax/comment.php',
 		'data': {'mapid':getURLParameter("mapid")},
@@ -887,6 +897,7 @@ function getComments() {
 			$.each(cs,function(i,comment) {
 				commentsModel[comment.pid]=comment;				
 			})
+
 
 
 			rootNodeViewModel.loadCommentsRecurs();
