@@ -81,7 +81,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 	this.loadComments = function() {
 		var postCommentsModel=null;
-		var cl="":
+		var cl="";
 		//note: commentsModel is global
 		if(this.entryNodeModel.pid+"" in commentsModel){
 			//console.log("")

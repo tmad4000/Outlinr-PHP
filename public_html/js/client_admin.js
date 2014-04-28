@@ -1,7 +1,6 @@
 var docReady=false;
 var postsLoaded=false;
 getPosts();
-getComments();
 
 //getPosts() -> displayPosts() 
 
@@ -424,6 +423,9 @@ function displayPosts() {
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
 
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
+
+
+		getComments();
 
 		//entryList = new EntryList(data);
 		//var entrylist=entryNodeToHTML(data);
@@ -874,6 +876,7 @@ function getComment(pid) {
 }
 
 function getComments() {
+	alert();
 	$.ajax({
 		'url': 'ajax/comment.php',
 		'data': {'mapid':getURLParameter("mapid")},
@@ -883,10 +886,11 @@ function getComments() {
 			var cs = $.parseJSON(localStorage.getItem("comments"));
 			$.each(cs,function(i,comment) {
 				commentsModel[comment.pid]=comment;				
-			}
+			})
 
 
 			rootNodeViewModel.loadCommentsRecurs();
+
 		},
 	});
 }
@@ -939,7 +943,7 @@ function getEmail(){
 
 function submitAndGetComments(pid) {
 
-		
+
 	var n=$('.entryNode[-idea-id="'+pid+'"]');
 	var c =n.find('.commentsinput').first();
 	var t = c.val();
