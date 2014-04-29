@@ -97,7 +97,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
 				}
 				else {
-					var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i>'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+					var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
 				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
 				}
 				

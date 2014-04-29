@@ -353,15 +353,15 @@ function setupNode(postEl) {
 	        } 
 			else if(event.keyCode == 13) { // enter
 				var content = this.value;
-        		var caret = getCaret(this);
-        		//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-	        	//below unneeded if using text input
-	        	// removes the newline
-	        	/*var content = this.value;
-	        	var caret = getCaret(this);
-	        	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-	        	*/
-	        	event.stopPropagation();
+    		var caret = getCaret(this);
+    		//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+      	//below unneeded if using text input
+      	// removes the newline
+      	/*var content = this.value;
+      	var caret = getCaret(this);
+      	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+      	*/
+      	event.stopPropagation();
 				//$(this).parent().find('.commentform').toggle();
 				var idS=$(this).closest('.entryNode').attr('-idea-id');
 				submitAndGetComments(idS);
@@ -391,7 +391,8 @@ function setupNode(postEl) {
 		});
 
 		// TODO universalize
-		postEl.find('.comment-upvote').click(function() {
+		postEl.on('click','.comment-upvote', function() {
+			console.log('comment-upvote');
 			var num=$(this).find('span').text()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
@@ -953,27 +954,26 @@ function getEmail(){
 }
 
 function submitAndGetComments(pid) {
-
-
 	var n=$('.entryNode[-idea-id="'+pid+'"]');
 	var c =n.find('.commentsinput').first();
 	var t = c.val();
-	
+	c.val('');
+
 	var ind=t.indexOf('~'+$('#usrhandle').val());
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
-//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+		// if(np.substr(ind+$('#usrhandle').val().length+1),1)
 		t+=' ~'+$('#usrhandle').val();
 	}
 
-
+	//
 	if(t) {
 		$.ajax({
 			'url': 'ajax/comment.php',
 			'data': {'pid':pid,'comment_text':t,'mapid':getURLParameter("mapid")},
 			'success': function(jsonData) {
-				
-/*				commentsModel[pid]= $.parseJSON(jsonData); //optimistic
-				displayPosts();
+				commentsModel[pid]= $.parseJSON(jsonData); //optimistic
+				rootNodeViewModel.loadCommentsRecurs();
+				/*displayPosts();
 				*/
 				// c.val(''); //Redundant?
 			},
