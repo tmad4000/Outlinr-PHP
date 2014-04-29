@@ -333,7 +333,7 @@ function setupNode(postEl) {
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
-			toggleComments(pid);
+			toggleComment(idS);
 
 
 //			getComment(idS);
@@ -513,13 +513,15 @@ function displayPosts() {
 }*/
 
 function toggleComment(pid) {
-	if(!(pid in expandedComments)) { //hide
-		expandedComments[pid]=1;
-		$('.comments[-idea-id="pid"]').removeClass('init-expanded').addClass('init-hidden');
-	}
-	else {
+	if(pid in expandedComments) { //hide
 		delete expandedComments[pid];
-		$('.comments[-idea-id="pid"]').removeClass('init-expanded').addClass('init-hidden');
+
+		$('.commentform[-idea-id="'+pid+'"]').removeClass('init-expanded').addClass('init-hidden');
+	}
+	else { // show
+		expandedComments[pid]=1;
+
+		$('.commentform[-idea-id="'+pid+'"]').removeClass('init-hidden').addClass('init-expanded');
 	}
 }
 

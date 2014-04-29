@@ -203,8 +203,8 @@ function EntryNodeViewModel(entryNodeModel) {
 				var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
 				
 				comments='<div class="showcomments"> \
-					<div class="commentform '+this.myCommentsExpanded+'"> ' +
-						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="'+this.entryNodeModel.pid+'"></textarea>' +
+					<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> ' +
+						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit"></textarea>' +
 						commentsListH +
 					'</div>' +
 				'</div>';
