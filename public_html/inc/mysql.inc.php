@@ -30,4 +30,7 @@ $MYSQLI_LINK = @mysqli_connect(DB_HOST, DB_USER, DB_PASS);
 if(!$MYSQLI_LINK)
 	$MYSQLI_LINK = mysqli_connect(DB_HOST, DB_USER, '');
 
+mysqli_set_charset($MYSQLI_LINK,"utf8");
+
+
 mysqli_select_db($MYSQLI_LINK, DB_NAME);

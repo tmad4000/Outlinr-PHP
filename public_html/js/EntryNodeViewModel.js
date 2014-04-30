@@ -86,7 +86,7 @@ function EntryNodeViewModel(entryNodeModel) {
 		if(this.entryNodeModel.pid+"" in commentsModel){
 			//console.log("")
 			postCommentsModel=commentsModel[this.entryNodeModel.pid];
-			console.log(commentsModel);
+			
 			$.each(postCommentsModel,function(i,currComment) {
 				var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 				var commentTime = moment(currComment.time * 1000).fromNow();
@@ -97,7 +97,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
 				}
 				else {
-					var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+					var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i>'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
 				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
 				}
 				
@@ -190,7 +190,7 @@ function EntryNodeViewModel(entryNodeModel) {
 					numCommentsMsg=''+numComments + " Comment";
 				else if(numComments > 1)
 					numCommentsMsg=''+numComments + " Comments";
-
+				numCommentsMsg+=" / 回應"
 				//entryNodeBody="<div>"+table+"</div>";
 				//comments=""
 
@@ -203,8 +203,8 @@ function EntryNodeViewModel(entryNodeModel) {
 				var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
 				
 				comments='<div class="showcomments"> \
-					<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> ' +
-						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit"></textarea>' +
+					<div class="commentform '+this.myCommentsExpanded+'"> ' +
+						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="'+this.entryNodeModel.pid+'"></textarea>' +
 						commentsListH +
 					'</div>' +
 				'</div>';
@@ -220,7 +220,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 
 				//entryNodeBody+=comments;
-				var del = isAdmin ? " · <span class='delete'><a href='#'>Delete</a></span>" : "";
+				var del = isAdmin ? " · <div class='delete'><a href='#'>Delete</a></div>" : "";
 
 				table += '<tr>'+	
 					upvoter+
