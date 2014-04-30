@@ -220,7 +220,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 
 				//entryNodeBody+=comments;
-				var del = isAdmin ? " · <div class='delete'><a href='#'>Delete</a></div>" : "";
+				var del = isAdmin ? " · <span class='delete'><a href='#'>Delete</a></span>" : "";
 
 				table += '<tr>'+	
 					upvoter+

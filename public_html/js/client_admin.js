@@ -296,13 +296,28 @@ function getCaret(el) {
 // Add events to the given post element. Pass postEl as $(document) to do the first initialization.
 // Afterwards, if more posts are added (like in expanding linked children), just call this with the child's post element.
 function setupNode(postEl) {
-		postEl.find("div.status").click(function(e) {
+		postEl.find("span.status").click(function(e) {
 			e.preventDefault();
 			if(isAdmin)
 				cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
+
+		postEl.find("span.status").mouseover(function(e) {
+			e.preventDefault();
+			if(isAdmin){
+				$(this).css('text-decoration','underline');
+				$(this).css('cursor','pointer');
+			}
+		});
+
+		postEl.find("span.status").mouseout(function(e) {
+			e.preventDefault();
+			if(isAdmin){
+				$(this).css('text-decoration','none');
+			}
+		});
 		
-		postEl.find("div.delete > a").click(function(e) {
+		postEl.find("span.delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)

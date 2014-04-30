@@ -318,17 +318,10 @@ a.showcomments {
 	float:right;
 	margin-right: 3px;
 	margin-left: 0px;
+	color:royalblue;
 }
 a.showcomments:hover {
 	background-position: 0 -16px;	
-}
-
-div.showcomments {
-	width:100%;
-	margin-left:0px;
-	font-size: 14px;
-/*	position:relative;
-	top:-35px;*/
 }
 
 div.commentform input[type=button] {
