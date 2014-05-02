@@ -308,9 +308,15 @@ div.container textarea.span11 {
 .timecol {
 }
 
-.ideaTxtFooter {
-	float:right;
-}
+
+ .ideaTxtFooter {
+ 	/* float:right; #hack */ 
+ }
+ 
+ .ideaTxtFooter-r {
+ 	 float:right; /*#hack */ 
+ }
+
 
 .uid {
     color:#AAA;
@@ -969,6 +975,7 @@ div.ideaTxtInner {
 .related-ideas-all {
 	line-height: 22px;
 	clear:both;
+	display: none !important; /* #hack */
 }
 
 .label-info.expanded, .label-info, .ms-sel-ctn .ms-sel-item {

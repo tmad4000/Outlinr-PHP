@@ -190,7 +190,8 @@ function EntryNodeViewModel(entryNodeModel) {
 					numCommentsMsg=''+numComments + " Comment";
 				else if(numComments > 1)
 					numCommentsMsg=''+numComments + " Comments";
-
+				
+				numCommentsMsg+=" / 回應"
 				//entryNodeBody="<div>"+table+"</div>";
 				//comments=""
 
@@ -204,8 +205,8 @@ function EntryNodeViewModel(entryNodeModel) {
 				
 				comments='<div class="showcomments"> \
 					<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> ' +
-						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit"></textarea>' +
-						commentsListH +
+						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit / 回應, 按ENTER鍵提交" ></textarea>' +
+							commentsListH +
 					'</div>' +
 				'</div>';
 
@@ -226,8 +227,11 @@ function EntryNodeViewModel(entryNodeModel) {
 					upvoter+
 					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
 					addRel /*+ "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · "*/ +		
-					"<div class='ideaTxtFooter'>"+status + " · " + 
-					"<span class='timecol'>"+time+"</span>"+del+" · " +commentExpandLink+"</div>"+comments+"</td>" +  
+					"<div class='ideaTxtFooter'>"+
+					commentExpandLink+
+					"<div class='ideaTxtFooter-r'>"+
+					status + " · " + 
+					"<span class='timecol'>"+time+"</span>"+del+"</div> " +"</div>"+comments+"</td>" +  
 					"</tr>";
 
 		   	table+="</table>";

@@ -146,14 +146,17 @@ require_once('../config.inc.php');
         <div class="row" id="box-description">
           <div class="col-sm-12">
             <span id="box-description-text" >
-<?= $r['mapdesc'] ?> </span>
+<!-- #hack -->            An anonymous suggestion box and discussion board for sexual health education in Hong Kong / 比你自由自在咁傾、講同問有關SEX嘅嘢
+<? 
+//echo $r['mapdesc'];
+ ?> </span>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
+                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?> / 鍵入一個想法，建議或目標 <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
               </div>
 <!--               <div class='related-ideas-all'>
                 <ul class='related-ideas'>
@@ -192,10 +195,10 @@ require_once('../config.inc.php');
       <div class="col-sm-3">
         <div class="sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
-            <li class="nav-header">Categories</li>
+            <li class="nav-header">Categories / 有啲咩嘢</li>
             <ul id="idea-hashtags" class="tags">
             </ul>
-            <li class="nav-header">People</li>
+            <li class="nav-header">People / 有啲咩人</li>
             <ul id="people-list" class="tags">
             </ul>
             <!--<li class="nav-header">All Ideas</li>

@@ -15,7 +15,9 @@ var url_regexp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+
 url_regexp = /((www|http|https)([^\s]+))|([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/g;
 
 
-var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
+var statusTable={0:"",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
+// var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
+
 var numberOfIdeasVisible = 0; // #HACK
 var filterToggle = 'Date'; // Date, Upvote, Hot, Status
 
