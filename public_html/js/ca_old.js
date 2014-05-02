@@ -296,28 +296,13 @@ function getCaret(el) {
 // Add events to the given post element. Pass postEl as $(document) to do the first initialization.
 // Afterwards, if more posts are added (like in expanding linked children), just call this with the child's post element.
 function setupNode(postEl) {
-		postEl.find("span.status").click(function(e) {
+		postEl.find("div.status").click(function(e) {
 			e.preventDefault();
 			if(isAdmin)
 				cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
 		});
-
-		postEl.find("span.status").mouseover(function(e) {
-			e.preventDefault();
-			if(isAdmin){
-				$(this).css('text-decoration','underline');
-				$(this).css('cursor','pointer');
-			}
-		});
-
-		postEl.find("span.status").mouseout(function(e) {
-			e.preventDefault();
-			if(isAdmin){
-				$(this).css('text-decoration','none');
-			}
-		});
 		
-		postEl.find("span.delete > a").click(function(e) {
+		postEl.find("div.delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)
@@ -348,14 +333,23 @@ function setupNode(postEl) {
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
+			if(!(idS in expandedComments)) {
+				expandedComments[idS]=1;
+			}
+			else {
+				delete expandedComments[idS];
+			}
 
-			toggleComment(idS);
-
-
-//			getComment(idS);
-
+			if(typeof commentsModel[idS] == 'undefined') {
+				console.log("exPPPPPPPPP")
+				getComment(idS);
+			}
+			// else {
+			// 	//#todo
+			// 	entryNodes[idS].expandComments
+			// 	($('.entryNode [-idea-id="'+idS+'"]').find('textarea')[0]).focus();
+			// }
 		});
-
 		postEl.find('.commentsinput').keydown(function (event) {
 			if(event.keyCode == 13 && !event.shiftKey){ // enter
 	        	event.preventDefault();
@@ -369,15 +363,15 @@ function setupNode(postEl) {
 	        } 
 			else if(event.keyCode == 13) { // enter
 				var content = this.value;
-    		var caret = getCaret(this);
-    		//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-      	//below unneeded if using text input
-      	// removes the newline
-      	/*var content = this.value;
-      	var caret = getCaret(this);
-      	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-      	*/
-      	event.stopPropagation();
+        		var caret = getCaret(this);
+        		//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+	        	//below unneeded if using text input
+	        	// removes the newline
+	        	/*var content = this.value;
+	        	var caret = getCaret(this);
+	        	this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+	        	*/
+	        	event.stopPropagation();
 				//$(this).parent().find('.commentform').toggle();
 				var idS=$(this).closest('.entryNode').attr('-idea-id');
 				submitAndGetComments(idS);
@@ -407,8 +401,7 @@ function setupNode(postEl) {
 		});
 
 		// TODO universalize
-		postEl.on('click','.comment-upvote', function() {
-			console.log('comment-upvote');
+		postEl.find('.comment-upvote').click(function() {
 			var num=$(this).find('span').text()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
@@ -439,9 +432,6 @@ function displayPosts() {
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
 
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
-
-
-		getComments();
 
 		//entryList = new EntryList(data);
 		//var entrylist=entryNodeToHTML(data);
@@ -529,22 +519,6 @@ function displayPosts() {
 
 }*/
 
-function toggleComment(pid) {
-	var cf=$('.commentform[-idea-id="'+pid+'"]');
-	if(pid in expandedComments) { //hide
-		delete expandedComments[pid];
-
-		cf.removeClass('init-expanded').addClass('init-hidden');
-	}
-	else { // show
-		console.log(e=$('.commentform[-idea-id="'+pid+'"]'))
-		expandedComments[pid]=1;
-
-		cf.removeClass('init-hidden').addClass('init-expanded');
-		(cf.find('textarea')[0]).focus();
-	}
-}
-
 function updateGlobalData(data) {
 	globalData = {};
 	for (var i = 0; i < data.length; i++) {
@@ -563,7 +537,7 @@ function displayIdeaNames() {
 		console.log(x=data);
 		updateGlobalData(data);
 		
-
+		getComments();
 		var cs = $.parseJSON(localStorage.getItem("comments"));
 		// idea names 
 		// Idea Names by Upvotes
@@ -913,15 +887,6 @@ function getComments() {
 		'data': {'mapid':getURLParameter("mapid")},
 		'success': function(jsonData) {
 			localStorage.setItem("comments", jsonData);
-
-			var cs = $.parseJSON(localStorage.getItem("comments"));
-			$.each(cs,function(i,comment) {
-				if(!(comment.pid+"" in commentsModel))
-					commentsModel[comment.pid] = [];
-				commentsModel[comment.pid].push(comment);				
-			})
-			rootNodeViewModel.loadCommentsRecurs();
-
 		},
 	});
 }
@@ -973,27 +938,27 @@ function getEmail(){
 }
 
 function submitAndGetComments(pid) {
+
+
 	var n=$('.entryNode[-idea-id="'+pid+'"]');
 	var c =n.find('.commentsinput').first();
 	var t = c.val();
-	c.val('');
-
+	
 	var ind=t.indexOf('~'+$('#usrhandle').val());
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
-		// if(np.substr(ind+$('#usrhandle').val().length+1),1)
+//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
 		t+=' ~'+$('#usrhandle').val();
 	}
 
-	//
+
 	if(t) {
 		$.ajax({
 			'url': 'ajax/comment.php',
 			'data': {'pid':pid,'comment_text':t,'mapid':getURLParameter("mapid")},
 			'success': function(jsonData) {
-				commentsModel[pid]= $.parseJSON(jsonData); //optimistic
-				rootNodeViewModel.loadCommentsRecurs();
-				/*displayPosts();
-				*/
+				commentsModel[pid]= $.parseJSON(jsonData);
+
+				displayPosts();
 				// c.val(''); //Redundant?
 			},
 		});
