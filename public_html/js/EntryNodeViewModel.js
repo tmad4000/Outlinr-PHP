@@ -203,8 +203,8 @@ function EntryNodeViewModel(entryNodeModel) {
 				var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
 				
 				comments='<div class="showcomments"> \
-					<div class="commentform '+this.myCommentsExpanded+'"> ' +
-						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" -idea-id="'+this.entryNodeModel.pid+'"></textarea>' +
+					<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> ' +
+						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" ></textarea>' +
 						commentsListH +
 					'</div>' +
 				'</div>';
@@ -227,8 +227,9 @@ function EntryNodeViewModel(entryNodeModel) {
 					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
 					addRel /*+ "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · "*/ +		
 					"<div class='ideaTxtFooter'>"+
+					"<div class='ideaTxtFooter-r'>"+
 					status + " · " + 
-					"<span class='timecol'>"+time+"</span>"+del+" · " +commentExpandLink+"</div>"+comments+"</td>" +  
+					"<span class='timecol'>"+time+"</span>"+del+"</div> " +commentExpandLink+"</div>"+comments+"</td>" +  
 					"</tr>";
 
 		   	table+="</table>";

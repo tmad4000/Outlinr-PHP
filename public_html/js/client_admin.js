@@ -348,6 +348,7 @@ function setupNode(postEl) {
 			e.preventDefault();
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
+
 			toggleComment(idS);
 
 
@@ -535,6 +536,7 @@ function toggleComment(pid) {
 		$('.commentform[-idea-id="'+pid+'"]').removeClass('init-expanded').addClass('init-hidden');
 	}
 	else { // show
+		console.log(e=$('.commentform[-idea-id="'+pid+'"]'))
 		expandedComments[pid]=1;
 
 		$('.commentform[-idea-id="'+pid+'"]').removeClass('init-hidden').addClass('init-expanded');
