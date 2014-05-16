@@ -32,7 +32,7 @@ $time = time();
 
 $ideastbl = IDEAS_TBL;
 $commentstbl = COMMENTS_TBL;
-$linkstbl=LINKS_TBL;
+$linkstbl = LINKS_TBL;
 
 function getMap($MYSQLI_LINK,$mapid){
 	$query = "SELECT * FROM ideamaps WHERE mapid={$mapid}";
