@@ -1243,7 +1243,7 @@ function setupRel(postEl) {
 		{
 			hint: true,
 			highlight: true,
-			minLength: 1,
+			minLength: 0,
 			autoselect: true
 		},
 		{
@@ -1256,8 +1256,30 @@ function setupRel(postEl) {
 				//    header: function () {return '';},
 				suggestion: Handlebars.compile('<p>{{title}}</p>')
 			}
+		});
+
+	// Setup typeahead to show a suggestion on focus
+	// From http://pastebin.com/adWHFupF
+	/* WARNING: This is hackery abusing non-public Typeahead APIs */
+	// Fix for v0.10.2
+	// Requires minLength == 0
+	postEl.find('.typeahead').focus(function() {
+		if ($(this).val() === "") {
+		      var input = $(this).data('ttTypeahead').input; //Reference to the TA Input class
+		      //Set the component's current query to something !== input.
+		      input.query = "nonempty";
+		      input._onInput("");
+		  }
+	});
+	
+	var _typeahead = $('.typeahead').eq(1).data('ttTypeahead');
+	_typeahead.input.__proto__.setHint = function (value) {
+		if (postEl.find('.typeahead:focus').val() === "") {
+			this.$hint.val(''); // Don't show a hint if the input is empty
+		} else {
+			this.$hint.val(value);
 		}
-	);
+	};
 }
 
 // Dom change: add a child dom el (some post) to the given parent dom element
