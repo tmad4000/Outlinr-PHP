@@ -1271,15 +1271,17 @@ function setupRel(postEl) {
 		      input._onInput("");
 		  }
 	});
-	
-	var _typeahead = $('.typeahead').eq(1).data('ttTypeahead');
-	_typeahead.input.__proto__.setHint = function (value) {
-		if (postEl.find('.typeahead:focus').val() === "") {
-			this.$hint.val(''); // Don't show a hint if the input is empty
-		} else {
-			this.$hint.val(value);
-		}
-	};
+
+	if ($('.typeahead').size() > 0) {
+		var _typeahead = $('.typeahead.tt-input').first().data('ttTypeahead');
+		_typeahead.input.__proto__.setHint = function (value) {
+			if (postEl.find('.typeahead:focus').val() === "") {
+				this.$hint.val(''); // Don't show a hint if the input is empty
+			} else {
+				this.$hint.val(value);
+			}
+		};
+	}
 }
 
 // Dom change: add a child dom el (some post) to the given parent dom element
