@@ -34,11 +34,11 @@ $r = mysqli_fetch_assoc($result)
               <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></div> 
               
             <span class="navbar-text">
-            <!--
+            
             <a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas (List)</a>
             <a href="index.1.7_suggestionbox_graph.php?mapid=<?= $getmapid ?>">Ideas (Graph)</a>
             <a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a>
-            -->
+            
             </span>
           </div>
 
@@ -46,7 +46,7 @@ $r = mysqli_fetch_assoc($result)
           <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
 
-              <!-- <li><a href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a></li> -->
+              <li><a href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a></li>
               <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">

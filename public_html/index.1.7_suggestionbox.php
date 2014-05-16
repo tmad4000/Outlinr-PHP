@@ -147,8 +147,8 @@ require_once('../config.inc.php');
           <div class="col-sm-12">
             <span id="box-description-text" >
 
-<!-- #hack -->            An anonymous suggestion box and discussion board for sexual health education in Hong Kong / 比你自由自在咁傾、講同問有關SEX嘅嘢
-<? 
+<?
+//#hack 
 //echo $r['mapdesc'];
  ?> </span>
           </div>
