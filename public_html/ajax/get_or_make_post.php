@@ -34,6 +34,7 @@ $ideastbl = IDEAS_TBL;
 $commentstbl = COMMENTS_TBL;
 $linkstbl = LINKS_TBL;
 
+
 function getMap($MYSQLI_LINK,$mapid){
 	$query = "SELECT * FROM ideamaps WHERE mapid={$mapid}";
 	//echo $query;
@@ -80,6 +81,7 @@ function getRelEntryIds($MYSQLI_LINK,$linkstbl, $pid) {
 }
 
 function getAllLinkIds($MYSQLI_LINK,$linkstbl) {
+	global $mapid;
 	$query = "SELECT * FROM $linkstbl WHERE deleted_time IS NULL ORDER BY time DESC";
 	
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
@@ -109,8 +111,6 @@ if (!empty($body)) {
 
     emailNotify($MYSQLI_LINK,$mapid,$body);
 
-
-
     require("link.php");
     //hack
 }
@@ -134,7 +134,6 @@ $rows = array();
 $data=array("uid"=>0,"pid"=>NULL,"children"=>array()); //root
 
 while ($r = mysqli_fetch_assoc($result)) {
-	
 	
 	$pid=$r['pid'];
 	$countQuery = "SELECT COUNT(*) FROM $commentstbl WHERE pid=$pid AND deleted_time IS NULL";

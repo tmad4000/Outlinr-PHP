@@ -1181,7 +1181,7 @@ function setupRel(postEl) {
 			}
 			else {
 				console.log('trying to relate idea to itself');
-				el.typeahead('val', 'Its irreflexive!');
+				el.typeahead('val', 'It\'s irreflexive!');
 				setTimeout(function(){el.typeahead('val', '');},700)
 			}
 		}
