@@ -21,7 +21,7 @@ $r = mysqli_fetch_assoc($result)
       </div>
       <div class="col-sm-3 feedbackbuttoncontainer">
 <a style="margin-left:-190px; margin-right:40px" href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a>
-        <a href="index.1.7_suggestionbox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback / 比我哋嘅意見</a>
+        <a href="index.1.7_suggestionbox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
       </div>
     </div>
   </div>

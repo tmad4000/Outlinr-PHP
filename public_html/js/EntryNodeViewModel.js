@@ -191,7 +191,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				else if(numComments > 1)
 					numCommentsMsg=''+numComments + " Comments";
 
-				numCommentsMsg+=" / 回應"
+				numCommentsMsg+=""
 				//entryNodeBody="<div>"+table+"</div>";
 				//comments=""
 
@@ -206,7 +206,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				comments='<div class="showcomments"> \
 					<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> ' +
 
-						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit / 回應, 按ENTER鍵提交" ></textarea>' +
+						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" ></textarea>' +
 							commentsListH +
 
 					'</div>' +

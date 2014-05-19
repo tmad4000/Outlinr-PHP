@@ -157,7 +157,7 @@ require_once('../config.inc.php');
           <div class="col-sm-12">
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?> / 鍵入一個想法，建議或目標 <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
+                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?> <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
               </div>
 <!--               <div class='related-ideas-all'>
                 <ul class='related-ideas'>
@@ -196,10 +196,10 @@ require_once('../config.inc.php');
       <div class="col-sm-3">
         <div class="sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
-            <li class="nav-header">Categories / 有啲咩嘢</li>
+            <li class="nav-header">Categories</li>
             <ul id="idea-hashtags" class="tags">
             </ul>
-            <li class="nav-header">People / 有啲咩人</li>
+            <li class="nav-header">People</li>
             <ul id="people-list" class="tags">
             </ul>
             <!--<li class="nav-header">All Ideas</li>

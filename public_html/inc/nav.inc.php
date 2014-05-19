@@ -51,7 +51,7 @@ $r = mysqli_fetch_assoc($result)
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">
               <div class="form-group">
-                <span style="font-size:16pt;">~</span><input type="text" id="usrhandle" class="form-control" placeholder="Username / 你個名">
+                <span style="font-size:16pt;">~</span><input type="text" id="usrhandle" class="form-control" placeholder="Username">
               </div>
             </form>
           </div><!-- /.navbar-collapse -->
