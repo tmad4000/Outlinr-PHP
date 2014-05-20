@@ -75,12 +75,12 @@ ul.suggest-labels {
 
 .suggest-labels a {
     border: 1px solid lightgray;
-    color:gray;
+    /*color:gray;*/
     margin:0px 4px 2px 0px;
     background: white;
     padding:0px 5px 0px 5px;
     border-radius:3px;
-    font-size:12px;
+    /*font-size:12px;*/
     -webkit-transition:all 0.3s linear;
     display: inline-block;
 }

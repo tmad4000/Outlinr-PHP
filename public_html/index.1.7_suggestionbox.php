@@ -147,9 +147,9 @@ require_once('../config.inc.php');
           <div class="col-sm-12">
             <span id="box-description-text" >
 
-<?
-//#hack 
-//echo $r['mapdesc'];
+<?php
+//#hack
+echo $r['mapdesc'];
  ?> </span>
           </div>
         </div>
