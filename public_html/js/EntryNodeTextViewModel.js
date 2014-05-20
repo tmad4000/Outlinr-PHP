@@ -248,7 +248,7 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.pushSplits(tag_regexp,this.hSplits);
 	this.pushSplits(url_regexp,this.uSplits);
 	this.tSplit=[0,findTitleEnd(this.txt)];
-	if(this.txt.length>100){
+	if(this.txt.length>300){ //#magicnumber #hack
 		this.mSplit=[findMoreTextStart(this.txt),this.txt.length];
 	}
 }

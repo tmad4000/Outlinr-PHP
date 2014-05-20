@@ -158,7 +158,7 @@ function findMoreTextStart(idea){
     var chCutoff = 300 - (iter*80)
     */
     var newIdea = idea.replace('\n',"n".repeat(80))
-    return 1000-newIdea.substr(0,1000).split('').reverse().join('').indexOf(" ");//poss off by 1 error
+    return 300-newIdea.substr(0,300).split('').reverse().join('').indexOf(" ");//poss off by 1 error #magicnumber #hack
 }
 
 function urlPress(e){
