@@ -16,12 +16,12 @@ $r = mysqli_fetch_assoc($result)
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-9">
-        <a href="<?="index.1.7_suggestionbox_admin.php?mapid=$getmapid" ?>">Admin Dashboard</a><br>
-        <p>Powered by <a href="index.1.7_suggestionbox_ideamaps.php">IdeaBox</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
+        <a href="<?="ideabox-admin.php?mapid=$getmapid" ?>">Admin Dashboard</a><br>
+        <p>Powered by <a href="index.php">IdeaBox</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
       </div>
       <div class="col-sm-3 feedbackbuttoncontainer">
-<a style="margin-left:-190px; margin-right:40px" href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a>
-        <a href="index.1.7_suggestionbox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
+<a style="margin-left:-190px; margin-right:40px" href="index.php">+ Make an idea box</a>
+        <a href="ideabox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
       </div>
     </div>
   </div>

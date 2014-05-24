@@ -3,12 +3,12 @@ session_start();
 //include at the top of every PHP page
 $_SERVER['DOCUMENT_ROOT'] = dirname(__FILE__);
 
-
 // Determine whether we're working on a local server
 // or on the real server:
 if (stristr($_SERVER['HTTP_HOST'], 'local') || (substr($_SERVER['HTTP_HOST'], 0, 7) == '192.168')) {
 	define('LOCAL',true);
-} else {
+} 
+else {
 	define('LOCAL',false);
 }
 
@@ -23,7 +23,8 @@ if (LOCAL) {
 	//define ('BASE_URI', '/path/to/html/folder/');
 	//define ('BASE_URL',	'http://localhost/directory/');
 	
-} else {
+} 
+else {
 
 	define('DEBUG_MODE',false);
 	//define ('BASE_URI', '/path/to/live/html/folder/');

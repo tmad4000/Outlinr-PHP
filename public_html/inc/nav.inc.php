@@ -13,10 +13,10 @@ $r = mysqli_fetch_assoc($result);
 $pagefilename=basename($_SERVER['PHP_SELF']);
 
 $pagesdict=array(
-  "index.1.7_suggestionbox_ideamaps.php"=>"ideamaps",
-  "index.1.7_suggestionbox.php"=>"list",
-  "index.1.7_suggestionbox_graph.php"=>"graph",
-  "index.1.7_suggestionbox_people.php"=>"people",
+  "index.php"=>"ideamaps",
+  "ideabox.php"=>"list",
+  "ideabox-graph.php"=>"graph",
+  "ideabox-people.php"=>"people",
   );
 
   $page=$pagesdict[$pagefilename];
@@ -44,31 +44,19 @@ $pagesdict=array(
                 }
               ?>
 
-              <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></div> 
-<!--               <ul class="nav nav-tabs">
-  <li <?= $page=="list"?'class="active"':"" ?> ><a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">Ideas List</a></li>
-  <li <?= $page=="graph"?'class="active"':"" ?> ><a href="index.1.7_suggestionbox_graph.php?mapid=<?= $getmapid ?>">Ideas Graph</a></li>
-  <li <?= $page=="people"?'class="active"':"" ?> ><a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a></li>
-</ul> -->
+              <?= strpos($_SERVER['PHP_SELF'],"index.php") ? '' : $r['mapname'] ?></div> 
 
             <ul class="nav navbar-nav">
-        <li <?= $page=="list"?'class="active"':"" ?> ><a href="index.1.7_suggestionbox.php?mapid=<?= $getmapid ?>">List View</a></li>
-  <li <?= $page=="graph"?'class="active"':"" ?> ><a href="index.1.7_suggestionbox_graph.php?mapid=<?= $getmapid ?>">Graph View</a></li>
-  <li <?= $page=="people"?'class="active"':"" ?> ><a href="index.1.7_suggestionbox_people.php?mapid=<?= $getmapid ?>">People</a></li>
-  
-        
-      </ul>
-           
+              <li <?= $page=="list"?'class="active"':"" ?> ><a href="ideabox.php?mapid=<?= $getmapid ?>">List View</a></li>
+              <li <?= $page=="graph"?'class="active"':"" ?> ><a href="ideabox-graph.php?mapid=<?= $getmapid ?>">Graph View</a></li>
+              <li <?= $page=="people"?'class="active"':"" ?> ><a href="ideabox-people.php?mapid=<?= $getmapid ?>">People</a></li>  
+            </ul>  
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-
-
-
-
-              <li><a href="index.1.7_suggestionbox_ideamaps.php">+ Make an idea box</a></li>
+              <li><a href="index.php">+ Make an idea box</a></li>
               <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">
