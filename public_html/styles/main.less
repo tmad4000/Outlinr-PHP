@@ -73,22 +73,17 @@ footer {
 	margin-top:  -73px;
 	height:  73px;
 	clear: both;
-	background: royalblue;
-	border-top: 1px solid #879FE6;
-	outline:  3px solid #1C2D61;
-	-webkit-box-shadow: 0px -4px 0px 0px #394361;
-	-moz-box-shadow: 0px -4px 0px 0px #394361;
-	box-shadow: 0px -4px 0px 0px #394361;
-	color: #1C3A94;
+	background: @silver;
+	color: white;
 	padding-top: 17px;
 } 
 
 footer a:hover {
-	color: #00002E;
+	color: #333;
 }
 
 footer a {
-	color: #03217B;
+	color: black;
 }
 
 /*Opera Fix*/
@@ -139,13 +134,13 @@ body {
 #feedbackbutton {
 	margin-top: 0px;
 	background: transparent;
-	border: 2px solid white;
+	border: 1px solid white;
 	font-size: 16px;
 	text-decoration: none;
 	padding: 8px 15px 9px 15px;
 	-webkit-font-smoothing: subpixel-antialiased;
-	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
-	transition: border .25s linear, color .25s linear, background-color .25s linear;
+	-webkit-transition: border .05s linear, color .05s linear, background-color .05s linear;
+	transition: border .05s linear, color .05s linear, background-color .05s linear;
 	outline: none;
 	color: white;
 	border-radius: 5px;
@@ -222,18 +217,16 @@ textarea, input[type="text"] {
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
 	-moz-box-shadow: none !important;
-	border: 2px solid #ddd;
+	border: 1px solid #ddd;
 	outline: none !important;
-	border-radius: 0px;
-	border-width: 1px;
 	-webkit-font-smoothing: subpixel-antialiased;
-	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
-	transition: border .25s linear, color .25s linear, background-color .25s linear;
+	-webkit-transition: border .05s linear, color .05s linear, background-color .05s linear;
+	transition: border .05s linear, color .05s linear, background-color .05s linear;
 	border-radius: 3px;
 	
 }
 textarea:focus,input[type="text"]:focus {
-	border-color: #59b4de;
+	border-color: @belize-hole;
 }
 
 .navbar-inner{
@@ -283,7 +276,6 @@ textarea:focus,input[type="text"]:focus {
 	-webkit-font-smoothing: antialiased;
 	box-sizing: border-box;
 	color:#444;
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
 	font-size: 14px;
 	line-height: 18px;
 	white-space: pre-line;
@@ -300,9 +292,6 @@ div.container h1 {
 
 div.container textarea.span11 {
   height: 20px;
-}
-
-.timecol {
 }
 
 .ideaTxtFooter {
@@ -323,19 +312,19 @@ div.container textarea.span11 {
 
 .sc0 { /*Status: not acknowledged*/
 	background: transparent;
-	color: #aaa;
+	color: @clouds;
 }
 .sc1 { /*Status: acknowledged*/
-	color: #FF0;
+	color: @wet-asphalt;
 }
 .sc2 { /*Status: acknowledged and in progress*/
-	color: #2eabe6;
+	color: @peter-river;
 }
 .sc3 { /*Status: complete*/
-	color: #0F0;
+	color: @emerald;
 }
 .sc4 { /*Status: rejected*/
-	color: #D41528;
+	color: @alizarin;
 }
 
 .popover {
@@ -360,7 +349,7 @@ div.container textarea.span11 {
 #filterBy .active {
 	outline: 0;
 	text-decoration: none;
-	color: #333;
+	color: @midnight-blue;
 }
 
 #filterBy a:hover {
@@ -378,7 +367,6 @@ div.container textarea.span11 {
 }
 
 #filterBy {
-	margin-top: 2px;
 	display: inline;
 	float: right;
 	cursor: pointer;
@@ -387,11 +375,6 @@ div.container textarea.span11 {
 #filterBy a {
 	padding: 5px 10px;
 	color: #aaa;
-	border-bottom: 1px solid white;
-}
-
-.table td {
-	border-top: 1px solid #eee;
 }
 
 .nav-header {
@@ -412,7 +395,7 @@ div.container textarea.span11 {
 }
 
 .navbar-header {
-	border-bottom: 1px solid #efefef;
+	border-bottom: 1px solid @clouds;
 }
 
 .progress {
@@ -452,6 +435,11 @@ div.container textarea.span11 {
   height: 14px;
   margin-left: 0px;
 } 
+
+.votes:hover {
+	background: @midnight-blue;
+	color: white;
+}
 
 .vote.on {
   color: rgb(218, 46, 38);
@@ -506,7 +494,7 @@ ul.comments {
 	border-bottom-width: 0px !important;
 }
 .comment-upvote.on {
-  	color: rgb(218, 46, 38);
+  color: rgb(218, 46, 38);
 }
 
 .comment-upvote i{
@@ -530,10 +518,8 @@ ul.comments {
 	padding-bottom: 3px;
 }
 
-
 .comments li div {
 	display: table-cell;
-
 }
 
 textarea.commentsinput {
@@ -569,131 +555,133 @@ div.commentform div.commentsinput {
 #postform textarea {
 	margin-bottom: 0px;
 	width: 100%;
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-size: 16px;
+	font-size: 25px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 300;
-	color: #555555;
 	padding: 4px 6px;
 	border: 0;
+	color: @pumpkin;
 }
+
 #postform div {
 	margin-bottom: 0px;
 }
+
 #postform .btn {
 	font-weight: 200!important;
 	margin-left: 5px;
 	height: 50px;
 }
+
 #postform{
 	margin-bottom: 0px;
 }
 
-::-webkit-input-placeholder {
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-}
+// ::-webkit-input-placeholder {
+// 	font-style: normal;
+// 	font-variant: normal;
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	box-sizing: border-box;
+// 	color: rgb(119, 119, 119);
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// }
 
-:-moz-placeholder {
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-}
+// :-moz-placeholder {
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// 	font-weight: 300;
+// }
 
-::-moz-placeholder {
-	letter-spacing: 0.3px;
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-}
+// ::-moz-placeholder {
+// 	letter-spacing: 0.3px;
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// 	font-weight: 300;
+// }
 
-:-ms-input-placeholder {  	
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-}
+// :-ms-input-placeholder {  	
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// }
 
-#newpost::-webkit-input-placeholder {
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
-#newpost::-webkit-input-placeholder {
-	padding-top: 2px;
-}
+// #newpost::-webkit-input-placeholder {
+// 	font-style: normal;
+// 	font-variant: normal;
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	box-sizing: border-box;
+// 	color: rgb(119, 119, 119);
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// 	font-weight: 300;
+// 	line-height: 18px;
+// 	white-space: pre-line;
+// 	word-wrap: break-word;
+// }
+// #newpost::-webkit-input-placeholder {
+// 	padding-top: 2px;
+// }
 
-#newpost:-moz-placeholder {
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
-#newpost:-moz-placeholder {
-   	padding-top:2px;
-}
+// #newpost:-moz-placeholder {
+// 	font-style: normal;
+// 	font-variant: normal;
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	box-sizing: border-box;
+// 	color: rgb(119, 119, 119);
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// 	font-weight: 300;
+// 	line-height: 18px;
+// 	white-space: pre-line;
+// 	word-wrap: break-word;
+// }
+// #newpost:-moz-placeholder {
+//    	padding-top:2px;
+// }
 
-#newpost::-moz-placeholder {
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
+// #newpost::-moz-placeholder {
+// 	font-style: normal;
+// 	font-variant: normal;
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	box-sizing: border-box;
+// 	color: rgb(119, 119, 119);
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// 	font-weight: 300;
+// 	line-height: 18px;
+// 	white-space: pre-line;
+// 	word-wrap: break-word;
+// }
 
-#newpost::-moz-placeholder {
-   	padding-top:2px;
-}
+// #newpost::-moz-placeholder {
+//    	padding-top:2px;
+// }
 
-#newpost:-ms-input-placeholder {  
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 300;
-	letter-spacing: 0.3px;
-	-webkit-font-smoothing: antialiased;
-	box-sizing: border-box;
-	color: rgb(119, 119, 119);
-	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
-	font-weight: 300;
-	line-height: 18px;
-	white-space: pre-line;
-	word-wrap: break-word;
-}
-#newpost:-ms-input-placeholder {  
-   	padding-top: 2px;
-}
+// #newpost:-ms-input-placeholder {  
+// 	font-style: normal;
+// 	font-variant: normal;
+// 	font-weight: 300;
+// 	letter-spacing: 0.3px;
+// 	-webkit-font-smoothing: antialiased;
+// 	box-sizing: border-box;
+// 	color: rgb(119, 119, 119);
+// 	font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+// 	font-weight: 300;
+// 	line-height: 18px;
+// 	white-space: pre-line;
+// 	word-wrap: break-word;
+// }
+// #newpost:-ms-input-placeholder {  
+//    padding-top: 2px;
+// }
 
 .hiddenText{
 	display: none;
@@ -835,10 +823,10 @@ input[type="text"].usr {
 }
 
 .entryNodeText {
-	font-size: 14px;
-	color: rgba(0, 0, 0, 0.74902);
-	line-height: 20px;
-	font-weight: normal;
+	font-size: 18px;
+	color: @midnight-blue;
+	line-height: 24px;
+	font-weight: semi-bold;
 	float: left;
 	white-space: pre;           /* CSS 2.0 */
 	white-space: pre-wrap;      /* CSS 2.1 */
@@ -858,13 +846,10 @@ input[type="text"].usr {
 
 .related-ideas > li {
 	display: inline;
-
 	background-color: #3a87ad;
 	color: #EEE;
-
 	font-size: 12px;
 	line-height: 22px;
-
 	padding: 3px 6px;
 	border-radius: 3px;
 	margin-left: 5px;
@@ -896,7 +881,6 @@ div.ideaTxtInner {
 	padding-left: 0px;
 	margin-left: 0px;
 	line-height: 22px;
-
 }
 
 .related-ideas-all {
