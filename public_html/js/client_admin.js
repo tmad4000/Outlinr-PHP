@@ -175,7 +175,69 @@ $(document).ready(function() {
 		updateCookie()
 	});
 	//Omnibox (input field) operations
-	
+
+
+	// ~cj codemirror:
+	codeMirror = CodeMirror(document.getElementById('codeMirror-container'), {
+		lineNumbers: false,
+		lineWrapping: true,
+		smartIndent: true,
+		autofocus: true,
+        viewportMargin: Infinity,
+        placeholder: "Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit.",
+		extraKeys: { 
+		  "Tab": function(cm) {
+		     var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+		     if(token.type == "xn-hashtag"){
+		      var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
+		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
+
+		     }else if(token.type == "xn-persontag"){
+		      var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
+		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
+		     }else if(token.type == "xn-maptag"){
+		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
+		     }
+		  },
+		  "Enter": function(cm){
+		  	// straight up enter, not shift+enter
+		  	if(!codeMirror.hintOpen){
+		        // don't submit post if we hit enter when the hint box was open 
+		        submitPostAndGetPosts();
+		    }
+		  },
+		  "Shift-Enter": function(cm){
+		  	// do nothing special
+		  },
+		},
+		onKeyEvent: function(e , event){
+		  if (event.type == "keyup"){   
+		    if(rootNodeViewModel!==null){
+		    	// filter search results 
+		        rootNodeViewModel.filter(codeMirror.getValue() || "");
+		    }
+		  }
+		},
+		mode: 'xn'
+	});
+	codeMirror.hintOpen = false
+	codeMirror.on("change",function(){
+	  var textinput = codeMirror.getValue();
+	  rootNodeViewModel.filter(textinput);
+	});
+	codeMirror.on("startCompletion", function(target, name){
+		codeMirror.hintOpen = true
+	});
+	codeMirror.on("endCompletion", function(){
+		// timeout delay after closing the hintbox, and before post submissions are allowed
+		// this is to prevent submissions when using "enter" on the autocomplete menu 
+		setTimeout(function(){codeMirror.hintOpen = false;},200)
+	})
+
+	/* #TODO: REMOVE old TEXTAREA code */
+
+	/*
+
 	
 	$('textarea#newpost').focus();
 
@@ -251,7 +313,7 @@ $(document).ready(function() {
 
 	});
 
-
+	*/
 
 	docReady=true;
 	//if(localStorage.getItem("posts")!==null) {
@@ -656,7 +718,27 @@ function displayIdeaNames() {
 	    	peopletagssorted.push([peopletags[key],key]);
 	   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
 
-		localStorage.setItem("tags", tags);
+		// ~cj we need to json.stringify before storing dictionaries
+		localStorage.setItem("tags", JSON.stringify(tags));
+
+		// ~cj generate lists of hash tags and person tags, save to localStorage
+		hashTags = [];
+		peopleTags = [];
+		$.each(tags, function(tag,contained){
+		    if(contained){
+		    	if(tag.substring(0,1)=="#"){
+		     		hashTags.push(tag.replace("#",""));
+		     	}else if(tag.substring(0,1)=="~"){
+		     		peopleTags.push(tag.replace("~",""));
+		     	}
+		    }
+		});
+		localStorage.setItem("autocompletionHashtags", JSON.stringify(hashTags));
+		// note: this only grabs persons from this one map 
+		localStorage.setItem("autocompletionPersontags", JSON.stringify(peopleTags));
+
+
+
 		var tagsul = $('ul#idea-hashtags').empty();
 		var tildesul = $('ul#people-list').empty();		
 		for(var k=0;k<hashtagssorted.length;k++){
@@ -817,6 +899,8 @@ function submitPostAndGetPosts(newPostText) {
     return idea.match(tag_regexp)
 	*/
 	
+	$("#codeMirror-container, #codeMirror-container div").addClass("cm-disabled")
+
 
 
 	$.ajax({
@@ -826,12 +910,17 @@ function submitPostAndGetPosts(newPostText) {
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
+                 codeMirror.setValue('')
                  
                  if(boxtoclear)
 	                 boxtoclear.val('');
 
                  displayPosts();
              },
+	        'complete': function(e){
+	        	// enable textarea when ajax returns
+	         	$("#codeMirror-container, #codeMirror-container div").removeClass("cm-disabled")
+	        }
          });
 }
 
