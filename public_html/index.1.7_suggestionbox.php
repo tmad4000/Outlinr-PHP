@@ -236,7 +236,7 @@ echo $r['mapdesc'];
 
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" id="newpost" ></textarea>
+                <!-- <textarea class="span12" id="newpost" ></textarea> -->
               </div>
 
 <!--               <div class='related-ideas-all'>

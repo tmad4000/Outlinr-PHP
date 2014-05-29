@@ -244,7 +244,7 @@ $(document).ready(function() {
 
 	/* #TODO: REMOVE old TEXTAREA code */
 
-	///*
+	/*
 
 	
 	$('textarea#newpost').focus();
@@ -562,13 +562,16 @@ function displayPosts() {
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
-		$('#newpost').val(targetName).focus();
+		//$('#newpost').val(targetName).focus();
+		codeMirror.setValue(targetName)
+		codeMirror.focus();
+
 		rootNodeViewModel.filter(targetName);
 	});
 
 
 	
-    rootNodeViewModel.filter($('textarea#newpost').val());
+    rootNodeViewModel.filter(codeMirror.getValue());
 }
 // Now implemented through an EntryNodeViewModel object and the .filter method
 /*function filterIdeas(query){//#TODO 
@@ -873,8 +876,8 @@ function deleteComment(commentid,pid) {
 function submitPostAndGetPosts(newPostText) {
 	var boxtoclear=false;
 	if(typeof newPostText === "undefined") {
-		newPostText=$('#newpost').val();
-		boxtoclear=$('#newpost');
+		newPostText=codeMirror.getValue();
+		//boxtoclear=$('#newpost');
 	}
 
 
