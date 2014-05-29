@@ -178,26 +178,40 @@ $(document).ready(function() {
 
 
 	// ~cj codemirror:
+	showAutocompletePopup = function(cm) {
+		var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+		
+		if(token.type == "xn-hashtag"){
+			var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
+		}else if(token.type == "xn-persontag"){
+			var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
+		}else if(token.type == "xn-maptag"){
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
+		}
+	}
+
 	codeMirror = CodeMirror(document.getElementById('codeMirror-container'), {
 		lineNumbers: false,
 		lineWrapping: true,
 		smartIndent: true,
 		autofocus: true,
         viewportMargin: Infinity,
-        placeholder: "Type your own cool project idea, suggestion, goal for your group, or complaint here! Press ENTER to submit.",
+        placeholder: localStorage.getItem("placeholder"),
 		extraKeys: { 
-		  "Tab": function(cm) {
-		     var cur = cm.getCursor(), token = cm.getTokenAt(cur);
-		     if(token.type == "xn-hashtag"){
-		      var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
-		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
-
-		     }else if(token.type == "xn-persontag"){
-		      var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
-		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
-		     }else if(token.type == "xn-maptag"){
-		      CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
-		     }
+		  "Tab": showAutocompletePopup,
+		  "#": function(cm){
+		  	setTimeout(function(){showAutocompletePopup(cm)},10);
+		  	return CodeMirror.Pass;
+		  },
+		  "'~'": function(cm){
+		  	setTimeout(function(){showAutocompletePopup(cm)},10);
+		  	return CodeMirror.Pass;
+		  },
+		  "'@'": function(cm){
+		  	setTimeout(function(){showAutocompletePopup(cm)},10);
+		  	return CodeMirror.Pass;
 		  },
 		  "Enter": function(cm){
 		  	// straight up enter, not shift+enter
@@ -208,15 +222,8 @@ $(document).ready(function() {
 		  },
 		  "Shift-Enter": function(cm){
 		  	// do nothing special
+		  	return CodeMirror.Pass;
 		  },
-		},
-		onKeyEvent: function(e , event){
-		  if (event.type == "keyup"){   
-		    if(rootNodeViewModel!==null){
-		    	// filter search results 
-		        rootNodeViewModel.filter(codeMirror.getValue() || "");
-		    }
-		  }
 		},
 		mode: 'xn'
 	});
@@ -224,6 +231,7 @@ $(document).ready(function() {
 	codeMirror.on("change",function(){
 	  var textinput = codeMirror.getValue();
 	  rootNodeViewModel.filter(textinput);
+       
 	});
 	codeMirror.on("startCompletion", function(target, name){
 		codeMirror.hintOpen = true
@@ -236,7 +244,7 @@ $(document).ready(function() {
 
 	/* #TODO: REMOVE old TEXTAREA code */
 
-	/*
+	///*
 
 	
 	$('textarea#newpost').focus();
@@ -313,7 +321,7 @@ $(document).ready(function() {
 
 	});
 
-	*/
+	//*/
 
 	docReady=true;
 	//if(localStorage.getItem("posts")!==null) {

@@ -59,7 +59,7 @@ require_once('../config.inc.php');
    <script src="js/lib/codemirror-4.2/addon/display/placeholder.js"></script>
    <link rel="stylesheet" href="js/lib/codemirror-4.2/addon/hint/show-hint.css">
    <link rel="stylesheet" href="js/lib/codemirror-4.2/lib/codemirror.css">
-   <link href="css/style-codemirror.css" rel="stylesheet">
+   <link href="css/codemirror.css" rel="stylesheet">
 
 
 
@@ -161,7 +161,7 @@ require_once('../config.inc.php');
 
 
 #codeMirror-container { 
-  border: 1px solid #cccccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
   padding: 6px 4px;
 }
@@ -176,17 +176,19 @@ require_once('../config.inc.php');
 
 }
 
-.CodeMirror pre.CodeMirror-placeholder { 
-  color: #999; }
-
-}
 #codeMirror-container div {
   color: rgb(85, 85, 85);
 }
 #codeMirror-container div, .CodeMirror pre.CodeMirror-placeholder  {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 200;
+  font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+.CodeMirror pre {
+  color: #333;
+}
+.CodeMirror pre.CodeMirror-placeholder { 
+  color: #aaa; 
 }
 .cm-disabled {
   color: #ccc;
@@ -199,6 +201,9 @@ require_once('../config.inc.php');
 <script>
   // note: currently this map list only updates on page load
   map_tags = <?=$ideamap_list_json ?>;
+
+  // placeholder text
+  localStorage.setItem("placeholder","Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>");
 </script>
 
 
@@ -227,11 +232,11 @@ echo $r['mapdesc'];
 
         <div id="codeMirror-container"></div>
  
-        <!--
+       
 
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
+                <textarea class="span12" id="newpost" ></textarea>
               </div>
 
 <!--               <div class='related-ideas-all'>
@@ -244,9 +249,9 @@ echo $r['mapdesc'];
                   <div class='suggest-labels'></div>
                 </div>
 
-              </div> ->
+              </div> -->
             </form>
-          -->
+          
           </div>
         </div>
         <div class="row">

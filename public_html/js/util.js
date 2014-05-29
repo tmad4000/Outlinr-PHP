@@ -40,7 +40,8 @@ function changeOrder(nodeChildren){
 }
 
 function updateNrOfIdeasVisible(){
-    if($('textarea#newpost').val() == ""){
+    var store = codeMirror.getValue()
+    if(store == ""){
         //$('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
         if(numberOfIdeasVisible ==0)
             $('#numResults').html("No Ideas here yet");
@@ -49,7 +50,6 @@ function updateNrOfIdeasVisible(){
     }
     else {
         // so that chunks of text dont happen
-        var store = $('textarea#newpost').val();
         if(store.length>40) store = store.substring(0,40)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
@@ -194,7 +194,12 @@ function hashtag(e){
         e.preventDefault();
 
         var targetName=$(e.target).html().replace(/<(?:.|\n)*?>/gm, '');;
-        $('#newpost').val(targetName).focus();
+
+        // clicking a hash tag replaces the whole text, even if you were in the middle of writing.
+        //$('#newpost').val(targetName).focus();
+        codeMirror.setValue(targetName);
+        codeMirror.focus();
+
         rootNodeViewModel.filter(targetName);
 }
 
