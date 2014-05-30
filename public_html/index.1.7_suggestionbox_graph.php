@@ -31,7 +31,7 @@ require_once('../config.inc.php');
   <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'></script>
   
 
-
+  <script type="text/javascript" src="js/client_admin.js"></script>
   <link href="css/typeahead.css" rel="stylesheet">
   
   <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>

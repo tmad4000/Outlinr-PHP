@@ -124,7 +124,6 @@ $(document).ready(function() {
 	        displayPosts();       
 	    }
 	});
-
 	initiateCookie();
 	$('#usrname').change(function (){
        	 updateCookie()
