@@ -20,11 +20,11 @@ require_once('../config.inc.php');
   // ~cj grab list of idea maps for CODEMIRROR autocomplete @mapname
   $query = "SELECT * FROM ideamaps";
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-  $ideamap_names = [];
+  $ideamap_names = array();
   while($ideamap_r = mysqli_fetch_assoc($result)){
     $name = $ideamap_r["mapname"];
     $name = str_replace(" ","_", $name); // mapnames should have _ in the backend anyway
-    $ideamap_names[] = $name;
+    array_push($ideamap_names,$name);
   } 
   $ideamap_list_json = json_encode($ideamap_names);
   // note: for now, idea map list only updates on page load
