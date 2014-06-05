@@ -1,0 +1,2 @@
+<?php
+define('CALNET_KEY','KEY_HERE'); //&lt get param
