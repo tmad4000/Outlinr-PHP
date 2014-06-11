@@ -29,8 +29,10 @@ $time = time();
 $ideastbl = IDEAS_TBL;
 $commentstbl = COMMENTS_TBL;
 
+$ideamapstbl = IDEAMAPS_TBL;
+
 function getMap($MYSQLI_LINK,$mapid){
-	$query = "SELECT * FROM ideamaps WHERE mapid={$mapid}";
+	$query = "SELECT * FROM $ideamapstbl WHERE mapid={$mapid}";
 	//echo $query;
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 	$r = mysqli_fetch_assoc($result);
@@ -54,10 +56,10 @@ function emailNotify($MYSQLI_LINK,$mapid,$body){
 	$e = $m['email'];
 	$mn = $m['mapname'];
 	$u = dirname(dirname(curPageURL()))."/index.1.7_suggestionbox.php?mapid=$mapid";
-	$headers  = "From: GestaltBox<noreply@gestaltbox.com>\r\n";
-	$headers .= "Reply-To: gestaltbox+$mapid@gmail.com\r\n";
+	$headers  = "From: IdeaJoin<noreply@IdeaJoin.com>\r\n";
+	$headers .= "Reply-To: IdeaJoin+$mapid@gmail.com\r\n";
 	$b = "Dear $mn,\nWe have a suggestion for you:\n $body\n\nSee all suggestions at $u";
-	mail($e,"[GestaltBox] New Suggestion for $mn",$b,$headers);
+	mail($e,"[IdeaJoin] New Suggestion for $mn",$b,$headers);
 }
 
 if (!empty($body)) {

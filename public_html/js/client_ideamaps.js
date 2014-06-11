@@ -16,6 +16,7 @@ $(document).ready(function() {
           }else if(event.keyCode == 13)
           {
               $('#postform').submit();
+              alert("New Suggestion Box at bottom");
           }
     });
     function getCaret(el) { 
@@ -94,7 +95,7 @@ function displayPosts() {
 					
 					
 							
-						var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a>' ;
+						var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a> ('+data[i].count+')' ;
 						
 						//if(data[i].parent+0!=0)
 						//	tablerow='<tr><td></td><td colspan="4"><table class="subrow">'+tablerow+'</table></td></tr>'
@@ -179,7 +180,7 @@ function extractIdeaName(idea) {
     i=Math.max(i1,i2);
     
     if(i<0) i=idea.length;
-    return $.trim(idea.substr(0,Math.min(50,i)))
+    return $.trim(idea.substr(0,Math.min(80,i)))
 }
 
 

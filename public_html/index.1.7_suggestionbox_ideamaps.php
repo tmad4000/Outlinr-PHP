@@ -5,7 +5,7 @@ require_once('../config.inc.php');
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>GestaltBox -- Ideas</title>
+  <title>IdeaJoin -- Ideas</title>
   
   
     
@@ -79,6 +79,8 @@ require_once('../config.inc.php');
             text-align:right;
             padding-right:20px;
         }
+
+
         
         .metric {
             font-size:10px;
@@ -107,7 +109,7 @@ require_once('../config.inc.php');
         
         ul.progbarlist {
                 list-style-type: none;
-                padding-top:0
+                padding-top:0;
                 
         }
         
@@ -120,8 +122,13 @@ require_once('../config.inc.php');
         #currentposts > ul.progbarlist {
 
                 padding-left:0;
-                margin-left:0
+                margin-left:0;
+                color:#AAA;
                 
+        }
+
+        #postform {
+          margin-left: 25px;
         }
 
       </style>
@@ -253,7 +260,7 @@ require_once('../config.inc.php');
           </div>-->
       <form id="postform">
         <div class="input-append" style="width:100%">
-          <textarea class="span12" placeholder="New Suggestion Box name" id="newpost" ></textarea>
+          <textarea class="span12" placeholder="+ Create a new Suggestion Box. Press ENTER to submit" id="newpost" ></textarea>
         </div>
       </form>
       

@@ -5,7 +5,7 @@ require_once('../config.inc.php');
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>GestaltBox -- Ideas</title>
+  <title>IdeaJoin -- Ideas</title>
   
   
     
