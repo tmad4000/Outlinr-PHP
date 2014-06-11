@@ -4,3 +4,6 @@ remoteinfo.php
 *_notes/
 
 public_html/pika/
+*.DS_Store
+*.floo
+*.flooignore
