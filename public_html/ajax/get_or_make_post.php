@@ -32,7 +32,9 @@ $commentstbl = COMMENTS_TBL;
 $ideamapstbl = IDEAMAPS_TBL;
 
 function getMap($MYSQLI_LINK,$mapid){
+	global $ideamapstbl;
 	$query = "SELECT * FROM $ideamapstbl WHERE mapid={$mapid}";
+
 	//echo $query;
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 	$r = mysqli_fetch_assoc($result);
