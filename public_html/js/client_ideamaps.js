@@ -25,7 +25,7 @@ $(document).ready(function() {
             $.each($('#currentposts > .progbarlist').children(), function(index, element){
               $(element).show();
               $.each(query,function(i,el){
-                if($(element).find('a').text().toLowerCase().indexOf(el)==-1)
+                if($(element).find('a').text().toLowerCase().indexOf(el.toLowerCase())==-1)
                   $(element).hide();
               });        
             });
