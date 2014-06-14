@@ -52,6 +52,8 @@ else {
 		$rows = array();
 
 		while ($r = mysqli_fetch_assoc($result)) {
+
+			$r=array_map(trim,array_map(stripslashes,$r));
 			$rows[]=$r;
 		}
 		print json_encode($rows);

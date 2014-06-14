@@ -136,11 +136,11 @@ function displayPosts() {
 		$bars.each(function() {
 			$(this).text($(this).width()/4 + "%");
 		});
-	   $(".idea").popover({
-			trigger: "hover", 
-		  offset: 10
+	  //  $(".idea").popover({
+			// trigger: "hover", 
+		 //  offset: 10
 
-		});
+		// });
     }
 }
 
