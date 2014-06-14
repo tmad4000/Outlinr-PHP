@@ -94,8 +94,10 @@ function displayPosts() {
 					status ="<td class='status'>" + '<div class="status sc'+data[i].status +'" >'+ '</div>' + "</td>";
 					
 					
-							
-						var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a> ('+data[i].count+')' ;
+						var linkURL= data[i].linkurl=="" ? 'index.1.7_suggestionbox.php?mapid='+data[i].mapid : data[i].linkurl;
+
+            var tablerow = '<a href="'+linkURL+'" target="_blank" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a> ('+data[i].count+')' ;
+//            var tablerow = '<a href="index.1.7_suggestionbox.php?mapid='+data[i].mapid+'" target="_blank" class="idea" rel="popover" data-content="'+data[i].mapname+'" data-original-title="'+n+'">'+n + '</a> ('+data[i].count+')' ;
 						
 						//if(data[i].parent+0!=0)
 						//	tablerow='<tr><td></td><td colspan="4"><table class="subrow">'+tablerow+'</table></td></tr>'
