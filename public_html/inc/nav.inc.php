@@ -24,7 +24,8 @@ $r=array_map(stripslashes,$r);
       
       <span class="brand">
         <img src="" height="20" width="20">
-        &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>IdeaJoin</a> 
+        &nbsp; <a class="outline" href='http://ideajoin.com'>IdeaJoin</a> 
+        <!-- &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>IdeaJoin</a>  -->
         <span>&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
         
         <!--<img src="images/email.png" id="emailicon"/>-->
@@ -33,7 +34,10 @@ $r=array_map(stripslashes,$r);
         <ul class="nav">
 
 
-          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? ' style="display:none"' : '' ?>><a href="index.1.7_suggestionbox_ideamaps.php">+ Make a suggestion box</a></li>
+          <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? ' style="display:none"' : '' ?>>
+          <a href="http://ideajoin.com">+ Make a suggestion box</a>
+          <!-- <a href="index.1.7_suggestionbox_ideamaps.php">+ Make a suggestion box</a> -->
+          </li>
           
           
 
