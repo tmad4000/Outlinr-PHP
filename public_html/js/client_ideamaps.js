@@ -54,46 +54,46 @@ $(document).ready(function() {
 });
 
 function displayPosts() {
-    if (localStorage.getItem("posts") !== null){
-      var jsonData = localStorage.getItem("posts");
-      var data = $.parseJSON(jsonData);
-		
-		  var progbarlist="<ul class='progbarlist'>";
-		
-      for (var i = 0; i < data.length; i++) {
-        progbarlist+="<li>";
-		
-			  var table = "" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
+  if (localStorage.getItem("posts") !== null){
+    var jsonData = localStorage.getItem("posts");
+    var data = $.parseJSON(jsonData);
+	
+	  var progbarlist="<ul class='progbarlist'>";
+	
+    for (var i = 0; i < data.length; i++) {
+      progbarlist+="<li>";
+	
+		  var table = "" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
 
-				var time = new Date(data[i].time * 1000);
-				//nl2br(processIdea(data[i].body))
-				n=extractIdeaName(data[i].mapname)		
-				status ="<td class='status'>" + '<div class="status sc'+data[i].status +'" >'+ '</div>' + "</td>";
-        var tablerow = '<a href="ideabox.php?mapid='+data[i].mapid+'" class="idea">'+n + '</a>';
+			var time = new Date(data[i].time * 1000);
+			//nl2br(processIdea(data[i].body))
+			n=extractIdeaName(data[i].mapname)		
+			status ="<td class='status'>" + '<div class="status sc'+data[i].status +'" >'+ '</div>' + "</td>";
+      var tablerow = '<a href="ideabox.php?mapid='+data[i].mapid+'" class="idea">'+n + '</a>';
 
 
-			  table+=tablerow;
-			  table+="";
-			
-	      if(data[i].parent+0!=0)
-			    table="<ul class='progbarlist'><li>"+table+"</li></ul>";
-	      progbarlist+=table+"</li>";
-      }
-        
-		  progbarlist+="</ul>";
-      $("#currentposts").html(progbarlist);
-      displayIdeaNames();
+		  table+=tablerow;
+		  table+="";
 		
-		  var $bars = $('.bar');
-  		$bars.each(function() {
-  			$(this).text($(this).width()/4 + "%");
-  		});
-
-      $(".idea").popover({
-  			trigger: "hover", 
-  		  offset: 10
-  		});
+      if(data[i].parent+0!=0)
+		    table="<ul class='progbarlist'><li>"+table+"</li></ul>";
+      progbarlist+=table+"</li>";
     }
+      
+	  progbarlist+="</ul>";
+    $("#currentposts").html(progbarlist);
+    displayIdeaNames();
+	
+	  var $bars = $('.bar');
+		$bars.each(function() {
+			$(this).text($(this).width()/4 + "%");
+		});
+
+    $(".idea").popover({
+			trigger: "hover", 
+		  offset: 10
+		});
+  }
 }
 
 function displayIdeaNames() {
