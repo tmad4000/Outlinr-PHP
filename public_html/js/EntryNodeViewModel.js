@@ -92,14 +92,9 @@ function EntryNodeViewModel(entryNodeModel) {
 				var commentTime = moment(currComment.time * 1000).fromNow();
 				//var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
 				var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
-				if(getCookie("c"+currComment.cid)!= ""){
-					var commentS='<div><div class="comment-upvote on"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
+
+				var commentS = '<div><div class="comment-upvote '+ (getCookie("c"+currComment.cid)!= "" ? "on":"") +'"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
 				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
-				}
-				else {
-					var commentS='<div><div class="comment-upvote"><i class="ion-ios7-arrow-up"></i>'+currComment.upvotes+'</div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
-				}
 				
 				cl+="<li>"+commentS+"</li>";
 			})
@@ -112,7 +107,7 @@ function EntryNodeViewModel(entryNodeModel) {
 		}
 	}
 
-/* //#future -- needs post dict
+	/* //#future -- needs post dict
 	this.hideComments = function() {
 		this.getViewDomE().children("li.body").find("ul.comments").removeClass('init-expanded').addClass('init-hidden');
 	}
@@ -213,14 +208,13 @@ function EntryNodeViewModel(entryNodeModel) {
 				'</div>';
 
 				var addRel="<div class='related-ideas-all'>" + 
-						"<ul class='related-ideas'>" + 
-						"</ul>" + 
-						"<div class='related-idea-input'>" +
-						"	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>" +
-						"<ul class='suggest-labels'></ul>"+
-						"</div>" +
-				"</div>";
-
+					"<ul class='related-ideas'>" + 
+					"</ul>" + 
+					"<div class='related-idea-input'>" +
+					"	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>" +
+					"<ul class='suggest-labels'></ul>"+
+					"</div>" +
+					"</div>";
 
 				//entryNodeBody+=comments;
 				var del = isAdmin ? " · <div class='delete'><a href='#'>Delete</a></div>" : "";
@@ -234,36 +228,31 @@ function EntryNodeViewModel(entryNodeModel) {
 					commentExpandLink+
 					"<div class='ideaTxtFooter-r'>"+
 					status + " · " + 
-					"<span class='timecol'>"+time+"</span>"+del+"</div> " +"</div>"+comments+"</td>" +  
-
+					"<span class='timecol'>"+time+"</span>"+del+"</div> " +"</div>"+comments+"</td>" + 
 					"</tr>";
 
 		   	table+="</table>";
 
 		   	entryNodeBody="<div>"+table+"</div>";
 		   	entryNodeBody=$($.parseHTML(entryNodeBody));
-			var eTView=this.eT.render();
+				var eTView=this.eT.render();
 
 			// there should only ever be one
 			entryNodeBody.find("div.ideaTxtInner").append(eTView);
 		}
 		
-
 		//render children
 		//View means HTML
 		var childrenListView=$($.parseHTML("<ul class='entrylist'></ul>"));
 		for(var key in this.children) {
 			var cNRendered=this.children[key].render();
-
 			var entryNodeChildView=$($.parseHTML("<li></li>\n"));
 			entryNodeChildView.append(cNRendered);
-
 			childrenListView.append(entryNodeChildView);
 		}
 
 		this.viewDomE = $($.parseHTML("<ul class='entryNode' -idea-id='"+this.entryNodeModel.pid+"'>" + 
 		"</ul>"));
-		
 
 		var eNBLi=$($.parseHTML("<li class='body'></li>"));
 		eNBLi.append(entryNodeBody);
@@ -273,8 +262,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 		this.viewDomE.append(eNBLi);
 		this.viewDomE.append(cLVLi);
-		// if(this.eT !==null)	
-		// 	this.eT.killHTML();
+
 		return this.viewDomE;
 	}
 }

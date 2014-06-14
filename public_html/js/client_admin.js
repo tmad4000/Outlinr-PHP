@@ -1,22 +1,8 @@
 var docReady=false;
 var postsLoaded=false;
-getPosts();
-
-//getPosts() -> displayPosts() 
 
 var numFilterTos=0;
 var nextFilter=null;
-
-function getURLParameter(sParam){
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++){
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam){
-            return sParameterName[1];
-        }
-    }
-}
 
 var isDefaultUsrHandle = true;
 var setStatusRequest = null;
@@ -29,9 +15,10 @@ var emailAddress;
 var isAdmin = false;
 var globalData;
 
+getPosts();
+
 $(document).ready(function() {
 	
-
 	isAdmin = $('#is-admin').val() === 'true';
 
 	if(isAdmin) {
@@ -39,29 +26,29 @@ $(document).ready(function() {
 		
 		$('#box-description-text').attr('contentEditable',true);
 		$('[contenteditable]').on('focus', function() { // http://stackoverflow.com/questions/1391278/contenteditable-change-events
-		    var $this = $(this);
-		    $this.data('before', $this.html());
-		    return $this;
+	    var $this = $(this);
+	    $this.data('before', $this.html());
+	    return $this;
 		}).on('blur keyup paste', function() {
-		    var $this = $(this);
-		    if ($this.data('before') !== $this.html()) {
-		        $this.data('before', $this.html());
-		        $this.trigger('change');
-		    }
-		    return $this;
+	    var $this = $(this);
+	    if ($this.data('before') !== $this.html()) {
+        $this.data('before', $this.html());
+        $this.trigger('change');
+	    }
+	    return $this;
 		});
 
 		$('#box-description-text').change(editDesc);
-
 		
 	}
 	
-	
 
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
+
 	$(window).resize(function() {
 		$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 	});
+
 	getEmail();
 	$('#emailicon').popover({
 		placement:"bottom",
@@ -74,55 +61,51 @@ $(document).ready(function() {
 		//expandidea
 	});	
 
-	function emailPopoverLoad(){
-		
+	function emailPopoverLoad(){	
 		$(this).val(emailAddress);
 		$(this).focus();
 	}
-
 	
 	$('.navbar-form').submit(function() {
-		
 		return false;
 	});	
 	$('#postform').submit(function() {
-		numberOfIdeasVisible =0;	
+		numberOfIdeasVisible = 0;	
 		submitPostAndGetPosts();
 		// never gets here
 		return false;
 	});
 	$('#sortByDate').click( function(){
-	    if(!$(this).hasClass('active')){
-	        filterToggle = "Date";
-	        $('#sortByUpvotes').removeClass('active'); 
-	        $('#sortByStatus').removeClass('active'); 	        
-	        $(this).addClass("active");
-	        
-
-	        displayPosts()
-	    }
+    if(!$(this).hasClass('active')){
+      filterToggle = "Date";
+      $('#sortByUpvotes').removeClass('active'); 
+      $('#sortByStatus').removeClass('active'); 	        
+      $(this).addClass("active");
+      
+      displayPosts()
+    }
 	});
 
 	$('#sortByUpvotes').click( function(){
-	    if(!$(this).hasClass('active')){
-	        filterToggle = "Upvotes";
-	        $('#sortByDate').removeClass('active'); 
-	        $('#sortByStatus').removeClass('active'); 
-	        $(this).addClass("active");	       		
+    if(!$(this).hasClass('active')){
+      filterToggle = "Upvotes";
+      $('#sortByDate').removeClass('active'); 
+      $('#sortByStatus').removeClass('active'); 
+      $(this).addClass("active");	       		
 
-	        displayPosts()        
-	    }
+      displayPosts()        
+    }
 	})
 
 	$('#sortByStatus').click(function(){
-	    if(!$(this).hasClass('active')){
-	        filterToggle = "Status";
-	        $('#sortByDate').removeClass('active');
-	       	$('#sortByUpvotes').removeClass('active'); 
-	        $(this).addClass("active");  		
+    if(!$(this).hasClass('active')){
+      filterToggle = "Status";
+      $('#sortByDate').removeClass('active');
+     	$('#sortByUpvotes').removeClass('active'); 
+      $(this).addClass("active");  		
 
-	        displayPosts();       
-	    }
+      displayPosts();       
+    }
 	});
 
 	initiateCookie();
@@ -174,8 +157,9 @@ $(document).ready(function() {
 		}
 		updateCookie()
 	});
+
+
 	//Omnibox (input field) operations
-	
 	
 	$('textarea#newpost').focus();
 
@@ -186,29 +170,25 @@ $(document).ready(function() {
 	});
 	$('textarea#newpost').keyup(function (event) {
 		var newpostObj=$(this);
-		
-		
-				
+						
 		// #TODO #Future trim repeated enters       
 		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
-        	var content = this.value;
-        	var caret = getCaret(this);
-        	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
-        	event.stopPropagation();
-        } 
-        else if(event.keyCode == 13){ // enter
-        	// removes the newline
-        	var content = this.value;
-        	var caret = getCaret(this);
-        	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-        	event.stopPropagation();
-        	$('#postform').submit();
-        }
-        else {
-        	if(rootNodeViewModel!==null){
-				
-				
-				var numIdeas=Object.keys(rootNodeViewModel).length
+    	var content = this.value;
+    	var caret = getCaret(this);
+    	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+    	event.stopPropagation();
+    } 
+    else if(event.keyCode == 13){ // enter
+    	// removes the newline
+    	var content = this.value;
+    	var caret = getCaret(this);
+    	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+    	event.stopPropagation();
+    	$('#postform').submit();
+    }
+    else {
+      if(rootNodeViewModel!==null){
+				var numIdeas=Object.keys(rootNodeViewModel).length;
 				
 				var minQPer=30
 				if(numIdeas>20)
@@ -235,23 +215,15 @@ $(document).ready(function() {
 				//if filter pending
 				else {
 					nextFilter=newpostObj.val() || "";
-				}
-				
-				
-				
-				
-        	}
-        }
-		
-		 
-    });
+				}		
+      }
+    }		 
+	});
+
 	$('textarea#newpost').change(function (event) {
 		rootNodeViewModel.filter($(this).val());
 		//#TODO never gets here
-
 	});
-
-
 
 	docReady=true;
 	//if(localStorage.getItem("posts")!==null) {
@@ -261,12 +233,12 @@ $(document).ready(function() {
 
 });
 
-
 //Handles new line (shift+enter) in the omnibox
 function getCaret(el) { 
 	if (el.selectionStart) { 
 		return el.selectionStart; 
-	} else if (document.selection) { 
+	} 
+	else if (document.selection) { 
 		el.focus(); 
 
 		var r = document.selection.createRange(); 
@@ -341,23 +313,19 @@ function setupNode(postEl) {
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
 
 			toggleComment(idS);
-
-
-//			getComment(idS);
-
 		});
 
 		postEl.find('.commentsinput').keydown(function (event) {
 			if(event.keyCode == 13 && !event.shiftKey){ // enter
-	        	event.preventDefault();
-	        }
+	      event.preventDefault();
+	    }
 		});
+
 		postEl.find('.commentsinput').keyup(function(e){
 			e.preventDefault();
 			if (event.keyCode == 13 && event.shiftKey) { // shift-enter
-	        	
-	        	event.stopPropagation();
-	        } 
+	      event.stopPropagation();
+	    } 
 			else if(event.keyCode == 13) { // enter
 				var content = this.value;
     		var caret = getCaret(this);
@@ -373,28 +341,24 @@ function setupNode(postEl) {
 				var idS=$(this).closest('.entryNode').attr('-idea-id');
 				submitAndGetComments(idS);
 			}
-
 		});
-
 
 		postEl.find('td.votes').click(function() {
 			var ideaid=$(this).attr('-idea-id')-0;
 
-			$('td.votes[-idea-id='+ideaid+']').children('.vote').toggleClass('on'); 
-			
+			$('td.votes[-idea-id='+ideaid+']').children('.vote').toggleClass('on'); 		
 
 			var num=$(this).children('span.votes').html()-0; 
 			if ($(this).children('.vote').hasClass('on')) {
 				num+=1;
-				$(this).children('span.votes').html(num) 
+				$(this).children('span.votes').text(num) 
 				doUpvote(ideaid,'up');
 			}
 			else {
 				num-=1;
-				$(this).children('span.votes').html(num) 
+				$(this).children('span.votes').text(num) 
 				doUpvote(ideaid,'down');
-			}
-			
+			}	
 		});
 
 		// TODO universalize
@@ -403,13 +367,13 @@ function setupNode(postEl) {
 			var num=$(this).find('span').text()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
-				num+=1;
+				num += 1;
 				$(this).find('span').text(num);
 
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'up');
 			}
 			else {
-				num-=1;
+				num -= 1;
 				$(this).find('span').text(num);
 
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
@@ -424,13 +388,10 @@ var rootNodeViewModel = null;
 function displayPosts() {
 	numberOfIdeasVisible =0;
 	if (localStorage.getItem("posts")){
-		
-
 		var jsonData = localStorage.getItem("posts");
 		var rootNodeModel = $.parseJSON(jsonData)['treePosts'];
 
 		rootNodeViewModel=new EntryNodeViewModel(rootNodeModel);
-
 
 		getComments();
 
@@ -446,14 +407,13 @@ function displayPosts() {
 		setupNode($('body'));
 
 		// TODO include in above
-			// Voting hover status
-			$("[rel='popover']").popover({
-				trigger: "hover", 
-				//placement: 'top', IDEALLY want this but it goes wrong
-				offset: 10,
-				html:true
-			});
-		
+		// Voting hover status
+		$("[rel='popover']").popover({
+			trigger: "hover", 
+			//placement: 'top', IDEALLY want this but it goes wrong
+			offset: 10,
+			html:true
+		});	
 	}
 
 	//ADD #JQUERY HERE
@@ -473,7 +433,6 @@ function displayPosts() {
 		}
 		$('[-idea-id="'+targetName+'"]').show();
 		
-
 		var offset = $($("a[name='"+targetName+"']")).offset();
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
 		$('html, body').animate({scrollTop:scrollto}, 0);
@@ -487,44 +446,13 @@ function displayPosts() {
 		rootNodeViewModel.filter(targetName);
 	});
 
-
-	
-    rootNodeViewModel.filter($('textarea#newpost').val());
+  rootNodeViewModel.filter($('textarea#newpost').val());
 }
-// Now implemented through an EntryNodeViewModel object and the .filter method
-/*function filterIdeas(query){//#TODO 
-	query = removeCommonWords(query.replace(/[^a-zA-Z0-9# ,\r\n]/gi,"").toLowerCase());
-	query = query.split(/[\r\n ,]+/);
-
-	$('#currentposts > ul.entryNode > li > ul.entrylist > li .entryNode').each(function(){
-		var h=true;
-		var itN=$(this).find('td.ideaTxt');
-		var pid=itN.children(".ideaname").attr('name');
-		var it=itN.text();
-		var tem=new EntryNodeTextViewModel(it,pid);
-
-		for(var i=0;i<query.length;i++){
-			var mi = it.toLowerCase().indexOf(query[i]);
-
-			if(mi>=0&&query[i]!=""){//ignore empty strings from query
-				
-				tem.setBold(mi,query[i].length);
-				var r = tem.render();
-				itN.html(r); //TODO add third param to this, pass whether bold or not so we can put it inside.
-				h=false;
-			}
-		}
-		if(!h||(query.length==1 && query[0]=="")) $(this).css('display','inherit'); 
-		else $(this).css('display','none');
-	});
-
-}*/
 
 function toggleComment(pid) {
 	var cf=$('.commentform[-idea-id="'+pid+'"]');
 	if(pid in expandedComments) { //hide
 		delete expandedComments[pid];
-
 		cf.removeClass('init-expanded').addClass('init-hidden');
 	}
 	else { // show
@@ -554,7 +482,6 @@ function displayIdeaNames() {
 		console.log(x=data);
 		updateGlobalData(data);
 		
-
 		var cs = $.parseJSON(localStorage.getItem("comments"));
 		// idea names 
 		// Idea Names by Upvotes
@@ -639,13 +566,13 @@ function displayIdeaNames() {
 		});
 		*/
 		var hashtagssorted = [];
-	    for (var key in hashtags)
-	    	hashtagssorted.push([hashtags[key],key]);
-	    hashtagssorted.sort(function(a, b) {return b[0] - a[0]}) 
-	    var peopletagssorted = [];
-	    for (var key in peopletags)
-	    	peopletagssorted.push([peopletags[key],key]);
-	   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+    for (var key in hashtags)
+    	hashtagssorted.push([hashtags[key],key]);
+    hashtagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+    var peopletagssorted = [];
+    for (var key in peopletags)
+    	peopletagssorted.push([peopletags[key],key]);
+   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
 
 		localStorage.setItem("tags", tags);
 		var tagsul = $('ul#idea-hashtags').empty();
@@ -675,7 +602,6 @@ function displayIdeaNames() {
 			else
 				tildesul.append('<li><span class="badge">'+upv+'pts</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
 		}
-
 	}
 }
 
@@ -710,7 +636,6 @@ function doUpvoteComment(commentid,upOrDown) {
 	});
 }
 
-
 function cycleStatus(ideaid) {
 	if(setStatusRequest !==null && setStatusRequestIdeaid==ideaid){
 		setStatusRequest.abort();
@@ -743,9 +668,7 @@ function cycleStatus(ideaid) {
 				getPosts();
 			},
 		});
-	},500);
-	
-	
+	},500);	
 }
 
 function deleteNode(ideaid) {
@@ -778,7 +701,6 @@ function submitPostAndGetPosts(newPostText) {
 		boxtoclear=$('#newpost');
 	}
 
-
 	//#HACK only usrhandle currently visible
 
 	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
@@ -807,28 +729,25 @@ function submitPostAndGetPosts(newPostText) {
     
     return idea.match(tag_regexp)
 	*/
-	
-
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
 		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(newPostText),'uid' : $('#usrhandle').val()}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
-                 // todo: parse data and add into our table
-                 localStorage.setItem("posts", jsonData);
-                 
-                 if(boxtoclear)
-	                 boxtoclear.val('');
+			// todo: parse data and add into our table
+			localStorage.setItem("posts", jsonData);
 
-                 displayPosts();
-             },
-         });
+			if(boxtoclear)
+			boxtoclear.val('');
+
+			displayPosts();
+    },
+  });
 }
 
-
 function submitPostAndGetPostsAndLink(newPostText,source) {
-//#HACK only usrhandle currently visible
+	//#HACK only usrhandle currently visible
 
 	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
 	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -839,14 +758,13 @@ function submitPostAndGetPostsAndLink(newPostText,source) {
 		var processedname = name;
 	}
 	
-	
 	//+$('#usrhandle').val()+\
 	//#hack
 	var np = newPostText;
 	var ind=np.indexOf('~'+$('#usrhandle').val());
 	
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
-//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+	//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
 			
 		np+=' ~'+$('#usrhandle').val();
 	}
@@ -856,8 +774,6 @@ function submitPostAndGetPostsAndLink(newPostText,source) {
     
     return idea.match(tag_regexp)
 	*/
-	
-
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
@@ -912,13 +828,11 @@ function getComments() {
 				commentsModel[comment.pid].push(comment);				
 			})
 			rootNodeViewModel.loadCommentsRecurs();
-
 		},
 	});
 }
 
 function editDesc(){
-
 	$.ajax({
 		'url': 'ajax/api.php', //#todo
 		'data': {'mapdesc':$('#box-description-text').text(),'mapid':getURLParameter("mapid")},
@@ -930,7 +844,6 @@ function editDesc(){
 }
 
 function submitAndGetEmail(){
-
 	$.ajax({
 		'url': 'ajax/email.php',
 		'data': {'notificationemail':$('#notificationemail').val(),'mapid':getURLParameter("mapid")},
@@ -941,16 +854,12 @@ function submitAndGetEmail(){
 	});
 }
 
-
 //#todo
 function hideOnEnter(event){
 	if(event.keyCode == 13) //enter key
 		$(this).popover('hide');
 	//console.log(this)
-
 }
-
-
 
 function getEmail(){
 	$.ajax({

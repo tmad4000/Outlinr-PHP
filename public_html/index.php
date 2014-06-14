@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IdeaBox</title>
+  <title>IdeaJoin</title>
   <?php include('inc/includes.php'); ?>
   <script type="text/javascript" src="js/client_ideamaps.js"></script>
   <link rel="stylesheet/less" type="text/css" href="styles/index.less" />
@@ -15,12 +15,12 @@
     <div class="row" id="splash">
       <div class="col-sm-12">
         <div id="landingsplash">
-          IdeaBox
+          IdeaJoin
         </div>
         <div id="marketing">
           <h2>An ideation tool for your community. </h1>
           <h5>Vote on ideas, comment, connect them and report on progress</h5>
-          <h2>It's Free and really easy to setup</h1>
+          <h2>It's Free and really easy to start</h1>
           <h5>Just enter the name of your box and hit enter!</h5>
         </div>
       </div>

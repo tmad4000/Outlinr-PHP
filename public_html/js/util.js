@@ -8,6 +8,38 @@ var statusTable={0:"",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK
 var filterToggle = 'Date'; // Date, Upvote, Hot, Status
 
+function getURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++){
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam){
+            return sParameterName[1];
+        }
+    }
+}
+
+function timeToString(hours, minutes) {
+  var xm = hours < 12 ? "am" : "pm";
+  
+  // Convert hours from 0-24 to 1-12.
+  hours = (hours + 11) % 12 + 1;
+  
+  if (minutes < 10)
+      minutes = "0" + minutes;
+  
+  return hours + ":" + minutes + " " + xm;
+}
+
+function dateToString(month, day) {
+    month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month];
+    return month + " " + day;
+}
+
+function nl2br(str) {
+    return str.replace(/\n/g, '<br>');
+}
+
 function changeOrder(nodeChildren){
     // if filtertoggle upvotes
     var sortable = [];
