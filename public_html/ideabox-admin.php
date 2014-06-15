@@ -19,7 +19,7 @@
     $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
     $r = mysqli_fetch_assoc($result);
   ?> 
-  <title>IdeaBox -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+  <title>IdeaJoin -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   
   <?php include('inc/includes.php'); ?>
 
