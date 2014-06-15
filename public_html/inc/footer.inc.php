@@ -17,10 +17,10 @@ $r = mysqli_fetch_assoc($result)
     <div class="row">
       <div class="col-sm-9">
         <a href="<?="ideabox-admin.php?mapid=$getmapid" ?>">Admin Dashboard</a><br>
-        <p>Powered by <a href="index.php">IdeaBox</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
+        <p>Powered by <a class="underline" href="index.php">IdeaJoin</a>. <a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></p>
       </div>
       <div class="col-sm-3 feedbackbuttoncontainer">
-<a style="margin-left:-190px; margin-right:40px" href="index.php">+ Make an idea box</a>
+<a class="underline" style="margin-left:-190px; margin-right:40px" href="index.php">Make a new IdeaJoin</a>
         <a href="ideabox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
       </div>
     </div>

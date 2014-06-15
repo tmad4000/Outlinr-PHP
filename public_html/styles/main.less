@@ -90,16 +90,31 @@ footer {
 	height:  73px;
 	clear: both;
 	background: white;
+	color: #666;
 	padding-top: 17px;
+	border-top: 1px solid grey;
 } 
 
 footer a:hover {
-	color: #333;
+	color: #444;
+	text-decoration: none;
 }
 
+
+
 footer a {
-	color: black;
-	text-decoration: underline;
+	color: #666;
+}
+
+a.underline:hover {
+	color: #444;
+	border-bottom: 2px solid #bbb;
+	text-decoration: none;
+}
+
+a.underline {
+	color: #666;
+	border-bottom: 2px solid #ddd;
 }
 
 /*Opera Fix*/
@@ -150,7 +165,7 @@ body {
 #feedbackbutton {
 	margin-top: 0px;
 	background: transparent;
-	border: 1px solid @alizarin;
+	border: 1px solid #666;
 	font-size: 16px;
 	text-decoration: none;
 	padding: 8px 15px 9px 15px;
@@ -158,13 +173,13 @@ body {
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
 	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	outline: none;
-	color: @alizarin;
+	color: #666;
 	border-radius: 5px;
 	display: inline-block;
 }
 
 #feedbackbutton:hover{
-	background: @alizarin;
+	background: #666;
 	color: white;
 }
 
