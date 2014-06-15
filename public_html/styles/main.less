@@ -4,6 +4,8 @@
 @screen-md-min: 992px;
 @screen-lg-min: 1200px;
 
+@body-bg: #eee;
+
 * {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -32,7 +34,17 @@
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: @screen-md-min) {
 	.outermost > .row:nth-of-type(2),.outermost > .row:nth-of-type(3) {
-		margin-left: 50px;
+		//margin-left: 50px;
+	}
+
+	.row.cp .col-sm-12 {
+		padding-right: 0px;
+	}
+
+	.col-sm-12.ml {
+		margin: 0px;
+		padding: 0px;
+		padding-left: 65px;
 	}
 
 	nav > .container-fluid {
@@ -43,7 +55,11 @@
 /* Large devices (large desktops, 1200px and up) */ 
 @media (min-width: @screen-lg-min) {
 	.outermost > .row:nth-of-type(2), .outermost > .row:nth-of-type(3) {
-		margin-left: 100px;
+		//margin-left: 100px;
+	}
+	.col-sm-12.ml {
+		margin-left: 115px;
+		padding: 0px;
 	}
 
 	nav > .container-fluid {
@@ -73,8 +89,7 @@ footer {
 	margin-top:  -73px;
 	height:  73px;
 	clear: both;
-	background: @silver;
-	color: white;
+	background: white;
 	padding-top: 17px;
 } 
 
@@ -84,6 +99,7 @@ footer a:hover {
 
 footer a {
 	color: black;
+	text-decoration: underline;
 }
 
 /*Opera Fix*/
@@ -96,7 +112,7 @@ body:before {
 }
 
 body {
-	background: #FFF;
+	background: @body-bg;
 	font-weight: 300;
 	-webkit-font-smoothing: antialiased;
 }
@@ -134,22 +150,22 @@ body {
 #feedbackbutton {
 	margin-top: 0px;
 	background: transparent;
-	border: 1px solid white;
+	border: 1px solid @alizarin;
 	font-size: 16px;
 	text-decoration: none;
 	padding: 8px 15px 9px 15px;
 	-webkit-font-smoothing: subpixel-antialiased;
-	-webkit-transition: border .05s linear, color .05s linear, background-color .05s linear;
-	transition: border .05s linear, color .05s linear, background-color .05s linear;
+	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	outline: none;
-	color: white;
+	color: @alizarin;
 	border-radius: 5px;
 	display: inline-block;
 }
 
 #feedbackbutton:hover{
-	background: white;
-	color: royalblue;
+	background: @alizarin;
+	color: white;
 }
 
 #feedbackbutton:active{
@@ -173,17 +189,12 @@ div.container {
 }
 
 .tags {
-	border-left: 1px solid #efefef;
 	font-size: 12pt;
 	list-style-type:  none;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	font-weight: 600;
 	margin-left: 2px;
-}
-
-.tags li {
-	padding-left: 15px;
 }
 
 #ideanames {
@@ -233,9 +244,8 @@ textarea:focus,input[type="text"]:focus {
 	-webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	box-shadow: none !important;
-	background: white;
 	border: 0px;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .navbar {
@@ -280,6 +290,7 @@ textarea:focus,input[type="text"]:focus {
 	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
+	background: white;
 }
 
 #filterBy i {
@@ -349,7 +360,8 @@ div.container textarea.span11 {
 #filterBy .active {
 	outline: 0;
 	text-decoration: none;
-	color: @midnight-blue;
+	color: @turquoise;
+	border-bottom: 1px solid @turquoise;
 }
 
 #filterBy a:hover {
@@ -421,6 +433,19 @@ div.container textarea.span11 {
 	background-color: #f9f9f9;
 }
 
+.star-idea {
+	width: 50px;
+	height: 40px; 
+	font-size: 30px;
+	color: @silver;
+	text-align: center;
+	vertical-align: middle;
+
+	i {
+		cursor: pointer;
+	}
+}
+
 .votes {
 	height: 40px;
 	width: 30px;
@@ -436,13 +461,12 @@ div.container textarea.span11 {
   margin-left: 0px;
 } 
 
-.votes:hover {
-	background: @midnight-blue;
-	color: white;
-}
-
 .vote.on {
   color: rgb(218, 46, 38);
+}
+
+a.showcomments {
+	font-weight: 500;
 }
 
 a.showcomments:hover {
@@ -871,6 +895,17 @@ div.ideaTxtInner > .entryNodeText {
 	padding-bottom: 5px;
 }
 
+.entryNode > .body {
+	background: white;
+	border: 1px solid #ddd;
+	margin-top: 2px;
+	border-radius: 3px;
+}
+
+.entryNode[-idea-id="null"] > .body {
+	border: 0px;
+}
+
 div.ideaTxtInner {
 	overflow: hidden;
 	padding-bottom: 5px;
@@ -914,4 +949,9 @@ div.ideaTxtInner {
 #box-description {
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+	background: transparent;
+	border-bottom: 1px solid @turquoise;
 }
