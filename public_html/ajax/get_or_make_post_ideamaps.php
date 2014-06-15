@@ -28,6 +28,18 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 
 $rows = array();
 while ($r = mysqli_fetch_assoc($result)) {
-    $rows []= array_map(stripslashes,$r);
+	$tmp=array_map(stripslashes,$r);
+
+	if($tmp['linkurl']) {
+		if(!preg_match('/^http:\//',$tmp['linkurl'])) {
+			$tmp['linkurl']="http://".$tmp['linkurl'];
+
+			if(!preg_match('/\.[A-Za-z]+$/',$tmp['linkurl']))
+				$tmp['linkurl']=$tmp['linkurl'].".ideajoin.com";
+		}
+	}
+
+    $rows []= $tmp;
+
 }
 print json_encode($rows);

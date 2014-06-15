@@ -23,7 +23,7 @@ $r=array_map(stripslashes,$r);
       </a>
       
       <span class="brand">
-        <img src="" height="20" width="20">
+        <!-- <img src="" height="20" width="20"> -->
         &nbsp; <a class="outline" href='http://ideajoin.com'>IdeaJoin</a> 
         <!-- &nbsp; <a class="outline" href='index.1.7_suggestionbox_ideamaps.php'>IdeaJoin</a>  -->
         <span>&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span>
@@ -36,6 +36,8 @@ $r=array_map(stripslashes,$r);
 
           <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? ' style="display:none"' : '' ?>>
           <a href="http://ideajoin.com">+ Make a suggestion box</a>
+
+
           <!-- <a href="index.1.7_suggestionbox_ideamaps.php">+ Make a suggestion box</a> -->
           </li>
           
@@ -54,7 +56,10 @@ $r=array_map(stripslashes,$r);
 <!--        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>-->
         <p class="navbar-text pull-right">
         <!--<input type="text" id="usremail" placeholder="(optional) Email"><input type="text" id="usrname" placeholder="(optional) Name">-->
+        <span style="padding-right:16px;"><a href="https://drive.google.com/file/d/0B-pHhDIV_JyBSUtfV1FOcDR2b1U/edit?usp=sharing" target="_blank">Sample Committee Motion</a></span>
         <span style="padding-right:16px;"><a href="http://ideaflowplan.tk/" target="_blank">Grand Vision</a></span>
+
+        
         <span style="font-size:16pt;">~</span><input type="text" id="usrhandle" class="usr" placeholder="username"></p>
       </div><!--/.nav-collapse -->
 
