@@ -333,6 +333,7 @@ td.uid {
         if($r['password']===''){
          $_SESSION['admin_'.$getmapid]=TRUE;
          echo 'No password set. ';
+         echo '<a target="_blank" href="mailto:jcole@mit.edu,david.furlong@stcatz.ox.ac.uk?subject=Claim this IdeaJoin Box:'.trim($r['mapname'])."; id $getmapid".'&body=Please identify yourself here and we can set you a password. %0A%0A Cheers, %0A Jacob and David">Claim your suggestion box</a>. ';
        }
        elseif($r['password']===$_GET['pw'])
          $_SESSION['admin_'.$getmapid]=TRUE;
