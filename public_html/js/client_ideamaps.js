@@ -67,9 +67,9 @@ function displayPosts() {
 
 			var time = new Date(data[i].time * 1000);
 			//nl2br(processIdea(data[i].body))
-			n=extractIdeaName(data[i].mapname)		
-			status ="<td class='status'>" + '<div class="status sc'+data[i].status +'" >'+ '</div>' + "</td>";
-      var tablerow = '<a href="ideabox.php?mapid='+data[i].mapid+'" class="idea">'+n + '</a>';
+			n = extractIdeaName(data[i].mapname)		
+			status = "<td class='status'>" + '<div class="status sc' + data[i].status +'" >' + '</div>' + "</td>";
+      var tablerow = '<a href="ideabox.php?mapid=' + data[i].mapid + '" class="idea">' + n + '</a>';
 
 
 		  table+=tablerow;

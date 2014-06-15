@@ -75,9 +75,24 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
+
+	$('#sortByHot').click( function(){
+    if(!$(this).hasClass('active')){
+      filterToggle = "Hot";
+      $('#sortByDate').removeClass('active'); 
+      $('#sortByUpvotes').removeClass('active');
+      $('#sortByStatus').removeClass('active'); 	        
+      $(this).addClass("active");
+      
+      displayPosts()
+    }
+	});
+
+
 	$('#sortByDate').click( function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Date";
+      $('#sortByHot').removeClass('active');
       $('#sortByUpvotes').removeClass('active'); 
       $('#sortByStatus').removeClass('active'); 	        
       $(this).addClass("active");
@@ -89,6 +104,7 @@ $(document).ready(function() {
 	$('#sortByUpvotes').click( function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Upvotes";
+      $('#sortByHot').removeClass('active');
       $('#sortByDate').removeClass('active'); 
       $('#sortByStatus').removeClass('active'); 
       $(this).addClass("active");	       		
@@ -100,6 +116,7 @@ $(document).ready(function() {
 	$('#sortByStatus').click(function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Status";
+      $('#sortByHot').removeClass('active');
       $('#sortByDate').removeClass('active');
      	$('#sortByUpvotes').removeClass('active'); 
       $(this).addClass("active");  		
