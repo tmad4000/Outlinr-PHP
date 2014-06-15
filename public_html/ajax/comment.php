@@ -3,11 +3,10 @@ require_once('../../config.inc.php');
 require_once(PATH.PATH_SEP.'inc/mysql.inc.php');
 require_once('util_mapid.php');
 
-
 $pid = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['pid']))+0);
 $commenttext = mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['comment_text'])));
 $deletecid= (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['deletecid']))+0);
-
+$commentparent = (int)(mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['comment_parent']))+0);
 	
 $time = time();
 $commentstbl = COMMENTS_TBL;
@@ -20,43 +19,33 @@ if (!empty($deletecid)) {
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("UPDATE Error: " . mysqli_error($MYSQLI_LINK));
 }
 else {
+	//create
+	if (!empty($pid)&&!empty($commenttext)) {
+		$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
+		if(!$tmptitle)
+			$tmptitle=substr($body,0,80);
+	  $query = "INSERT INTO $commentstbl (cid, `pid`, `comment_text`,`time`, `uid`, `mapid`, `comment_parent`) VALUES ('', $pid, '$commenttext',$time, '',$mapid, $commentparent)";
+	  $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
+	}
 
-	//Create and read
-	//if(!empty($pid)) {
+	//read
+	if(!empty($pid)) //list all from post
+		$where="pid=$pid AND";
+	else if(!empty($mapid)) //list all from map
+		$where="mapid=$mapid AND";
+	else
+		$where=""; //list all	
 
-		//create
-		if (!empty($pid)&&!empty($commenttext)) {
-			$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideatitle'])));
-			if(!$tmptitle)
-				$tmptitle=substr($body,0,80);
-		    $query = "INSERT INTO $commentstbl (cid, `pid`, `comment_text`,`time`, `uid`, `mapid`) VALUES ('', $pid, '$commenttext',$time, '',$mapid)";
-			//print $query;
-		    $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
-		}
+	$query = "SELECT * FROM $commentstbl WHERE $where deleted_time IS NULL ORDER BY time DESC";
 
-		//read
-		
-		if(!empty($pid)) //list all from post
-			$where="pid=$pid AND";
-		else if(!empty($mapid)) //list all from map
-			$where="mapid=$mapid AND";
-		else
-			$where=""; //list all
+	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+	$rows = array();
 
-		
+	while ($r = mysqli_fetch_assoc($result)) {
+		$rows[]=$r;
+	}
 
-		$query = "SELECT * FROM $commentstbl WHERE $where deleted_time IS NULL ORDER BY time DESC";
-		
-
-		$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-		$rows = array();
-
-		while ($r = mysqli_fetch_assoc($result)) {
-			$rows[]=$r;
-		}
-		print json_encode($rows);
-
-
+	print json_encode($rows);
 
 }
 

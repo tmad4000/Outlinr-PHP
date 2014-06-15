@@ -363,7 +363,6 @@ function setupNode(postEl) {
 
 		// TODO universalize
 		postEl.on('click','.comment-upvote', function() {
-			console.log('comment-upvote');
 			var num=$(this).find('span').text()-0; 
 			$(this).toggleClass('on'); 
 			if ($(this).hasClass('on')) {
@@ -377,6 +376,25 @@ function setupNode(postEl) {
 				$(this).find('span').text(num);
 
 				doUpvoteComment($(this).parent().parent().find('.comment-text').attr('-comment-id')-0,'down');
+			}
+		});
+
+		postEl.on('click','.comment-reply', function() {
+			$(this).parent().append('<textarea class="comments-reply ml" placeholder="Comment; press ENTER to submit" ></textarea>');
+		});
+
+		postEl.find('.comment-reply').keyup(function(e){
+			e.preventDefault();
+			if (event.keyCode == 13 && event.shiftKey) { // shift-enter
+	      event.stopPropagation();
+	    } 
+			else if(event.keyCode == 13) { // enter
+				var content = this.value;
+    		var caret = getCaret(this);
+      	event.stopPropagation();
+				//$(this).parent().find('.commentform').toggle();
+				var idS=$(this).closest('.entryNode').attr('-idea-id');
+				submitAndGetComments(idS,$(this).closest('.comment-text').attr('-comment-id'));
 			}
 		});
 
@@ -872,7 +890,7 @@ function getEmail(){
 	});
 }
 
-function submitAndGetComments(pid) {
+function submitAndGetComments(pid, comment_parent) {
 	var n=$('.entryNode[-idea-id="'+pid+'"]');
 	var c =n.find('.commentsinput').first();
 	var t = c.val();
@@ -888,13 +906,10 @@ function submitAndGetComments(pid) {
 	if(t) {
 		$.ajax({
 			'url': 'ajax/comment.php',
-			'data': {'pid':pid,'comment_text':t,'mapid':getURLParameter("mapid")},
+			'data': {'pid':pid,'comment_text':t,'mapid':getURLParameter("mapid"),'comment_parent':comment_parent},
 			'success': function(jsonData) {
 				commentsModel[pid]= $.parseJSON(jsonData); //optimistic
 				rootNodeViewModel.loadCommentsRecurs();
-				/*displayPosts();
-				*/
-				// c.val(''); //Redundant?
 			},
 		});
 	}

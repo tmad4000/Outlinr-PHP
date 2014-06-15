@@ -2,7 +2,6 @@ function EntryNodeViewModel(entryNodeModel) {
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
 	this.myCommentsExpanded="init-hidden";
-	// console.log(this.entryNodeModel);
 	//attributes of this object
 	this.visible=true;
 	//self
@@ -84,17 +83,24 @@ function EntryNodeViewModel(entryNodeModel) {
 		var cl="";
 		//note: commentsModel is global
 		if(this.entryNodeModel.pid+"" in commentsModel){
-			//console.log("")
 			postCommentsModel=commentsModel[this.entryNodeModel.pid];
 			
 			$.each(postCommentsModel,function(i,currComment) {
 				var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
 				var commentTime = moment(currComment.time * 1000).fromNow();
-				//var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
 				var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
 
-				var commentS = '<div><div class="comment-upvote '+ (getCookie("c"+currComment.cid)!= "" ? "on":"") +'"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'+currComment.upvotes+'</span></div></div><div class="comment-text" -comment-id="'+currComment.cid+'">' + y.render() + '</div>'+
-				'<div class="comment-time timecol">' + commentTime + '</div>'+del;
+				var commentS = '<div><div class="comment-upvote '
+				+ (getCookie("c"+currComment.cid)!= "" ? "on":"") 
+				+ '"><i class="ion-ios7-arrow-up"></i><span class="nrofVotes">'
+				+ currComment.upvotes
+				+ '</span></div></div><div class="comment-text" -comment-id="'
+				+ currComment.cid
+				+ '">' 
+				+ y.render() 
+				+ '</div>'
+				+ '<div class="comment-reply">Reply</div>'
+				+ '<div class="comment-time timecol">' + commentTime + '</div>'+del;
 				
 				cl+="<li>"+commentS+"</li>";
 			})
@@ -161,14 +167,14 @@ function EntryNodeViewModel(entryNodeModel) {
 				var commentsListH='<ul class="comments">';
 
 				var postCommentsModel=null;
-					//note: commentsModel is global
-					if(this.entryNodeModel.pid+"" in commentsModel){
-						//console.log("")
-						postCommentsModel=commentsModel[this.entryNodeModel.pid];
-					}
-					else {
-						//console.log("comment key " + this.entryNodeModel.pid + " not found")
-					}
+				//note: commentsModel is global
+				if(this.entryNodeModel.pid+"" in commentsModel){
+					//console.log("")
+					postCommentsModel=commentsModel[this.entryNodeModel.pid];
+				}
+				else {
+					//console.log("comment key " + this.entryNodeModel.pid + " not found")
+				}
 
 				//comments load now asynch
 
