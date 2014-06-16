@@ -24,6 +24,7 @@ define('IDEAS_TBL', 'post_ideas_mitsugg');
 define('COMMENTS_TBL', 'comments');
 define('LINKS_TBL', 'links');
 define('IDEAMAPS_TBL', 'ideamaps');
+define('VOTES_TBL', 'votes');
 
 
 $MYSQLI_LINK = @mysqli_connect(DB_HOST, DB_USER, DB_PASS);
