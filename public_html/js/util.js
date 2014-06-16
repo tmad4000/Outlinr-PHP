@@ -44,17 +44,39 @@ function changeOrder(nodeChildren){
     // if filtertoggle upvotes
     var sortable = [];
     for (var key in nodeChildren)
-    sortable.push([key, nodeChildren[key].upvotes])
+        sortable.push([key, nodeChildren[key].upvotes])
     if(filterToggle == 'Upvotes')
         sortable.sort(function(a, b) {return b[1] - a[1]}) 
 
     if(filterToggle == 'Status'){
         sortable = []
         for (var key in nodeChildren)
-        sortable.push([key, nodeChildren[key].status])
+            sortable.push([key, nodeChildren[key].status])
         sortable.sort(function(a, b) {return a[1].localeCompare(b[1])})
     }
+    if(filterToggle == 'Hot'){
+        sortable = []
+        for (var key in nodeChildren){
+            
+            var currentTime = new Date().getTime() / 1000;
+            var postTime = nodeChildren[key].time;
+            var votes = nodeChildren[key].upvotes;
+            var score = 0;
+            if(votes > 0){
+                score = ratingFunction(currentTime-postTime,1,votes)
+            }
+            else if(votes == 0){
+                score = ratingFunction(currentTime-postTime,0,1)
+            }
+            sortable.push([key, score])
+        }
+        sortable.sort(function(a, b) {return b[1] - a[1]})
+    }
     return sortable  
+}
+
+function ratingFunction(t,y,z){ //http://amix.dk/blog/post/19588
+    return Math.log(z)/Math.log(10) + (y*t)/45000;
 }
 
 function updateNrOfIdeasVisible(){
