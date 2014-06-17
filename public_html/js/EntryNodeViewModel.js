@@ -5,6 +5,7 @@ function EntryNodeViewModel(entryNodeModel) {
 	// console.log(this.entryNodeModel);
 	//attributes of this object
 	this.visible=true;
+	this.comments = [];
 	//self
 	if(this.entryNodeModel.pid !== null && this.entryNodeModel.pid !== undefined)
 		this.eT = new EntryNodeTextViewModel(this.entryNodeModel.body,this.entryNodeModel.pid);
@@ -69,8 +70,23 @@ function EntryNodeViewModel(entryNodeModel) {
 		}
 		if(this.eT !== null){
 			var isMatch=this.eT.filter(query); //returns true if matches. Boldifies its own text
-			if(!isMatch)
+			var isCommentMatch = false;
+			var pid = this.entryNodeModel.pid;
+			var x = this;
+			$.each(this.comments, function(i,comment){
+				if(comment.filter(query) && query !=""){
+					isCommentMatch = true;
+					if(!expandedComments[pid])
+						toggleComment(pid);
+				}
+				if(!isCommentMatch && expandedComments[pid])
+					toggleComment(pid);
+			})
+			if(!isMatch && !isCommentMatch){
 				this.hide();
+				if(expandedComments[pid])
+					toggleComment(pid);
+			}
 			else 
 				this.show();
 			updateNrOfIdeasVisible()
@@ -80,15 +96,15 @@ function EntryNodeViewModel(entryNodeModel) {
 	}
 
 	this.loadComments = function() {
-		var postCommentsModel=null;
 		var cl="";
 		//note: commentsModel is global
 		if(this.entryNodeModel.pid+"" in commentsModel){
 			//console.log("")
-			postCommentsModel=commentsModel[this.entryNodeModel.pid];
-			
+			var postCommentsModel=commentsModel[this.entryNodeModel.pid];
+			var temp=this.comments;
 			$.each(postCommentsModel,function(i,currComment) {
 				var y = new EntryNodeCommentViewModel(currComment.comment_text,currComment.cid);
+				temp.push(y);
 				var commentTime = moment(currComment.time * 1000).fromNow();
 				//var commentTimeS=dateToString(commentTime.getMonth(), commentTime.getDate()) + ", " + timeToString(commentTime.getHours(), commentTime.getMinutes());
 				var del = isAdmin ? " <div class='delete-comment'><a href='#'>Delete</a></div>" : "";
@@ -129,6 +145,7 @@ function EntryNodeViewModel(entryNodeModel) {
 	//for the root node, perhaps there needn't be self info?
 	this.render = function() {
 		//entryNodeBodyToHTML
+		console.log('rendering'+this.entryNodeModel.pid);
 		//entryNodeChildrenToHTML
 		
 		var entryNodeBody="";
