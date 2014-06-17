@@ -317,7 +317,7 @@ function setupNode(postEl) {
 			}
 		});
 		
-		postEl.find("span.delete > a").click(function(e) {
+		postEl.find(".delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)
