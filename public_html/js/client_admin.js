@@ -181,9 +181,8 @@ $(document).ready(function() {
 	$('textarea#newpost').focus();
 
 	$('textarea#newpost').keydown(function (event) {
-		if(event.keyCode == 13){ // enter
-        	event.preventDefault();
-        }
+		if(event.keyCode == 13) // enter
+    	event.preventDefault();
 	});
 	$('textarea#newpost').keyup(function (event) {
 		var newpostObj=$(this);
@@ -213,7 +212,6 @@ $(document).ready(function() {
 				if(numIdeas>50)
 					minQPer=400
 					
-				//c/onsole.log(numFilterTos)
 				//if no filter pending
 				if(numFilterTos<=0){
 					rootNodeViewModel.filter(newpostObj.val() || "");
@@ -329,7 +327,7 @@ function setupNode(postEl) {
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
 
-			toggleComment(idS);
+			toggleComment(idS,true);
 		});
 
 		postEl.find('.commentsinput').keydown(function (event) {
@@ -477,7 +475,7 @@ function displayPosts() {
   rootNodeViewModel.filter($('textarea#newpost').val());
 }
 
-function toggleComment(pid) {
+function toggleComment(pid, focus) {
 	var cf=$('.commentform[-idea-id="'+pid+'"]');
 	if(pid in expandedComments) { //hide
 		delete expandedComments[pid];
@@ -488,7 +486,8 @@ function toggleComment(pid) {
 		expandedComments[pid]=1;
 
 		cf.removeClass('init-hidden').addClass('init-expanded');
-		(cf.find('textarea')[0]).focus();
+		if(focus)
+			(cf.find('textarea')[0]).focus();
 	}
 }
 
