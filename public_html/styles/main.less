@@ -177,7 +177,7 @@ body {
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
 	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	outline: none;
-	color: @silver;
+	color: #aaa;
 	border-radius: 5px;
 	display: inline-block;
 }
@@ -294,6 +294,12 @@ textarea:focus,input[type="text"]:focus {
 	text-decoration: underline !important;
 }
 
+#filterBy {
+	display: inline;
+	float: right;
+	cursor: pointer;
+}
+
 #filterBy a {
 	-webkit-font-smoothing: subpixel-antialiased;
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
@@ -310,10 +316,23 @@ textarea:focus,input[type="text"]:focus {
 	white-space: pre-line;
 	word-wrap: break-word;
 	background: white;
+	padding: 5px 10px;
+	color: #aaa;
 }
 
 #filterBy i {
 	margin-right: 5px;
+}
+
+#filterBy .active {
+	outline: 0;
+	text-decoration: none;
+	color: @sunflower;
+	border-bottom: 1px solid @sunflower;
+}
+
+#filterBy a:hover {
+	text-decoration: none;
 }
 
 div.container h1 {
@@ -376,17 +395,6 @@ div.container textarea.span11 {
 	padding: 0;
 }
 
-#filterBy .active {
-	outline: 0;
-	text-decoration: none;
-	color: @turquoise;
-	border-bottom: 1px solid @turquoise;
-}
-
-#filterBy a:hover {
-	text-decoration: none;
-}
-
 .loginadminbutton {
 	display: inline;
 	height: 30px;
@@ -395,17 +403,6 @@ div.container textarea.span11 {
 	background: white;
 	border: 1px solid gray;
 	outline: none;
-}
-
-#filterBy {
-	display: inline;
-	float: right;
-	cursor: pointer;
-}
-
-#filterBy a {
-	padding: 5px 10px;
-	color: #aaa;
 }
 
 .nav-header {
