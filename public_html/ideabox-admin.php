@@ -19,7 +19,7 @@
     $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
     $r = mysqli_fetch_assoc($result);
   ?> 
-  <title>IdeaBox -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+  <title>IdeaJoin -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   
   <?php include('inc/includes.php'); ?>
 
@@ -119,7 +119,7 @@
           }
           if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
           <ul class="nav nav-list">
-            <li class="nav-header">Categories</li>
+            <li class="nav-header">Labels</li>
             <ul id="idea-hashtags" class="tags">
             </ul>
             <li class="nav-header">People</li>

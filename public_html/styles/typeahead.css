@@ -78,6 +78,7 @@ ul.suggest-labels {
     border-radius: 3px;
     -webkit-transition: all 0.3s linear;
     display: inline-block;
+    color: gray;
 }
 
 .suggest-labels a:hover {

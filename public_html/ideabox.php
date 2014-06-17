@@ -15,7 +15,7 @@ require_once('../config.inc.php');
     $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
     $r = mysqli_fetch_assoc($result);
   ?>
-  <title>IdeaBox -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
+  <title>IdeaJoin -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   <?php include('inc/includes.php'); ?>
   <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
@@ -47,7 +47,7 @@ echo $r['mapdesc'];
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12 ml">
             <form id="postform">
               <div class="input-append">
                 <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
@@ -56,7 +56,7 @@ echo $r['mapdesc'];
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12 ml">
             <div id="tableHeaderDiv">
               <div id="numResults"></div>
               <div id="filterBy">
@@ -68,7 +68,7 @@ echo $r['mapdesc'];
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row cp">
           <div class="col-sm-12">
             <div id="currentposts">
               <center><i class="ion-loading-c"></i></center>
@@ -79,7 +79,7 @@ echo $r['mapdesc'];
       <div class="col-sm-3">
         <div class="sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
-            <li class="nav-header">Categories</li>
+            <li class="nav-header">Labels</li>
             <ul id="idea-hashtags" class="tags">
             </ul>
             <li class="nav-header">People</li>

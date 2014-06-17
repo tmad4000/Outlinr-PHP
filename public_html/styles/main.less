@@ -4,8 +4,14 @@
 @screen-md-min: 992px;
 @screen-lg-min: 1200px;
 
+@body-bg: #eee;
+
 * {
 	font-family: 'Open Sans', sans-serif;
+}
+
+.gold {
+	color: @sunflower;
 }
 
 .nav-list {
@@ -32,7 +38,17 @@
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: @screen-md-min) {
 	.outermost > .row:nth-of-type(2),.outermost > .row:nth-of-type(3) {
-		margin-left: 50px;
+		//margin-left: 50px;
+	}
+
+	.row.cp .col-sm-12 {
+		padding-right: 0px;
+	}
+
+	.col-sm-12.ml {
+		margin: 0px;
+		padding: 0px;
+		padding-left: 75px;
 	}
 
 	nav > .container-fluid {
@@ -43,7 +59,11 @@
 /* Large devices (large desktops, 1200px and up) */ 
 @media (min-width: @screen-lg-min) {
 	.outermost > .row:nth-of-type(2), .outermost > .row:nth-of-type(3) {
-		margin-left: 100px;
+		//margin-left: 100px;
+	}
+	.col-sm-12.ml {
+		margin-left: 115px;
+		padding: 0px;
 	}
 
 	nav > .container-fluid {
@@ -73,17 +93,32 @@ footer {
 	margin-top:  -73px;
 	height:  73px;
 	clear: both;
-	background: @silver;
-	color: white;
+	background: white;
+	color: #666;
 	padding-top: 17px;
+	border-top: 1px solid @silver;
 } 
 
 footer a:hover {
-	color: #333;
+	color: #444;
+	text-decoration: none;
 }
 
+
+
 footer a {
-	color: black;
+	color: #666;
+}
+
+a.underline:hover {
+	color: #444;
+	border-bottom: 2px solid #bbb;
+	text-decoration: none;
+}
+
+a.underline {
+	color: #666;
+	border-bottom: 2px solid #ddd;
 }
 
 /*Opera Fix*/
@@ -96,7 +131,7 @@ body:before {
 }
 
 body {
-	background: #FFF;
+	background: @body-bg;
 	font-weight: 300;
 	-webkit-font-smoothing: antialiased;
 }
@@ -134,22 +169,22 @@ body {
 #feedbackbutton {
 	margin-top: 0px;
 	background: transparent;
-	border: 1px solid white;
+	border: 1px solid @silver;
 	font-size: 16px;
 	text-decoration: none;
 	padding: 8px 15px 9px 15px;
 	-webkit-font-smoothing: subpixel-antialiased;
-	-webkit-transition: border .05s linear, color .05s linear, background-color .05s linear;
-	transition: border .05s linear, color .05s linear, background-color .05s linear;
+	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	outline: none;
-	color: white;
+	color: #aaa;
 	border-radius: 5px;
 	display: inline-block;
 }
 
 #feedbackbutton:hover{
-	background: white;
-	color: royalblue;
+	background: @silver;
+	color: white;
 }
 
 #feedbackbutton:active{
@@ -173,17 +208,12 @@ div.container {
 }
 
 .tags {
-	border-left: 1px solid #efefef;
 	font-size: 12pt;
 	list-style-type:  none;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	font-weight: 600;
 	margin-left: 2px;
-}
-
-.tags li {
-	padding-left: 15px;
 }
 
 #ideanames {
@@ -233,9 +263,8 @@ textarea:focus,input[type="text"]:focus {
 	-webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	box-shadow: none !important;
-	background: white;
 	border: 0px;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .navbar {
@@ -265,6 +294,12 @@ textarea:focus,input[type="text"]:focus {
 	text-decoration: underline !important;
 }
 
+#filterBy {
+	display: inline;
+	float: right;
+	cursor: pointer;
+}
+
 #filterBy a {
 	-webkit-font-smoothing: subpixel-antialiased;
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
@@ -280,10 +315,24 @@ textarea:focus,input[type="text"]:focus {
 	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
+	background: white;
+	padding: 5px 10px;
+	color: #aaa;
 }
 
 #filterBy i {
 	margin-right: 5px;
+}
+
+#filterBy .active {
+	outline: 0;
+	text-decoration: none;
+	color: @sunflower;
+	border-bottom: 1px solid @sunflower;
+}
+
+#filterBy a:hover {
+	text-decoration: none;
 }
 
 div.container h1 {
@@ -346,16 +395,6 @@ div.container textarea.span11 {
 	padding: 0;
 }
 
-#filterBy .active {
-	outline: 0;
-	text-decoration: none;
-	color: @midnight-blue;
-}
-
-#filterBy a:hover {
-	text-decoration: none;
-}
-
 .loginadminbutton {
 	display: inline;
 	height: 30px;
@@ -364,17 +403,6 @@ div.container textarea.span11 {
 	background: white;
 	border: 1px solid gray;
 	outline: none;
-}
-
-#filterBy {
-	display: inline;
-	float: right;
-	cursor: pointer;
-}
-
-#filterBy a {
-	padding: 5px 10px;
-	color: #aaa;
 }
 
 .nav-header {
@@ -392,10 +420,6 @@ div.container textarea.span11 {
 #numResults {
 	max-width: 400px;
 	float: left;
-}
-
-.navbar-header {
-	border-bottom: 1px solid @clouds;
 }
 
 .progress {
@@ -421,6 +445,19 @@ div.container textarea.span11 {
 	background-color: #f9f9f9;
 }
 
+.star-idea {
+	width: 50px;
+	height: 40px; 
+	font-size: 30px;
+	color: @silver;
+	text-align: center;
+	vertical-align: middle;
+
+	i {
+		cursor: pointer;
+	}
+}
+
 .votes {
 	height: 40px;
 	width: 30px;
@@ -436,13 +473,12 @@ div.container textarea.span11 {
   margin-left: 0px;
 } 
 
-.votes:hover {
-	background: @midnight-blue;
-	color: white;
-}
-
 .vote.on {
   color: rgb(218, 46, 38);
+}
+
+a.showcomments {
+	font-weight: 500;
 }
 
 a.showcomments:hover {
@@ -526,10 +562,10 @@ textarea.commentsinput {
 	width: 100%;
 	height: 30px;
 	resize: vertical;
-	font-size: 16px;
-	margin-top: 5px;
+	font-size: 14px;
+	margin-top: 3px;
 	padding-left: 5px;
-	padding-top: 3px;
+	padding-top: 5px;
 	float: left;
 	clear: both;
 	overflow: hidden;
@@ -871,6 +907,17 @@ div.ideaTxtInner > .entryNodeText {
 	padding-bottom: 5px;
 }
 
+.entryNode > .body {
+	background: white;
+	border: 1px solid #ddd;
+	margin-top: 2px;
+	border-radius: 3px;
+}
+
+.entryNode[-idea-id="null"] > .body {
+	border: 0px;
+}
+
 div.ideaTxtInner {
 	overflow: hidden;
 	padding-bottom: 5px;
@@ -914,4 +961,9 @@ div.ideaTxtInner {
 #box-description {
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+	background: transparent;
+	border-bottom: 1px solid @turquoise;
 }

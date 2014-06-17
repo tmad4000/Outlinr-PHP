@@ -397,6 +397,17 @@ function setupNode(postEl) {
 			}
 		});
 
+		postEl.on('click','.star-idea i', function() {
+			var ideaid=$(this).parent().attr('-idea-id')-0;
+			$(this).toggleClass('gold');
+			if($(this).hasClass('gold')){
+				setCookie("s"+ideaid, "starred");
+			}
+			else {
+				deleteCookie("s"+ideaid);
+			}
+		});
+
 		setupRel(postEl);
 }
 //var entryList = null;
@@ -601,24 +612,8 @@ function displayIdeaNames() {
 		for(var k=0;k<peopletagssorted.length;k++){
 			var tag = peopletagssorted[k][1];
 			var upv = peopletagssorted[k][0];
-			if(upv>=200){
-				tildesul.append('<li><span class="badge badge-200">'+upv+'pts</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
-			}
-			else if(upv>=50){
-				tildesul.append('<li><span class="badge badge-50">'+upv+'pts</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
-			}
-			else if(upv>=30){
-				tildesul.append('<li><span class="badge badge-30">'+upv+'pts</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
-			}
-			else if(upv>=10){
-				tildesul.append('<li><span class="badge badge-10">'+upv+'pts</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
-			}
-			else if(upv==1){
-				tildesul.append('<li><span class="badge">'+upv+'pt</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
-			}
-			else
-				tildesul.append('<li><span class="badge">'+upv+'pts</span> <a href="#" onclick="hashtag(event)">'+tag + '</a> </li>'); //TODO
-		}
+			tildesul.append('<li><a href="#" onclick="hashtag(event)">'+tag + '</a> <span class="badge">('+upv+')</span></li>')
+		} 
 	}
 }
 
@@ -629,7 +624,7 @@ function doUpvote(ideaid,upOrDown) {
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
 			if(upOrDown=="up"){
-				setCookie("i"+ideaid);
+				setCookie("i"+ideaid, "voted");
 			}
 			else {
 				deleteCookie("i"+ideaid);
@@ -644,7 +639,7 @@ function doUpvoteComment(commentid,upOrDown) {
 		'data': {'commentid':commentid},
 		'success': function(jsonData) {
 			if(upOrDown=="up"){
-				setCookie("c"+commentid);
+				setCookie("c"+commentid, "voted");
 			}
 			else {
 				deleteCookie("c"+commentid);

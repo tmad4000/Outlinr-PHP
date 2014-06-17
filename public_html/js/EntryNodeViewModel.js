@@ -138,104 +138,106 @@ function EntryNodeViewModel(entryNodeModel) {
 	
 			var table = "<table class='table'>"; // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
 
-				//dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())
-				var time = moment(this.entryNodeModel.time * 1000).fromNow();
-				//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
-				var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
+			//dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes())
+			var time = moment(this.entryNodeModel.time * 1000).fromNow();
+			//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+			var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
 
-				/*status ="<div class='status'>" +
-						'<div class="star">'+'<a class="star-off star-on" href="#" title="This is a favorite question (click again to undo)">&nbsp;&nbsp;&nbsp;</a>'+'</div>' +
-						'<div class="status-box"><a href="#" rel="popover" data-content="'+progEntry +this.entryNodeModel.metric+'" data-original-title="'+statusTable[this.entryNodeModel.status]+'"><div class="status sc'+this.entryNodeModel.status +'" >'+ '</div></a></div>' + 
-					"</div>";*/
-				status = "<span class='status'><i class='ion-record status sc"+this.entryNodeModel.status +"'></i> "+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</span>";
-				if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
-					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+			status = "<span class='status'><i class='ion-record status sc"+this.entryNodeModel.status +"'></i> "+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</span>";
+			if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
+				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+			}
+			else {
+				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+			}
+			if(getCookie("s"+this.entryNodeModel.pid) == "starred"){
+				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
+				+ '<i class="ion-ios7-star-outline gold"></i>'
+				+ '</td>';
+			}
+			else {
+				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
+				+ '<i class="ion-ios7-star-outline"></i>'
+				+ '</td>';			
+			}
+			
+
+			//Comments
+			
+			var commentsListH='<ul class="comments">';
+
+			var postCommentsModel=null;
+				//note: commentsModel is global
+				if(this.entryNodeModel.pid+"" in commentsModel){
+					//console.log("")
+					postCommentsModel=commentsModel[this.entryNodeModel.pid];
 				}
 				else {
-					upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+					//console.log("comment key " + this.entryNodeModel.pid + " not found")
 				}
 
+			//comments load now asynch
 
-				//Comments
-				
-				var commentsListH='<ul class="comments">';
+			commentsListH+='</ul>';
+			
+			var numComments;
+			if(postCommentsModel!==null)
+				numComments=postCommentsModel.length;
+			else
+				numComments=this.entryNodeModel.num_comments;
 
-				var postCommentsModel=null;
-					//note: commentsModel is global
-					if(this.entryNodeModel.pid+"" in commentsModel){
-						//console.log("")
-						postCommentsModel=commentsModel[this.entryNodeModel.pid];
-					}
-					else {
-						//console.log("comment key " + this.entryNodeModel.pid + " not found")
-					}
+			var numCommentsMsg=''+'Comment';
+			if(numComments == 1)
+				numCommentsMsg=''+numComments + " Comment";
+			else if(numComments > 1)
+				numCommentsMsg=''+numComments + " Comments";
 
-				//comments load now asynch
+			numCommentsMsg+=""
 
-				commentsListH+='</ul>';
-				
-				var numComments;
-				if(postCommentsModel!==null)
-					numComments=postCommentsModel.length;
-				else
-					numComments=this.entryNodeModel.num_comments;
+			//note: expandedComments is global
+			if(this.entryNodeModel.pid in expandedComments)
+				this.myCommentsExpanded="init-expanded";
+			else
+				this.myCommentsExpanded="init-hidden";
 
-				var numCommentsMsg=''+'Comment';
-				if(numComments == 1)
-					numCommentsMsg=''+numComments + " Comment";
-				else if(numComments > 1)
-					numCommentsMsg=''+numComments + " Comments";
+			var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
+			
+			comments='<div class="showcomments">'
+				+ '<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> '
+				+ '<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" ></textarea>'
+				+ commentsListH
+				+ '</div>'
+				+ '</div>';
 
-				numCommentsMsg+=""
-				//entryNodeBody="<div>"+table+"</div>";
-				//comments=""
+			var addRel="<div class='related-ideas-all'>"
+				+ "<ul class='related-ideas'>"
+				+ "</ul>"
+				+ "<div class='related-idea-input'>"
+				+ "	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>"
+				+ "<ul class='suggest-labels'></ul>"
+				+ "</div>"
+				+ "</div>";
 
-				//note: expandedComments is global
-				if(this.entryNodeModel.pid in expandedComments)
-					this.myCommentsExpanded="init-expanded";
-				else
-					this.myCommentsExpanded="init-hidden";
+			var del = isAdmin ? " · <div class='delete'><a href='#'>Delete</a></div>" : "";
 
-				var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
-				
-				comments='<div class="showcomments"> \
-					<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> ' +
+			table += '<tr>'
+				+ starCol	
+				+ upvoter
+				+ '<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>"
+				+ addRel	
+				+ "<div class='ideaTxtFooter'>"
+				+ commentExpandLink
+				+ "<div class='ideaTxtFooter-r'>"
+				+ status  
+				+ " · "
+				+ "<span class='timecol'>"+time+"</span>"+del+"</div> " +"</div>"+comments+"</td>"
+				+ "</tr>";
 
-						'<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" ></textarea>' +
-							commentsListH +
+	   	table += "</table>";
 
-					'</div>' +
-				'</div>';
-
-				var addRel="<div class='related-ideas-all'>" + 
-					"<ul class='related-ideas'>" + 
-					"</ul>" + 
-					"<div class='related-idea-input'>" +
-					"	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>" +
-					"<ul class='suggest-labels'></ul>"+
-					"</div>" +
-					"</div>";
-
-				//entryNodeBody+=comments;
-				var del = isAdmin ? " · <div class='delete'><a href='#'>Delete</a></div>" : "";
-
-				table += '<tr>'+	
-					upvoter+
-					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
-					addRel /*+ "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · "*/ +		
-					"<div class='ideaTxtFooter'>"+
-
-					commentExpandLink+
-					"<div class='ideaTxtFooter-r'>"+
-					status + " · " + 
-					"<span class='timecol'>"+time+"</span>"+del+"</div> " +"</div>"+comments+"</td>" + 
-					"</tr>";
-
-		   	table+="</table>";
-
-		   	entryNodeBody="<div>"+table+"</div>";
-		   	entryNodeBody=$($.parseHTML(entryNodeBody));
-				var eTView=this.eT.render();
+	   	entryNodeBody = "<div>" + table + "</div>";
+	   	entryNodeBody = $($.parseHTML(entryNodeBody));
+			var eTView = this.eT.render();
 
 			// there should only ever be one
 			entryNodeBody.find("div.ideaTxtInner").append(eTView);
