@@ -322,11 +322,11 @@ function setCookieUsr(handle,isDefaultUsrHandle,exdays){
 }
 
 // Cookie for storing upvotes
-function setCookie(contentid){
+function setCookie(contentid, value){
     var d = new Date();
     d.setTime(d.getTime()+(365*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
-    document.cookie = contentid.toString()+"=voted;"+ expires;
+    document.cookie = contentid.toString()+"="+value+";"+ expires;
 }
 
 function getCookie(label){

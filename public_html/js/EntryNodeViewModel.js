@@ -150,10 +150,17 @@ function EntryNodeViewModel(entryNodeModel) {
 			else {
 				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 			}
-
-			var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
-			+ '<i class="ion-ios7-star-outline"></i>'
-			+ '</td>';
+			if(getCookie("s"+this.entryNodeModel.pid) == "starred"){
+				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
+				+ '<i class="ion-ios7-star-outline gold"></i>'
+				+ '</td>';
+			}
+			else {
+				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
+				+ '<i class="ion-ios7-star-outline"></i>'
+				+ '</td>';			
+			}
+			
 
 			//Comments
 			

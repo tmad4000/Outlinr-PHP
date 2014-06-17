@@ -380,6 +380,17 @@ function setupNode(postEl) {
 			}
 		});
 
+		postEl.on('click','.star-idea i', function() {
+			var ideaid=$(this).parent().attr('-idea-id')-0;
+			$(this).toggleClass('gold');
+			if($(this).hasClass('gold')){
+				setCookie("s"+ideaid, "starred");
+			}
+			else {
+				deleteCookie("s"+ideaid);
+			}
+		});
+
 		setupRel(postEl);
 }
 //var entryList = null;
@@ -596,7 +607,7 @@ function doUpvote(ideaid,upOrDown) {
 		'data': {'ideaid':ideaid},
 		'success': function(jsonData) {
 			if(upOrDown=="up"){
-				setCookie("i"+ideaid);
+				setCookie("i"+ideaid, "voted");
 			}
 			else {
 				deleteCookie("i"+ideaid);
@@ -611,7 +622,7 @@ function doUpvoteComment(commentid,upOrDown) {
 		'data': {'commentid':commentid},
 		'success': function(jsonData) {
 			if(upOrDown=="up"){
-				setCookie("c"+commentid);
+				setCookie("c"+commentid, "voted");
 			}
 			else {
 				deleteCookie("c"+commentid);

@@ -10,6 +10,10 @@
 	font-family: 'Open Sans', sans-serif;
 }
 
+.gold {
+	color: @sunflower;
+}
+
 .nav-list {
 	border-left: 0px solid #ddd;
 	margin-bottom: 20px;
@@ -92,7 +96,7 @@ footer {
 	background: white;
 	color: #666;
 	padding-top: 17px;
-	border-top: 1px solid grey;
+	border-top: 1px solid @silver;
 } 
 
 footer a:hover {
@@ -165,7 +169,7 @@ body {
 #feedbackbutton {
 	margin-top: 0px;
 	background: transparent;
-	border: 1px solid #666;
+	border: 1px solid @silver;
 	font-size: 16px;
 	text-decoration: none;
 	padding: 8px 15px 9px 15px;
@@ -173,13 +177,13 @@ body {
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
 	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	outline: none;
-	color: #666;
+	color: @silver;
 	border-radius: 5px;
 	display: inline-block;
 }
 
 #feedbackbutton:hover{
-	background: #666;
+	background: @silver;
 	color: white;
 }
 
@@ -419,10 +423,6 @@ div.container textarea.span11 {
 #numResults {
 	max-width: 400px;
 	float: left;
-}
-
-.navbar-header {
-	border-bottom: 1px solid @clouds;
 }
 
 .progress {
