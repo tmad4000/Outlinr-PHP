@@ -29,7 +29,7 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 $rows = array();
 while ($r = mysqli_fetch_assoc($result)) {
 	$tmp=array_map(stripslashes,$r);
-
+	unset($tmp['password']);
 	if($tmp['linkurl']) {
 		if(!preg_match('/^http:\//',$tmp['linkurl'])) {
 			$tmp['linkurl']="http://".$tmp['linkurl'];
