@@ -17,10 +17,10 @@ $pagesdict=array(
   "ideabox.php"=>"list",
   "ideabox-graph.php"=>"graph",
   "ideabox-people.php"=>"people",
+  "ideabox-idea.php"=>"idea"
   );
 
   $page=$pagesdict[$pagefilename];
-;
 
 ?>
 
@@ -37,18 +37,17 @@ $pagesdict=array(
               <span class="icon-bar"></span>
             </button>
             <div class="outline navbar-brand">
+              <a href="index.php">IdeaJoin</a>
               <?php if($r['maplogourl']) { ?>
                 <!--width:30px;-->
                 <img src="<?=$r['maplogourl'] ?>" style="height:35px;margin-top:-5px;margin-right:10px">
-                <?php
-                }
-              ?>
+              <?php } ?>
 
               <?= strpos($_SERVER['PHP_SELF'],"index.php") ? '' : $r['mapname'] ?></div> 
 
             <ul class="nav navbar-nav">
-              <li <?= $page=="list"?'class="active"':"" ?> ><a href="ideabox.php?mapid=<?= $getmapid ?>">List View</a></li>
-              <li <?= $page=="graph"?'class="active"':"" ?> ><a href="ideabox-graph.php?mapid=<?= $getmapid ?>">Graph View</a></li>
+              <li <?= $page=="list"?'class="active"':"" ?> ><a href="ideabox.php?mapid=<?= $getmapid ?>">List</a></li>
+              <li <?= $page=="graph"?'class="active"':"" ?> ><a href="ideabox-graph.php?mapid=<?= $getmapid ?>">Graph</a></li>
               <li <?= $page=="people"?'class="active"':"" ?> ><a href="ideabox-people.php?mapid=<?= $getmapid ?>">People</a></li>  
             </ul>  
           </div>
@@ -56,7 +55,6 @@ $pagesdict=array(
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="index.php">+ Make an idea box</a></li>
               <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">

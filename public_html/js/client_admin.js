@@ -18,12 +18,12 @@ var globalData;
 getPosts();
 
 $(document).ready(function() {
-	
+
 	isAdmin = $('#is-admin').val() === 'true';
 
 	if(isAdmin) {
 		$('.brand').append('<i class="fa fa-bell-o" id="emailicon"></i>');
-		
+
 		$('#box-description-text').attr('contentEditable',true);
 		$('[contenteditable]').on('focus', function() { // http://stackoverflow.com/questions/1391278/contenteditable-change-events
 	    var $this = $(this);
@@ -39,9 +39,9 @@ $(document).ready(function() {
 		});
 
 		$('#box-description-text').change(editDesc);
-		
+
 	}
-	
+
 
 	$('.row-fluid .span9').width(window.innerWidth-250-64+"px");
 
@@ -59,18 +59,18 @@ $(document).ready(function() {
 	});
 	$('body').on('click','.selectize-input div',function(){
 		//expandidea
-	});	
+	});
 
-	function emailPopoverLoad(){	
+	function emailPopoverLoad(){
 		$(this).val(emailAddress);
 		$(this).focus();
 	}
-	
+
 	$('.navbar-form').submit(function() {
 		return false;
-	});	
+	});
 	$('#postform').submit(function() {
-		numberOfIdeasVisible = 0;	
+		numberOfIdeasVisible = 0;
 		submitPostAndGetPosts();
 		// never gets here
 		return false;
@@ -78,10 +78,10 @@ $(document).ready(function() {
 	$('#sortByDate').click( function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Date";
-      $('#sortByUpvotes').removeClass('active'); 
-      $('#sortByStatus').removeClass('active'); 	        
+      $('#sortByUpvotes').removeClass('active');
+      $('#sortByStatus').removeClass('active');
       $(this).addClass("active");
-      
+
       displayPosts()
     }
 	});
@@ -89,11 +89,11 @@ $(document).ready(function() {
 	$('#sortByUpvotes').click( function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Upvotes";
-      $('#sortByDate').removeClass('active'); 
-      $('#sortByStatus').removeClass('active'); 
-      $(this).addClass("active");	       		
+      $('#sortByDate').removeClass('active');
+      $('#sortByStatus').removeClass('active');
+      $(this).addClass("active");
 
-      displayPosts()        
+      displayPosts()
     }
 	})
 
@@ -101,10 +101,10 @@ $(document).ready(function() {
     if(!$(this).hasClass('active')){
       filterToggle = "Status";
       $('#sortByDate').removeClass('active');
-     	$('#sortByUpvotes').removeClass('active'); 
-      $(this).addClass("active");  		
+     	$('#sortByUpvotes').removeClass('active');
+      $(this).addClass("active");
 
-      displayPosts();       
+      displayPosts();
     }
 	});
 
@@ -160,7 +160,7 @@ $(document).ready(function() {
 
 
 	//Omnibox (input field) operations
-	
+
 	$('textarea#newpost').focus();
 
 	$('textarea#newpost').keydown(function (event) {
@@ -170,14 +170,14 @@ $(document).ready(function() {
 	});
 	$('textarea#newpost').keyup(function (event) {
 		var newpostObj=$(this);
-						
-		// #TODO #Future trim repeated enters       
+
+		// #TODO #Future trim repeated enters
 		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
     	var content = this.value;
     	var caret = getCaret(this);
     	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
     	event.stopPropagation();
-    } 
+    }
     else if(event.keyCode == 13){ // enter
     	// removes the newline
     	var content = this.value;
@@ -189,35 +189,35 @@ $(document).ready(function() {
     else {
       if(rootNodeViewModel!==null){
 				var numIdeas=Object.keys(rootNodeViewModel).length;
-				
+
 				var minQPer=30
 				if(numIdeas>20)
 					minQPer=200
 				if(numIdeas>50)
 					minQPer=400
-					
+
 				//c/onsole.log(numFilterTos)
 				//if no filter pending
 				if(numFilterTos<=0){
 					rootNodeViewModel.filter(newpostObj.val() || "");
-					
+
 					setTimeout(function() {
 						if(nextFilter!=null) {
-							rootNodeViewModel.filter(nextFilter);					
+							rootNodeViewModel.filter(nextFilter);
 							nextFilter=null;
 						}
-							
+
 						numFilterTos--;
 					}, minQPer);
-					
+
 					numFilterTos++;
 				}
 				//if filter pending
 				else {
 					nextFilter=newpostObj.val() || "";
-				}		
+				}
       }
-    }		 
+    }
 	});
 
 	$('textarea#newpost').change(function (event) {
@@ -234,26 +234,26 @@ $(document).ready(function() {
 });
 
 //Handles new line (shift+enter) in the omnibox
-function getCaret(el) { 
-	if (el.selectionStart) { 
-		return el.selectionStart; 
-	} 
-	else if (document.selection) { 
-		el.focus(); 
+function getCaret(el) {
+	if (el.selectionStart) {
+		return el.selectionStart;
+	}
+	else if (document.selection) {
+		el.focus();
 
-		var r = document.selection.createRange(); 
-		if (r == null) { 
-			return 0; 
-		} 
+		var r = document.selection.createRange();
+		if (r == null) {
+			return 0;
+		}
 
-		var re = el.createTextRange(), 
-		rc = re.duplicate(); 
-		re.moveToBookmark(r.getBookmark()); 
-		rc.setEndPoint('EndToStart', re); 
+		var re = el.createTextRange(),
+		rc = re.duplicate();
+		re.moveToBookmark(r.getBookmark());
+		rc.setEndPoint('EndToStart', re);
 
-		return rc.text.length; 
-	}  
-	return 0; 
+		return rc.text.length;
+	}
+	return 0;
 }
 
 // Add events to the given post element. Pass postEl as $(document) to do the first initialization.
@@ -279,29 +279,29 @@ function setupNode(postEl) {
 				$(this).css('text-decoration','none');
 			}
 		});
-		
+
 		postEl.find("span.delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)
 				deleteNode($(this).closest('.entryNode').attr('-idea-id'));
-			
+
 		});
 		postEl.find(".ideaTxt").on("click","div.delete-comment > a",function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('li').find(".comment-text").text() + "?");
 			if (r){
-				deleteComment($(this).closest('li').find(".comment-text").attr('-comment-id'),$(this).closest('.entryNode').attr('-idea-id'));	
+				deleteComment($(this).closest('li').find(".comment-text").attr('-comment-id'),$(this).closest('.entryNode').attr('-idea-id'));
 			}
-			
-		});		
-		
+
+		});
+
 		/*$(".entryNode table").hover (function() {
 			$(this).find('div.delete > a').fadeIn();
 		},function() {
 			$(this).find('div.delete > a').hide();
 		});)*/
-		
+
 		/*$(".star-off").click(function() {
 			$(this).toggleClass("star-on");
 			//cycleStatus($(this).closest('.entryNode').attr('-idea-id'));
@@ -325,7 +325,7 @@ function setupNode(postEl) {
 			e.preventDefault();
 			if (event.keyCode == 13 && event.shiftKey) { // shift-enter
 	      event.stopPropagation();
-	    } 
+	    }
 			else if(event.keyCode == 13) { // enter
 				var content = this.value;
     		var caret = getCaret(this);
@@ -346,26 +346,26 @@ function setupNode(postEl) {
 		postEl.find('td.votes').click(function() {
 			var ideaid=$(this).attr('-idea-id')-0;
 
-			$('td.votes[-idea-id='+ideaid+']').children('.vote').toggleClass('on'); 		
+			$('td.votes[-idea-id='+ideaid+']').children('.vote').toggleClass('on');
 
-			var num=$(this).children('span.votes').html()-0; 
+			var num=$(this).children('span.votes').html()-0;
 			if ($(this).children('.vote').hasClass('on')) {
 				num+=1;
-				$(this).children('span.votes').text(num) 
+				$(this).children('span.votes').text(num)
 				doUpvote(ideaid,'up');
 			}
 			else {
 				num-=1;
-				$(this).children('span.votes').text(num) 
+				$(this).children('span.votes').text(num)
 				doUpvote(ideaid,'down');
-			}	
+			}
 		});
 
 		// TODO universalize
 		postEl.on('click','.comment-upvote', function() {
 			console.log('comment-upvote');
-			var num=$(this).find('span').text()-0; 
-			$(this).toggleClass('on'); 
+			var num=$(this).find('span').text()-0;
+			$(this).toggleClass('on');
 			if ($(this).hasClass('on')) {
 				num += 1;
 				$(this).find('span').text(num);
@@ -420,11 +420,11 @@ function displayPosts() {
 		// TODO include in above
 		// Voting hover status
 		$("[rel='popover']").popover({
-			trigger: "hover", 
+			trigger: "hover",
 			//placement: 'top', IDEALLY want this but it goes wrong
 			offset: 10,
 			html:true
-		});	
+		});
 	}
 
 	//ADD #JQUERY HERE
@@ -433,7 +433,7 @@ function displayPosts() {
 	});
 
 	//fix offset
-	$('#ideanames li a').click(function(e){	
+	$('#ideanames li a').click(function(e){
 		e.preventDefault();
 		//$('#newpost').val('');
 
@@ -443,16 +443,16 @@ function displayPosts() {
 			updateNrOfIdeasVisible()
 		}
 		$('[-idea-id="'+targetName+'"]').show();
-		
+
 		var offset = $($("a[name='"+targetName+"']")).offset();
 		var scrollto = offset.top - 57; // fixed_top_bar_height = 50px
 		$('html, body').animate({scrollTop:scrollto}, 0);
 	});
-	
-	$('.ideatags a, .peopletags a').click(function(e){	
+
+	$('.ideatags a, .peopletags a').click(function(e){
 		e.preventDefault();
 
-		var targetName=$(e.target).html();
+		var targetName=$(e.target).text();
 		$('#newpost').val(targetName).focus();
 		rootNodeViewModel.filter(targetName);
 	});
@@ -492,9 +492,9 @@ function displayIdeaNames() {
 		var peopletags={};
 		console.log(x=data);
 		updateGlobalData(data);
-		
+
 		var cs = $.parseJSON(localStorage.getItem("comments"));
-		// idea names 
+		// idea names
 		// Idea Names by Upvotes
 		var sortable = [];
 		$.each( data,function(i,data){
@@ -527,7 +527,7 @@ function displayIdeaNames() {
 		});
 
 		$.each( cs,function(i,cs){
-			
+
 			var n=extractIdeaName(cs.comment_text);
 			var h=extractHashes(cs.comment_text);
 			var t=extractTildes(cs.comment_text);
@@ -552,7 +552,7 @@ function displayIdeaNames() {
 			}
 
 			// Could list comments here
-			//sortable[data.pid] = [n,data.upvotes.toString()]; 
+			//sortable[data.pid] = [n,data.upvotes.toString()];
 		});
 
 		/* IDEAS ON RIGHTHAND BAR
@@ -579,15 +579,15 @@ function displayIdeaNames() {
 		var hashtagssorted = [];
     for (var key in hashtags)
     	hashtagssorted.push([hashtags[key],key]);
-    hashtagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+    hashtagssorted.sort(function(a, b) {return b[0] - a[0]})
     var peopletagssorted = [];
     for (var key in peopletags)
     	peopletagssorted.push([peopletags[key],key]);
-   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
+   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]})
 
 		localStorage.setItem("tags", tags);
 		var tagsul = $('ul#idea-hashtags').empty();
-		var tildesul = $('ul#people-list').empty();		
+		var tildesul = $('ul#people-list').empty();
 		for(var k=0;k<hashtagssorted.length;k++){
 			//if(tag.substring(0,1)=="#")
 			tagsul.append('<li><a href="#" onclick="hashtag(event)">'+hashtagssorted[k][1] + '</a> </li>');
@@ -596,12 +596,12 @@ function displayIdeaNames() {
 			var tag = peopletagssorted[k][1];
 			var upv = peopletagssorted[k][0];
 			tildesul.append('<li><a href="#" onclick="hashtag(event)">'+tag + '</a> <span class="badge">('+upv+')</span></li>')
-		} 
+		}
 	}
 }
 
 //ajax
-function doUpvote(ideaid,upOrDown) { 	
+function doUpvote(ideaid,upOrDown) {
 	$.ajax({
 		'url': 'ajax/upvote.php?'+upOrDown+'=true',
 		'data': {'ideaid':ideaid},
@@ -611,7 +611,7 @@ function doUpvote(ideaid,upOrDown) {
 			}
 			else {
 				deleteCookie("i"+ideaid);
-			}		
+			}
 		},
 	});
 }
@@ -634,10 +634,10 @@ function doUpvoteComment(commentid,upOrDown) {
 function cycleStatus(ideaid) {
 	if(setStatusRequest !==null && setStatusRequestIdeaid==ideaid){
 		setStatusRequest.abort();
-	} 
+	}
 	if(setStatusRequestTimeout !==null && setStatusRequestIdeaid==ideaid){
 		clearTimeout(setStatusRequestTimeout);
-	} 
+	}
 	setStatusRequestIdeaid = ideaid;
 	var x = $('.entryNode[-idea-id="'+ideaid+'"]').find('.status');
 	var cn = 0;
@@ -663,7 +663,7 @@ function cycleStatus(ideaid) {
 				getPosts();
 			},
 		});
-	},500);	
+	},500);
 }
 
 function deleteNode(ideaid) {
@@ -706,22 +706,22 @@ function submitPostAndGetPosts(newPostText) {
 	else {
 		var processedname = name;
 	}
-	
-	
+
+
 	//+$('#usrhandle').val()+\
 	//#hack
 	var np = newPostText;
 	var ind=np.indexOf('~'+$('#usrhandle').val());
-	
+
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
 //		if(np.substr(ind+$('#usrhandle').val().length+1),1)
-			
+
 		np+=' ~'+$('#usrhandle').val();
 	}
-	
+
 	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
 	function extractTags(idea) {
-    
+
     return idea.match(tag_regexp)
 	*/
 
@@ -752,21 +752,21 @@ function submitPostAndGetPostsAndLink(newPostText,source) {
 	else {
 		var processedname = name;
 	}
-	
+
 	//+$('#usrhandle').val()+\
 	//#hack
 	var np = newPostText;
 	var ind=np.indexOf('~'+$('#usrhandle').val());
-	
+
 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
 	//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
-			
+
 		np+=' ~'+$('#usrhandle').val();
 	}
-	
+
 	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
 	function extractTags(idea) {
-    
+
     return idea.match(tag_regexp)
 	*/
 
@@ -777,7 +777,7 @@ function submitPostAndGetPostsAndLink(newPostText,source) {
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  // localStorage.setItem("posts", jsonData);
-                 
+
                  // displayPosts();
              },
          });
@@ -820,7 +820,7 @@ function getComments() {
 			$.each(cs,function(i,comment) {
 				if(!(comment.pid+"" in commentsModel))
 					commentsModel[comment.pid] = [];
-				commentsModel[comment.pid].push(comment);				
+				commentsModel[comment.pid].push(comment);
 			})
 			rootNodeViewModel.loadCommentsRecurs();
 		},
@@ -913,7 +913,7 @@ function linkEntryNodesFE(source,target) {
 
 	//forward link
 	$('.entryNode[-idea-id="'+source+'"]').find('.suggest-labels').eq(0).append(label);
-	
+
 	//backlink
 	var label2=createSetupLabel(source);
 	$('.entryNode[-idea-id="'+target+'"]').find('.suggest-labels').eq(0).append(label2);
@@ -926,7 +926,7 @@ function linkEntryNodesAjax(source,target) {
 		'url': 'ajax/link.php',
 		'data': {'pid':source,'tid':target},
 		'success': function(jsonData) {
-			
+
 		},
 	});
 }
@@ -934,7 +934,7 @@ function linkEntryNodesAjax(source,target) {
 
 //helper method; tid needs be int
 function createSetupLabel(tid) {
-	
+
 	var title=globalData[tid].title;
 	var label = $('<li><a href="#" -idea-id="'+tid+'">' + title + '</a></li>');
 	label.click(function (e) {
@@ -949,7 +949,7 @@ function createSetupLabel(tid) {
 		}
 	});
 	return label;
-}				
+}
 
 // postEl should be an entryNode
 //sets up typeahead and related idea links on a node
@@ -964,7 +964,7 @@ function setupRel(postEl) {
 		var nodeId = nodeView.attr('-idea-id');
 
 		if (isNaN(nodeId)) return; //skip if rootnode
-		//nodeId===""||nodeId===null||nodeId === 'null') return; 
+		//nodeId===""||nodeId===null||nodeId === 'null') return;
 
 		var nodeModel = globalData[parseInt(nodeId)];
 		if (typeof nodeModel==="undefined")
@@ -975,7 +975,7 @@ function setupRel(postEl) {
 
 		//load related node links
 		$.each(nodeModel.relEntryIds, function(i, rel){
-			if(rel.deleted_time === null){ 
+			if(rel.deleted_time === null){
 				var relName = "";  //#remove?
 				var destNode = null;
 
@@ -986,7 +986,7 @@ function setupRel(postEl) {
 					labels.append(label);
 				}
 				else {
-					console.log(rel.target+' target is not loaded');					
+					console.log(rel.target+' target is not loaded');
 					// TODO showing vertical line... delete or find link?
 				}
 			}
@@ -1001,7 +1001,7 @@ function setupRel(postEl) {
 	var getSuggestions = function (queryString, callback) {
 		if (localStorage.getItem("posts")){
 			// TODO [3/4 done] make this a backend query; for now I'll just match on some random posts
-			
+
 			var jsonData = localStorage.getItem("posts");
 			var data = $.parseJSON(jsonData)['flatPosts']; // TODO #later refactor to use globaldata
 			var somePosts=data;
@@ -1012,9 +1012,9 @@ function setupRel(postEl) {
 
 			var matches = [];
 			var regex = new RegExp(queryString, 'i');
-			
+
 			//c onsole.log("oeu",somePosts)
-			
+
 			$.each(somePosts, function (i, post) {
 				if (regex.test(post.title) || regex.test(post.description)) {
 					matches.push(post);
@@ -1033,7 +1033,7 @@ function setupRel(postEl) {
 		// TODO decide whether to add to entry list in real time
 		if (suggestion === undefined) {
 			newSugg=true;
-			// TODO make a call to the server to add this suggestion. Add the 
+			// TODO make a call to the server to add this suggestion. Add the
 			//  pid to the globalData array, and set that pid here, instead of -1
 
 			var newEntryTxt=el.typeahead('val');

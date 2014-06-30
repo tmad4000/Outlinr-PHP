@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once('../config.inc.php');
 
@@ -7,7 +7,7 @@ require_once('../config.inc.php');
 <!DOCTYPE html>
 <html>
 <head>
-  <?php 
+  <?php
     require_once('inc/mysql.inc.php');
     include_once("inc/analyticstracking.inc.php");
     $getmapid=$_GET['mapid']+0;
@@ -16,21 +16,21 @@ require_once('../config.inc.php');
     $r = mysqli_fetch_assoc($result);
   ?>
   <title>IdeaJoin -- <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?></title>
-  <?php include('inc/includes.php'); ?>
-  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
+  <?php include('inc/local.php'); ?>
+  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
-  <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
+  <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>
   <script type="text/javascript" src="js/client_admin.js"></script>
-  
+
   <link rel="stylesheet/less" type="text/css" href="styles/ideabox.less" />
-  <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>  
-  
+  <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>
+
 
 </head>
 <body>
   <div class="container-fluid outermost">
- 
-  <?php 
+
+  <?php
   include('inc/nav.inc.php');
   ?>
 
@@ -93,7 +93,7 @@ echo $r['mapdesc'];
       </div><!--/span-->
     </div><!--/row-->
   </div><!--/.fluid-container-->
-  <?php 
+  <?php
   include('inc/footer.inc.php');
   ?>
 </body>

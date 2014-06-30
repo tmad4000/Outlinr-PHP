@@ -8,6 +8,10 @@ var statusTable={0:"",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 var numberOfIdeasVisible = 0; // #HACK
 var filterToggle = 'Date'; // Date, Upvote, Hot, Status
 
+function isLinkIdeaJoin(link){
+    var ideaJoin_regexp = /(^(?:www|http|https)([a-zA-Z0-9-]+/;
+}
+
 function getURLParameter(sParam){
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -21,13 +25,13 @@ function getURLParameter(sParam){
 
 function timeToString(hours, minutes) {
   var xm = hours < 12 ? "am" : "pm";
-  
+
   // Convert hours from 0-24 to 1-12.
   hours = (hours + 11) % 12 + 1;
-  
+
   if (minutes < 10)
       minutes = "0" + minutes;
-  
+
   return hours + ":" + minutes + " " + xm;
 }
 
@@ -46,7 +50,7 @@ function changeOrder(nodeChildren){
     for (var key in nodeChildren)
     sortable.push([key, nodeChildren[key].upvotes])
     if(filterToggle == 'Upvotes')
-        sortable.sort(function(a, b) {return b[1] - a[1]}) 
+        sortable.sort(function(a, b) {return b[1] - a[1]})
 
     if(filterToggle == 'Status'){
         sortable = []
@@ -54,7 +58,7 @@ function changeOrder(nodeChildren){
         sortable.push([key, nodeChildren[key].status])
         sortable.sort(function(a, b) {return a[1].localeCompare(b[1])})
     }
-    return sortable  
+    return sortable
 }
 
 function updateNrOfIdeasVisible(){
@@ -74,7 +78,7 @@ function updateNrOfIdeasVisible(){
         }
         else {
             $('#numResults').html("Found "+numberOfIdeasVisible+' Ideas which match"'+store+'"');
-        }     
+        }
     }
 }
 
@@ -97,10 +101,10 @@ function timeToString(hours, minutes) {
 
     // Convert hours from 0-24 to 1-12.
     hours = (hours + 11) % 12 + 1;
-    
+
     if (minutes < 10)
     	minutes = "0" + minutes;
-    
+
     return hours + ":" + minutes + " " + xm;
 }
 
@@ -235,7 +239,7 @@ String.prototype.regexMatchOffset = function(regex, startpos) {
     if(matchObj===null) {
      	newObj=[];
     }
-	
+
     return newObj;
 }
 
@@ -251,7 +255,7 @@ function extractTags(idea) {
     return idea.match(tag_regexp)
 }
 function extractHashes(idea) {
-	return idea.match(hash_regexp)
+	return (idea.match(hash_regexp))
 }
 function extractTildes(idea) {
     return idea.match(tilde_regexp)
@@ -272,14 +276,14 @@ function processIdea(idea,pid) {
 }
 
 // NAV BAR UTIL METHODS
-function initiateCookie(){ 
+function initiateCookie(){
     if(getCookie("handle")!=""){
         //var n = unescape(getCookie("name"));
-        //var e = unescape(getCookie("usremail")); 
+        //var e = unescape(getCookie("usremail"));
         var h = unescape(getCookie("handle"));
         var d = unescape(getCookie("isDefaultUsrHandle"));
-        //$("#usrname").val(n); 
-        //$("#usremail").val(e); 
+        //$("#usrname").val(n);
+        //$("#usremail").val(e);
         $("#usrhandle").val(h);
         isDefaultUsrHandle = d == "true";
     }
@@ -298,7 +302,7 @@ function rememberMeToggle(){
     if(getCookie("name")!="" || getCookie("email")!=""){
         // untoggle (val remember)
         $("#usrremember").attr("value","Remember");
-        deleteCookie() 
+        deleteCookie()
    }
    else {
         // toggle (val forget)

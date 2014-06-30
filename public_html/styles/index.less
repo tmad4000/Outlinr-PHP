@@ -1,9 +1,5 @@
 @import "colors";
 
-.row {
-  margin: 0;
-}
-
 #ideamaps {
   background: @midnight-blue;
   -webkit-background-size:  cover;
@@ -68,9 +64,7 @@ ul.progbarlist table {
 }
 
 #landingsplash {
-  font-size: 100pt;
-  text-align: center;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-size: 30pt;
 }
 
 input[type="text"]#newpost {
@@ -129,10 +123,29 @@ footer a:hover {
 
 #textfield {
   position:  relative;
-  top: 95px;
+  top: 25px;
   z-index: 50;
 }
 
 ul.progbarlist {
   padding: 0px;
+}
+
+.link-button {
+  padding: 10px 20px;
+  border: 0px;
+  background: @peter-river;
+  font-size: 16pt;
+  font-weight: 600;
+  color: white;
+  border-radius: 4px;
+  margin-top: 10px;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.link-button:hover {
+  background: darken(@peter-river, 10%);
+  color: white;
+  text-decoration: none;
 }
