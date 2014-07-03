@@ -10,6 +10,18 @@
   z-index: -1;
 }
 
+#brand a {
+  text-shadow: 0px 1px 1px white;
+  font-size: 30pt;
+  color: #666;
+  text-decoration: none;
+}
+
+#brand a:hover {
+  color: #444;
+  text-decoration: none;
+}
+
 body::after {
   content: "";
   opacity: 0.1;
@@ -24,6 +36,10 @@ body::after {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+#marketing {
+  text-shadow: 0px 1px 1px white;
 }
 
 #currentposts {
@@ -63,10 +79,6 @@ ul.progbarlist table {
   margin-left: 0             
 }
 
-#landingsplash {
-  font-size: 30pt;
-}
-
 input[type="text"]#newpost {
   border-radius: 50px;
   width: 100%;
@@ -101,7 +113,7 @@ input[type="text"]#newpost {
   padding: 0px;
 }
 
-footer {
+footer.box-footer {
   background: transparent;
   outline: none !important;
   border-top: 0px !important;
@@ -111,12 +123,12 @@ footer {
   font-size: 20pt;
 }
 
-footer a {
+footer.box-footer a {
   margin: 0px 50px;
   color: white;
 }
 
-footer a:hover {
+footer.box-footer a:hover {
   text-decoration:  none;
   text-shadow: 0 0 5px #efefef;
 }

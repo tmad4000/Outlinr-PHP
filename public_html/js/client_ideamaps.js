@@ -1,7 +1,6 @@
 $(document).ready(function() {
-  $('#postform').submit(function() {
-    submitPostAndGetPosts();
-    $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+  $('#create-box-form').submit(function() {
+    createBox($('#create-box-name').val(), $('#create-box-email').val(), $('#create-box-password').val())
     return false;
   });
     
@@ -13,7 +12,7 @@ $(document).ready(function() {
          event.stopPropagation();   
     }
     else if(event.keyCode == 13){
-        $('#postform').submit();              
+      $('#postform').submit();              
     }
     else {
       // FILTER RESULTS
@@ -49,7 +48,7 @@ $(document).ready(function() {
     return 0; 
   }
 
-	getPosts();
+	getPosts($('#mapidform').val());
 
 });
 
@@ -102,7 +101,7 @@ function displayIdeaNames() {
     var data = $.parseJSON(jsonData);
 
     var nameul = $('ul#ideanames').empty();
-    var tags={};
+    var tags = {};
      $.each( data,function(i,data) {
         if(data.body != null){
           var n=extractIdeaName(data.body);
@@ -158,7 +157,7 @@ function replaceTags(idea) {
 function submitPostAndGetPosts() {
   $.ajax({
     'url': 'ajax/get_or_make_post_ideamaps.php',
-    'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val()},
+    'data': {'mapid':$('#mapidform').val(), 'name': $('#newpost').val(), },
     'success': function(jsonData) {
        // todo: parse data and add into our table
       localStorage.setItem("posts", jsonData);
@@ -168,11 +167,20 @@ function submitPostAndGetPosts() {
   });
 }
 
-function getPosts() {
+function createBox(name, email, password) {
+  $.ajax({
+    'url': 'ajax/create_ideamap.php',
+    'data': {'name': name, 'email': email, 'password': password },
+    'success': function(jsonData) {
+      document.location.href='ideabox.php?mapid='+jsonData;
+    },
+  });
+}
+
+function getPosts(mapid) {
   $.ajax({
     'url': 'ajax/get_or_make_post_ideamaps.php',
-    'data': {'mapid':$('#mapidform').val(),
-		'newpost': ''},
+    'data': {'mapid': mapid, 'newpost': ''},
     'success': function(jsonData) {
       localStorage.setItem("posts", jsonData);
       displayPosts();
