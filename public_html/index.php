@@ -8,7 +8,7 @@
   <?php include('inc/local.php'); ?>
   <script type="text/javascript" src="js/client_ideamaps.js"></script>
   <link rel="stylesheet/less" type="text/css" href="styles/index.less" />
-  <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>  
+  <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>
 </head>
 <body>
   <div class="container-fluid">
@@ -19,6 +19,7 @@
         </div>
       </div>
       <div class="col-sm-6 right middle margin-vertical">
+        <a href="https://github.com/login/oauth/authorize?client_id=3429c5dd62f9e39cf646&scope=user&redirect_uri=http://www.ideajoin.com/github_oauth.php" class="link-button">Login with Github</a>
         <a href="create.php" class="link-button">Create New</a>
       </div>
     </div>
