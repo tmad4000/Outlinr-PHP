@@ -7,11 +7,30 @@
 @body-bg: #eee;
 
 * {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Open Sans", Arial, "Lucida Grande", sans-serif; 
+  -webkit-font-smoothing: antialiased;
 }
 
 .gold {
 	color: @sunflower;
+}
+
+.right {
+	text-align: right;
+}
+
+.middle {
+	vertical-align: middle;
+}
+
+.full-width {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.margin-vertical {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .nav-list {
@@ -41,14 +60,8 @@
 		//margin-left: 50px;
 	}
 
-	.row.cp .col-sm-12 {
-		padding-right: 0px;
-	}
-
 	.col-sm-12.ml {
-		margin: 0px;
-		padding: 0px;
-		padding-left: 75px;
+		//padding: 0px;
 	}
 
 	nav > .container-fluid {
@@ -56,14 +69,13 @@
 	}
 }
 
-/* Large devices (large desktops, 1200px and up) */ 
+/* Large devices (large desktops, 1200px and up) */
 @media (min-width: @screen-lg-min) {
 	.outermost > .row:nth-of-type(2), .outermost > .row:nth-of-type(3) {
 		//margin-left: 100px;
 	}
 	.col-sm-12.ml {
-		margin-left: 115px;
-		padding: 0px;
+		//padding: 0px;
 	}
 
 	nav > .container-fluid {
@@ -97,10 +109,6 @@ footer {
 	color: #666;
 	padding-top: 17px;
 	border-top: 1px solid @silver;
-} 
-
-footer a:hover {
-	color: #444;
 	text-decoration: none;
 }
 
@@ -108,6 +116,7 @@ footer a:hover {
 
 footer a {
 	color: #666;
+	text-decoration: none;
 }
 
 a.underline:hover {
@@ -229,6 +238,7 @@ div.container {
 .comment-time {
 	width: 100px;
 	text-align: right;
+  float: right;
 }
 
 .badge {
@@ -244,20 +254,19 @@ div.container {
 }
 
 textarea, input[type="text"] {
-	-webkit-box-shadow: none !important;
+	/*-webkit-box-shadow: none !important;
 	box-shadow: none !important;
-	-moz-box-shadow: none !important;
-	border: 1px solid #ddd;
+	-moz-box-shadow: none !important;*/
 	outline: none !important;
-	-webkit-font-smoothing: subpixel-antialiased;
+	/*-webkit-font-smoothing: subpixel-antialiased;
 	-webkit-transition: border .05s linear, color .05s linear, background-color .05s linear;
 	transition: border .05s linear, color .05s linear, background-color .05s linear;
-	border-radius: 3px;
-	
+	border-radius: 3px;*/
+
 }
-textarea:focus,input[type="text"]:focus {
+/*textarea:focus,input[type="text"]:focus {
 	border-color: @belize-hole;
-}
+}*/
 
 .navbar-inner{
 	-webkit-box-shadow: none !important;
@@ -310,12 +319,10 @@ textarea:focus,input[type="text"]:focus {
 	letter-spacing: 0.3px;
 	-webkit-font-smoothing: antialiased;
 	box-sizing: border-box;
-	color:#444;
 	font-size: 14px;
 	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
-	background: white;
 	padding: 5px 10px;
 	color: #aaa;
 }
@@ -327,8 +334,7 @@ textarea:focus,input[type="text"]:focus {
 #filterBy .active {
 	outline: 0;
 	text-decoration: none;
-	color: @sunflower;
-	border-bottom: 1px solid @sunflower;
+	color: #666;
 }
 
 #filterBy a:hover {
@@ -348,7 +354,7 @@ div.container textarea.span11 {
 }
 
 .ideaTxtFooter-r {
-	display: inline;
+	display: inline-block;
 	margin-left: 5px;
 }
 
@@ -447,7 +453,7 @@ div.container textarea.span11 {
 
 .star-idea {
 	width: 50px;
-	height: 40px; 
+	height: 40px;
 	font-size: 30px;
 	color: @silver;
 	text-align: center;
@@ -471,7 +477,7 @@ div.container textarea.span11 {
   width: 30px;
   height: 14px;
   margin-left: 0px;
-} 
+}
 
 .vote.on {
   color: rgb(218, 46, 38);
@@ -482,7 +488,7 @@ a.showcomments {
 }
 
 a.showcomments:hover {
-	background-position: 0 -16px;	
+	background-position: 0 -16px;
 }
 
 div.commentform input[type=button] {
@@ -509,9 +515,11 @@ ul.comments {
 }
 
 .comment-text {
-	width: 400px;
+	width: auto;
+  margin:0 auto;
 	padding-left: 10px;
 	font-size: 16px;
+  display: block;
 }
 
 #emailicon {
@@ -520,6 +528,8 @@ ul.comments {
 
 .comment-upvote{
 	overflow: hidden;
+  float: left;
+  width: 50px;
 	cursor: pointer;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -542,20 +552,11 @@ ul.comments {
 }
 
 .comments li {
-	float: left;
 	clear: both;
 	width: 100%;
-}
-
-.comments li div {
-	display: table-cell;
-	border-bottom: 1px solid #ddd;
-	padding-top: 3px;
+  border-bottom: 1px solid #ddd;
+  padding-top: 3px;
 	padding-bottom: 3px;
-}
-
-.comments li div {
-	display: table-cell;
 }
 
 textarea.commentsinput {
@@ -576,7 +577,7 @@ div.commentform div.commentsinput {
 	float: left;
 	height: 22px;
 	width: 220px;
-	
+
 	background-color: #ffffff;
 	border: 1px solid #cccccc;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -591,13 +592,12 @@ div.commentform div.commentsinput {
 #postform textarea {
 	margin-bottom: 0px;
 	width: 100%;
-	font-size: 25px;
+	font-size: 12pt;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 300;
-	padding: 4px 6px;
+	padding: 4px 8px;
 	border: 0;
-	color: @pumpkin;
 }
 
 #postform div {
@@ -639,7 +639,7 @@ div.commentform div.commentsinput {
 // 	font-weight: 300;
 // }
 
-// :-ms-input-placeholder {  	
+// :-ms-input-placeholder {
 // 	font-weight: 300;
 // 	letter-spacing: 0.3px;
 // 	-webkit-font-smoothing: antialiased;
@@ -701,7 +701,7 @@ div.commentform div.commentsinput {
 //    	padding-top:2px;
 // }
 
-// #newpost:-ms-input-placeholder {  
+// #newpost:-ms-input-placeholder {
 // 	font-style: normal;
 // 	font-variant: normal;
 // 	font-weight: 300;
@@ -715,7 +715,7 @@ div.commentform div.commentsinput {
 // 	white-space: pre-line;
 // 	word-wrap: break-word;
 // }
-// #newpost:-ms-input-placeholder {  
+// #newpost:-ms-input-placeholder {
 //    padding-top: 2px;
 // }
 
@@ -943,7 +943,7 @@ div.ideaTxtInner {
   padding: 0 5px;
   border-radius: 3px;
   margin-left: 5px;
-  margin-top: 4px
+  margin-top: 4px;
 }
 
 .ms-res-ctn {
@@ -961,6 +961,10 @@ div.ideaTxtInner {
 #box-description {
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.table > tbody > tr > td {
+	border-top: 0;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {

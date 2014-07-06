@@ -1,9 +1,5 @@
 @import "colors";
 
-.row {
-  margin: 0;
-}
-
 #ideamaps {
   background: @midnight-blue;
   -webkit-background-size:  cover;
@@ -12,6 +8,18 @@
   background-size:  cover;
   margin: 0;
   z-index: -1;
+}
+
+#brand a {
+  text-shadow: 0px 1px 1px white;
+  font-size: 30pt;
+  color: #666;
+  text-decoration: none;
+}
+
+#brand a:hover {
+  color: #444;
+  text-decoration: none;
 }
 
 body::after {
@@ -28,6 +36,10 @@ body::after {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+#marketing {
+  text-shadow: 0px 1px 1px white;
 }
 
 #currentposts {
@@ -67,12 +79,6 @@ ul.progbarlist table {
   margin-left: 0             
 }
 
-#landingsplash {
-  font-size: 100pt;
-  text-align: center;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-}
-
 input[type="text"]#newpost {
   border-radius: 50px;
   width: 100%;
@@ -107,7 +113,7 @@ input[type="text"]#newpost {
   padding: 0px;
 }
 
-footer {
+footer.box-footer {
   background: transparent;
   outline: none !important;
   border-top: 0px !important;
@@ -117,22 +123,41 @@ footer {
   font-size: 20pt;
 }
 
-footer a {
+footer.box-footer a {
   margin: 0px 50px;
   color: white;
 }
 
-footer a:hover {
+footer.box-footer a:hover {
   text-decoration:  none;
   text-shadow: 0 0 5px #efefef;
 }
 
 #textfield {
   position:  relative;
-  top: 95px;
+  top: 25px;
   z-index: 50;
 }
 
 ul.progbarlist {
   padding: 0px;
+}
+
+.link-button {
+  padding: 10px 20px;
+  border: 0px;
+  background: @peter-river;
+  font-size: 16pt;
+  font-weight: 600;
+  color: white;
+  border-radius: 4px;
+  margin-top: 10px;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.link-button:hover {
+  background: darken(@peter-river, 10%);
+  color: white;
+  text-decoration: none;
 }

@@ -98,3 +98,7 @@ Issues
   - viewDomE is not actually connected to the html page, we can use a getter method to select the jquery object based on the parents pid.
 
 We have 554 Pixels in width used up without considering the ideas innerwidth
+
+Search query ranking:
+balance of nr of matvched queries and keywords which are matched by fewest queries.
+ie give every term in the query a frequency ranking from 1 to 3. then find the highest scoring query match.

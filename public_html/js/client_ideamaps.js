@@ -1,28 +1,27 @@
 $(document).ready(function() {
-  $('#postform').submit(function() {
-    submitPostAndGetPosts();
-    $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+  $('#create-box-form').submit(function() {
+    createBox($('#create-box-name').val(), $('#create-box-email').val(), $('#create-box-password').val())
     return false;
   });
     
   $('#newpost').keyup(function (event) {
-    if (event.keyCode == 13 && event.shiftKey) {
-         var content = this.value;
-         var caret = getCaret(this);
-         this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
-         event.stopPropagation();   
+    if (event.keyCode == 13 && event.shiftKey) { // NEW LINE
+      var content = this.value;
+      var caret = getCaret(this);
+      this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
+      event.stopPropagation();   
     }
-    else if(event.keyCode == 13){
-        $('#postform').submit();              
+    else if(event.keyCode == 13){ // SUBMIT
+      $('#postform').submit();              
     }
-    else {
-      // FILTER RESULTS
+    else { // FILTER RESULTS 
       var query = $(this).val();
+      console.log(query)
       query = query.split(' ');
       $.each($('#currentposts > .progbarlist').children(), function(index, element){
         $(element).show();
         $.each(query,function(i,el){
-          if($(element).find('a').text().toLowerCase().indexOf(el.toLowerCase)==-1)
+          if($(element).find('a').text().toLowerCase().indexOf(el.toLowerCase())==-1)
             $(element).hide();
         });        
       });
@@ -49,7 +48,7 @@ $(document).ready(function() {
     return 0; 
   }
 
-	getPosts();
+	getPosts($('#mapidform').val());
 
 });
 
@@ -71,12 +70,11 @@ function displayPosts() {
 			status = "<td class='status'>" + '<div class="status sc' + data[i].status +'" >' + '</div>' + "</td>";
       var tablerow = '<a href="ideabox.php?mapid=' + data[i].mapid + '" class="idea">' + n + '</a>';
 
-
 		  table+=tablerow;
 		  table+="";
 		
-      if(data[i].parent+0!=0)
-		    table="<ul class='progbarlist'><li>"+table+"</li></ul>";
+      // if(data[i].parent+0!=0)
+		    // table=table;
       progbarlist+=table+"</li>";
     }
       
@@ -102,7 +100,7 @@ function displayIdeaNames() {
     var data = $.parseJSON(jsonData);
 
     var nameul = $('ul#ideanames').empty();
-    var tags={};
+    var tags = {};
      $.each( data,function(i,data) {
         if(data.body != null){
           var n=extractIdeaName(data.body);
@@ -158,7 +156,7 @@ function replaceTags(idea) {
 function submitPostAndGetPosts() {
   $.ajax({
     'url': 'ajax/get_or_make_post_ideamaps.php',
-    'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val()},
+    'data': {'mapid':$('#mapidform').val(), 'name': $('#newpost').val(), },
     'success': function(jsonData) {
        // todo: parse data and add into our table
       localStorage.setItem("posts", jsonData);
@@ -168,11 +166,20 @@ function submitPostAndGetPosts() {
   });
 }
 
-function getPosts() {
+function createBox(name, email, password) {
+  $.ajax({
+    'url': 'ajax/create_ideamap.php',
+    'data': {'name': name, 'email': email, 'password': password },
+    'success': function(jsonData) {
+      document.location.href='ideabox.php?mapid='+jsonData;
+    },
+  });
+}
+
+function getPosts(mapid) {
   $.ajax({
     'url': 'ajax/get_or_make_post_ideamaps.php',
-    'data': {'mapid':$('#mapidform').val(),
-		'newpost': ''},
+    'data': {'mapid': mapid, 'newpost': ''},
     'success': function(jsonData) {
       localStorage.setItem("posts", jsonData);
       displayPosts();
