@@ -5,23 +5,23 @@ $(document).ready(function() {
   });
     
   $('#newpost').keyup(function (event) {
-    if (event.keyCode == 13 && event.shiftKey) {
-         var content = this.value;
-         var caret = getCaret(this);
-         this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
-         event.stopPropagation();   
+    if (event.keyCode == 13 && event.shiftKey) { // NEW LINE
+      var content = this.value;
+      var caret = getCaret(this);
+      this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
+      event.stopPropagation();   
     }
-    else if(event.keyCode == 13){
+    else if(event.keyCode == 13){ // SUBMIT
       $('#postform').submit();              
     }
-    else {
-      // FILTER RESULTS
+    else { // FILTER RESULTS 
       var query = $(this).val();
+      console.log(query)
       query = query.split(' ');
       $.each($('#currentposts > .progbarlist').children(), function(index, element){
         $(element).show();
         $.each(query,function(i,el){
-          if($(element).find('a').text().toLowerCase().indexOf(el.toLowerCase)==-1)
+          if($(element).find('a').text().toLowerCase().indexOf(el.toLowerCase())==-1)
             $(element).hide();
         });        
       });
@@ -70,12 +70,11 @@ function displayPosts() {
 			status ="<td class='status'>" + '<div class="status sc'+data[i].status +'" >'+ '</div>' + "</td>";
       var tablerow = '<a href="ideabox.php?mapid='+data[i].mapid+'" class="idea">'+n + '</a>';
 
-
 		  table+=tablerow;
 		  table+="";
 		
-      if(data[i].parent+0!=0)
-		    table="<ul class='progbarlist'><li>"+table+"</li></ul>";
+      // if(data[i].parent+0!=0)
+		    // table=table;
       progbarlist+=table+"</li>";
     }
       

@@ -23,13 +23,13 @@
       <div class="col-sm-12">
         <form role="form" id="create-box-form">
           <div class="form-group">
-            <input type="text" class="form-control input-lg" id="create-box-name" placeholder="IdeaJoin Name">
+            <input type="text" class="form-control input-lg" id="create-box-name" placeholder="Title">
           </div>
           <div class="form-group">
             <input type="email" class="form-control input-lg" id="create-box-email" placeholder="Email (won't be shared)">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control input-lg" id="create-box-password" placeholder="Admin Password">
+            <input type="password" class="form-control input-lg" id="create-box-password" placeholder="Moderation Password">
           </div>
           <!--<div class="checkbox">
             <label>
