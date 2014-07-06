@@ -75,11 +75,26 @@ $(document).ready(function() {
 		// never gets here
 		return false;
 	});
+
+	$('#sortByHot').click( function(){
+    if(!$(this).hasClass('active')){
+      filterToggle = "Hot";
+      $('#sortByDate').removeClass('active'); 
+      $('#sortByUpvotes').removeClass('active');
+      $('#sortByStatus').removeClass('active'); 	        
+      $(this).addClass("active");
+      
+      displayPosts()
+    }
+	});
+
+
 	$('#sortByDate').click( function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Date";
-      $('#sortByUpvotes').removeClass('active');
-      $('#sortByStatus').removeClass('active');
+      $('#sortByHot').removeClass('active');
+      $('#sortByUpvotes').removeClass('active'); 
+      $('#sortByStatus').removeClass('active'); 	        
       $(this).addClass("active");
 
       displayPosts()
@@ -89,9 +104,11 @@ $(document).ready(function() {
 	$('#sortByUpvotes').click( function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Upvotes";
-      $('#sortByDate').removeClass('active');
-      $('#sortByStatus').removeClass('active');
-      $(this).addClass("active");
+
+      $('#sortByHot').removeClass('active');
+      $('#sortByDate').removeClass('active'); 
+      $('#sortByStatus').removeClass('active'); 
+      $(this).addClass("active");	       		
 
       displayPosts()
     }
@@ -100,6 +117,7 @@ $(document).ready(function() {
 	$('#sortByStatus').click(function(){
     if(!$(this).hasClass('active')){
       filterToggle = "Status";
+      $('#sortByHot').removeClass('active');
       $('#sortByDate').removeClass('active');
      	$('#sortByUpvotes').removeClass('active');
       $(this).addClass("active");
@@ -164,9 +182,8 @@ $(document).ready(function() {
 	$('textarea#newpost').focus();
 
 	$('textarea#newpost').keydown(function (event) {
-		if(event.keyCode == 13){ // enter
-        	event.preventDefault();
-        }
+		if(event.keyCode == 13) // enter
+    	event.preventDefault();
 	});
 	$('textarea#newpost').keyup(function (event) {
 		var newpostObj=$(this);
@@ -196,7 +213,6 @@ $(document).ready(function() {
 				if(numIdeas>50)
 					minQPer=400
 
-				//c/onsole.log(numFilterTos)
 				//if no filter pending
 				if(numFilterTos<=0){
 					rootNodeViewModel.filter(newpostObj.val() || "");
@@ -280,7 +296,8 @@ function setupNode(postEl) {
 			}
 		});
 
-		postEl.find("span.delete > a").click(function(e) {
+		
+		postEl.find(".delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)
@@ -312,7 +329,7 @@ function setupNode(postEl) {
 			//$(this).parent().find('.commentform').toggle();
 			var idS=$(this).closest('.entryNode').attr('-idea-id');
 
-			toggleComment(idS);
+			toggleComment(idS,true);
 		});
 
 		postEl.find('.commentsinput').keydown(function (event) {
@@ -460,7 +477,7 @@ function displayPosts() {
   rootNodeViewModel.filter($('textarea#newpost').val());
 }
 
-function toggleComment(pid) {
+function toggleComment(pid, focus) {
 	var cf=$('.commentform[-idea-id="'+pid+'"]');
 	if(pid in expandedComments) { //hide
 		delete expandedComments[pid];
@@ -471,7 +488,8 @@ function toggleComment(pid) {
 		expandedComments[pid]=1;
 
 		cf.removeClass('init-hidden').addClass('init-expanded');
-		(cf.find('textarea')[0]).focus();
+		if(focus)
+			(cf.find('textarea')[0]).focus();
 	}
 }
 
