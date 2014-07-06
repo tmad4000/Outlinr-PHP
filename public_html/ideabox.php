@@ -76,7 +76,7 @@ echo $r['mapdesc'];
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 gray">
         <div class="sidebar-nav-fixed navbar-inner">
           <ul class="nav nav-list">
             <li class="nav-header">Labels</li>

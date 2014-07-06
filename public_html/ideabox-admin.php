@@ -111,7 +111,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 gray">
         <div class="sidebar-nav-fixed navbar-inner">
         <?php 
           if($r['password']==='' || $r['password']===$_GET['pw']){
