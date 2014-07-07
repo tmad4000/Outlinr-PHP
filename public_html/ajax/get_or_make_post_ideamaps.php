@@ -16,7 +16,6 @@ if (!empty($maptitle)) {
 
 $query = "SELECT * FROM $ideamapstbl ORDER BY mapid";
 $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-
 $rows = array();
 while ($r = mysqli_fetch_assoc($result)) {
     $rows []= array_map(stripslashes,$r);

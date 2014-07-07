@@ -16,13 +16,23 @@ require_once('../config.inc.php');
   <title>IdeaJoin -- <?= strpos($_SERVER['PHP_SELF'],"ideabox-idea.php") ? '' : $r['title'] ?></title>
   <?php include('inc/includes.php'); ?>
   <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>
-  <script src="js/lib/client_idea.js"></script>  
+  <script src="js/client_idea.js"></script> 
+  <script src="js/lib/share.min.js"></script>
 </head>
 <body>
   <div class="container-fluid outermost"> 
     <?php 
     include('inc/nav.inc.php');
     ?>
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>
+          <?= $r['body'] ?>
+        </h1>
+        <div id="share">
+        </div>
+      </div>
+    </div>
   </div><!--/.fluid-container-->
   <?php 
   include('inc/footer.inc.php');

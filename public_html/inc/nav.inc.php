@@ -2,11 +2,17 @@
 require_once('inc/mysql.inc.php');
 
 include_once("inc/analyticstracking.inc.php");
-
+$ideamap = false;
 $getmapid=intval((mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['mapid'])))+0));
+$getideaid=intval((mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars(trim($_REQUEST['ideaid'])))+0));
+if($getmapid){
+  $ideamap = true;
+  $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
+}
+else {
+  $query = "SELECT * FROM post_ideas_mitsugg WHERE pid={$getideaid}";
+}
 
-$query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
-//echo $query;
 $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 $r = mysqli_fetch_assoc($result);
 
@@ -38,18 +44,19 @@ $pagesdict=array(
             </button>
             <div class="outline navbar-brand">
               <a href="index.php">IdeaJoin</a>
-              <?php if($r['maplogourl']) { ?>
+              <?php if($ideamap && $r['maplogourl']) { ?>
                 <!--width:30px;-->
                 <img src="<?=$r['maplogourl'] ?>" style="height:35px;margin-top:-5px;margin-right:10px">
               <?php } ?>
 
-              <?= strpos($_SERVER['PHP_SELF'],"index.php") ? '' : $r['mapname'] ?></div> 
-
+              <?= strpos($_SERVER['PHP_SELF'],"index.php") || !$ideamap ? $r['title'] : $r['mapname'] ?></div> 
+            <?php if($ideamap){ ?>
             <ul class="nav navbar-nav">
-              <li <?= $page=="list"?'class="active"':"" ?> ><a href="ideabox.php?mapid=<?= $getmapid ?>">List</a></li>
-              <li <?= $page=="graph"?'class="active"':"" ?> ><a href="ideabox-graph.php?mapid=<?= $getmapid ?>">Graph</a></li>
-              <li <?= $page=="people"?'class="active"':"" ?> ><a href="ideabox-people.php?mapid=<?= $getmapid ?>">People</a></li>  
-            </ul>  
+              <li <?= $page=="list"?'class="active"':"" ?> ><a href="ideabox.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>">List</a></li>
+              <li <?= $page=="graph"?'class="active"':"" ?> ><a href="ideabox-graph.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>">Graph</a></li>
+              <li <?= $page=="people"?'class="active"':"" ?> ><a href="ideabox-people.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>">People</a></li>  
+            </ul> 
+            <?php  } ?> 
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
