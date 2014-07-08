@@ -351,7 +351,7 @@ function linkHashtags(text) {
         '<a class="hashtag" href="http://twitter.com/#search?q=$1">#$1</a>'
     );
 } */
-var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
+var tag_regexp = /#([a-zA-Z0-9\-"&;”“]+)/g; //#todo relates to
 function extractTags(idea) {
     
     return idea.match(tag_regexp)

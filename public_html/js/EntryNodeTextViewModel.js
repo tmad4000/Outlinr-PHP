@@ -2,16 +2,16 @@ function EntryNodeTextViewModel(txt,pid) {
 	this.viewDomE=null; //until render is called for first time
 	//replace with this.critPts=[]; (i,code)
 	//model
-	this.txt=txt;
-	this.pid=pid;
-	this.critPts=[];
-	this.critPtsSet=false;
+	this.txt = txt;
+	this.pid = pid;
+	this.critPts = [];
+	this.critPtsSet = false;
 
-	this.bSplits=[]; //bolds
-	this.hSplits=[]; //hashtags
-	this.tSplit=[]; //title/nontitle
-	this.mSplit=[];// "show more.."
-	this.uSplits=[]; // urls
+	this.bSplits = []; //bolds
+	this.hSplits = []; //hashtags
+	this.tSplit = []; //title/nontitle
+	this.mSplit = []; // "show more.."
+	this.uSplits = []; // urls
 	
 	//determines whether the string being searched for is in this particular idea text
 	this.filter = function(query){
@@ -25,7 +25,8 @@ function EntryNodeTextViewModel(txt,pid) {
 		query = removeCommonWords(query.toLowerCase());
 		query = query.split(/[\r\n ,-]+/);
 		var nomatch = true;
-		var t = this.txt.toLowerCase()
+
+		var t = this.txt.toLowerCase();
 		
 		for(var i=0;i<query.length;i++){
 			var mi = t.indexOf(query[i]);
@@ -46,8 +47,7 @@ function EntryNodeTextViewModel(txt,pid) {
 		if(isMatch)
 			moreText(this.pid);
 		
-		return isMatch;
-		
+		return isMatch;	
 	}
 
 	//adds splits to a split array
@@ -104,45 +104,11 @@ function EntryNodeTextViewModel(txt,pid) {
 		}
 		this.critPtsSet=true;
 	}
-	/*
-		var doSplit = function(t,i) {
-			return [t.substr(0,i),t.substr(i)]
-		}
-
-		var splitTxt = function(t,splitsRay) {
-				var outRay=[];
-
-				//if number
-				if(!(splitsRay instanceof Array)) {
-					return [t.substr(0,splitsRay),t.substr(splitsRay)]
-				}
-				else {
-					var start=0;
-					var end=t.length;
-					for(var i=0;i<splitsRay.length;i++) {
-
-						start=splitsRay[i][0];
-						end=splitsRay[i][1];
-						
-
-					}
-
-					return st;
-				}
-
-		}
-	*/
 
 	this.setBold = function(s1,s2) { 
 		this.bSplits.push(s1);
 		this.bSplits.push(s1+s2);
 		this.critPtsSet=false;
-		/*
-		var si=this.txt.indexOf(s,0);
-		for(var i=0;si>=0;i++) {
-			si=this.txt.indexOf(s,i);
-			this.bSplits.push([si,si+s.length]);
-		}*/
 	}
 
 	this.clearBold = function() {//todo
@@ -235,8 +201,8 @@ function EntryNodeTextViewModel(txt,pid) {
 		}
 		strWTags.push(this.txt.substr(lastI,this.txt.length-lastI))
 		var temp = "<div class='entryNodeText'>"+nl2br(strWTags.join(""))+"</div>";
+
 		this.viewDomE = $($.parseHTML(temp));
-		
 		return this.viewDomE;
 	}
 

@@ -1,7 +1,10 @@
-var tag_regexp = /\B[#~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!><]+))/g;
-var hash_regexp = /\B[#](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/g;
-var tilde_regexp = /\B[~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/gi;
-var url_regexp = /((www|http|https)([^\s]+))|([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/g;
+// var tag_regexp = /\B[#~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/g;
+// var hash_regexp = /\B[#](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/g;
+// var tilde_regexp = /\B[~](([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?)|([^\s\n.,?!<>]+))/gi;
+var url_regexp = /((www|http|https)([^\s\,]+))|([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/g;
+var tag_regexp = /\B[#~][a-zA-Z0-9\@\.]+/g;
+var hash_regexp = /\B[#][a-zA-Z0-9\@\.]+/g;
+var tilde_regexp = /\B[~][a-zA-Z0-9\@\.]+/gi;
 
 var statusTable={0:"",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 
@@ -21,6 +24,14 @@ function getURLParameter(sParam){
             return sParameterName[1];
         }
     }
+}
+
+function htmlEncode(value){
+    return $('<div/>').text(value).html();
+}
+
+function htmlDecode(value){
+    return $('<div/>').html(value).text();
 }
 
 function timeToString(hours, minutes) {
@@ -237,7 +248,7 @@ function replaceIdeaName(idea,pid) {
 function hashtag(e){
         e.preventDefault();
 
-        var targetName=$(e.target).html().replace(/<(?:.|\n)*?>/gm, '');;
+        var targetName=$(e.target).text();
         $('#newpost').val(targetName).focus();
         rootNodeViewModel.filter(targetName);
 }

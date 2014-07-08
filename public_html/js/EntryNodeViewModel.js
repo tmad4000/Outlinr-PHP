@@ -254,8 +254,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 	   	entryNodeBody = "<div>" + table + "</div>";
 	   	entryNodeBody = $($.parseHTML(entryNodeBody));
-			var eTView = this.eT.render();
-
+			var eTView = this.eT.render();			
 			// there should only ever be one
 			entryNodeBody.find("div.ideaTxtInner").append(eTView);
 		}

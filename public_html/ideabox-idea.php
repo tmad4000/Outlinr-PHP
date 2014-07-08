@@ -12,8 +12,12 @@ require_once('../config.inc.php');
     $query = "SELECT * FROM post_ideas_mitsugg WHERE pid={$getideaid}";
     $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
     $r = mysqli_fetch_assoc($result);
+    $mapid = $r['mapid'];
+    $querymap = "SELECT * FROM ideamaps WHERE mapid=$mapid";
+    $resultmap = mysqli_query($MYSQLI_LINK, $querymap) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK)); 
+    $rmap = mysqli_fetch_assoc($resultmap);
   ?>
-  <title>IdeaJoin -- <?= strpos($_SERVER['PHP_SELF'],"ideabox-idea.php") ? '' : $r['title'] ?></title>
+  <title>IdeaJoin -- <?= $r['title'] ?></title>
   <?php include('inc/includes.php'); ?>
   <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>
   <script src="js/client_idea.js"></script> 
@@ -29,6 +33,9 @@ require_once('../config.inc.php');
         <h1>
           <?= $r['body'] ?>
         </h1>
+        <caption><?= $r['time'] ?>, <?= $r['status'] ?>, <?= $r['progress'] ?>, <?= $r['upvotes'] ?> Upvotes, in <a href="ideabox.php?<?=$r["mapid"]?>"><?= $rmap["mapname"] ?></a></caption>
+         <!-- status progress mapid upvotes -->
+        </h2>
         <div id="share">
         </div>
       </div>

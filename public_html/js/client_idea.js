@@ -1,13 +1,14 @@
 $(document).ready(function() {
-	alert(window.location);
-  	new Share(".share-button", {
+  	new Share("#share", {
   		title: "IdeaJoin",
-  		url: "window.location",
+  		url: window.location,
   		text: "Idea text",
 	  	networks: {
 	    	facebook: {
-	      		app_id: "822253967785867"
+	      		app_id: "822253967785867",
 	    	}
 	  	}
 	});
+
+	
 });

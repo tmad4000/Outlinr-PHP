@@ -26,20 +26,19 @@ $(document).ready(function() {
 
 		$('#box-description-text').attr('contentEditable',true);
 		$('[contenteditable]').on('focus', function() { // http://stackoverflow.com/questions/1391278/contenteditable-change-events
-	    var $this = $(this);
-	    $this.data('before', $this.html());
-	    return $this;
+		    var $this = $(this);
+		    $this.data('before', $this.html());
+		    return $this;
 		}).on('blur keyup paste', function() {
-	    var $this = $(this);
-	    if ($this.data('before') !== $this.html()) {
-        $this.data('before', $this.html());
-        $this.trigger('change');
-	    }
-	    return $this;
+		    var $this = $(this);
+		    if ($this.data('before') !== $this.html()) {
+		        $this.data('before', $this.html());
+		        $this.trigger('change');
+		    }
+	    	return $this;
 		});
 
 		$('#box-description-text').change(editDesc);
-
 	}
 
 
@@ -205,33 +204,33 @@ $(document).ready(function() {
     }
     else {
       if(rootNodeViewModel!==null){
-				var numIdeas=Object.keys(rootNodeViewModel).length;
+		var numIdeas=Object.keys(rootNodeViewModel).length;
 
-				var minQPer=30
-				if(numIdeas>20)
-					minQPer=200
-				if(numIdeas>50)
-					minQPer=400
+		var minQPer=30
+		if(numIdeas>20)
+			minQPer=200
+		if(numIdeas>50)
+			minQPer=400
 
-				//if no filter pending
-				if(numFilterTos<=0){
-					rootNodeViewModel.filter(newpostObj.val() || "");
+		//if no filter pending
+		if(numFilterTos<=0){
+			rootNodeViewModel.filter(newpostObj.val() || "");
 
-					setTimeout(function() {
-						if(nextFilter!=null) {
-							rootNodeViewModel.filter(nextFilter);
-							nextFilter=null;
-						}
-
-						numFilterTos--;
-					}, minQPer);
-
-					numFilterTos++;
+			setTimeout(function() {
+				if(nextFilter!=null) {
+					rootNodeViewModel.filter(nextFilter);
+					nextFilter=null;
 				}
-				//if filter pending
-				else {
-					nextFilter=newpostObj.val() || "";
-				}
+
+				numFilterTos--;
+			}, minQPer);
+
+			numFilterTos++;
+		}
+		//if filter pending
+		else {
+			nextFilter=newpostObj.val() || "";
+		}
       }
     }
 	});
