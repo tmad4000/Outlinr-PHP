@@ -189,50 +189,50 @@ $(document).ready(function() {
 
 		// #TODO #Future trim repeated enters
 		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
-    	var content = this.value;
-    	var caret = getCaret(this);
-    	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
-    	event.stopPropagation();
-    }
-    else if(event.keyCode == 13){ // enter
-    	// removes the newline
-    	var content = this.value;
-    	var caret = getCaret(this);
-    	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-    	event.stopPropagation();
-    	$('#postform').submit();
-    }
-    else {
-      if(rootNodeViewModel!==null){
-		var numIdeas=Object.keys(rootNodeViewModel).length;
+	    	var content = this.value;
+	    	var caret = getCaret(this);
+	    	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+	    	event.stopPropagation();
+	    }
+	    else if(event.keyCode == 13){ // enter
+	    	// removes the newline
+	    	var content = this.value;
+	    	var caret = getCaret(this);
+	    	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
+	    	event.stopPropagation();
+	    	$('#postform').submit();
+	    }
+	    else {
+	      if(rootNodeViewModel!==null){
+			var numIdeas=Object.keys(rootNodeViewModel).length;
 
-		var minQPer=30
-		if(numIdeas>20)
-			minQPer=200
-		if(numIdeas>50)
-			minQPer=400
+			var minQPer=30
+			if(numIdeas>20)
+				minQPer=200
+			if(numIdeas>50)
+				minQPer=400
 
-		//if no filter pending
-		if(numFilterTos<=0){
-			rootNodeViewModel.filter(newpostObj.val() || "");
+			//if no filter pending
+			if(numFilterTos<=0){
+				rootNodeViewModel.filter(htmlEncode(newpostObj.val()) || "");
 
-			setTimeout(function() {
-				if(nextFilter!=null) {
-					rootNodeViewModel.filter(nextFilter);
-					nextFilter=null;
-				}
+				setTimeout(function() {
+					if(nextFilter!=null) {
+						rootNodeViewModel.filter(nextFilter);
+						nextFilter=null;
+					}
 
-				numFilterTos--;
-			}, minQPer);
+					numFilterTos--;
+				}, minQPer);
 
-			numFilterTos++;
-		}
-		//if filter pending
-		else {
-			nextFilter=newpostObj.val() || "";
-		}
-      }
-    }
+				numFilterTos++;
+			}
+			//if filter pending
+			else {
+				nextFilter=newpostObj.val() || "";
+			}
+	      }
+	    }
 	});
 
 	$('textarea#newpost').change(function (event) {
