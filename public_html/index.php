@@ -19,7 +19,8 @@
         </div>
       </div>
       <div class="col-sm-6 right middle margin-vertical">
-        <a href="https://github.com/login/oauth/authorize?client_id=3429c5dd62f9e39cf646&scope=user&redirect_uri=http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/dev/public_html/ajax/github_oauth.php" class="link-button">Login with Github</a>
+        <a href='github_oauth_logout.php'>Logout</a>
+        <a href="https://github.com/login/oauth/authorize?client_id=3429c5dd62f9e39cf646&scope=user:email&redirect_uri=http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/dev/public_html/ajax/github_oauth.php" class="link-button">Login with Github</a>
         <a href="create.php" class="link-button">Create New</a>
       </div>
     </div>
