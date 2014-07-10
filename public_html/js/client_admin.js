@@ -196,12 +196,22 @@ $(document).ready(function() {
         	event.stopPropagation();
         } 
         else if(event.keyCode == 13){ // enter
+
         	// removes the newline
         	var content = this.value;
         	var caret = getCaret(this);
         	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
         	event.stopPropagation();
-        	$('#postform').submit();
+        	
+
+        	if($('#usrhandle').val().indexOf('@')<0) { //#hack
+					alert("Please enter your email in the upper right (:");
+					return;
+			}
+			else {	
+
+	        	$('#postform').submit();
+	        }
         }
         else {
         	if(rootNodeViewModel!==null){
@@ -1200,6 +1210,7 @@ function setupRel(postEl) {
 		// figure out $(this), suggestion
 		if($('.add-new-tt')){
 			if(e.keyCode == 13){ //enter key
+			
 				if($('.add-new-tt').hasClass('sel')){
 					selectRel($(this).closest('.related-ideas-all').find('.tt-input'));
 				}

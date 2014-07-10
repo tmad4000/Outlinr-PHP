@@ -45,6 +45,15 @@ require_once('../config.inc.php');
   $(document).ready(function(){
   $('#peopletable').height($( window ).height()-73-65);
   $('#peopletable').width($( window ).width());
+
+<?php if(!isset($_SESSION['firstgraphload'])) {
+  $_SESSION['firstgraphload']=true;
+  echo 'location.reload();';
+}
+//#hack
+?>
+    
+
   });
   </script>
 </head>

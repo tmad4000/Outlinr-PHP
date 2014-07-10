@@ -5,3 +5,4 @@ remoteinfo.inc.php
 
 public_html/pika/
 .floo*
+.DS_STORE
