@@ -66,7 +66,7 @@ $pagesdict=array(
             </ul>
             <form class="navbar-form nav navbar-nav navbar-right" role="search">
               <div class="form-group">
-                <span style="font-size:12pt;">~</span><input type="text" id="usrhandle" class="form-control" placeholder="Username">
+                <span style="font-size:12pt;">~</span><input type="text" id="usrhandle" class="form-control" placeholder="Email">
               </div>
             </form>
           </div><!-- /.navbar-collapse -->
