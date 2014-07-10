@@ -16,7 +16,6 @@ $(document).ready(function() {
     }
     else { // FILTER RESULTS 
       var query = $(this).val();
-      console.log(query)
       query = query.split(' ');
       $.each($('#currentposts > .progbarlist').children(), function(index, element){
         $(element).show();

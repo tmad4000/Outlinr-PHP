@@ -379,7 +379,6 @@ function setupNode(postEl) {
 
 		// TODO universalize
 		postEl.on('click','.comment-upvote', function() {
-			console.log('comment-upvote');
 			var num=$(this).find('span').text()-0;
 			$(this).toggleClass('on');
 			if ($(this).hasClass('on')) {
@@ -483,7 +482,6 @@ function toggleComment(pid, focus) {
 		cf.removeClass('init-expanded').addClass('init-hidden');
 	}
 	else { // show
-		console.log(e=$('.commentform[-idea-id="'+pid+'"]'))
 		expandedComments[pid]=1;
 
 		cf.removeClass('init-hidden').addClass('init-expanded');
@@ -507,7 +505,6 @@ function displayIdeaNames() {
 		var tags={};
 		var hashtags={};
 		var peopletags={};
-		console.log(x=data);
 		updateGlobalData(data);
 
 		var cs = $.parseJSON(localStorage.getItem("comments"));
@@ -676,7 +673,6 @@ function cycleStatus(ideaid) {
 			'url': 'ajax/setstatus.php',
 			'data': {'ideaid':ideaid,'sts':cn},
 			'success': function(jsonData) {
-				console.log('gp');
 				getPosts();
 			},
 		});
@@ -870,7 +866,6 @@ function submitAndGetEmail(){
 function hideOnEnter(event){
 	if(event.keyCode == 13) //enter key
 		$(this).popover('hide');
-	//console.log(this)
 }
 
 function getEmail(){
