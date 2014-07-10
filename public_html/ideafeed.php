@@ -17,8 +17,14 @@
           <div class="col-sm-12">
             <form id="postform">
               <textarea class="span12" placeholder="Add an Idea" id="newpost" ></textarea>
-              <input type="submit" id="" value="Scope">
-              <input type="submit" id="" value="Add">
+              <div class="right">
+                <button id="" class="btn btn-secondary">
+                  <i class='fa fa-filter'></i>
+                </button>
+                <button type="submit" id="" class="btn btn-primary">
+                  Add
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -39,11 +45,11 @@
         <div class="row">
           <div class="col-sm-12 ml">
             <div id="filterBy">
-            Show me <button type="button" id="type-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a href=''>New</a>">
+            Show me <button type="button" id="type-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<ul><li><a href='' class='selected'>All</a></li><li><a href=''>iOS</a></li><li><a href=''>Android</a></li><li><a href=''>Web Dev</a></li><li><a href=''>Hardware</a></li></ul>">
               All <i class='fa-chevron-down fa'></i>
-            </button> ideas in <button type="button" id="join-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a href=''>New</a>">
+            </button> ideas in <button type="button" id="join-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<ul><li><a href=''>Earth</a></li><li><a href='' class='selected'>Hackathons</a></li><li><a href=''>At&t Houston</a></li></ul>">
               Hackathons <i class='fa-chevron-down fa'></i>
-            </button> sorted by <button type="button" id="sort-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<a href=''>New</a>">
+            </button> sorted by <button type="button" id="sort-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<ul><li><a href='' class='selected'>Hot</a></li><li><a href=''>Top</a></li><li><a href=''>New</a></li><li><a href=''>Progress</a></li></ul>">
               Hot <i class='fa-chevron-down fa'></i>
             </button>
             </div>

@@ -274,11 +274,11 @@ textarea, input[type="text"] {
 	margin-top: 20px;
 }
 
-.nav-search::before {
+#search-ideas:before {
 	content: "\f002";
 }
 
-.navbar>.container-fluid .navbar-brand {
+.navbar > .container-fluid .navbar-brand {
 	margin-left: 0;
 }
 
@@ -579,9 +579,6 @@ div.commentform div.commentsinput {
 }
 
 #postform .btn {
-	font-weight: 200!important;
-	margin-left: 5px;
-	height: 50px;
 }
 
 #postform {
@@ -783,7 +780,6 @@ div.ideaTxtInner > .entryNodeText {
 
 .entryNode > .body {
 	background: white;
-	border: 1px solid #ddd;
 	margin-top: 2px;
 	border-radius: 3px;
 }
@@ -879,6 +875,7 @@ footer .container-middle {
 	outline: none;
 	border-radius: 6px;
 	font-size: 16pt;
+  font-weight: 600;
 }
 
 .link-button {
@@ -977,4 +974,38 @@ td.uid {
 
 .ideaTxt {
   color: #777;
+}
+
+.popover {
+	padding: 20px;
+	width: 170px;
+	min-height: 100px;
+}
+
+.popover-content {
+	font-size: 16pt;
+}
+
+.popover-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.popover-content ul li a.selected {
+  color: @pumpkin;
+  font-weight: 600;
+}
+
+.popover-content ul li a {
+  color: #333;
+}
+
+.popover-content ul li a:hover {
+  color: @pumpkin;
+  text-decoration: none;
+}
+
+.right {
+  float: right;
 }

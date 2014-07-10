@@ -7,13 +7,15 @@
         </div>
         <ul class="nav navbar-nav">
           <li><a href="ideafeed.php" class="selected">Discover</a></li>
-          <li><a href="joins.php">Joins</a></li>
+          <li><a href="">Add</a></li>
           <li><input type="search" id="search-ideas" class="nav-search" placeholder="Search ideas"></li>
         </ul>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="signin.php" class="blue">Log in</a></li>      
-        <li><a href="signup.php" class="blue">Sign Up</a></li>
+        <li><a href="notifications.php"><i class="fa fa-bell-o"></i></a></li>
+        <li><a href="joins.php">My Joins</a></li>
+        <li><a href="signin.php" class="blue">Settings</a></li>      
+        <li><a href="inc/logout.php" class="blue">Log out</a></li>
       </ul>
     </div><!-- /.container-fluid -->
   </nav>

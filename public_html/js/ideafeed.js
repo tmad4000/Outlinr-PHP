@@ -20,6 +20,7 @@ getPosts();
 $(document).ready(function() {
 
 	$('#sort-by').popover({
+		transition: false,
 		trigger: "click",
 		placement: "bottom",
 		html: true,
@@ -29,12 +30,26 @@ $(document).ready(function() {
 		trigger: "click",
 		placement: "bottom",
 		html: true,
+		transition: false,
     });
 
     $('#join-by').popover({
 		trigger: "click",
 		placement: "bottom",
 		html: true,
+		transition: false,
+    });
+
+    $('#sort-by').blur(function(){
+    	$(this).popover('hide')
+    });
+
+    $('#join-by').blur(function(){
+    	$(this).popover('hide')
+    });
+
+    $('#type-by').blur(function(){
+    	$(this).popover('hide')
     });
 
 	isAdmin = $('#is-admin').val() === 'true';

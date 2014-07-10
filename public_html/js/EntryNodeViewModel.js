@@ -169,12 +169,12 @@ function EntryNodeViewModel(entryNodeModel) {
 			}
 			if(getCookie("s"+this.entryNodeModel.pid) == "starred"){
 				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
-				+ '<i class="ion-ios7-star-outline gold"></i>'
+				+ '<i class="fa fa-star gold"></i>'
 				+ '</td>';
 			}
 			else {
 				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
-				+ '<i class="ion-ios7-star-outline"></i>'
+				+ '<i class="fa fa-star"></i>'
 				+ '</td>';			
 			}
 			
