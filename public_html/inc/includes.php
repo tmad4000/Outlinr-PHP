@@ -1,3 +1,4 @@
+<title>IdeaJoin</title>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,300,600,800' rel='stylesheet' type='text/css'>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -12,3 +13,5 @@
 <script type="text/javascript" src="js/lib/typeahead.bundle.js"></script>
 <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'></script>
 <link href="styles/typeahead.css" rel="stylesheet">
+<script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>  
+<script src="js/lib/share.min.js"></script>

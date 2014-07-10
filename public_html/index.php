@@ -1,55 +1,64 @@
-<?php
-  require_once('../config.inc.php');
-?>
+<?php require_once('../config.inc.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IdeaJoin</title>
   <?php include('inc/local.php'); ?>
-  <script type="text/javascript" src="js/client_ideamaps.js"></script>
-  <link rel="stylesheet/less" type="text/css" href="styles/index.less" />
-  <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script>
+  <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
+  <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>
+  <script type="text/javascript" src="js/ideafeed.js"></script>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row margin-vertical">
-      <div class="col-sm-6">
-        <div id="brand">
-          <a href="index.php">IdeaJoin</a>
-        </div>
-      </div>
-      <div class="col-sm-6 right middle margin-vertical">
-        <a href="https://github.com/login/oauth/authorize?client_id=3429c5dd62f9e39cf646&scope=user&redirect_uri=http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/dev/public_html/ajax/github_oauth.php" class="link-button">Login with Github</a>
-        <a href="create.php" class="link-button">Create New</a>
-      </div>
-    </div>
+  <div class="container-fluid outermost">
+    <?php include('inc/nav.inc.php'); ?>
     <div class="row">
-      <div class="col-sm-12">
-        <div id="marketing">
-          <h2>An ideation tool for your community. </h2>
-          <h2>Discuss, vote on and connect ideas then monitor their progress</h2>
-        </div>
-      </div>
-    </div>
-    <div class="row" id="textfield">
-      <div class="col-sm-12">
-        <form id="postform">
-          <div class="input-append">
-            <input type="text" class="span12" id="newpost" placeholder="Search idea boxes"/>
+      <div class="col-sm-3">
+        <div class="row">
+          <div class="cols-sm-12 ml">
+            <form id="postform">
+              <div class="input-append">
+                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
-    <div class="row full-width" id="ideamaps">
-      <div class="col-sm-12">
-        <div id="currentposts">
-          <center><i class="ion-loading-c"></i></center>
+        </div>
+        <div class="row">
+          <div class="sidebar-nav-fixed navbar-inner">
+              <ul class="nav nav-list">
+                <li class="nav-header">Labels</li>
+                <ul id="idea-hashtags" class="tags">
+                </ul>
+                <li class="nav-header">People</li>
+                <ul id="people-list" class="tags">
+                </ul>
+            </ul>
+          </div><!--/.well -->
         </div>
       </div>
-    </div>
-  </div>
-  <?php
-  include('inc/footer-home.inc.php');
-  ?>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-12 ml">
+            <div id="tableHeaderDiv">
+              <div id="numResults"></div>
+              <div id="filterBy">
+                <a id='sortByHot' class="active"><i class="ion-fireball"></i><span>Hot</span></a>
+                <a id='sortByDate'><i class="ion-ios7-lightbulb-outline"></i><span>New</span></a>
+                <a id="sortByUpvotes"><i class="ion-ios7-star-outline"></i><span>Top</span></a>
+                <a id='sortByStatus'><i class="ion-ios7-checkmark-outline"></i><span>Progress</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row cp">
+          <div class="col-sm-12">
+            <div id="currentposts">
+              <center><i class="ion-loading-c"></i></center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!--/row-->
+  </div><!--/.fluid-container-->
+<?php include('inc/footer.inc.php'); ?>
 </body>
 </html>

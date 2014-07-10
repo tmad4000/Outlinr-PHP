@@ -19,6 +19,24 @@ getPosts();
 
 $(document).ready(function() {
 
+	$('#sort-by').popover({
+		trigger: "click",
+		placement: "bottom",
+		html: true,
+    });
+
+    $('#type-by').popover({
+		trigger: "click",
+		placement: "bottom",
+		html: true,
+    });
+
+    $('#join-by').popover({
+		trigger: "click",
+		placement: "bottom",
+		html: true,
+    });
+
 	isAdmin = $('#is-admin').val() === 'true';
 
 	if(isAdmin) {

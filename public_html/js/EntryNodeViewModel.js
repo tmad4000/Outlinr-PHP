@@ -242,7 +242,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				+ upvoter
 				+ '<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>"
 				+ addRel	
-				+ "<div class='ideaTxtFooter'>"
+				+ "<div class='ideaTxtFooter hidden'>"
 				+ commentExpandLink
 				+ "<div class='ideaTxtFooter-r'>"
 				+ status  
