@@ -17,6 +17,7 @@ require_once('../config.inc.php');
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
   $r = mysqli_fetch_assoc($result);
   ?>
+  <link href="http://www.d3plus.org/css/d3plus.css" rel="stylesheet" />
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -49,8 +50,6 @@ require_once('../config.inc.php');
   
   <script>
   $(document).ready(function(){
-  $('#peopletable').height($( window ).height()-73-65);
-  $('#peopletable').width($( window ).width());
 
 <?php if(!isset($_SESSION['firstgraphload'])) {
   $_SESSION['firstgraphload']=true;
@@ -69,6 +68,7 @@ require_once('../config.inc.php');
     <?php 
     include('inc/nav.inc.php');
     ?>
+<div id="rviz" style="height:800px"></div>
 <div id="viz" style="height:600px"></div>
 
 <script>
@@ -98,7 +98,8 @@ require_once('../config.inc.php');
   var relations_orig=data['links'];
   var relations=[];
 
-  var nodes=data['flatPosts'];
+  var nodes_orig=data['flatPosts'];
+  var nodes=[];
   var sample_data = [
     {"prim_key":"778", "name": "alpha", "size": 10},
     {"prim_key":"781", "name": "beta", "size": 12},
@@ -109,33 +110,76 @@ require_once('../config.inc.php');
   ]
 
   for(i=0;i<relations_orig.length;i++) {
+      if(isNaN(relations_orig[i]['source'])||isNaN(relations_orig[i]['target']))
+      {
+        console("nan")
+        continue;
+      }
       relations[i]={};
-      relations[i]['source']=""+relations_orig[i]['source']
-      relations[i]['target']=""+relations_orig[i]['target']
+      relations[i]['source']=relations_orig[i]['source']
+      relations[i]['target']=relations_orig[i]['target']
+      // relations[i]['strength']=relations_orig[i]['strength']
+
     // console.log(relations[i]['source'],relations[i]['target'])
     //   relations[i]['source']=relations_orig[i]['source']['prim_key']
     //   relations[i]['target']=relations_orig[i]['target']['prim_key']
     }
 
-  for(i=0;i<nodes.length;i++) {
+  for(i=0;i<nodes_orig.length;i++) {
       
-      nodes[i]['name']=""+nodes[i]['title']
+      if(nodes_orig[i]===undefined||nodes_orig[i]['title']===undefined || nodes_orig[i]['pid']===undefined) {
+        console.log("nodebad",nodes_orig[i]['pid'])
+        continue
+      }
+
+      nodes[i]={};
+      nodes[i]['title']=nodes_orig[i]['title'];
+      nodes[i]['name']=nodes_orig[i]['title'];
+      nodes[i]['body']=nodes_orig[i]['body'];
+      nodes[i]['pid']=nodes_orig[i]['pid'];
+      nodes[i]['size']=20;
+
     }
 
-relations=relations.slice(0,60)
+ relationsf=relations.slice(0,3)
 
 console.log(relations[0]['source'],relations[0]['target'])
+
+
+ var rvisualization = d3plus.viz()
+    .container("#rviz")  // container DIV to hold the visualization
+    .type("rings")
+    .data(nodes)      // visualization type
+    .edges(relationsf) // list of node connections
+    .focus(relationsf[0]['source'])
+    .id("pid")
+    .text("title")
+    .tooltip("body")     // ID of the initial center node
+    .draw()             // finally, draw the visualization!
+
+
 
   var visualization = d3plus.viz()
     .container("#viz")
     .type("network")
     .data(nodes)
-    .edges(relations)
+    .edges(relationsf)
     // .size("size")
     .id("pid")
     .text("title")
     .tooltip("body")
     .draw();
+
+
+     setTimeout(function(){
+     
+ relationsf=relations.slice(0,4)
+      visualization
+        // .data(nodes)
+        .edges(relationsf)
+        .draw()
+   
+    },2000) // wait 2 seconds before changing the scale
 
 </script>
 
