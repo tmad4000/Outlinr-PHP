@@ -240,7 +240,7 @@ $(document).ready(function() {
 		if(isDefaultUsrHandle){
 			var defaultUsrHandle = $('#usremail').val();
 			var emailBeginningI = $('#usremail').val().indexOf('@');
-			if(emailBeginningI>=0){
+			if(emailBeginningI>=0) {
 				defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
 			}
 			$('#usrhandle').val(defaultUsrHandle);
@@ -316,10 +316,8 @@ $(document).ready(function() {
 		  	// straight up enter, not shift+enter
 		  	if(!codeMirror.hintOpen){
 		        // don't submit post if we hit enter when the hint box was open 
-		        if($('#usrhandle').val().indexOf('@')<0) { //#hack
-		        	// don't submit if email address is blank
-					alert("Please enter your email in the upper right (:");
-					return;
+		        if(!validateEmail()) { //#hack
+		        	return;
 				} else {	
 		        	submitPostAndGetPosts();
 		    	}
@@ -690,8 +688,13 @@ function displayPosts() {
 	});
 
 
-	
+
     rootNodeViewModel.filter(codeMirror.getValue());
+
+    //#hack
+    var email="~"+$("#usrhandle").val()
+	$('.suggest-labels a').filter(function() { return $(this).text()==email}).closest('.entryNode').find('.interested').html("Interested");
+
 }
 // Now implemented through an EntryNodeViewModel object and the .filter method
 /*function filterIdeas(query){//#TODO 
@@ -1362,6 +1365,7 @@ function setupRel(postEl) {
 			//  pid to the globalData array, and set that pid here, instead of -1
 
 			var newEntryTxt=el.typeahead('val');
+			console.log(newEntryTxt,"oeuo")
 			//suggestion = {title: newEntryTxt.substr(0,50),body: newEntryTxt, pid: -1};
 			// todo time
 			suggestion={title: newEntryTxt.substr(0,50),body: newEntryTxt, pid: -1,children: [],deleted_time: "",metric: "",num_comments: "0",parent: "0",path: "",progress: "",relEntryIds: [],status: "0",upvotes: "0"};
@@ -1454,6 +1458,22 @@ function setupRel(postEl) {
 		selectRel($(this).closest('.related-idea-input').find('.tt-input'));
 	});
 
+	$('#currentposts').on('click','.interested',function(e){
+		e.preventDefault();
+		var email="~"+$("#usrhandle").val()
+		
+		if(validateEmail(email)) {
+			//$(this).closest('.entryNode').find('related-idea-input').typeahead('val',email);
+			$(this).closest('.entryNode').find('.tt-input').typeahead('val',email)
+			selectRel($(this).closest('.entryNode').find('.tt-input'))
+			$(this).html("Interested");
+			//selectRel($(this).closest('.entryNode').find('related-idea-add').typeahead('val',email));
+		}
+	});
+
+
+
+
 	/*postEl.find('.typeahead').keypress(function (e) {
 		if (e.which == 13) { // enter
 			selectRel($(this));
@@ -1528,4 +1548,14 @@ function expandRelated(parent, post, label) {
 		setupNode(postEl);
 	}
 
+}
+
+function validateEmail() {
+    if($('#usrhandle').val().indexOf('@')<0) { //#hack
+        // don't submit if email address is blank
+
+        alert("Please enter your email in the upper right (:");
+        return false;
+    }
+    return true;
 }

@@ -141,7 +141,7 @@ require_once('../config.inc.php');
 
     }
 
- relationsf=relations.slice(0,3)
+ relationsf=relations //.slice(0,3)
 
 console.log(relations[0]['source'],relations[0]['target'])
 

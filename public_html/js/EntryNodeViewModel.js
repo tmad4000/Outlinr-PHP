@@ -231,6 +231,7 @@ function EntryNodeViewModel(entryNodeModel) {
 					'<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>" +
 					addRel /*+ "<div class='subscribe'>Get Notifications</div>"+ " · "+ "<div class='report'>Report</div>"+ " · "*/ +		
 					"<div class='ideaTxtFooter'>"+
+					'<span class="interested"><a href="#">+ I\'m interested!</a></span>	&nbsp;'+"· " +
 					commentExpandLink+
 					"<div class='ideaTxtFooter-r'>"+
 					status + " · " + 
