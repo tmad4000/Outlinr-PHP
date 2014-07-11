@@ -43,7 +43,8 @@ CodeMirror.defineMode("xn", function(config, parserConfig) {
 		}else if (ch == "@") {
 			stream.eatWhile(/[A-Za-z0-9-_]/);
 			var word = stream.current();
-			return ret("xn-maptag", "xn-maptag");
+			//return ret("xn-maptag", "xn-maptag"); 
+			// disable @ in this version 
 		}
 	}
   };

@@ -229,7 +229,13 @@ $(document).ready(function() {
 		  	// straight up enter, not shift+enter
 		  	if(!codeMirror.hintOpen){
 		        // don't submit post if we hit enter when the hint box was open 
-		        submitPostAndGetPosts();
+		        if($('#usrhandle').val().indexOf('@')<0) { //#hack
+		        	// don't submit if email address is blank
+					alert("Please enter your email in the upper right (:");
+					return;
+				} else {	
+		        	submitPostAndGetPosts();
+		    	}
 		    }
 		  },
 		  "Shift-Enter": function(cm){
