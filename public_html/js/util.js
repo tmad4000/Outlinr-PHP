@@ -40,7 +40,8 @@ function changeOrder(nodeChildren){
 }
 
 function updateNrOfIdeasVisible(){
-    if($('textarea#newpost').val() == ""){
+    var store = codeMirror.getValue()
+    if(store == ""){
         //$('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
         if(numberOfIdeasVisible ==0)
             $('#numResults').html("No Ideas here yet");
@@ -49,7 +50,6 @@ function updateNrOfIdeasVisible(){
     }
     else {
         // so that chunks of text dont happen
-        var store = $('textarea#newpost').val();
         if(store.length>40) store = store.substring(0,40)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
@@ -100,8 +100,24 @@ function removeCommonWords(str) {
 }
 
 function findTitleEnd(idea) {
-	var i1=idea.indexOf("--");
+    var MAX_TITLE_LENGTH = 80
+    var title = idea.substring(0,MAX_TITLE_LENGTH);
+    var e = title.lastIndexOf(" ")
+    if(e>=0){
+        // cut off before last space
+        title = title.substring(0,e);
+    } 
 
+    var delims = ["--"," - ","\n"]
+    var ends = $.map(delims, function(d){ return title.indexOf(d)});
+    ends = $.grep(ends, function(end){ return end > 0 } );
+    titleEnd = Math.min.apply(Math,ends); 
+
+    return titleEnd;
+    /*
+
+	var i1=idea.indexOf("--");
+    //var i2=-1;//idea.indexOf(":");
 	//var i2=-1;//idea.indexOf(":");
     var i = i1-2;
 	//var i=Math.min(i1-2,i2-1);
@@ -134,7 +150,7 @@ function findTitleEnd(idea) {
 
 	titleEnd=iuse;//Math.min(titleEnd,i3);
 
-	return titleEnd;
+	return titleEnd;*/
 }
 
 function findMoreTextStart(idea){
@@ -194,7 +210,12 @@ function hashtag(e){
         e.preventDefault();
 
         var targetName=$(e.target).html().replace(/<(?:.|\n)*?>/gm, '');;
-        $('#newpost').val(targetName).focus();
+
+        // clicking a hash tag replaces the whole text, even if you were in the middle of writing.
+        //$('#newpost').val(targetName).focus();
+        codeMirror.setValue(targetName);
+        codeMirror.focus();
+
         rootNodeViewModel.filter(targetName);
 }
 
@@ -324,3 +345,15 @@ function getCookie(label){
 function deleteCookie(name){
     document.cookie = name+"=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
 }
+
+// count size of object
+function objectLength(obj){
+    return $.map(obj, function(n, i) { return i; }).length; 
+}
+
+
+// given user input from textarea, returns query that can be filtered
+function textToQuery(text){
+    return removeCommonWords(text.toLowerCase());
+}
+

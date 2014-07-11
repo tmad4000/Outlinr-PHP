@@ -16,6 +16,19 @@ require_once('../config.inc.php');
   //var_dump($MYSQLI_LINK);
   $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
   $r = mysqli_fetch_assoc($result);
+
+  // ~cj grab list of idea maps for CODEMIRROR autocomplete @mapname
+  $query = "SELECT * FROM ideamaps";
+  $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+  $ideamap_names = array();
+  while($ideamap_r = mysqli_fetch_assoc($result)){
+    $name = $ideamap_r["mapname"];
+    $name = str_replace(" ","_", $name); // mapnames should have _ in the backend anyway
+    array_push($ideamap_names,$name);
+  } 
+  $ideamap_list_json = json_encode($ideamap_names);
+  // note: for now, idea map list only updates on page load
+
   ?>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -37,6 +50,18 @@ require_once('../config.inc.php');
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client_admin.js"></script>
+
+   <!-- code mirror  -->
+   <script src="js/lib/codemirror-4.2/lib/codemirror.js"></script>
+   <script type="text/javascript" src="js/codemirror-xn-mode.js"></script>
+   <script src="js/lib/codemirror-4.2/addon/hint/show-hint.js"></script>
+   <script src="js/codemirror-xn-hint.js"></script>
+   <script src="js/lib/codemirror-4.2/addon/display/placeholder.js"></script>
+   <link rel="stylesheet" href="js/lib/codemirror-4.2/addon/hint/show-hint.css">
+   <link rel="stylesheet" href="js/lib/codemirror-4.2/lib/codemirror.css">
+   <link href="css/codemirror.css" rel="stylesheet">
+
+
 
   <link href="css/typeahead.css" rel="stylesheet">
   
@@ -67,8 +92,8 @@ require_once('../config.inc.php');
   }
 
 
-  /*popover */
-  .idea {position: absolute; top: 100px; left: 100px;}
+ /*popover */
+ .idea {position: absolute; top: 100px; left: 100px;}
 
 
 
@@ -132,7 +157,56 @@ require_once('../config.inc.php');
     color:#090909;
     cursor:text!important;
   }
+
+
+
+#codeMirror-container { 
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 4px;
+}
+.CodeMirror {
+
+  height: auto;
+  min-height: 3.7em;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+
+}
+
+#codeMirror-container div {
+  color: rgb(85, 85, 85);
+}
+#codeMirror-container div, .CodeMirror pre.CodeMirror-placeholder  {
+  font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+.CodeMirror pre {
+  color: #333;
+}
+.CodeMirror pre.CodeMirror-placeholder { 
+  color: #aaa; 
+}
+.cm-disabled {
+  color: #ccc;
+  background-color: #f9f9f9
+}
+
+
   </style>
+
+<script>
+  // note: currently this map list only updates on page load
+  map_tags = <?=$ideamap_list_json ?>;
+
+  // placeholder text
+  localStorage.setItem("placeholder","Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>");
+</script>
+
+
 </head>
 <body>
   <div class="container-fluid outermost">
@@ -155,10 +229,16 @@ echo $r['mapdesc'];
         </div>
         <div class="row">
           <div class="col-sm-12">
+
+        <div id="codeMirror-container"></div>
+ 
+       
+
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
+                <!-- <textarea class="span12" id="newpost" ></textarea> -->
               </div>
+
 <!--               <div class='related-ideas-all'>
                 <ul class='related-ideas'>
                   
@@ -171,6 +251,7 @@ echo $r['mapdesc'];
 
               </div> -->
             </form>
+          
           </div>
         </div>
         <div class="row">

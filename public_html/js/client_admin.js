@@ -6,6 +6,93 @@ getPosts();
 
 var numFilterTos=0;
 var nextFilter=null;
+var currTextQuery="";
+
+var filterTimeout = null;
+// filter results with a smart delay 
+function filterResultsSmartDelay(){
+	var textQuery=textToQuery(currTextQuery);
+
+	var minQPer=100
+	var numIdeas = Object.keys(rootNodeViewModel).length;
+	if(numIdeas>20){
+		minQPer=600
+	}else if(numIdeas>50){
+		minQPer=1000
+	}
+	/*
+	if(filterTimeout != null){
+		clearTimeout(filterTimeout)
+	}
+	filterTimeout = setTimeout(function() {
+		// code mirror update filter
+	  var textinput = codeMirror.getValue();
+	  rootNodeViewModel.filter(textinput);
+	}, minQPer);*/
+
+	if(numFilterTos<=0){
+		rootNodeViewModel.filter(textToQuery(textQuery) || "");
+		setTimeout(function() {
+			if(nextFilter!=null) {
+				rootNodeViewModel.filter(nextFilter);	
+				nextFilter=null;
+
+				setTimeout(function() { //to prevent immediate subsequent call of numFilterTos<=0 without delay 
+					numFilterTos--;
+				},minQPer)
+				numFilterTos++;
+			}
+				
+			numFilterTos--;
+		}, minQPer);
+		
+		numFilterTos++;
+	}
+	//if filter pending
+	else {
+		nextFilter=textToQuery(textQuery) || "";
+	}
+}
+
+/*
+function filterResultsSmartDelay(query){
+	if(rootNodeViewModel!==null){
+				
+				
+				var numIdeas=Object.keys(rootNodeViewModel).length
+				
+				var minQPer=30
+				if(numIdeas>20)
+					minQPer=200
+				if(numIdeas>50)
+					minQPer=400
+					
+				//c/onsole.log(numFilterTos)
+				//if no filter pending
+				if(numFilterTos<=0){
+					rootNodeViewModel.filter(newpostObj.val() || "");
+					
+					setTimeout(function() {
+						if(nextFilter!=null) {
+							rootNodeViewModel.filter(nextFilter);					
+							nextFilter=null;
+						}
+							
+						numFilterTos--;
+					}, minQPer);
+					
+					numFilterTos++;
+				}
+				//if filter pending
+				else {
+					nextFilter=newpostObj.val() || "";
+				}
+				
+				
+				
+				
+        	}
+}*/
 
 function getURLParameter(sParam){
     var sPageURL = window.location.search.substring(1);
@@ -174,7 +261,101 @@ $(document).ready(function() {
 		updateCookie()
 	});
 	//Omnibox (input field) operations
-	
+
+
+	// ~cj codemirror:
+	showAutocompletePopup = function(cm, tokentype) {
+		if(tokentype == null){
+			// if tokentype is null, then figure out the token (hashtag, person or map) the user is typing
+			var cur = cm.getCursor(), token = cm.getTokenAt(cur), tokentype = token.type;
+		}
+		// else, force token to be tokentype:
+		
+		console.log("autocomplete popup", tokentype)
+
+		if(tokentype == "xn-hashtag"){
+			var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
+			console.log("show hash_tags")
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
+		}else if(tokentype == "xn-persontag"){
+			var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
+		}else if(tokentype == "xn-maptag"){
+			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
+		}else{
+			// show no hints
+		}
+	}
+
+	codeMirror = CodeMirror(document.getElementById('codeMirror-container'), {
+		lineNumbers: false,
+		lineWrapping: true,
+		smartIndent: true,
+		autofocus: true,
+        viewportMargin: Infinity,
+        placeholder: localStorage.getItem("placeholder"),
+		extraKeys: { 
+		  "Tab": function(cm){
+		  	showAutocompletePopup(cm, null);
+		  },
+		  "'#'": function(cm){
+		  	setTimeout(function(){ showAutocompletePopup(cm, "xn-hashtag") },40) 
+		  	// why timeout? because this fires before the textarea receives character
+		  	// and keyup was producing weird bugs
+		  	return CodeMirror.Pass;
+		  },
+		  "'~'": function(cm){
+		  	setTimeout(function(){ showAutocompletePopup(cm, "xn-persontag") },40)
+		  	return CodeMirror.Pass;
+		  },
+		  "'@'": function(cm){
+		  	setTimeout(function(){ showAutocompletePopup(cm, "xn-maptag") },40)
+		  	return CodeMirror.Pass;
+		  },
+		  "Enter": function(cm){
+		  	// straight up enter, not shift+enter
+		  	if(!codeMirror.hintOpen){
+		        // don't submit post if we hit enter when the hint box was open 
+		        if($('#usrhandle').val().indexOf('@')<0) { //#hack
+		        	// don't submit if email address is blank
+					alert("Please enter your email in the upper right (:");
+					return;
+				} else {	
+		        	submitPostAndGetPosts();
+		    	}
+		    }
+		  },
+		  "Shift-Enter": function(cm){
+		  	// do nothing special
+		  	return CodeMirror.Pass;
+		  },
+		},
+		mode: 'xn'
+	});
+	codeMirror.hintOpen = false
+	/*codeMirror.on("keyup",function(cm,e){
+		showAutocompletePopup(cm)
+	});*/
+	codeMirror.on("change",function(){
+	  //var textinput = codeMirror.getValue();
+	  //rootNodeViewModel.filter(textinput);
+	  currTextQuery=codeMirror.getValue();
+	  filterResultsSmartDelay();
+       
+	});
+	codeMirror.on("startCompletion", function(target, name){
+		codeMirror.hintOpen = true
+	});
+	codeMirror.on("endCompletion", function(){
+		// timeout delay after closing the hintbox, and before post submissions are allowed
+		// this is to prevent submissions when using "enter" on the autocomplete menu 
+		setTimeout(function(){codeMirror.hintOpen = false;},200)
+	})
+
+	/* #TODO: REMOVE old TEXTAREA code */
+
+	/*
+
 	
 	$('textarea#newpost').focus();
 
@@ -260,7 +441,7 @@ $(document).ready(function() {
 
 	});
 
-
+	//*/
 
 	docReady=true;
 	//if(localStorage.getItem("posts")!==null) {
@@ -501,13 +682,16 @@ function displayPosts() {
 		e.preventDefault();
 
 		var targetName=$(e.target).html();
-		$('#newpost').val(targetName).focus();
+		//$('#newpost').val(targetName).focus();
+		codeMirror.setValue(targetName)
+		codeMirror.focus();
+
 		rootNodeViewModel.filter(targetName);
 	});
 
 
 	
-    rootNodeViewModel.filter($('textarea#newpost').val());
+    rootNodeViewModel.filter(codeMirror.getValue());
 }
 // Now implemented through an EntryNodeViewModel object and the .filter method
 /*function filterIdeas(query){//#TODO 
@@ -665,7 +849,27 @@ function displayIdeaNames() {
 	    	peopletagssorted.push([peopletags[key],key]);
 	   	peopletagssorted.sort(function(a, b) {return b[0] - a[0]}) 
 
-		localStorage.setItem("tags", tags);
+		// ~cj we need to json.stringify before storing dictionaries
+		localStorage.setItem("tags", JSON.stringify(tags));
+
+		// ~cj generate lists of hash tags and person tags, save to localStorage
+		hashTags = [];
+		peopleTags = [];
+		$.each(tags, function(tag,contained){
+		    if(contained){
+		    	if(tag.substring(0,1)=="#"){
+		     		hashTags.push(tag.replace("#",""));
+		     	}else if(tag.substring(0,1)=="~"){
+		     		peopleTags.push(tag.replace("~",""));
+		     	}
+		    }
+		});
+		localStorage.setItem("autocompletionHashtags", JSON.stringify(hashTags));
+		// note: this only grabs persons from this one map 
+		localStorage.setItem("autocompletionPersontags", JSON.stringify(peopleTags));
+
+
+
 		var tagsul = $('ul#idea-hashtags').empty();
 		var tildesul = $('ul#people-list').empty();		
 		for(var k=0;k<hashtagssorted.length;k++){
@@ -792,8 +996,8 @@ function deleteComment(commentid,pid) {
 function submitPostAndGetPosts(newPostText) {
 	var boxtoclear=false;
 	if(typeof newPostText === "undefined") {
-		newPostText=$('#newpost').val();
-		boxtoclear=$('#newpost');
+		newPostText=codeMirror.getValue();
+		//boxtoclear=$('#newpost');
 	}
 
 
@@ -826,6 +1030,8 @@ function submitPostAndGetPosts(newPostText) {
     return idea.match(tag_regexp)
 	*/
 	
+	$("#codeMirror-container, #codeMirror-container div").addClass("cm-disabled")
+
 
 
 	$.ajax({
@@ -835,12 +1041,17 @@ function submitPostAndGetPosts(newPostText) {
 		'success': function(jsonData) {
                  // todo: parse data and add into our table
                  localStorage.setItem("posts", jsonData);
+                 codeMirror.setValue('')
                  
                  if(boxtoclear)
 	                 boxtoclear.val('');
 
                  displayPosts();
              },
+	        'complete': function(e){
+	        	// enable textarea when ajax returns
+	         	$("#codeMirror-container, #codeMirror-container div").removeClass("cm-disabled")
+	        }
          });
 }
 

@@ -21,8 +21,7 @@ function EntryNodeTextViewModel(txt,pid) {
 			this.getViewDomE().html(r);
 			return true
 		}
-
-		query = removeCommonWords(query.toLowerCase());
+		
 		query = query.split(/[\r\n ,-]+/);
 		var nomatch = true;
 		var t = this.txt.toLowerCase()

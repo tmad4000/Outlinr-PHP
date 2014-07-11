@@ -1,4 +1,5 @@
 function EntryNodeViewModel(entryNodeModel) {
+	this.cnt=0;
 	this.entryNodeModel=entryNodeModel; //js obj from json
 	this.viewDomE=null; //until render is called for first time
 	this.myCommentsExpanded="init-hidden";
@@ -63,20 +64,44 @@ function EntryNodeViewModel(entryNodeModel) {
 	}
 	//render must be called first so that viewDomE!==null
 	this.filter = function(query){
+
+		var visibleSelfAndBelow=0;
+
+		var isMatch = false;
 		if(this.getViewDomE() === null){ //ERROR
-			console.log("viewDomE is null")
-			return;
+			console.error("viewDomE is null")
+			return false;
 		}
-		if(this.eT !== null){
-			var isMatch=this.eT.filter(query); //returns true if matches. Boldifies its own text
+		else if(this.eT !== null){ //not root node
+			isMatch=this.eT.filter(query); //returns true if matches. Boldifies its own text
 			if(!isMatch)
 				this.hide();
-			else 
+			else {
 				this.show();
+				visibleSelfAndBelow=1
+			}
 			updateNrOfIdeasVisible()
 		}
-		$.each(this.children,function() {this.filter(query)})
+
+		//$.each(this.children,function() {this.filter(query)})
+		var childrenVisible = 0;
+		
+		for(var index in this.children) { 
+		   if (this.children.hasOwnProperty(index)) {
+		       var child = this.children[index];
+		       var delta=child.filter(query);
+		       childrenVisible+=delta
+
+		       // console.log(this.cnt++, delta)
+		       // if(childrenVisible>=10) break;
+		       //console.log("child")
+		   }
+ 		}
+
+		visibleSelfAndBelow+=childrenVisible;
+		// $.each(this.children,function() {this.filter(query)})
 		//#TODO #future should we show parents of children who match?
+		return visibleSelfAndBelow;
 	}
 
 	this.loadComments = function() {
