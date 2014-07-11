@@ -149,7 +149,7 @@ td.uid {
 }
 
 .ideaTxt {
-  color:#777;
+  color:#aaa;
 }
 </style>
 </head>
