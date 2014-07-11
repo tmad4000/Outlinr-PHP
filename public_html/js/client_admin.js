@@ -178,17 +178,26 @@ $(document).ready(function() {
 
 
 	// ~cj codemirror:
-	showAutocompletePopup = function(cm) {
-		var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+	showAutocompletePopup = function(cm, tokentype) {
+		if(tokentype == null){
+			// if tokentype is null, then figure out the token (hashtag, person or map) the user is typing
+			var cur = cm.getCursor(), token = cm.getTokenAt(cur), tokentype = token.type;
+		}
+		// else, force token to be tokentype:
 		
-		if(token.type == "xn-hashtag"){
+		console.log("autocomplete popup", tokentype)
+
+		if(tokentype == "xn-hashtag"){
 			var hash_tags = $.parseJSON(localStorage.getItem("autocompletionHashtags"));
+			console.log("show hash_tags")
 			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: hash_tags} );
-		}else if(token.type == "xn-persontag"){
+		}else if(tokentype == "xn-persontag"){
 			var person_tags = $.parseJSON(localStorage.getItem("autocompletionPersontags"));
 			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: person_tags} );
-		}else if(token.type == "xn-maptag"){
+		}else if(tokentype == "xn-maptag"){
 			CodeMirror.showHint(cm, CodeMirror.xnHint, {tags: map_tags} );
+		}else{
+			// show no hints
 		}
 	}
 
@@ -200,17 +209,21 @@ $(document).ready(function() {
         viewportMargin: Infinity,
         placeholder: localStorage.getItem("placeholder"),
 		extraKeys: { 
-		  "Tab": showAutocompletePopup,
-		  "#": function(cm){
-		  	setTimeout(function(){showAutocompletePopup(cm)},10);
+		  "Tab": function(cm){
+		  	showAutocompletePopup(cm, null);
+		  },
+		  "'#'": function(cm){
+		  	setTimeout(function(){ showAutocompletePopup(cm, "xn-hashtag") },40) 
+		  	// why timeout? because this fires before the textarea receives character
+		  	// and keyup was producing weird bugs
 		  	return CodeMirror.Pass;
 		  },
 		  "'~'": function(cm){
-		  	setTimeout(function(){showAutocompletePopup(cm)},10);
+		  	setTimeout(function(){ showAutocompletePopup(cm, "xn-persontag") },40)
 		  	return CodeMirror.Pass;
 		  },
 		  "'@'": function(cm){
-		  	setTimeout(function(){showAutocompletePopup(cm)},10);
+		  	setTimeout(function(){ showAutocompletePopup(cm, "xn-maptag") },40)
 		  	return CodeMirror.Pass;
 		  },
 		  "Enter": function(cm){
@@ -228,6 +241,9 @@ $(document).ready(function() {
 		mode: 'xn'
 	});
 	codeMirror.hintOpen = false
+	/*codeMirror.on("keyup",function(cm,e){
+		showAutocompletePopup(cm)
+	});*/
 	codeMirror.on("change",function(){
 	  var textinput = codeMirror.getValue();
 	  rootNodeViewModel.filter(textinput);
