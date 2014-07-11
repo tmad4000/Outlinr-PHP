@@ -6,6 +6,93 @@ getPosts();
 
 var numFilterTos=0;
 var nextFilter=null;
+var currTextQuery="";
+
+var filterTimeout = null;
+// filter results with a smart delay 
+function filterResultsSmartDelay(){
+	var textQuery=textToQuery(currTextQuery);
+
+	var minQPer=100
+	var numIdeas = Object.keys(rootNodeViewModel).length;
+	if(numIdeas>20){
+		minQPer=600
+	}else if(numIdeas>50){
+		minQPer=1000
+	}
+	/*
+	if(filterTimeout != null){
+		clearTimeout(filterTimeout)
+	}
+	filterTimeout = setTimeout(function() {
+		// code mirror update filter
+	  var textinput = codeMirror.getValue();
+	  rootNodeViewModel.filter(textinput);
+	}, minQPer);*/
+
+	if(numFilterTos<=0){
+		rootNodeViewModel.filter(textToQuery(textQuery) || "");
+		setTimeout(function() {
+			if(nextFilter!=null) {
+				rootNodeViewModel.filter(nextFilter);	
+				nextFilter=null;
+
+				setTimeout(function() { //to prevent immediate subsequent call of numFilterTos<=0 without delay 
+					numFilterTos--;
+				},minQPer)
+				numFilterTos++;
+			}
+				
+			numFilterTos--;
+		}, minQPer);
+		
+		numFilterTos++;
+	}
+	//if filter pending
+	else {
+		nextFilter=textToQuery(textQuery) || "";
+	}
+}
+
+/*
+function filterResultsSmartDelay(query){
+	if(rootNodeViewModel!==null){
+				
+				
+				var numIdeas=Object.keys(rootNodeViewModel).length
+				
+				var minQPer=30
+				if(numIdeas>20)
+					minQPer=200
+				if(numIdeas>50)
+					minQPer=400
+					
+				//c/onsole.log(numFilterTos)
+				//if no filter pending
+				if(numFilterTos<=0){
+					rootNodeViewModel.filter(newpostObj.val() || "");
+					
+					setTimeout(function() {
+						if(nextFilter!=null) {
+							rootNodeViewModel.filter(nextFilter);					
+							nextFilter=null;
+						}
+							
+						numFilterTos--;
+					}, minQPer);
+					
+					numFilterTos++;
+				}
+				//if filter pending
+				else {
+					nextFilter=newpostObj.val() || "";
+				}
+				
+				
+				
+				
+        	}
+}*/
 
 function getURLParameter(sParam){
     var sPageURL = window.location.search.substring(1);
@@ -250,8 +337,10 @@ $(document).ready(function() {
 		showAutocompletePopup(cm)
 	});*/
 	codeMirror.on("change",function(){
-	  var textinput = codeMirror.getValue();
-	  rootNodeViewModel.filter(textinput);
+	  //var textinput = codeMirror.getValue();
+	  //rootNodeViewModel.filter(textinput);
+	  currTextQuery=codeMirror.getValue();
+	  filterResultsSmartDelay();
        
 	});
 	codeMirror.on("startCompletion", function(target, name){

@@ -345,3 +345,15 @@ function getCookie(label){
 function deleteCookie(name){
     document.cookie = name+"=; expires=Thu, 18 Dec 2013 12:00:00 GMT";
 }
+
+// count size of object
+function objectLength(obj){
+    return $.map(obj, function(n, i) { return i; }).length; 
+}
+
+
+// given user input from textarea, returns query that can be filtered
+function textToQuery(text){
+    return removeCommonWords(text.toLowerCase());
+}
+
