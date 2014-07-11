@@ -31,6 +31,7 @@ require_once('../config.inc.php');
   <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'></script>
   
 
+<script type="text/javascript" src="js/client_admin.js"></script>
 
   <link href="css/typeahead.css" rel="stylesheet">
   
@@ -53,7 +54,7 @@ require_once('../config.inc.php');
     <?php 
     include('inc/nav.inc.php');
     ?>
-    <iframe id="peopletable" src="http://107.170.218.111/" style="height:100%;width:100%;border:0px;margin-left:-15px;margin-top:0px;margin-right:-30px;"></iframe>
+    <iframe id="peopletable" src="http://107.170.218.111:3000" style="height:100%;width:100%;border:0px;margin-left:-15px;margin-top:0px;margin-right:-30px;"></iframe>
   </div><!--/.fluid-container-->
   <?php 
   include('inc/footer.inc.php');

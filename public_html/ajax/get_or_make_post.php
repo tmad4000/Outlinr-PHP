@@ -81,9 +81,19 @@ function getRelEntryIds($MYSQLI_LINK,$linkstbl, $pid) {
 }
 
 function getAllLinkIds($MYSQLI_LINK,$linkstbl) {
-	global $mapid;
-	$query = "SELECT * FROM $linkstbl WHERE deleted_time IS NULL ORDER BY time DESC";
-	
+	global $mapid,$ideastbl;
+
+
+	// $query = "SELECT * FROM $linkstbl WHERE deleted_time IS NULL ORDER BY time DESC";
+	$query = "SELECT DISTINCT $linkstbl.* FROM $ideastbl
+		INNER JOIN $linkstbl
+		ON ($linkstbl.source=$ideastbl.pid OR $linkstbl.target=$ideastbl.pid)
+		WHERE $ideastbl.body <> ''
+		AND $ideastbl.mapid = $mapid
+		AND $ideastbl.deleted_time IS NULL 
+		AND $linkstbl.deleted_time IS NULL 
+		ORDER BY $ideastbl.path ASC , $ideastbl.time DESC";
+
 	$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 	$rows = array();
 
@@ -177,5 +187,7 @@ while ($r = mysqli_fetch_assoc($result)) {
 
 $allLinks=getAllLinkIds($MYSQLI_LINK,$linkstbl);
 
+
+// header('Content-Type: application/json');
 print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows,"links"=>$allLinks));
 // print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows,"links"=>$allLinks));

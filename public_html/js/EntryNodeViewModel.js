@@ -212,8 +212,9 @@ function EntryNodeViewModel(entryNodeModel) {
 					'</div>' +
 				'</div>';
 
+//#HACK related-ideas not necessary? #todo
 				var addRel="<div class='related-ideas-all'>" + 
-						"<ul class='related-ideas'>" + 
+						"<ul class='related-ideas'>"  + 
 						"</ul>" + 
 						"<div class='related-idea-input'>" +
 						"	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>" +
