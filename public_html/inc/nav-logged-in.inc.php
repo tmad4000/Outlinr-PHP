@@ -12,7 +12,7 @@
         </ul>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="notifications.php"><i class="fa fa-bell-o"></i></a></li>
+        <li><a href="notifications.php"><i class="fa fa-star gold"></i></a></li>
         <li><a href="joins.php">My Joins</a></li>
         <li><a href="signin.php" class="blue">Settings</a></li>      
         <li><a href="inc/logout.php" class="blue">Log out</a></li>

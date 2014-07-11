@@ -20,11 +20,12 @@
           <div class="form-group">
             <input type="password" class="form-control input-lg" id="create-box-password" placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-default">Sign Up</button>
+          <span>By signing up, you agree to our terms of use</span>
+          <button type="submit" class="btn btn-warning right">Sign Up</button>
         </form>
       </div>
     </div> 
   </div>
-<?php include('inc/footer-home.inc.php');  ?>
+<?php include('inc/footer.inc.php');  ?>
 </body>
 </html>

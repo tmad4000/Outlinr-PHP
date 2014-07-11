@@ -22,6 +22,6 @@
       </div>
     </div> 
   </div>
-<?php include('inc/footer-home.inc.php');  ?>
+<?php include('inc/footer.inc.php');  ?>
 </body>
 </html>

@@ -24,6 +24,7 @@ $(document).ready(function() {
 		trigger: "click",
 		placement: "bottom",
 		html: true,
+		content: sortByPopover
     });
 
     $('#type-by').popover({
@@ -31,6 +32,7 @@ $(document).ready(function() {
 		placement: "bottom",
 		html: true,
 		transition: false,
+		content: typeByPopover
     });
 
     $('#join-by').popover({
@@ -38,6 +40,19 @@ $(document).ready(function() {
 		placement: "bottom",
 		html: true,
 		transition: false,
+		content: joinByPopover
+    });
+
+    $('#scope').popover({
+		trigger: "click",
+		placement: "bottom",
+		html: true,
+		transition: false,
+		content: scopePopover
+    });
+
+    $('#scope').blur(function(){
+    	$(this).popover('hide')
     });
 
     $('#sort-by').blur(function(){
@@ -51,6 +66,34 @@ $(document).ready(function() {
     $('#type-by').blur(function(){
     	$(this).popover('hide')
     });
+
+    $('#currentposts').on('mouseover', '.entryNode > .body', function(){
+    	$(this).find('.ideaTxtFooter').removeClass('not-visible');
+    });
+
+    $('#currentposts').on('mouseout', '.entryNode > .body', function(){
+    	$(this).find('.ideaTxtFooter').addClass('not-visible');
+    });
+
+    $('#currentposts').on('click', '.ideaTxt', function(e){
+    	console.log($(e.target).closest('.no-trigger-modal'));
+    	if($(e.target).closest('.no-trigger-modal').length == 0){
+    		$('#idea-modal').modal('toggle');
+    		var ideaid = $(this).closest('.entryNode').attr('-idea-id')
+    		console.log(globalData[ideaid]);   
+    		$('#idea-modal-upvotes').html(globalData[ideaid].upvotes); 		
+    		$('#idea-modal-title').html(globalData[ideaid].title);
+    		$('#idea-modal-info').html(moment(globalData[ideaid].time * 1000).fromNow()+", Status: "+statusTable[globalData[ideaid].status]);
+    		$('#idea-modal-body').html(globalData[ideaid].body);
+    	}
+    });
+
+
+    $('#myModal').modal('toggle')
+    $('#idea-modal').modal({
+	  keyboard: false,
+	  show: false
+	})
 
 	isAdmin = $('#is-admin').val() === 'true';
 
@@ -108,54 +151,55 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#sortByHot').click( function(){
-    if(!$(this).hasClass('active')){
+	$('#sort-by-hot').click(function(){
+    if(!$(this).hasClass('selected')){
       filterToggle = "Hot";
-      $('#sortByDate').removeClass('active'); 
-      $('#sortByUpvotes').removeClass('active');
-      $('#sortByStatus').removeClass('active'); 	        
-      $(this).addClass("active");
-      
+      $('#sort-by-date').removeClass('selected'); 
+      $('#sort-by-top').removeClass('selected');
+      $('#sort-by-progress').removeClass('selected'); 	        
+      $(this).addClass("selected");
+      $('#sort-by').html('Hot');
       displayPosts()
     }
 	});
 
 
-	$('#sortByDate').click( function(){
-    if(!$(this).hasClass('active')){
-      filterToggle = "Date";
-      $('#sortByHot').removeClass('active');
-      $('#sortByUpvotes').removeClass('active'); 
-      $('#sortByStatus').removeClass('active'); 	        
-      $(this).addClass("active");
+	$('#sort-by-date').click( function(){
+	    if(!$(this).hasClass('selected')){
+	      filterToggle = "Date";
+	      $('#sort-by-hot').removeClass('selected');
+	      $('#sort-by-top').removeClass('selected'); 
+	      $('#sort-by-progress').removeClass('selected'); 	        
+	      $(this).addClass("selected");
+	      $('#sort-by').html('New');
 
-      displayPosts()
-    }
+	      displayPosts();
+	    }
 	});
 
-	$('#sortByUpvotes').click( function(){
-    if(!$(this).hasClass('active')){
-      filterToggle = "Upvotes";
+	$('#sort-by-top').click( function(){
+	    if(!$(this).hasClass('selected')){
+	      filterToggle = "Upvotes";
 
-      $('#sortByHot').removeClass('active');
-      $('#sortByDate').removeClass('active'); 
-      $('#sortByStatus').removeClass('active'); 
-      $(this).addClass("active");	       		
+	      $('#sort-by-hot').removeClass('selected');
+	      $('#sort-by-date').removeClass('selected'); 
+	      $('#sort-by-progress').removeClass('selected'); 
+	      $(this).addClass("selected");	       		
 
-      displayPosts()
-    }
+	      displayPosts()
+	    };
 	})
 
-	$('#sortByStatus').click(function(){
-    if(!$(this).hasClass('active')){
-      filterToggle = "Status";
-      $('#sortByHot').removeClass('active');
-      $('#sortByDate').removeClass('active');
-     	$('#sortByUpvotes').removeClass('active');
-      $(this).addClass("active");
+	$('#sort-by-progress').click(function(){
+	    if(!$(this).hasClass('selected')){
+	      filterToggle = "Status";
+	      $('#sort-by-hot').removeClass('selected');
+	      $('#sort-by-date').removeClass('selected');
+	     	$('#sort-by-top').removeClass('selected');
+	      $(this).addClass("selected");
 
-      displayPosts();
-    }
+	      displayPosts();
+	    };
 	});
 
 	initiateCookie();
@@ -211,31 +255,11 @@ $(document).ready(function() {
 
 	//Omnibox (input field) operations
 
-	$('textarea#newpost').focus();
+	$('#search-ideas').focus();
 
-	$('textarea#newpost').keydown(function (event) {
-		if(event.keyCode == 13) // enter
-    	event.preventDefault();
-	});
-	$('textarea#newpost').keyup(function (event) {
+	$('#search-ideas').keyup(function (event) {
 		var newpostObj=$(this);
 
-		// #TODO #Future trim repeated enters
-		if (event.keyCode == 13 && event.shiftKey) { // shift-enter
-    	var content = this.value;
-    	var caret = getCaret(this);
-    	this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
-    	event.stopPropagation();
-    }
-    else if(event.keyCode == 13){ // enter
-    	// removes the newline
-    	var content = this.value;
-    	var caret = getCaret(this);
-    	//this.value = content.substring(0,caret-1)+content.substring(caret,content.length);
-    	event.stopPropagation();
-    	$('#postform').submit();
-    }
-    else {
       if(rootNodeViewModel!==null){
 		var numIdeas=Object.keys(rootNodeViewModel).length;
 
@@ -265,10 +289,9 @@ $(document).ready(function() {
 			nextFilter=newpostObj.val() || "";
 		}
       }
-    }
 	});
 
-	$('textarea#newpost').change(function (event) {
+	$('textarea#search-ideas').change(function (event) {
 		rootNodeViewModel.filter($(this).val());
 		//#TODO never gets here
 	});
@@ -484,7 +507,6 @@ function displayPosts() {
 	//fix offset
 	$('#ideanames li a').click(function(e){
 		e.preventDefault();
-		//$('#newpost').val('');
 
 		var targetName=$(e.target).attr('href').substr(1);
 		if($('[-idea-id="'+targetName+'"]').css('display')=='none'){
@@ -502,11 +524,11 @@ function displayPosts() {
 		e.preventDefault();
 
 		var targetName=$(e.target).text();
-		$('#newpost').val(targetName).focus();
+		$('#search-ideas').val(targetName).focus();
 		rootNodeViewModel.filter(targetName);
 	});
 
-  rootNodeViewModel.filter($('textarea#newpost').val());
+  rootNodeViewModel.filter($('textarea#search-ideas').val());
 }
 
 function toggleComment(pid, focus) {
@@ -778,7 +800,6 @@ function submitPostAndGetPosts(newPostText) {
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
 		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(newPostText),'uid' : $('#usrhandle').val()}, //#hack
-		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
 			// todo: parse data and add into our table
 			localStorage.setItem("posts", jsonData);

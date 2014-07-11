@@ -160,20 +160,20 @@ function EntryNodeViewModel(entryNodeModel) {
 			//moved to UTIL var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
 			var progEntry=this.entryNodeModel.progress && this.entryNodeModel.progress != "null" ? this.entryNodeModel.progress + '% - ': "";
 
-			status = "<span class='status'><i class='ion-record status sc"+this.entryNodeModel.status +"'></i> "+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</span>";
+			status = "<span class='status no-trigger-modal'><i class='ion-record status sc"+this.entryNodeModel.status +"'></i> "+statusTable[this.entryNodeModel.status]+progEntry +this.entryNodeModel.metric+"</span>";
 			if(getCookie("i"+this.entryNodeModel.pid)== "voted"){
-				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+				upvoter='<td class="votes no-trigger-modal" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote on"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 			}
 			else {
-				upvoter='<td class="votes" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
+				upvoter='<td class="votes no-trigger-modal" -idea-id="'+this.entryNodeModel.pid+'"><span class="vote"><i class="ion-ios7-arrow-up"></i></span><span class="votes" >'+this.entryNodeModel.upvotes+'</span></td>';
 			}
 			if(getCookie("s"+this.entryNodeModel.pid) == "starred"){
-				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
+				var starCol = '<td class="star-idea no-trigger-modal" -idea-id="'+this.entryNodeModel.pid+'">'
 				+ '<i class="fa fa-star gold"></i>'
 				+ '</td>';
 			}
 			else {
-				var starCol = '<td class="star-idea" -idea-id="'+this.entryNodeModel.pid+'">'
+				var starCol = '<td class="star-idea no-trigger-modal" -idea-id="'+this.entryNodeModel.pid+'">'
 				+ '<i class="fa fa-star"></i>'
 				+ '</td>';			
 			}
@@ -181,7 +181,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 			//Comments
 			
-			var commentsListH='<ul class="comments">';
+			var commentsListH='<ul class="comments no-trigger-modal">';
 
 			var postCommentsModel=null;
 				//note: commentsModel is global
@@ -219,7 +219,7 @@ function EntryNodeViewModel(entryNodeModel) {
 
 			var commentExpandLink = '<a href="#" class="showcomments">'+numCommentsMsg+'</a>';
 			
-			comments='<div class="showcomments">'
+			comments='<div class="showcomments no-trigger-modal">'
 				+ '<div class="commentform '+this.myCommentsExpanded+'" -idea-id="'+this.entryNodeModel.pid+'"> '
 				+ '<textarea class="commentsinput" placeholder="Comment; press ENTER to submit" ></textarea>'
 				+ commentsListH
@@ -227,11 +227,11 @@ function EntryNodeViewModel(entryNodeModel) {
 				+ '</div>';
 
 			var addRel="<div class='related-ideas-all'>"
-				+ "<ul class='related-ideas'>"
+				+ "<ul class='related-ideas  no-trigger-modal'>"
 				+ "</ul>"
 				+ "<div class='related-idea-input'>"
-				+ "	<input class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>"
-				+ "<ul class='suggest-labels'></ul>"
+				+ "	<input class='related-idea-add typeahead  no-trigger-modal' placeholder='+ Add Related Idea' width='200'>"
+				+ "<ul class='suggest-labels  no-trigger-modal'></ul>"
 				+ "</div>"
 				+ "</div>";
 
@@ -242,7 +242,7 @@ function EntryNodeViewModel(entryNodeModel) {
 				+ upvoter
 				+ '<td class="ideaTxt">'+"<div class='ideaTxtInner'></div>"
 				+ addRel	
-				+ "<div class='ideaTxtFooter hidden'>"
+				+ "<div class='ideaTxtFooter not-visible no-trigger-modal'>"
 				+ commentExpandLink
 				+ "<div class='ideaTxtFooter-r'>"
 				+ status  

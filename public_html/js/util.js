@@ -95,7 +95,7 @@ function ratingFunction(t,y,z){ //http://amix.dk/blog/post/19588
 }
 
 function updateNrOfIdeasVisible(){
-    if($('textarea#newpost').val() == ""){
+    if($('#search-ideas').val() == ""){
         //$('#numResults').html("Showing All Ideas ("+numberOfIdeasVisible+")");
         if(numberOfIdeasVisible ==0)
             $('#numResults').html("No Ideas here yet");
@@ -104,7 +104,7 @@ function updateNrOfIdeasVisible(){
     }
     else {
         // so that chunks of text dont happen
-        var store = $('textarea#newpost').val();
+        var store = $('#search-ideas').val();
         if(store.length>40) store = store.substring(0,40)+"...";
         if(numberOfIdeasVisible==1){
             $('#numResults').html("Found "+numberOfIdeasVisible+" Idea which matches \""+store+"\"");
@@ -249,7 +249,7 @@ function hashtag(e){
         e.preventDefault();
 
         var targetName=$(e.target).text();
-        $('#newpost').val(targetName).focus();
+        $('#search-ideas').val(targetName).focus();
         rootNodeViewModel.filter(targetName);
 }
 

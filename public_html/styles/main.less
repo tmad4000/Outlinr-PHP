@@ -217,10 +217,14 @@ div.container {
 	margin-top: 10px;
 }
 
+.modal-body {
+	padding: 10px;
+}
+
 .tags li {
 	font-size: 12pt;
 	display: inline-block;
-	margin-left: 6px;
+	margin-right: 6px;
 }
 
 #ideanames {
@@ -442,7 +446,7 @@ div.container textarea.span11 {
 	height: 40px;
 	width: 30px;
 	cursor: pointer;
-	font-size: 16pt;
+	font-size: 12pt;
 	text-align: center;
 }
 
@@ -578,7 +582,8 @@ div.commentform div.commentsinput {
 	margin-bottom: 0px;
 }
 
-#postform .btn {
+.btn {
+	outline: none;
 }
 
 #postform {
@@ -586,8 +591,8 @@ div.commentform div.commentsinput {
 	margin-top: 20px;
 }
 
-.hidden {
-	display: none;
+.not-visible {
+	visibility: hidden;
 }
 
 .hiddenText {
@@ -780,8 +785,9 @@ div.ideaTxtInner > .entryNodeText {
 
 .entryNode > .body {
 	background: white;
-	margin-top: 2px;
-	border-radius: 3px;
+	border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .entryNode[-idea-id="null"] > .body {
@@ -1008,4 +1014,16 @@ td.uid {
 
 .right {
   float: right;
+}
+
+.btn.no-style {
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	outline: none;
+}
+
+.btn.no-style:hover {
+	text-decoration: underline;
+	outline: none;	
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php include('inc/local.php'); ?>
+  <?php include('inc/includes.php'); ?>
   <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>
@@ -18,8 +18,8 @@
             <form id="postform">
               <textarea class="span12" placeholder="Add an Idea" id="newpost" ></textarea>
               <div class="right">
-                <button id="" class="btn btn-secondary">
-                  <i class='fa fa-filter'></i>
+                <button type="button" class="btn btn-default no-style" id="scope" data-container="body" data-toggle="popover" data-placement="bottom">
+                  <i class='fa fa-share-alt'></i> Private
                 </button>
                 <button type="submit" id="" class="btn btn-primary">
                   Add
@@ -45,11 +45,11 @@
         <div class="row">
           <div class="col-sm-12 ml">
             <div id="filterBy">
-            Show me <button type="button" id="type-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<ul><li><a href='' class='selected'>All</a></li><li><a href=''>iOS</a></li><li><a href=''>Android</a></li><li><a href=''>Web Dev</a></li><li><a href=''>Hardware</a></li></ul>">
+            Show me <button type="button" id="type-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom">
               All <i class='fa-chevron-down fa'></i>
-            </button> ideas in <button type="button" id="join-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<ul><li><a href=''>Earth</a></li><li><a href='' class='selected'>Hackathons</a></li><li><a href=''>At&t Houston</a></li></ul>">
+            </button> ideas in <button type="button" id="join-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom">
               Hackathons <i class='fa-chevron-down fa'></i>
-            </button> sorted by <button type="button" id="sort-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<ul><li><a href='' class='selected'>Hot</a></li><li><a href=''>Top</a></li><li><a href=''>New</a></li><li><a href=''>Progress</a></li></ul>">
+            </button> sorted by <button type="button" id="sort-by" class="filter-button" data-container="body" data-toggle="popover" data-placement="bottom">
               Hot <i class='fa-chevron-down fa'></i>
             </button>
             </div>
@@ -65,8 +65,8 @@
         </div>
         <div class="row cp">
           <div class="col-sm-12">
+            <div id="numResults"></div>
             <div id="currentposts">
-              <div id="numResults"></div>
               <center><i class="ion-loading-c"></i></center>
             </div>
           </div>
@@ -75,5 +75,33 @@
     </div><!--/row-->
   </div><!--/.fluid-container-->
   <?php include('inc/footer.inc.php'); ?>
+  <div class="modal" id="idea-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" ><span id="idea-modal-upvotes"></span><span id="idea-modal-title"></span></h4>
+        </div>
+        <div class="modal-body">
+          <div id="idea-modal-info">
+          </div>
+          <div id="idea-modal-body">
+          </div>
+        </div>
+        <div class="modal-footer" id="idea-modal-footer">
+          <div class="row">
+            <div class="col-sm-6">
+              <div id="idea-modal-comments">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div id="idea-modal-people">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
