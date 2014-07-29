@@ -111,7 +111,8 @@ function findTitleEnd(idea) {
     var delims = ["--"," - ","\n"]
     var ends = $.map(delims, function(d){ return title.indexOf(d)});
     ends = $.grep(ends, function(end){ return end > 0 } );
-    titleEnd = Math.min.apply(Math,ends); 
+    ends.push(e);
+    var titleEnd = Math.min.apply(Math,ends); 
 
     return titleEnd;
     /*
@@ -357,3 +358,7 @@ function textToQuery(text){
     return removeCommonWords(text.toLowerCase());
 }
 
+
+ function htmlEntityDecode(str) {
+    return $('<div/>').html(str).text();
+}

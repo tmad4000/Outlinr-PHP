@@ -1,6 +1,5 @@
 <?php 
 require_once('../config.inc.php');
-$getmapid=$_GET['mapid']+0;
 
 if(isset($_GET['logout'])) {
   session_destroy();
@@ -8,37 +7,71 @@ if(isset($_GET['logout'])) {
 
   header("Location:index.1.7_suggestionbox.php?mapid=$getmapid"); // TODO auto map id recognize
 }
+
+$getmapid=$_GET['mapid']+0;
 ?>
+
 
 <!DOCTYPE html>
-<html><head>
-<?php 
-require_once('inc/mysql.inc.php');
-include_once("inc/analyticstracking.inc.php");
-$query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
+<html>
+<head>
+  <?php 
+  require_once('inc/mysql.inc.php');
+  include_once("inc/analyticstracking.inc.php");
+  $getmapid=$_GET['mapid']+0;
+  $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
   //echo $query;
   //var_dump($MYSQLI_LINK);
-$result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
-$r = mysqli_fetch_assoc($result);
+  $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+  $r = mysqli_fetch_assoc($result);
 
-?>
+  // ~cj grab list of idea maps for CODEMIRROR autocomplete @mapname
+  $query = "SELECT * FROM ideamaps";
+  $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
+  $ideamap_names = array();
+  while($ideamap_r = mysqli_fetch_assoc($result)){
+    $name = $ideamap_r["mapname"];
+    $name = str_replace(" ","_", $name); // mapnames should have _ in the backend anyway
+    array_push($ideamap_names,$name);
+  } 
+  $ideamap_list_json = json_encode($ideamap_names);
+  // note: for now, idea map list only updates on page load
+
+  ?>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.4.1/css/ionicons.min.css">
-
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>IdeaBox -- <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></title>
   <script src="js/lib/moment-with-langs.js"></script>
+  
   <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>  <script type="text/javascript" src="js/util.js"></script>
+
   
   <script type="text/javascript" src="js/lib/typeahead.bundle.js"></script>
   <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js'></script>
   
+  <script type="text/javascript" src="js/util.js"></script>
+
   <script type="text/javascript" src="js/EntryNodeCommentViewModel.js"></script> 
   <script type="text/javascript" src="js/EntryNodeTextViewModel.js"></script>
   <script type="text/javascript" src="js/EntryNodeViewModel.js"></script>    
   <script type="text/javascript" src="js/client_admin.js"></script>
+
+   <!-- code mirror  -->
+   <script src="js/lib/codemirror-4.2/lib/codemirror.js"></script>
+   <script type="text/javascript" src="js/codemirror-xn-mode.js"></script>
+   <script src="js/lib/codemirror-4.2/addon/hint/show-hint.js"></script>
+   <script src="js/codemirror-xn-hint.js"></script>
+   <script src="js/lib/codemirror-4.2/addon/display/placeholder.js"></script>
+   <link rel="stylesheet" href="js/lib/codemirror-4.2/addon/hint/show-hint.css">
+   <link rel="stylesheet" href="js/lib/codemirror-4.2/lib/codemirror.css">
+   <link href="css/codemirror.css" rel="stylesheet">
+
+
+
+  <link href="css/typeahead.css" rel="stylesheet">
   
   <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
@@ -47,10 +80,7 @@ $r = mysqli_fetch_assoc($result);
   <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>  
  
   <style type='text/css'>
-    .navbar {
-      letter-spacing: 1px !important;
-    }
-
+    
     #ideanames li{
       line-height: 14px;
       padding-bottom: 6px;
@@ -69,94 +99,127 @@ $r = mysqli_fetch_assoc($result);
 
   }
 
-.outline:hover{
-  text-decoration: none;
+
+ /*popover */
+ .idea {position: absolute; top: 100px; left: 100px;}
+
+
+
+
+  ul.entryNode {
+    list-style-type: none;
+    padding-top:0
+    
+  }
+
+  ul.entrylist {
+    list-style-type: none;
+    padding-top:0
+    
+  }
+
+  ul.entryNode table{
+    padding-top:5px;    
+    margin-bottom:0;
+    
+  }
+
+  ul.entryNode td {
+    
+    
+  }
+
+  td.uid {
+    text-align:right;
+  }
+
+  #currentposts > ul.entrylist {
+
+    padding-left:0;
+    margin-left:0;
+    
+  }
+  #currentposts > ul.entryNode {
+
+    padding-left:0;
+    margin-left:0;
+    
+  }
+  #currentposts > ul.entryNode > li > ul.entrylist {
+
+    padding-left:0;
+    margin-left:0;
+    
+  }
+
+  #currentposts > ul.entryNode > li > ul.entrylist > li > ul.entryNode {
+
+    padding-left:1px;
+    margin-left:0;
+    
+  }
+
+  #currentposts .suggname {
+    text-decoration:none;
+    /*color:#D41528;*/
+    color:#090909;
+    cursor:text!important;
+  }
+
+
+
+#codeMirror-container { 
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 4px;
+}
+.CodeMirror {
+
+  height: auto;
+  min-height: 3.7em;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+
+}
+
+#codeMirror-container div {
+  color: rgb(85, 85, 85);
+}
+#codeMirror-container div, .CodeMirror pre.CodeMirror-placeholder  {
+  font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+.CodeMirror pre {
+  color: #333;
+}
+.CodeMirror pre.CodeMirror-placeholder { 
+  color: #aaa; 
+}
+.cm-disabled {
+  color: #ccc;
+  background-color: #f9f9f9
 }
 
 
-/*popover */
-.idea {position: absolute; top: 100px; left: 100px;}
+  </style>
 
-td.ideaTxt {
-  /*width:100%;*/
-}
+<script>
+  // note: currently this map list only updates on page load
+  map_tags = <?=$ideamap_list_json ?>;
 
-td.ideaTxt > b {
-  /*width:100%;*/
-  font-weight:900;
-}
+  // placeholder text
+  localStorage.setItem("placeholder",htmlEntityDecode("Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>"));
+</script>
 
 
-
-ul.entryNode {
-  list-style-type: none;
-  padding-top:0
-  
-}
-
-ul.entrylist {
-  list-style-type: none;
-  padding-top:0
-  
-}
-
-ul.entryNode table{
-  padding-top:5px;    
-  margin-bottom:0;
-  
-}
-
-ul.entryNode td {
-  
-  
-}
-
-td.uid {
-  text-align:right;
-}
-
-#currentposts > ul.entrylist {
-
-  padding-left:0;
-  margin-left:0;
-  
-}
-#currentposts > ul.entryNode {
-
-  padding-left:0;
-  margin-left:0;
-  
-}
-#currentposts > ul.entryNode > li > ul.entrylist {
-
-  padding-left:0;
-  margin-left:0;
-  
-}
-
-#currentposts > ul.entryNode > li > ul.entrylist > li > ul.entryNode {
-
-  padding-left:1px;
-  margin-left:0;
-  
-}
-
-#currentposts .suggname {
-  text-decoration:none;
-  /*color:#D41528;*/
-  color:#090909;
-  cursor:text!important;
-}
-
-.ideaTxt {
-  color:#aaa;
-}
-</style>
 </head>
 <body>
-<div class="container-fluid outermost">
+  <div class="container-fluid outermost">
  
-  <?php 
+<?php 
   include('inc/nav.inc.php');
   ?>
   <div class="row adminrow"><!-- Admin row-->
@@ -196,22 +259,46 @@ td.uid {
       <input type="hidden" id="is-admin" value="true"/>
       </div>
     </div>
+
+
+
     <div class="row">
       <div class="col-sm-9">
         <div class="row" id="box-description">
           <div class="col-sm-12">
             <span id="box-description-text" >
-  <?= $r['mapdesc'] ?> </span>
+
+<?php
+//#hack
+echo $r['mapdesc'];
+ ?> </span>
           </div>
         </div>
-
         <div class="row">
           <div class="col-sm-12">
+
+        <div id="codeMirror-container"></div>
+ 
+       
+
             <form id="postform">
               <div class="input-append">
-                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
+                <!-- <textarea class="span12" id="newpost" ></textarea> -->
               </div>
+
+<!--               <div class='related-ideas-all'>
+                <ul class='related-ideas'>
+                  
+                </ul>
+
+                <div class='related-idea-input'>
+                  <input id='newpostRelatedIdeas' class='related-idea-add typeahead' placeholder='+ Add Related Idea' width='200'>
+                  <div class='suggest-labels'></div>
+                </div>
+
+              </div> -->
             </form>
+          
           </div>
         </div>
         <div class="row">
@@ -236,7 +323,7 @@ td.uid {
       </div>
       <div class="col-sm-3">
         <div class="sidebar-nav-fixed navbar-inner">
-        <?php 
+          <?php 
           if($r['password']==='' || $r['password']===$_GET['pw']){
             $_SESSION['admin_'.$getmapid]=TRUE;
           }
@@ -249,11 +336,17 @@ td.uid {
             <ul id="people-list" class="tags">
             </ul> 
             <?php } ?>
+
+
+            <!--<li class="nav-header">All Ideas</li>
+            <ul id="ideanames" class="">
+            </ul>
+            -->
           </ul>
         </div><!--/.well -->
       </div><!--/span-->
     </div><!--/row-->
-    <?php
+        <?php
   }
   ?>
   </div><!--/.fluid-container-->
@@ -262,3 +355,4 @@ td.uid {
   ?>
 </body>
 </html>
+

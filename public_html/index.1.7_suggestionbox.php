@@ -203,7 +203,7 @@ require_once('../config.inc.php');
   map_tags = <?=$ideamap_list_json ?>;
 
   // placeholder text
-  localStorage.setItem("placeholder","Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>");
+  localStorage.setItem("placeholder",htmlEntityDecode("Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? '' : $r['mapname'] ?>"));
 </script>
 
 

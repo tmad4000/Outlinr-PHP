@@ -338,7 +338,8 @@ $(document).ready(function() {
 	  //var textinput = codeMirror.getValue();
 	  //rootNodeViewModel.filter(textinput);
 	  currTextQuery=codeMirror.getValue();
-	  filterResultsSmartDelay();
+	  setTimeout(filterResultsSmartDelay,0);
+	  // filterResultsSmartDelay();
        
 	});
 	codeMirror.on("startCompletion", function(target, name){
@@ -505,7 +506,7 @@ function setupNode(postEl) {
 			}
 		});
 		
-		postEl.find("span.delete > a").click(function(e) {
+		postEl.find(".delete > a").click(function(e) {
 			e.preventDefault();
 			var r=confirm("Are you sure you want to delete "+$(this).closest('.entryNode').find("a.ideaname").text() + "?");
 			if (r)
@@ -1460,6 +1461,9 @@ function setupRel(postEl) {
 
 	$('#currentposts').on('click','.interested',function(e){
 		e.preventDefault();
+		if($(this).html()=="Interested")
+			return
+		
 		var email="~"+$("#usrhandle").val()
 		
 		if(validateEmail(email)) {
