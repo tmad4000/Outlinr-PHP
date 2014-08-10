@@ -11,9 +11,12 @@
 <body>
   <div class="container-fluid outermost">
     <?php include('inc/nav.inc.php'); ?>
-    <div class="row">
+    <div class="row pad">
       <div class="col-sm-12">
-        Join the network of ideas
+        <h1>Join the network of ideas</h1>
+        <h3>Twitter for ideas</h3>
+        <p> To create a chart, we need to instantiate the Chart class. To do this, we need to pass in the 2d context of where we want to draw the chart. Here's an example.
+        </p>
       </div>
     </div><!--/row-->
   </div><!--/.fluid-container-->

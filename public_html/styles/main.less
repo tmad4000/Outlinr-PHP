@@ -278,8 +278,13 @@ textarea, input[type="text"] {
 	margin-top: 20px;
 }
 
-#search-ideas:before {
+#search-ideas-parent:before {
 	content: "\f002";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  color: #333;
 }
 
 .navbar > .container-fluid .navbar-brand {
@@ -293,6 +298,10 @@ textarea, input[type="text"] {
 .nav-search {
 	border: 0;
 	outline: none;
+	padding-left: 10px;
+}
+
+#search-ideas-parent {
 	padding: 20px;
 }
 
@@ -1026,4 +1035,12 @@ td.uid {
 .btn.no-style:hover {
 	text-decoration: underline;
 	outline: none;	
+}
+
+.popover a {
+	cursor: pointer;
+}
+
+.lighten-on-hover:hover {
+	color: lighten(gold, 10%);
 }

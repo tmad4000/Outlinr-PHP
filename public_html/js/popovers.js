@@ -1,5 +1,20 @@
 function sortByPopover(){
-   return "<ul><li><a id='sort-by-hot' class='selected'>Hot</a></li><li><a id='sort-by-top'>Top</a></li><li><a id='sort-by-new'>New</a></li><li><a id='sort-by-progress'>Progress</a></li></ul>"; 
+    switch(filterToggle){
+        case 'Hot':
+            return "<ul><li><a id='sort-by-hot' class='selected'>Hot</a></li><li><a id='sort-by-top'>Top</a></li><li><a id='sort-by-date'>New</a></li><li><a id='sort-by-progress'>Progress</a></li></ul>"; 
+            break;
+        case 'Date':
+            return "<ul><li><a id='sort-by-hot'>Hot</a></li><li><a id='sort-by-top'>Top</a></li><li><a id='sort-by-date' class='selected'>New</a></li><li><a id='sort-by-progress'>Progress</a></li></ul>"; 
+            break; 
+        case 'Upvotes':
+            return "<ul><li><a id='sort-by-hot'>Hot</a></li><li><a id='sort-by-top' class='selected'>Top</a></li><li><a id='sort-by-date'>New</a></li><li><a id='sort-by-progress'>Progress</a></li></ul>"; 
+            break; 
+        case 'Status':
+            return "<ul><li><a id='sort-by-hot'>Hot</a></li><li><a id='sort-by-top'>Top</a></li><li><a id='sort-by-date'>New</a></li><li><a id='sort-by-progress' class='selected'>Progress</a></li></ul>"; 
+            break;
+        default: 
+            return "<ul><li><a id='sort-by-hot'>Hot</a></li><li><a id='sort-by-top'>Top</a></li><li><a id='sort-by-date'>New</a></li><li><a id='sort-by-progress'>Progress</a></li></ul>"; 
+    }
 }
 
 function joinByPopover(){

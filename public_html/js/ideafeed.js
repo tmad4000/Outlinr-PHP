@@ -81,9 +81,9 @@ $(document).ready(function() {
     		$('#idea-modal').modal('toggle');
     		var ideaid = $(this).closest('.entryNode').attr('-idea-id')
     		console.log(globalData[ideaid]);   
-    		$('#idea-modal-upvotes').html(globalData[ideaid].upvotes); 		
+    		$('#idea-modal-upvotes').html('<span class="label label-primary">'+globalData[ideaid].upvotes+'</span>'); 		
     		$('#idea-modal-title').html(globalData[ideaid].title);
-    		$('#idea-modal-info').html(moment(globalData[ideaid].time * 1000).fromNow()+", Status: "+statusTable[globalData[ideaid].status]);
+    		$('#idea-modal-info').html(moment(globalData[ideaid].time * 1000).fromNow()+", "+statusTable[globalData[ideaid].status]);
     		$('#idea-modal-body').html(globalData[ideaid].body);
     	}
     });
@@ -132,6 +132,7 @@ $(document).ready(function() {
 		html:true,
 		content:function(){  return "<input type='text' id='notificationemail' onchange='submitAndGetEmail()' onkeypress='hideOnEnter(event)' value='"+emailAddress+"' placeholder='email'/>"; }
 	});
+
 	$('body').on('click','.selectize-input div',function(){
 		//expandidea
 	});
@@ -151,52 +152,39 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#sort-by-hot').click(function(){
-    if(!$(this).hasClass('selected')){
-      filterToggle = "Hot";
-      $('#sort-by-date').removeClass('selected'); 
-      $('#sort-by-top').removeClass('selected');
-      $('#sort-by-progress').removeClass('selected'); 	        
-      $(this).addClass("selected");
-      $('#sort-by').html('Hot');
-      displayPosts()
-    }
+	$('body').on('click', '#sort-by-hot', function(){
+	    if(!$(this).hasClass('selected')){
+	      filterToggle = "Hot";
+
+	      $('#sort-by').html("Hot <i class='fa-chevron-down fa'></i>");
+	      displayPosts()
+	    }
 	});
 
-
-	$('#sort-by-date').click( function(){
+	$('body').on('click', '#sort-by-date', function(){
 	    if(!$(this).hasClass('selected')){
 	      filterToggle = "Date";
-	      $('#sort-by-hot').removeClass('selected');
-	      $('#sort-by-top').removeClass('selected'); 
-	      $('#sort-by-progress').removeClass('selected'); 	        
-	      $(this).addClass("selected");
-	      $('#sort-by').html('New');
+
+	      $('#sort-by').html("New <i class='fa-chevron-down fa'></i>");
 
 	      displayPosts();
 	    }
 	});
 
-	$('#sort-by-top').click( function(){
+	$('body').on('click', '#sort-by-top', function(){
 	    if(!$(this).hasClass('selected')){
 	      filterToggle = "Upvotes";
-
-	      $('#sort-by-hot').removeClass('selected');
-	      $('#sort-by-date').removeClass('selected'); 
-	      $('#sort-by-progress').removeClass('selected'); 
-	      $(this).addClass("selected");	       		
+	      $('#sort-by').html("Top <i class='fa-chevron-down fa'></i>");
 
 	      displayPosts()
 	    };
 	})
 
-	$('#sort-by-progress').click(function(){
+	$('body').on('click', '#sort-by-progress', function(){
 	    if(!$(this).hasClass('selected')){
 	      filterToggle = "Status";
-	      $('#sort-by-hot').removeClass('selected');
-	      $('#sort-by-date').removeClass('selected');
-	     	$('#sort-by-top').removeClass('selected');
-	      $(this).addClass("selected");
+	      
+	      $('#sort-by').html("Progress <i class='fa-chevron-down fa'></i>");
 
 	      displayPosts();
 	    };

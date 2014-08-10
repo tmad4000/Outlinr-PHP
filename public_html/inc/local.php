@@ -8,6 +8,7 @@
 <script type="text/javascript" src="js/util.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link rel="stylesheet/less" type="text/css" href="styles/main.less" />
+<link rel="stylesheet/less" type="text/css" href="styles/default.less" />
 <script type="text/javascript" src="js/lib/typeahead.bundle.js"></script>
 <script type='text/javascript' src='inc/local/handlebars-v1.3.0.js'></script>
 <link href="styles/typeahead.css" rel="stylesheet">

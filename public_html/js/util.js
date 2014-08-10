@@ -9,7 +9,7 @@ var tilde_regexp = /\B[~][a-zA-Z0-9\@\.]+/gi;
 var statusTable={0:"",1:"Acknowledged",2:"In Progress", 3:"Done", 4:"Rejected"};
 
 var numberOfIdeasVisible = 0; // #HACK
-var filterToggle = 'Date'; // Date, Upvote, Hot, Status
+var filterToggle = 'Hot'; // Date, Upvote, Hot, Status
 
 function isLinkIdeaJoin(link){
     var ideaJoin_regexp = /(^(?:www|http|https)([a-zA-Z0-9-]+/;

@@ -8,7 +8,7 @@
         <ul class="nav navbar-nav">
           <li><a href="ideafeed.php" class="selected">Discover</a></li>
           <li><a href="joins.php">Joins</a></li>
-          <li><input type="search" id="search-ideas" class="nav-search" placeholder="Search ideas"></li>
+          <li><div id="search-ideas-parent"><input type="search" id="search-ideas" class="nav-search" placeholder="Search ideas"></div></li>
         </ul>
       </div>
       <ul class="nav navbar-nav navbar-right">

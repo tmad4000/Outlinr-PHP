@@ -21,7 +21,7 @@
                 <button type="button" class="btn btn-default no-style" id="scope" data-container="body" data-toggle="popover" data-placement="bottom">
                   <i class='fa fa-share-alt'></i> Private
                 </button>
-                <button type="submit" id="" class="btn btn-primary">
+                <button type="submit" id="" class="btn btn-default">
                   Add
                 </button>
               </div>
@@ -80,12 +80,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" ><span id="idea-modal-upvotes"></span><span id="idea-modal-title"></span></h4>
+          <h4 class="modal-title" >
+            <span id="idea-modal-upvotes"></span> <span id="idea-modal-title"></span>
+          </h4>
         </div>
         <div class="modal-body">
-          <div id="idea-modal-info">
-          </div>
-          <div id="idea-modal-body">
+          <span id="idea-modal-info">
+          </span>
+          <div id="idea-modal-body" class="lead">
           </div>
         </div>
         <div class="modal-footer" id="idea-modal-footer">

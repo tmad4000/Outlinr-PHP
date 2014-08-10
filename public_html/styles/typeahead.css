@@ -28,6 +28,7 @@
   z-index: 4000 !important;
   max-height: 250px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -35,11 +36,12 @@
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
   -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
   box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  border-radius: 6px;
 }
 
 .tt-suggestion {
   padding: 10px 20px;
-  font-size: 12px;
+  font-size: 12pt;
   cursor: pointer;
 }
 

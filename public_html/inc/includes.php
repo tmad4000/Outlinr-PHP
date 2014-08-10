@@ -1,5 +1,4 @@
 <title>IdeaJoin</title>
-<script src="js/popovers.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,300,600,800' rel='stylesheet' type='text/css'>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -8,6 +7,7 @@
 <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/util.js"></script>
+<script src="js/popovers.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link href="stylesheet/less" type="text/css" href="styles/ui.less" />
 <link rel="stylesheet/less" type="text/css" href="styles/main.less" />
@@ -16,3 +16,4 @@
 <link href="styles/typeahead.css" rel="stylesheet">
 <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>  
 <script src="js/lib/share.min.js"></script>
+<script src="js/search.js"></script>
