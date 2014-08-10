@@ -35,7 +35,8 @@ $r=array_map(stripslashes,$r);
 
 
           <li <?= strpos($_SERVER['PHP_SELF'],"index.1.7_suggestionbox_ideamaps.php") ? ' style="display:none"' : '' ?>>
-          <a href="http://ideajoin.com">+ Make a suggestion box</a>
+          <a href="http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/ideabox_catzjcr/public_html/index.1.7_suggestionbox_graph.php?mapid=80" target="_blank"  style="float: left;">Graph View (Alpha)</a>
+          <a href="http://ideajoin.com" style="float: left;">+ Make a suggestion box</a>
 
 
           <!-- <a href="index.1.7_suggestionbox_ideamaps.php">+ Make a suggestion box</a> -->
