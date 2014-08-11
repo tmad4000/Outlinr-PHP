@@ -7,7 +7,7 @@
 @body-bg: white;
 
 * {
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Open Sans", Arial, "Lucida Grande", sans-serif; 
+	font-family:'Raleway', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, "Open Sans", Arial, "Lucida Grande", sans-serif; 
   	-webkit-font-smoothing: antialiased;
 }
 
@@ -105,22 +105,20 @@ html, body {
 }
 
 footer {
-	position:  relative;
-	margin-top:  -73px;
-	height:  73px;
-	clear: both;
-	background: white;
-	color: #666;
+	background: @wet-asphalt;
+	color: white;
 	padding-top: 17px;
 	border-top: 1px solid @silver;
 	text-decoration: none;
 }
-
-
-
+ 
 footer a {
-	color: #666;
-	text-decoration: none;
+	color: white;
+ 	text-decoration: none;
+}
+ 
+footer a:hover {
+	color: white;
 }
 
 a.underline:hover {
@@ -132,6 +130,10 @@ a.underline:hover {
 a.underline {
 	color: #666;
 	border-bottom: 2px solid #ddd;
+}
+
+a.hashtag {
+	color: @alizarin;
 }
 
 /*Opera Fix*/
@@ -204,12 +206,49 @@ body {
 	color: #1C3A94;
 }
 
+#viewBy {
+	list-style-type: none;
+	display: inline;
+	padding: 0;
+
+	li {
+		float: left;
+		margin-left: 10px;
+	}
+}
+
 .navbar-default {
-	background: @bg-gray;
+	background: @clouds;
+	border-bottom: 2px solid white !important;
+	font-family: 'Montserrat';
+	font-weight: 400;
+	font-size: 16pt;
+}
+
+.navbar-title {
+	padding: 10px 20px;
+	background: @clouds;
+	height: 50px;
 }
 
 .navbar-text {
 	margin-top: 15px;
+}
+
+.navbar a {
+	color: white;
+}
+
+
+.navbar-brand {
+
+	font-size: 20pt;
+	font-weight: 800;
+	margin-right: 0px;
+	background: @wet-asphalt;
+}
+
+.navbar-brand:hover {
 }
 
 div.container {
@@ -286,8 +325,12 @@ textarea, input[type="text"] {
 
 .navbar {
 	border-bottom: 0px;
-  letter-spacing: 1px !important;
-  margin-bottom: 0px;
+ 	letter-spacing: 1px !important;
+ 	margin-bottom: 0px;
+}
+
+.navbar .container-fluid {
+	margin-left: 0;
 }
 
 .nav-list {
@@ -317,17 +360,17 @@ textarea, input[type="text"] {
 	cursor: pointer;
 }
 
-#filterBy a {
+.list-style a {
 	-webkit-font-smoothing: subpixel-antialiased;
 	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
 	transition: border .25s linear, color .25s linear, background-color .25s linear;
 	font-style: normal;
 	font-variant: normal;
-	font-weight: 200;
+	font-weight: 500;
 	letter-spacing: 0.3px;
 	-webkit-font-smoothing: antialiased;
 	box-sizing: border-box;
-	font-size: 14px;
+	font-size: 18px;
 	line-height: 18px;
 	white-space: pre-line;
 	word-wrap: break-word;
@@ -335,17 +378,17 @@ textarea, input[type="text"] {
 	color: #aaa;
 }
 
-#filterBy i {
+.list-style i {
 	margin-right: 5px;
 }
 
-#filterBy .active {
+.list-style .active {
 	outline: 0;
 	text-decoration: none;
 	color: #666;
 }
 
-#filterBy a:hover {
+.list-style a:hover {
 	text-decoration: none;
 }
 
@@ -462,14 +505,8 @@ div.container textarea.span11 {
 .star-idea {
 	width: 50px;
 	height: 40px;
-	font-size: 30px;
-	color: @silver;
 	text-align: center;
 	vertical-align: middle;
-
-	i {
-		cursor: pointer;
-	}
 }
 
 .votes {
@@ -600,7 +637,8 @@ div.commentform div.commentsinput {
 #postform textarea {
 	margin-bottom: 0px;
 	width: 100%;
-	font-size: 12pt;
+	font-size: 14pt;
+	display: none;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 300;
@@ -632,6 +670,19 @@ div.commentform div.commentsinput {
 	margin: 1px 0px 5px 2px;
 }
 
+.navbar-nav>li>a {
+	margin: 0;
+	padding: 3px 0;
+	cursor: pointer;
+	box-sizing:border-box;
+
+	i {
+		margin-right: 8px;
+	}
+
+}
+
+
 .navbar-text input[type="button"] {
 	background-color: #eee;
   border: 1px solid #cccccc;
@@ -648,25 +699,21 @@ div.commentform div.commentsinput {
   padding: 4px 6px;
   font-size: 14px;
   line-height: 20px;
-  color: #555555;
+  color: white;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
 
-.navbar-text input[type="button"]:active {
-	background-color: #ddd;
-}
-
-.navbar-text a {
-	margin: 0px 20px;
-	font-weight: 200;
-	font-size: 16pt;
-	letter-spacing: 0px;
-}
-.navbar-text a.selected {
-	border-bottom: 1px solid #efefef;
-}
+// .navbar-text a {
+// 	margin: 0px 20px;
+// 	font-weight: 200;
+// 	font-size: 18pt;
+// 	letter-spacing: 0px;
+// }
+// .navbar-text a.selected {
+// 	border-bottom: 1px solid #efefef;
+// }
 .navbar-text a:hover, .navbar-brand a:hover {
 	text-decoration: none;
 }
@@ -680,6 +727,10 @@ div.commentform div.commentsinput {
 	font-size: 12px;
 	outline: none;
 	padding: 2px 2px 1px 4px;
+}
+
+.big-status {
+	font-size: 30pt;
 }
 
 #currentposts {
@@ -762,6 +813,7 @@ input[type="text"].usr {
 }
 
 .entryNodeText {
+	font-weight: 600;
 	font-size: 18px;
 	color: @midnight-blue;
 	line-height: 24px;
@@ -811,8 +863,8 @@ div.ideaTxtInner > .entryNodeText {
 }
 
 .entryNode > .body {
+	border-top: 1px solid #eee;
 	background: white;
-	border: 1px solid #ddd;
 	margin-top: 2px;
 	border-radius: 3px;
 }
@@ -870,7 +922,6 @@ div.ideaTxtInner {
 	border-top: 0;
 }
 
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
-	background: transparent;
-	border-bottom: 1px solid @turquoise;
-}
+// .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+// 	border-bottom: 1px solid @turquoise;
+// }

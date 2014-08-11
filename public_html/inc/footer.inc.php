@@ -11,17 +11,57 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 $r = mysqli_fetch_assoc($result)
 
 ?>
-
-<footer class="box-footer">
+<footer>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-9">
-        <a href="<?="ideabox-admin.php?mapid=$getmapid" ?>">Admin Dashboard</a><br>
-        <p>Powered by <a class="underline" href="index.php">IdeaJoin</a>. <a href="http://ideaflowplan.tk/" class="underline" target="_blank">Grand Vision</a></p>
+      <div class="col-sm-3">
+        <div class="container-middle">
+        <span class="category-title">About us</span>
+        <ul>
+          <li>Press</li>
+          <li>Who we are</li>
+          <li><a href="http://ideaflowplan.tk/">Vision</a></li>
+          <li><a href="<?="ideabox-admin.php?mapid=$getmapid" ?>">Admin Dashboard</a></li>
+        </ul>
+        </div>
       </div>
-      <div class="col-sm-3 feedbackbuttoncontainer">
-<a class="underline" style="margin-left:-190px; margin-right:40px" href="index.php">Make a new IdeaJoin</a>
-        <a href="ideabox.php?mapid=95" target="_blank" id="feedbackbutton">Give us Feedback</a>
+      <div class="col-sm-3">
+        <div class="container-middle">
+      <span class="category-title">Help</span>
+        <ul>
+            <li>FAQ</li>
+            <li>Terms of Use</li>
+            <li>Support</li>
+            <li>Rules</li>
+        </ul> 
+        </div>     
+      </div>
+      <div class="col-sm-3">
+        <div class="container-middle">
+      <span class="category-title">Discover</span>
+        <ul>
+            
+        </ul> 
+        </div>      
+      </div>
+        <div class="col-sm-3">
+          <div class="container-middle">
+      <span class="category-title">Say Hello</span>
+          <ul>
+            <li>Facebook</li>
+            <li>Blog</li>
+            <li>Twitter</li>
+          </ul> 
+          </div>      
+      </div>
+    </div>
+    <hr/>
+    <div class="row" style="margin-bottom: 30px">
+      <div class="col-sm-6">
+        IdeaJoin
+      </div>
+      <div class="col-sm-6" style="text-align: right">
+        © 2014 IdeaJoin, Inc.
       </div>
     </div>
   </div>

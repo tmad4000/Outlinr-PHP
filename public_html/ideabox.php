@@ -55,9 +55,14 @@ require_once('../config.inc.php');
             <div class="col-sm-12 ml">
               <div id="tableHeaderDiv">
                 <div id="numResults"></div>
-                <div id="filterBy">
+                <div id="viewBy" class="list-style">
+                  <a <?= $page=="list"?'class="active"':""?> href="ideabox.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>"><i class="ion-android-drawer"></i>List</a>
+                  <a <?= $page=="graph"?'class="active"':"" ?> href="ideabox-graph.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>"><i class="ion-android-share"></i>Graph</a>
+                  <a <?= $page=="people"?'class="active"':"" ?> href="ideabox-people.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>"><i class="ion-person-stalker"></i>People</a> 
+                </div>
+                <div id="filterBy" class="list-style">
                   <a id='sortByHot' class="active"><i class="ion-fireball"></i><span>Hot</span></a>
-                  <a id='sortByDate'><i class="ion-ios7-lightbulb-outline"></i><span>New</span></a>
+                  <a id='sortByDate'><i class="ion-calendar"></i><span>New</span></a>
                   <a id="sortByUpvotes"><i class="ion-ios7-star-outline"></i><span>Top</span></a>
                   <a id='sortByStatus'><i class="ion-ios7-checkmark-outline"></i><span>Progress</span></a>
                 </div>

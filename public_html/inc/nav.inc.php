@@ -44,23 +44,22 @@ $pagesdict=array(
             </button>
             <div class="outline navbar-brand">
               <a href="index.php">IdeaJoin</a>
-              <?php if($ideamap && $r['maplogourl']) { ?>
-                <!--width:30px;-->
-                <img src="<?=$r['maplogourl'] ?>" style="height:35px;margin-top:-5px;margin-right:10px">
-              <?php } ?>
-
-              <?= strpos($_SERVER['PHP_SELF'],"index.php") || !$ideamap ? $r['title'] : $r['mapname'] ?></div> 
+            </div> 
             <?php if($ideamap){ ?>
-            <ul class="nav navbar-nav">
-              <li <?= $page=="list"?'class="active"':"" ?> ><a href="ideabox.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>">List</a></li>
-              <li <?= $page=="graph"?'class="active"':"" ?> ><a href="ideabox-graph.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>">Graph</a></li>
-              <li <?= $page=="people"?'class="active"':"" ?> ><a href="ideabox-people.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>">People</a></li>  
+            <?php if($ideamap && $r['maplogourl']) { ?>
+              <!--width:30px;-->
+<!--               <img src="<?=$r['maplogourl'] ?>" style="height:35px;margin-top:-5px;margin-right:10px">
+ -->            <?php } ?>
+            <ul class="nav navbar-nav"> 
+              <li class="navbar-title"><?= strpos($_SERVER['PHP_SELF'],"index.php") || !$ideamap ? $r['title'] : $r['mapname'] ?></li>   
+              <li class="navbar-title"><a class="navbar-button" id="add-activate"><i class="ion-plus-round"></i>Add your Idea</a></li>
+              <li class="navbar-title"><a class="navbar-button" id="search-activate"><i class="ion-search"></i>Search Ideas</a></li>
             </ul> 
             <?php  } ?> 
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
+          <!-- <div class="collapse navbar-collapse" style="float:right" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
             </ul>
