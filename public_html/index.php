@@ -26,8 +26,9 @@
     <div class="row">
       <div class="col-sm-12">
         <div id="marketing">
-          <h2>An ideation tool for your community. </h2>
+          <h2>An ideation tool for your community.</h2>
           <h2>Discuss, vote on and connect ideas then monitor their progress</h2>
+          <h2>100% Free.</h2>
         </div>
       </div>
     </div>
