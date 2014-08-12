@@ -37,7 +37,6 @@ require_once('../config.inc.php');
         <div class="row" id="box-description">
           <div class="col-sm-12">
             <span id="box-description-text" >
-
               <?php echo $r['mapdesc']; ?> 
             </span>
           </div>
