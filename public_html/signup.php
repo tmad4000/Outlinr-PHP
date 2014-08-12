@@ -6,7 +6,7 @@
 <head>
   <title>IdeaJoin</title>
   <?php include('inc/includes.php'); ?>
-  <script type="text/javascript" src="js/client_ideamaps.js"></script>
+  <script type="text/javascript" src="js/signup.js"></script>
   <link rel="stylesheet/less" type="text/css" href="styles/index.less" />
   <link rel="stylesheet/less" type="text/css" href="styles/signup.less" />
   <script src="js/lib/less-1.7.0.min.js" type="text/javascript"></script>  
@@ -42,14 +42,14 @@
             </div>
           </form>
           <hr/>
-          <form role="form" id="signup-box-form">
+          <form role="form" id="signup-form">
             <h2>Signup</h2>
-            Facebook, Google, Twitter logins TODO
+            <!-- Facebook, Google, Twitter logins TODO -->
             <div class="form-group">
               <input type="email" class="form-control input-md" id="signup-email" placeholder="Email">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control input-md" id="signup-handle" placeholder="Name">
+              <input type="text" class="form-control input-md" id="signup-handle" placeholder="Full Name">
             </div>
             <div class="form-group">
               <input type="text" class="form-control input-md" id="signup-handle" placeholder="Username">
