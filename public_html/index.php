@@ -19,8 +19,7 @@
         </div>
       </div>
       <div class="col-sm-6 right middle margin-vertical">
-<!--         <a href="https://github.com/login/oauth/authorize?client_id=3429c5dd62f9e39cf646&scope=user&redirect_uri=http://instadefine.com/IdeaOverflow/Outlinr-PHP/public_html/dev/public_html/ajax/github_oauth.php" class="link-button">Login with Github</a>
- -->        <a href="create.php" class="link-button">Create New</a>
+        <a href="create.php" class="link-button">Create New</a>
       </div>
     </div>
     <div class="row">
@@ -37,7 +36,7 @@
       <div class="col-sm-12">
         <form id="postform">
           <div class="input-append">
-            <input type="text" class="span12" id="newpost" placeholder="Search idea boxes"/>
+            <input type="text" class="span12" id="newpost" placeholder="Search ideajoins"/>
           </div>
         </form>
       </div>
