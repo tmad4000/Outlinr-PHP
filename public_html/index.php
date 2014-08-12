@@ -27,7 +27,8 @@
       <div class="col-sm-12">
         <div id="marketing">
           <h2>An ideation tool for your community.</h2>
-          <h2>Discuss, vote on and connect ideas then monitor their progress</h2>
+          <h2>Discuss, vote on and connect ideas.</h2>
+          <h2>Report on the status of suggestions.</h2>
           <h2>100% Free.</h2>
         </div>
       </div>

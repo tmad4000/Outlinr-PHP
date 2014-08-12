@@ -105,6 +105,7 @@ html, body {
 }
 
 footer {
+	font-size: 14pt;
 	background: @wet-asphalt;
 	color: white;
 	padding-top: 17px;
@@ -113,8 +114,26 @@ footer {
 }
 
 footer ul {
-	list-style-type: none;
+	margin-top: 10px;
+	list-style: none;
+	padding-left: 0;
+	width: auto;
+
+	li {
+		display: block;
+  		width: auto;
+  		float: none;
+	}
 }
+
+footer span.category-title {
+	font-weight: 600;
+}
+
+footer .container-middle {
+	margin: 0 auto;
+}
+
  
 footer a {
 	color: white;
@@ -245,14 +264,15 @@ body {
 
 
 .navbar-brand {
-
 	font-size: 20pt;
 	font-weight: 800;
 	margin-right: 0px;
 	background: @wet-asphalt;
 }
 
-.navbar-brand:hover {
+.navbar-default .navbar-brand:hover {
+	background: darken(@wet-asphalt, 5%);
+	color: darken(white, 5%);
 }
 
 div.container {
@@ -638,11 +658,10 @@ div.commentform div.commentsinput {
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-#postform textarea {
+#postform input[type="text"] {
 	margin-bottom: 0px;
-	width: 100%;
+	width: 400px;
 	font-size: 14pt;
-	display: none;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 300;
@@ -652,12 +671,6 @@ div.commentform div.commentsinput {
 
 #postform div {
 	margin-bottom: 0px;
-}
-
-#postform .btn {
-	font-weight: 200!important;
-	margin-left: 5px;
-	height: 50px;
 }
 
 #postform{

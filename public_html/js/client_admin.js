@@ -178,13 +178,13 @@ $(document).ready(function() {
 
 	//Omnibox (input field) operations
 
-	$('textarea#newpost').focus();
+	$('#newpost').focus();
 
-	$('textarea#newpost').keydown(function (event) {
+	$('#newpost').keydown(function (event) {
 		if(event.keyCode == 13) // enter
     	event.preventDefault();
 	});
-	$('textarea#newpost').keyup(function (event) {
+	$('#newpost').keyup(function (event) {
 		var newpostObj=$(this);
 
 		// #TODO #Future trim repeated enters
@@ -235,7 +235,7 @@ $(document).ready(function() {
 	    }
 	});
 
-	$('textarea#newpost').change(function (event) {
+	$('#newpost').change(function (event) {
 		rootNodeViewModel.filter($(this).val());
 		//#TODO never gets here
 	});

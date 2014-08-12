@@ -52,8 +52,14 @@ $pagesdict=array(
  -->            <?php } ?>
             <ul class="nav navbar-nav"> 
               <li class="navbar-title"><?= strpos($_SERVER['PHP_SELF'],"index.php") || !$ideamap ? $r['title'] : $r['mapname'] ?></li>   
-              <li class="navbar-title"><a class="navbar-button" id="add-activate"><i class="ion-plus-round"></i>Add your Idea</a></li>
-              <li class="navbar-title"><a class="navbar-button" id="search-activate"><i class="ion-search"></i>Search Ideas</a></li>
+              <li class="navbar-search">
+                <form class="navbar-form navbar-left" role="search" id="postform">
+                  <div class="form-group">
+                    <input type="text" id="newpost" class="form-control" placeholder="Add/Filter">
+                  </div>
+                  <button type="submit" class="btn btn-default">Add Idea</button>
+                </form>
+              </li>
             </ul> 
             <?php  } ?> 
           </div>

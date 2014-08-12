@@ -42,19 +42,9 @@ require_once('../config.inc.php');
             </span>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-12 ml">
-            <form id="postform">
-              <div class="input-append">
-                <textarea class="span12" placeholder="Type an idea, suggestion, or goal for <?= strpos($_SERVER['PHP_SELF'],"ideabox_ideamaps.php") ? '' : $r['mapname'] ?>" id="newpost" ></textarea>
-              </div>
-            </form>
-          </div>
-        </div>
           <div class="row">
             <div class="col-sm-12 ml">
               <div id="tableHeaderDiv">
-                <div id="numResults"></div>
                 <div id="viewBy" class="list-style">
                   <a <?= $page=="list"?'class="active"':""?> href="ideabox.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>"><i class="ion-android-drawer"></i>List</a>
                   <a <?= $page=="graph"?'class="active"':"" ?> href="ideabox-graph.php?mapid=<?= $ideamap ? $getmapid : $getideaid ?>"><i class="ion-android-share"></i>Graph</a>
@@ -67,6 +57,7 @@ require_once('../config.inc.php');
                   <a id='sortByStatus'><i class="ion-ios7-checkmark-outline"></i><span>Progress</span></a>
                 </div>
               </div>
+              <div id="numResults"></div>
             </div>
           </div>
           <div class="row cp">

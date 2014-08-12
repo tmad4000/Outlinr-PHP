@@ -20,6 +20,7 @@ $r = mysqli_fetch_assoc($result)
         <ul>
           <li>Press</li>
           <li>Who we are</li>
+          <li>Contact</li>
           <li><a href="http://ideaflowplan.tk/">Vision</a></li>
           <li><a href="<?="ideabox-admin.php?mapid=$getmapid" ?>">Admin Dashboard</a></li>
         </ul>
@@ -33,6 +34,7 @@ $r = mysqli_fetch_assoc($result)
             <li>Terms of Use</li>
             <li>Support</li>
             <li>Rules</li>
+            <li>Signup</li>
         </ul> 
         </div>     
       </div>
@@ -55,7 +57,6 @@ $r = mysqli_fetch_assoc($result)
           </div>      
       </div>
     </div>
-    <hr/>
     <div class="row" style="margin-bottom: 30px">
       <div class="col-sm-6">
         IdeaJoin

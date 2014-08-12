@@ -7,6 +7,8 @@
         <ul>
           <li>Press</li>
           <li>Who we are</li>
+          <li>Contact</li>
+          <li><a href="http://ideaflowplan.tk/">Vision</a></li>
         </ul>
         </div>
       </div>
@@ -18,6 +20,7 @@
             <li>Terms of Use</li>
             <li>Support</li>
             <li>Rules</li>
+            <li>Signup</li>
         </ul> 
         </div>     
       </div>
@@ -40,10 +43,8 @@
           </div>      
       </div>
     </div>
-    <hr/>
     <div class="row" style="margin-bottom: 30px">
       <div class="col-sm-6">
-        IdeaJoin
       </div>
       <div class="col-sm-6" style="text-align: right">
         © 2014 IdeaJoin, Inc.
