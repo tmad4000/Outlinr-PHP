@@ -70,10 +70,10 @@ require_once('../config.inc.php');
         <div class="col-sm-3 gray">
           <div class="sidebar-nav-fixed navbar-inner">
             <ul class="nav nav-list">
-              <li class="nav-header">Labels</li>
+              <li class="nav-header">Popular Hashtags (#)</li>
               <ul id="idea-hashtags" class="tags">
               </ul>
-              <li class="nav-header">People</li>
+              <li class="nav-header">Active People (~)</li>
               <ul id="people-list" class="tags">
               </ul>
             <!--<li class="nav-header">All Ideas</li>

@@ -126,54 +126,54 @@ $(document).ready(function() {
 	});
 
 	initiateCookie();
-	$('#usrname').change(function (){
-       	 updateCookie()
-	});
-	$('#usrname').keyup(function (){
-       	updateCookie()
-	});
-	$('#usremail').keyup(function(){
+	// $('#usrname').change(function (){
+ //       	 updateCookie()
+	// });
+	// $('#usrname').keyup(function (){
+ //       	updateCookie()
+	// });
+	// $('#usremail').keyup(function(){
 
-		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
-			isDefaultUsrHandle=true;
-		}
-		if(isDefaultUsrHandle){
-			var defaultUsrHandle = $('#usremail').val();
-			var emailBeginningI = $('#usremail').val().indexOf('@');
-			if(emailBeginningI>=0){
-				defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
-			}
-			$('#usrhandle').val(defaultUsrHandle);
-		}
-		updateCookie()
-	});
-	$('#usremail').change(function(){
-		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
-			isDefaultUsrHandle=true;
-		}
-		if(isDefaultUsrHandle){
-			var defaultUsrHandle = $('#usremail').val();
-			var emailBeginningI = $('#usremail').val().indexOf('@');
-			if(emailBeginningI>=0){
-				defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
-			}
-			$('#usrhandle').val(defaultUsrHandle);
-		}
-		updateCookie()
-	});
-	$('#usrhandle').keyup(function(){
-		isDefaultUsrHandle = false;
-		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
-			isDefaultUsrHandle=true;
-		}
-		updateCookie()
-	});
-	$('#usrhandle').change(function(){
-		if($('#usremail').val()=="" && $('#usrhandle').val()==""){
-			isDefaultUsrHandle=true;
-		}
-		updateCookie()
-	});
+	// 	if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+	// 		isDefaultUsrHandle=true;
+	// 	}
+	// 	if(isDefaultUsrHandle){
+	// 		var defaultUsrHandle = $('#usremail').val();
+	// 		var emailBeginningI = $('#usremail').val().indexOf('@');
+	// 		if(emailBeginningI>=0){
+	// 			defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
+	// 		}
+	// 		$('#usrhandle').val(defaultUsrHandle);
+	// 	}
+	// 	updateCookie()
+	// });
+	// $('#usremail').change(function(){
+	// 	if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+	// 		isDefaultUsrHandle=true;
+	// 	}
+	// 	if(isDefaultUsrHandle){
+	// 		var defaultUsrHandle = $('#usremail').val();
+	// 		var emailBeginningI = $('#usremail').val().indexOf('@');
+	// 		if(emailBeginningI>=0){
+	// 			defaultUsrHandle = defaultUsrHandle.substr(0,emailBeginningI)
+	// 		}
+	// 		$('#usrhandle').val(defaultUsrHandle);
+	// 	}
+	// 	updateCookie()
+	// });
+	// $('#usrhandle').keyup(function(){
+	// 	isDefaultUsrHandle = false;
+	// 	if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+	// 		isDefaultUsrHandle=true;
+	// 	}
+	// 	updateCookie()
+	// });
+	// $('#usrhandle').change(function(){
+	// 	if($('#usremail').val()=="" && $('#usrhandle').val()==""){
+	// 		isDefaultUsrHandle=true;
+	// 	}
+	// 	updateCookie()
+	// });
 
 
 	//Omnibox (input field) operations
@@ -711,26 +711,26 @@ function submitPostAndGetPosts(newPostText) {
 
 	//#HACK only usrhandle currently visible
 
-	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
-	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
-		var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
-	}
-	else {
-		var processedname = name;
-	}
+	// var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
+	// //var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	// if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
+	// 	var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
+	// }
+	// else {
+	// 	var processedname = name;
+	// }
 
 
 	//+$('#usrhandle').val()+\
 	//#hack
 	var np = newPostText;
-	var ind=np.indexOf('~'+$('#usrhandle').val());
+	// var ind=np.indexOf('~'+$('#usrhandle').val());
 
-	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
-//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+// 	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
+// //		if(np.substr(ind+$('#usrhandle').val().length+1),1)
 
-		np+=' ~'+$('#usrhandle').val();
-	}
+// 		np+=' ~'+$('#usrhandle').val();
+// 	}
 
 	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
 	function extractTags(idea) {
@@ -740,7 +740,7 @@ function submitPostAndGetPosts(newPostText) {
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(newPostText),'uid' : $('#usrhandle').val()}, //#hack
+		'data': {'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(newPostText)/*,'uid' : $('#usrhandle').val()*/}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
 			// todo: parse data and add into our table
@@ -757,25 +757,25 @@ function submitPostAndGetPosts(newPostText) {
 function submitPostAndGetPostsAndLink(newPostText,source) {
 	//#HACK only usrhandle currently visible
 
-	var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
-	//var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
-		var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
-	}
-	else {
-		var processedname = name;
-	}
+	// var name = $('#usrname').val()!=""? $('#usrname').val() : "0";
+	// //var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	// if($('#usremail').val()!="" && $('#usremail').val()!="" && name !='0'){
+	// 	var processedname = "<a href='mailto:"+$('#usremail').val()+"'>"+name+"</a>";
+	// }
+	// else {
+	// 	var processedname = name;
+	// }
 
 	//+$('#usrhandle').val()+\
 	//#hack
 	var np = newPostText;
-	var ind=np.indexOf('~'+$('#usrhandle').val());
+	// var ind=np.indexOf('~'+$('#usrhandle').val());
 
-	if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
-	//		if(np.substr(ind+$('#usrhandle').val().length+1),1)
+	// if($('#usrhandle').val()!="" && ind==-1) { //#bug -- doesn't catch included word
+	// //		if(np.substr(ind+$('#usrhandle').val().length+1),1)
 
-		np+=' ~'+$('#usrhandle').val();
-	}
+	// 	np+=' ~'+$('#usrhandle').val();
+	// }
 
 	/*var tag_regexp = /#([a-zA-Z0-9<>\-"&;”“]+)/g; //#todo relates to
 	function extractTags(idea) {
@@ -785,7 +785,7 @@ function submitPostAndGetPostsAndLink(newPostText,source) {
 
 	$.ajax({
 		'url': 'ajax/get_or_make_post.php',
-		'data': {'tid':-1,'pid':source, 'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(extractIdeaName(newPostText)),'uid' : $('#usrhandle').val()}, //#hack
+		'data': {'tid':-1,'pid':source, 'mapid':getURLParameter("mapid"), 'newpost': np,'ideatitle': extractIdeaName(extractIdeaName(newPostText))/*,'uid' : $('#usrhandle').val()*/}, //#hack
 		//'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val()),'uid' : $('#usrname').val()},
 		'success': function(jsonData) {
                  // todo: parse data and add into our table

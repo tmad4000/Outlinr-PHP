@@ -119,10 +119,10 @@
           }
           if($_SESSION['admin_'.$getmapid]==TRUE) { ?>
           <ul class="nav nav-list">
-            <li class="nav-header">Labels</li>
+            <li class="nav-header">Popular Hashtags</li>
             <ul id="idea-hashtags" class="tags">
             </ul>
-            <li class="nav-header">People</li>
+            <li class="nav-header">Active People</li>
             <ul id="people-list" class="tags">
             </ul> 
             <?php } ?>
