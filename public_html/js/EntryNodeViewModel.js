@@ -195,13 +195,16 @@ function EntryNodeViewModel(entryNodeModel) {
 			else
 				numComments=this.entryNodeModel.num_comments;
 
-			var numCommentsMsg=''+'Comment';
-			if(numComments == 1)
-				numCommentsMsg=''+numComments + " Comment";
-			else if(numComments > 1)
-				numCommentsMsg=''+numComments + " Comments";
+			var numCommentsMsg='Discussion';
+			if(numComments > 0){
+				numCommentsMsg += ' ('+numComments+')';
+			}
+			// if(numComments == 1)
+			// 	numCommentsMsg=''+numComments + "Discussion";
+			// else if(numComments > 1)
+			// 	numCommentsMsg=''+numComments + " Posts in the discussion";
 
-			numCommentsMsg+=""
+			// numCommentsMsg+=""
 
 			//note: expandedComments is global
 			if(this.entryNodeModel.pid in expandedComments)
